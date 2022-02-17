@@ -1,0 +1,38 @@
+:root {
+  --black: rgb(0, 0, 0);
+  --dark: #1c1c1c;
+  --grey: #464b5e;
+  --secondary: #9d9da8;
+  --primary: #ffe502;
+  --light: #f2f2f2;
+  --white: #fff;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  overflow-x: hidden;
+}
+
+.stroke {
+  stroke: #fff;
+  stroke-width: 1px;
+}
+
+.swiper-button-prev,
+.swiper-button-next {
+  color: var(--primary) !important;
+}
+
+.swiper-button-next {
+  transform: translateX(10px);
+}
+
+/* STEPS STYLES END*/
+
+.icon-hidden.form-control.is-invalid,
+.icon-hidden.form-control.is-valid,
+.icon-hidden .was-validated .form-control:invalid {
+  background-image: none !important;
+}

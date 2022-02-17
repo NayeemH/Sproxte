@@ -1,0 +1,17 @@
+.wrapper {
+  background: var(--dark);
+  padding: 1rem 2.5rem;
+}
+
+.wrapper a {
+  color: var(--white) !important;
+  text-decoration: none !important;
+  font-size: 12px;
+  background: transparent;
+  transition: 0.3s all ease-in-out;
+}
+
+.wrapper a:hover {
+  color: var(--primary) !important;
+  transition: 0.3s all ease-in-out;
+}

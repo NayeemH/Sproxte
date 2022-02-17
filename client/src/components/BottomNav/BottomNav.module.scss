@@ -1,0 +1,30 @@
+.wrapper {
+  display: flex;
+  background: var(--dark);
+}
+
+.wrapper div {
+  flex: 1;
+  padding: 1rem 2.5rem;
+  border: 1px solid var(--black);
+}
+
+.wrapper div:first-child {
+  border-right: none;
+}
+
+.wrapper div a {
+  text-decoration: none;
+  font-size: 20px;
+  color: var(--white);
+  transition: 0.3s all ease-in-out;
+}
+
+.wrapper div a:global(.active) {
+  color: var(--primary);
+}
+
+.wrapper div a:hover {
+  color: var(--primary);
+  transition: 0.3s all ease-in-out;
+}

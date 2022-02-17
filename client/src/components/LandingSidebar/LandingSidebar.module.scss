@@ -1,0 +1,64 @@
+.wrapper {
+  position: fixed;
+  top: 0;
+  left: -110%;
+  width: 300px;
+  height: 100vh;
+  background: var(--dark);
+  box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.3);
+  z-index: 9999;
+  transition: 0.4s left ease-in-out;
+}
+
+.wrapper.active {
+  left: 0 !important;
+  transition: 0.4s left ease-in-out;
+}
+
+.close {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: var(--white);
+  font-size: 24px;
+  transition: 0.3s all ease-in-out;
+}
+
+.close:hover {
+  color: var(--primary);
+  cursor: pointer;
+  transition: 0.3s all ease-in-out;
+}
+
+.name {
+  font-size: 24px;
+  color: var(--primary);
+  font-weight: bold;
+}
+
+.content {
+  padding-top: 2rem;
+}
+
+.content a {
+  color: var(--white) !important;
+  padding: 0.8rem 1rem;
+  display: block;
+  font-size: 18px;
+  text-decoration: none;
+  background: var(--dark);
+  border-bottom: 1px solid var(--black);
+  transition: 0.3s all ease-in-out;
+}
+
+.content a:global(.active) {
+  color: var(--primary) !important;
+  transition: 0.3s all ease-in-out;
+}
+
+.content a:hover {
+  color: var(--primary) !important;
+  background: var(--black);
+  cursor: pointer;
+  transition: 0.3s all ease-in-out;
+}

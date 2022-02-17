@@ -1,0 +1,22 @@
+.wrapper {
+  background: rgb(9, 9, 9) !important;
+  min-height: calc(100vh - 228px);
+  padding-bottom: 30px;
+}
+
+.list_row {
+  max-width: 900px !important;
+  padding: 20px 0;
+  margin: 0 auto !important;
+  border-bottom: 1px solid var(--black);
+}
+
+.link {
+  color: var(--white) !important;
+  transition: 0.3s all ease-in-out;
+}
+
+.link:hover {
+  color: var(--primary) !important;
+  transition: 0.3s all ease-in-out;
+}

@@ -1,0 +1,22 @@
+.crd {
+  background: var(--dark) !important;
+  color: var(--white) !important;
+  border-radius: 15px !important;
+  border: 1px solid var(--black) !important;
+  cursor: pointer;
+  transition: 0.3s all ease-in-out;
+}
+
+.crd:hover {
+  border: 1px solid var(--primary) !important;
+  transition: 0.3s all ease-in-out;
+}
+
+.crd:hover .footer {
+  border-color: var(--primary) !important;
+  transition: 0.3s all ease-in-out;
+}
+.crd .footer {
+  border-color: var(--black) !important;
+  transition: 0.3s all ease-in-out;
+}
