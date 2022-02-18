@@ -1,0 +1,146 @@
+###
+### Authentication
+
+## This is for signup
+POST http://localhost:5001/api/v1/auth/signup
+Content-Type: application/json
+
+{
+    "name": "Istiyak Hossain",
+    "email": "istiyak.riyad@gmail.com",
+    "password": "asdfasdf"
+}
+
+
+## This is for login
+POST http://localhost:5001/api/v1/auth/login
+Content-Type: application/json
+
+{
+    "email": "istiyak.riyad@gmail.com",
+    "password": "asdfasdf"
+}
+
+## For logout
+POST http://localhost:5001/api/v1/auth/logout
+
+
+## For Refresh Token
+POST http://localhost:5001/api/v1/auth/refreshToken
+
+
+
+
+
+
+#### 
+#### Product Type
+####
+
+## Create Product Type
+POST http://localhost:5001/api/v1/type/
+Content-Type: multipart/form-data
+
+name: 
+pngImage:
+svgImage:
+sizes:
+
+
+### Get all product Type
+GET http://localhost:5001/api/v1/type/
+
+
+### Get one product type
+GET http://localhost:5001/api/v1/type/62101332ee7327c37ee2bc3b
+
+
+### Update Product Type
+PATCH  http://localhost:5001/api/v1/type/62101332ee7327c37ee2bc3b
+Content-Type: multipart/form-data
+
+name: 
+pngImage:
+svgImage:
+sizes:
+
+### Delete product Type
+DELETE http://localhost:5001/api/v1/type/62101332ee7327c37ee2bc3b
+
+
+
+
+
+
+
+
+###
+### Templates
+###
+
+
+## Create Template
+POST http://localhost:5001/api/v1/type/
+Content-Type: multipart/form-data
+
+name: 
+pngImageFront:
+pngImageBack:
+sizes:
+price:
+description:
+quantity:
+featured:
+
+
+
+### Get all Template
+GET http://localhost:5001/api/v1/template/
+
+
+### Get one Template
+GET http://localhost:5001/api/v1/template/62101332ee7327c37ee2bc3b
+
+
+### Update Template
+PATCH  http://localhost:5001/api/v1/template/62101332ee7327c37ee2bc3b
+Content-Type: multipart/form-data
+
+name: 
+pngImageFront:
+pngImageBack:
+sizes:
+price:
+description:
+quantity:
+featured:
+
+
+### Delete Template
+DELETE http://localhost:5001/api/v1/template/62101332ee7327c37ee2bc3b
+
+
+
+
+
+
+
+###
+### Discover
+###
+
+### Overview
+GET http://localhost:5001/api/v1/discover/
+
+
+
+### Feature
+GET http://localhost:5001/api/v1/discover/feature?page=1&limit=1
+
+
+### Popular
+GET http://localhost:5001/api/v1/discover/popular?page=1&limit=4
+
+
+### All
+GET http://localhost:5001/api/v1/discover/all?page=1&limit=24
