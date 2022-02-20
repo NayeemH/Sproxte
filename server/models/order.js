@@ -8,6 +8,22 @@ const OrderSchema = Schema({
         required:true,
         ref: "users"
     },
+    type:{
+        type: String,
+        required: true,
+    },
+    paymentDone:{
+        type: Boolean,
+        default: false
+    },
+    date: {
+        type: Date
+    },
+    delivered: {
+        type: Boolean,
+        default: false
+    },
+
     products: {
         type: Array,
         default: []

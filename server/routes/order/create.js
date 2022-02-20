@@ -6,11 +6,14 @@ router.post('/', async(req,res,next)=>{
         const {products, price,address} = req.body;
         const {userId} = req.user;
 
+
         const order = await new Order({
           products,
           price,
           address,  
-          userId
+          userId,
+          date: new Date(),
+          paymentDone: true,  
         }).save();
 
         res.json({
