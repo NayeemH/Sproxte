@@ -42,6 +42,9 @@ const userSchema = mongoose.Schema({
         type: String,
         default: 'default.png',
     },
+    address: {
+        type: String
+    },
     verified: {
         type: String,
         default: false

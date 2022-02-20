@@ -35,6 +35,16 @@ const templateSchema = Schema({
         type: Boolean,
         default: false
     },
+    layouts: {
+        type: Array
+    },
+    colors: {
+        type: Array
+    },
+    productType: {
+        type:  Schema.Types.ObjectId,
+        required: true
+    },
     sellCount: {
         type: Number,
         default: 0

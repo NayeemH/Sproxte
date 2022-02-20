@@ -6,7 +6,7 @@ const {saveImage, fileFetch} = require('../../lib/imageConverter');
 
 router.post('/', fileFetch.fields([{name: 'pngImageFront', maxCount: 1}, {name: 'pngImageBack', maxCount: 1}]), async (req, res, next) => {
     try {
-        const {name, sizes, price, description, quantity, featured} = req.body;
+        const {name, sizes, price, description, quantity, featured, layouts, colors, productType} = req.body;
 
         const images1 = await saveImage(req.files.pngImageFront[0]);
         const images2 = await saveImage(req.files.pngImageBack[0]);
@@ -20,7 +20,10 @@ router.post('/', fileFetch.fields([{name: 'pngImageFront', maxCount: 1}, {name: 
             price,
             description,
             quantity,
-            featured
+            featured,
+            layouts,
+            colors,
+            productType
         }).save();
 
         res.json({
