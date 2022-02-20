@@ -12,7 +12,7 @@ const activate = require('./activate');
 const productType = require('./productType');
 const discover = require('./discover');
 const template = require('./template');
-
+const order = require('./order');
 
 // User Register and login function 
 router.use('/auth', user);
@@ -41,5 +41,7 @@ router.use('/activate', activate);
 // Profile Info
 //router.use('/download', isAuth, download);
 
+// order
+router.use('/order', isAuth, order);
 
 module.exports = router;
