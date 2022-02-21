@@ -4,19 +4,30 @@ import { AiOutlineAlignLeft, AiOutlineShoppingCart } from "react-icons/ai";
 import { BiUserPlus } from "react-icons/bi";
 import { connect } from "react-redux";
 import { toggleLandingSidebar } from "../../actions/Landing.action";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Nav = ({ toggleLandingSidebar, count }) => {
   const navigate = useNavigate();
   return (
     <div className={styles.wrapper}>
-      <div className={styles.ham} onClick={toggleLandingSidebar}>
+      {/* <div className={styles.ham} onClick={toggleLandingSidebar}>
         <AiOutlineAlignLeft />
-      </div>
+      </div> */}
       <div className="">
         <span className={styles.title} onClick={() => navigate("/")}>
           SPROXTE
         </span>
+      </div>
+      <div className="">
+        <Link to="/" className={styles.link}>
+          Home
+        </Link>
+        <Link to="/" className={styles.link}>
+          Contact
+        </Link>
+        <Link to="/" className={styles.link}>
+          About
+        </Link>
       </div>
       <div
         className={`${styles.cart} d-flex justify-content-around align-items-around`}

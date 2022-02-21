@@ -1,40 +1,39 @@
 .wrapper {
   height: 60px;
   background: var(--dark);
-  border-bottom: 1px solid var(--black);
   padding: 5px 2.5rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-bottom: 2px solid var(--black);
+}
+.link {
+  color: var(--light) !important;
+  font-size: 1.2rem;
+  margin-right: 20px;
 }
 
-.ham {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  color: var(--white);
-  font-size: 24px;
+a.link {
+  color: var(--light) !important;
 }
 
-.ham:hover {
-  cursor: pointer;
-  color: var(--primary);
+a.link:hover {
+  color: var(--grey) !important;
 }
 
 .title {
   font-size: 24px;
-  color: var(--primary);
+  color: var(--primary) !important;
   font-weight: bold;
 }
 
 .title:hover {
   cursor: pointer;
-  color: var(--white) !important;
+  color: var(--primary) !important;
 }
 
 .cart {
   position: relative;
+  color: var(--dark) !important;
   width: 80px;
 }
 
@@ -56,7 +55,7 @@
 }
 
 .link {
-  color: var(--white) !important;
+  color: var(--dark) !important;
   text-decoration: none;
   transition: 0.3s all ease-in-out;
 }

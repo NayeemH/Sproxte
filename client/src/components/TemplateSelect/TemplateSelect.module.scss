@@ -1,11 +1,12 @@
 .wrapper {
-  min-height: calc(100vh - 228px);
-  background: rgb(9, 9, 9);
+  background: #f5f5f5;
+  padding-top: 20px;
 }
 
 .template {
   max-width: 300px;
-  width: 100%;
+  width: 90%;
+  max-height: 332px;
   animation: previewAnim 5s infinite;
 }
 
@@ -19,7 +20,12 @@
 
 .templates {
   width: 400px !important;
-  margin: 0 auto;
+}
+
+.templates_wrapper {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
 }
 
 .temp_item {
@@ -47,6 +53,17 @@
 .btn:hover {
   background: var(--dark) !important;
   color: var(--primary) !important;
+}
+
+.preview {
+  background: var(--dark);
+  height: 430px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  border-top-right-radius: 25px;
+  border-bottom-right-radius: 25px;
 }
 
 @keyframes previewAnim {

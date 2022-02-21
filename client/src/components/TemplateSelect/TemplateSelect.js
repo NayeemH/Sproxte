@@ -12,18 +12,23 @@ const TemplateSelect = ({ setSelectedTemplate, template }) => {
   const navigate = useNavigate();
   return (
     <div className={styles.wrapper}>
-      <span className="text-center d-block text-white lead pt-4">
-        {template.name}
-      </span>
-      <div className="text-center py-3">
-        <img
-          src={template.template}
-          className={styles.template}
-          alt={template.name}
-        />
-      </div>
       <Row>
-        <Col className={`${styles.templates} text-white pb-5`}>
+        <Col className="">
+          <div className={`text-center py-3 ${styles.preview}`}>
+            <img
+              src={template.template}
+              className={styles.template}
+              alt={template.name}
+            />
+            <span className="text-center fs-2 d-block text-light  py-3">
+              {template.name}
+            </span>
+          </div>
+        </Col>
+        <Col className={`${styles.templates_wrapper} text-white pb-5`}>
+          <span className="d-block fs-1 text-center text-dark py-4">
+            Customize Now
+          </span>
           <Swiper
             slidesPerView={1}
             slidesOffsetBefore={10}
@@ -63,18 +68,18 @@ const TemplateSelect = ({ setSelectedTemplate, template }) => {
               </SwiperSlide>
             ))}
           </Swiper>
+          <div className="text-center pt-5">
+            <Button
+              className={styles.btn}
+              size="lg"
+              variant="primary"
+              onClick={() => navigate(`/order/${template.id}`)}
+            >
+              Order Now
+            </Button>
+          </div>
         </Col>
       </Row>
-      <div className="text-center pb-4">
-        <Button
-          className={styles.btn}
-          size="lg"
-          variant="primary"
-          onClick={() => navigate(`/order/${template.id}`)}
-        >
-          Order Now
-        </Button>
-      </div>
     </div>
   );
 };
