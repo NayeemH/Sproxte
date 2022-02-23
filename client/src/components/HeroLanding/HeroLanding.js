@@ -9,13 +9,13 @@ const HeroLanding = () => {
   return (
     <>
       <Row className={styles.wrapper}>
-        <Col md={6} className="py-5 px-3">
+        <Col md={6} xs={12} className="py-md-5 py-3 px-md-3">
           <h1 className={styles.heading}>Sproxte</h1>
           <h1 className={`fs-1 fw-bolder ${styles.sub}`}>
             Work that we produce for our clients is always unique and unique to
             our clients.
           </h1>
-          <span className="d-block lead pr-5 pt-3">
+          <span className="d-block lead pr-md-5 pt-3">
             Lorem Ipsum is simply dummy text of <br /> the printing and
             typesetting industry.
             <br /> Lorem Ipsum has been the industry's standard.

@@ -65,3 +65,15 @@ a.link:hover {
   color: var(--primary) !important;
   transition: 0.3s all ease-in-out;
 }
+
+@media screen and (max-width: 767px) {
+  .wrapper {
+    flex-direction: column;
+    height: auto;
+    padding: 1.5rem;
+  }
+
+  .link {
+    margin-right: 15px;
+  }
+}

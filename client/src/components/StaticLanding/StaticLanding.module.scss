@@ -1,0 +1,18 @@
+.dots {
+  transform: translateY(50%);
+  z-index: -1;
+}
+
+.btn {
+  padding: 10px 2rem !important;
+  background: var(--primary) !important;
+  box-shadow: none !important;
+  color: var(--dark) !important;
+  font-weight: bold;
+  border: 1px solid var(--black) !important;
+}
+
+.btn:hover {
+  background: var(--dark) !important;
+  color: var(--primary) !important;
+}

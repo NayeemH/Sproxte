@@ -12,7 +12,7 @@ const TemplateSelect = ({ setSelectedTemplate, template }) => {
   const navigate = useNavigate();
   return (
     <div className={styles.wrapper}>
-      <Row>
+      <Row className="mx-0">
         <Col className="">
           <div className={`text-center py-3 ${styles.preview}`}>
             <img
@@ -25,7 +25,7 @@ const TemplateSelect = ({ setSelectedTemplate, template }) => {
             </span>
           </div>
         </Col>
-        <Col className={`${styles.templates_wrapper} text-white pb-5`}>
+        <Col className={`${styles.templates_wrapper} text-white pb-5 `}>
           <span className="d-block fs-1 text-center text-dark py-4">
             Customize Now
           </span>
