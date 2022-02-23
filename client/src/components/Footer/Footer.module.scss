@@ -19,3 +19,24 @@
 .logo {
   max-width: 100px;
 }
+
+.icon {
+  color: var(--primary);
+  text-decoration: none;
+  transition: 0.3s all ease-in-out;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 1px solid var(--primary) !important;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 26px !important;
+  margin: 5px;
+}
+
+@media screen and (max-width: 767px) {
+  .list a {
+    margin-bottom: 10px !important;
+  }
+}
