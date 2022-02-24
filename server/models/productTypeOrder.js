@@ -12,7 +12,7 @@ const productTypeOrderSchema = Schema({
         required: true,
     },
     IEPTemplateId:{
-        type: Schema.Types.ObejectId,
+        type: Schema.Types.ObjectId,
         required: true
     },
     address: {
