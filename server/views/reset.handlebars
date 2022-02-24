@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Email Verification</title>
+    <style>
+        div {
+            font-family: Helvetica;
+            padding: 20px;
+            text-align: center;
+            max-width: 456px;
+            margin: auto;
+        }
+        img {
+            width: 100%;
+        }
+        h1 {
+            margin-bottom: 35px;
+            font-size: 26px;
+            color: #202020;
+        }
+        p {
+            font-size: 16px;
+            color: #718096;
+        }
+        small {
+            color: #718096;
+            margin-top: 20px;
+            font-size: 14px;
+        }
+
+        .conferm-link {
+            margin: 20px 0;
+            padding: 18px;
+            display: block;
+            background-color: #374191;
+            border-radius: 20px;
+            text-decoration: none;
+        }
+
+        .email {
+            text-decoration: none;
+        }
+        span {
+            color: #00C1C6;
+            font-size: 16px;
+        }
+        .conferm-link span {
+            color: #ffffff;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <img src="https://lh3.googleusercontent.com/G2cXeh992LZ6OTlKeunUgmmR9YUdx6C25KvOkAZhivhGBL2JepQTyoVhCbIeM5HtQHnrZ2IC_NFFw-SoBMKyL-knjzDZvmytIzzEVbuf5-saw1h__xpHqABHMUI3KVIuXjvYYzLcqiohyOjrtKxYQrpgnVSWeL-Rmhhi34Ea-i8PGObEOYmkpVOyIMYCYxSeRKE1X72s48hUZoRJnnkrvCWIwAStZVn9uTrqwdLF2lrtYS4S725j4FLt1SW1k6OtzzxAH72HzMLuvV2_d-37ipthZBy5saOqUnM776KDArTFQ-UnCVFV3aj_ykEeE8f1swRe9Md9POgeZpLSMB6p-MjV8ZOX7WDtynGHpk5mXNTA_h6RFh7XhomCfUEMiisxrN4yCwJQRshGtGy3jNFBIi2RsVtQ4TrgUlAg6JYl_Wm2pmnU9MGiStt4XxDDvZjFwD1Z76AdOjgzXQCa75hEZHytCrZTrcW63m-hC0yTGKVGcb_ObQ0MBLlbAXuAJ60hhRzRQsEd-_k8Xa2SiT7vF-18b_Yu8eb_0RCQONGTTxT7OY6zC6uCoINIbEa1eLxefKEG0-mGaJahtW39XGFaOE9uMr2vGyS-PvaJhegqHPwW1YMgTWIEDUX-nmDSFv5EpqCHVQQ86sPgiBE2N5Uebmq3dn4-1maLZHKDFgz8Oy-KDCyUz5kVe7OSqk8VwnHZnIBUm6rU7aL5WuKzxzuwf1Y=w1366-h466-no?authuser=0" alt="Auth">
+        <h1>Confirm your email to reset your password</h1>
+        <p>Hi <span>{{username}},</span> once you confirm your email, <a class='email' href="https://mail.google.com"><span>{{email}}</span></a>, your password will be reset. So please carefull</p>
+        
+        <a class='conferm-link' href="{{link}}"><span>Confirm Email Address</span></a>
+
+        <small>If you didn't request this email, you can safely ignore it.</small>
+    </div>
+</body>
+</html>
