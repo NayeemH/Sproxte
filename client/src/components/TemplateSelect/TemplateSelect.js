@@ -12,8 +12,8 @@ const TemplateSelect = ({ setSelectedTemplate, template }) => {
   const navigate = useNavigate();
   return (
     <div className={styles.wrapper}>
-      <Row className="mx-0">
-        <Col className="">
+      <Row className={styles.row}>
+        <Col className="" data-aos="fade-up">
           <div className={`text-center py-3 ${styles.preview}`}>
             <img
               src={template.template}

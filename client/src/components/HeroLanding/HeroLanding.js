@@ -8,7 +8,7 @@ import TemplateSelect from "../TemplateSelect/TemplateSelect";
 const HeroLanding = () => {
   return (
     <>
-      <Row className={styles.wrapper}>
+      <Row className={styles.wrapper} data-aos="fade-left">
         <Col md={6} xs={12} className="py-md-5 py-3 px-md-3">
           <h1 className={styles.heading}>Sproxte</h1>
           <h1 className={`fs-1 fw-bolder ${styles.sub}`}>

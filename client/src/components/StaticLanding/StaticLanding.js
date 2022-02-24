@@ -1,8 +1,11 @@
 import React from "react";
 import { Button, Col, Container, Row } from "react-bootstrap";
+import { AiOutlineArrowRight } from "react-icons/ai";
+import { Link } from "react-router-dom";
 import demoLanding from "../../assets/landing/demoLanding.png";
 import dots from "../../assets/landing/dots.png";
 import callToAction from "../../assets/landing/callToAction.png";
+import types from "../../config/ProductTypes";
 import styles from "./StaticLanding.module.scss";
 
 const StaticLanding = () => {
@@ -27,6 +30,38 @@ const StaticLanding = () => {
       <div className="pb-5">
         <img src={demoLanding} style={{ width: "90%" }} alt="" />
       </div>
+
+      <Row>
+        <Col md={12} className="px-md-5 px-0 pb-md-5 pb-4">
+          <span className="d-block px-5 pt-5 text-center fs-3 fw-bold">
+            Lorem Ipsum is simply dummy text of the printing and <br />{" "}
+            typesetting industry.
+          </span>
+          <span className="d-block px-5 text-center fs-6 text-secondary pt-3">
+            Lorem Ipsum is simply dummy text of the printing and typesetting
+            industry. Lorem Ipsum is simply dummy text of the printing and
+            typesetting industry. Lorem Ipsum is simply dummy text of the
+            printing and typesetting industry.Lorem Ipsum is simply dummy text
+            of the printing and typesetting industry.
+          </span>
+        </Col>
+        {types.map((item) => (
+          <Col
+            md={3}
+            className={`d-flex justify-content-center align-items-center flex-column`}
+          >
+            <div className={styles.cat_wrapper}>{item.svg}</div>
+            <span className="d-block text-center fs-6 text-secondary pt-3">
+              {item.name}
+            </span>
+            <Link to={`/type/${item.name}`} className={styles.arrow}>
+              <span>
+                <AiOutlineArrowRight />
+              </span>
+            </Link>
+          </Col>
+        ))}
+      </Row>
 
       <Row>
         <Col md={6} className="">

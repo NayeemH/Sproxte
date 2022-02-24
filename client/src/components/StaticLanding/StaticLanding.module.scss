@@ -5,14 +5,43 @@
 
 .btn {
   padding: 10px 2rem !important;
-  background: var(--primary) !important;
+  background: linear-gradient(90deg, #ffe502 0%, #ffa602 100%) !important;
   box-shadow: none !important;
   color: var(--dark) !important;
   font-weight: bold;
-  border: 1px solid var(--black) !important;
+  border: none !important;
+  transition: 0.3s all ease-in-out;
 }
 
 .btn:hover {
   background: var(--dark) !important;
-  color: var(--primary) !important;
+  color: var(--orange) !important;
+  transition: 0.3s all ease-in-out;
+}
+
+.cat_wrapper {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  background: rgba($color: #ffa602, $alpha: 1);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.cat_wrapper svg {
+  stroke: #000 !important;
+  max-height: 75px;
+  max-width: 75px;
+  width: 100%;
+}
+
+.arrow {
+  color: #ffa602;
+  text-decoration: none;
+  font-size: 24px;
+}
+
+.arrow:hover {
+  color: var(--primary);
 }
