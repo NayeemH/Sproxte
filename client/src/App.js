@@ -17,6 +17,7 @@ import FileUploadPage from "./views/FileUploadPage/FileUploadPage";
 import { useEffect } from "react";
 import Aos from "aos";
 import "aos/dist/aos.css";
+import LoginPage from "./views/LoginPage/LoginPage";
 
 function App() {
   useEffect(() => {
@@ -32,6 +33,7 @@ function App() {
           <Route path="/" element={<LandingPage />} />
           <Route path="/discover" element={<DiscoverPage />} />
           <Route path="/signup" element={<SignupPage />} />
+          <Route path="/login" element={<LoginPage />} />
           <Route path="/cart" element={<CartPage />} />
           <Route path="/contact" element={<ContactPage />} />
           <Route path="/payment-methods" element={<PaymentMethodsPage />} />

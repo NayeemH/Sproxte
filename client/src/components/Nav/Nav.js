@@ -25,10 +25,13 @@ const Nav = ({ toggleLandingSidebar, count }) => {
         <Link to="/" className={styles.link}>
           Home
         </Link>
-        <Link to="/" className={styles.link}>
+        <Link to="/discover" className={styles.link}>
+          Discover
+        </Link>
+        <Link to="/contact" className={styles.link}>
           Contact
         </Link>
-        <Link to="/" className={styles.link}>
+        <Link to="/about" className={styles.link}>
           About
         </Link>
       </div>

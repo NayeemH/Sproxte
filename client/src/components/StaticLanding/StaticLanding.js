@@ -11,33 +11,42 @@ import styles from "./StaticLanding.module.scss";
 const StaticLanding = () => {
   return (
     <Container className="py-5">
-      <span className="d-block px-5 pt-5 text-center fs-3 fw-bold">
+      <span
+        className="d-block px-5 pt-5 text-center fs-3 fw-bold"
+        data-aos="fade-right"
+      >
         Lorem Ipsum is simply dummy text of the printing and <br /> typesetting
         industry.
       </span>
       <Row>
-        <Col md={6}>
+        <Col md={6} data-aos="fade-left">
           <span className="d-block pt-5 pb-3 h3">Lorem, ipsum.</span>
           <span className="d-block pb-md-5 lead">
             Lorem ipsum dolor sit, amet consectetur adipisicing <br /> elit.
             Similique, excepturi. Quae, dolores quam! Ipsa, fugit!
           </span>
         </Col>
-        <Col md={6} className="d-flex justify-content-end">
+        <Col md={6} className="d-flex justify-content-end" data-aos="fade-up">
           <img src={dots} className={`img-fluid ${styles.dots}`} alt="" />
         </Col>
       </Row>
-      <div className="pb-5">
+      <div className="pb-5" data-aos="fade-down">
         <img src={demoLanding} style={{ width: "90%" }} alt="" />
       </div>
 
       <Row>
         <Col md={12} className="px-md-5 px-0 pb-md-5 pb-4">
-          <span className="d-block px-5 pt-5 text-center fs-3 fw-bold">
+          <span
+            className="d-block px-5 pt-5 text-center fs-3 fw-bold"
+            data-aos="fade-left"
+          >
             Lorem Ipsum is simply dummy text of the printing and <br />{" "}
             typesetting industry.
           </span>
-          <span className="d-block px-5 text-center fs-6 text-secondary pt-3">
+          <span
+            className="d-block px-5 text-center fs-6 text-secondary pt-3"
+            data-aos="fade-right"
+          >
             Lorem Ipsum is simply dummy text of the printing and typesetting
             industry. Lorem Ipsum is simply dummy text of the printing and
             typesetting industry. Lorem Ipsum is simply dummy text of the
@@ -45,10 +54,12 @@ const StaticLanding = () => {
             of the printing and typesetting industry.
           </span>
         </Col>
-        {types.map((item) => (
+        {types.map((item, i) => (
           <Col
             md={3}
             className={`d-flex justify-content-center align-items-center flex-column`}
+            key={i}
+            data-aos="fade-up"
           >
             <div className={styles.cat_wrapper}>{item.svg}</div>
             <span className="d-block text-center fs-6 text-secondary pt-3">
@@ -64,7 +75,7 @@ const StaticLanding = () => {
       </Row>
 
       <Row>
-        <Col md={6} className="">
+        <Col md={6} className="" data-aos="fade-down">
           <img
             src={callToAction}
             className=" "
@@ -72,7 +83,7 @@ const StaticLanding = () => {
             alt=""
           />
         </Col>
-        <Col md={6} className="p-5">
+        <Col md={6} className="p-5" data-aos="fade-up">
           <h3>Lorem Ipsum is simply dummy text dummy text </h3>
           <span className="d-block py-4">
             Lorem Ipsum is simply dummy text of the printing and typesetting
