@@ -1,5 +1,5 @@
 .wrapper {
-  background: rgb(9, 9, 9) !important;
+  background: var(--light) !important;
   min-height: calc(100vh - 228px);
   padding: 2rem 0;
 }
@@ -11,7 +11,7 @@
 .crd {
   margin: 0 auto;
   width: 28rem;
-  background: var(--dark) !important;
+  background: var(--white);
 }
 
 .btn {

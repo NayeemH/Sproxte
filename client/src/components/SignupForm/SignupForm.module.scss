@@ -1,5 +1,5 @@
 .wrapper {
-  background: rgb(9, 9, 9) !important;
+  background: var(--light) !important;
   min-height: calc(100vh - 228px);
   padding: 2rem 0;
 }
@@ -11,15 +11,16 @@
 .crd {
   margin: 0 auto;
   width: 28rem;
-  background: var(--dark) !important;
 }
 
 .btn {
   outline: none !important;
   border: none !important;
-  padding: 8px 26px;
-  background: var(--primary) !important;
+  padding: 8px 26px !important;
+  background: linear-gradient(90deg, #ffe502 0%, #ffa602 100%) !important;
   color: var(--dark) !important;
+  font-weight: bold !important;
+  border-radius: 30px !important;
   transition: 0.3s all ease-in-out;
 }
 

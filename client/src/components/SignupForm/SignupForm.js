@@ -48,9 +48,11 @@ const SignupForm = () => {
   });
   return (
     <div className={styles.wrapper}>
-      <Card text="light" className={styles.crd}>
-        <Card.Header className="d-flex justify-content-center align-items-center">
-          <span className={styles.heading}>Create Account</span>
+      <Card className={`${styles.crd} shadow `}>
+        <Card.Header className="d-flex justify-content-center align-items-center bg-dark">
+          <span className={`${styles.heading} fw-bold gradient_title`}>
+            Create Account
+          </span>
         </Card.Header>
         <Card.Body>
           <Formik

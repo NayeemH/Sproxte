@@ -14,9 +14,7 @@ const Discover = () => {
           xs={12}
           className="d-flex justify-content-between align-items-center pb-3"
         >
-          <span className="d-block fs-3 text-light fw-light">
-            FEATURED TEMPLATES
-          </span>
+          <span className="d-block fs-3 fw-light">FEATURED TEMPLATES</span>
           <Link to="/" className={styles.link}>
             <span className="fw-light fs-3">
               <AiOutlineRight />
@@ -38,9 +36,7 @@ const Discover = () => {
           xs={12}
           className="d-flex justify-content-between align-items-center pb-3"
         >
-          <span className="d-block fs-3 text-light fw-light">
-            POPULAR TEMPLATES
-          </span>
+          <span className="d-block fs-3 fw-light">POPULAR TEMPLATES</span>
           <Link to="/" className={styles.link}>
             <span className="fw-light fs-3">
               <AiOutlineRight />
@@ -62,9 +58,7 @@ const Discover = () => {
           xs={12}
           className="d-flex justify-content-between align-items-center pb-3"
         >
-          <span className="d-block fs-3 text-light fw-light">
-            ALL TEMPLATES
-          </span>
+          <span className="d-block fs-3 fw-light">ALL TEMPLATES</span>
           <Link to="/" className={styles.link}>
             <span className="fw-light fs-3">
               <AiOutlineRight />

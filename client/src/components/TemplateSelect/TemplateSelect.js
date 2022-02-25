@@ -5,15 +5,15 @@ import styles from "./TemplateSelect.module.scss";
 import types from "../../config/ProductTypes";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination } from "swiper";
-import { Button, Col, Row } from "react-bootstrap";
+import { Button, Col, Container, Row } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 
 const TemplateSelect = ({ setSelectedTemplate, template }) => {
   const navigate = useNavigate();
   return (
-    <div className={styles.wrapper}>
-      <Row className={styles.row}>
-        <Col className="" data-aos="fade-up">
+    <Container fluid className={styles.wrapper}>
+      <Row className={`${styles.row}`}>
+        <Col className="px-0" data-aos="fade-up">
           <div className={`text-center py-3 ${styles.preview}`}>
             <img
               src={template.template}
@@ -25,7 +25,7 @@ const TemplateSelect = ({ setSelectedTemplate, template }) => {
             </span>
           </div>
         </Col>
-        <Col className={`${styles.templates_wrapper} text-white pb-5 `}>
+        <Col className={`${styles.templates_wrapper} px-0 text-white pb-5 `}>
           <span className="d-block fs-1 text-center text-dark py-4">
             Customize Now
           </span>
@@ -72,7 +72,6 @@ const TemplateSelect = ({ setSelectedTemplate, template }) => {
             <Button
               className={styles.btn}
               size="lg"
-              variant="primary"
               onClick={() => navigate(`/order/${template.id}`)}
             >
               Order Now
@@ -80,7 +79,7 @@ const TemplateSelect = ({ setSelectedTemplate, template }) => {
           </div>
         </Col>
       </Row>
-    </div>
+    </Container>
   );
 };
 

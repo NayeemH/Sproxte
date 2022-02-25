@@ -37,3 +37,14 @@ body {
 .icon-hidden .was-validated .form-control:invalid {
   background-image: none !important;
 }
+
+.gradient_title {
+  background-image: linear-gradient(90deg, #ffe502 0%, #ffa602 100%) !important;
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.bg-dark {
+  background: var(--dark) !important;
+}

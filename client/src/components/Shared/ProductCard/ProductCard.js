@@ -7,7 +7,10 @@ const ProductCard = ({ title, img, id }) => {
   const navigate = useNavigate();
   return (
     <>
-      <Card className={styles.crd} onClick={() => navigate(`/product/${id}`)}>
+      <Card
+        className={`${styles.crd} shadow-sm`}
+        onClick={() => navigate(`/product/${id}`)}
+      >
         <Card.Body>
           <img src={img} alt={title} className="img-fluid" />
         </Card.Body>

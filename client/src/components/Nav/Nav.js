@@ -14,7 +14,10 @@ const Nav = ({ toggleLandingSidebar, count }) => {
         <AiOutlineAlignLeft />
       </div> */}
       <div className="">
-        <span className={styles.title} onClick={() => navigate("/")}>
+        <span
+          className={`${styles.title} gradient_title`}
+          onClick={() => navigate("/")}
+        >
           SPROXTE
         </span>
       </div>

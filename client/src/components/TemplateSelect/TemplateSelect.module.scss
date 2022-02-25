@@ -46,9 +46,10 @@
   padding: 10px 2rem !important;
   background: linear-gradient(90deg, #ffe502 0%, #ffa602 100%) !important;
   box-shadow: none !important;
+  border-radius: 30px !important;
   color: var(--dark) !important;
   font-weight: bold !important;
-  border: 1px solid var(--black) !important;
+  border: none !important;
 }
 
 .btn:hover {

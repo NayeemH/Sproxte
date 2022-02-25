@@ -9,20 +9,20 @@
 .crd {
   flex: 7;
   width: 100% !important;
-  background: var(--dark) !important;
-  color: var(--white) !important;
+  background: var(--white) !important;
+  color: var(--dark) !important;
   border-radius: 15px !important;
-  border: 1paroundx solid var(--black) !important;
+  border: 1px solid var(--orange) !important;
   transition: 0.3s all ease-in-out;
 }
 .crd_size {
   flex: 1 !important;
   width: 100% !important;
   margin: 20px 0 !important;
-  background: var(--dark) !important;
-  color: var(--white) !important;
+  background: var(--white) !important;
+  color: var(--dark) !important;
   border-radius: 15px !important;
-  border: 1paroundx solid var(--black) !important;
+  border: 1px solid var(--orange) !important;
   transition: 0.3s all ease-in-out;
 }
 
@@ -32,11 +32,16 @@
 }
 
 .btn {
-  background: var(--primary) !important;
+  background: linear-gradient(90deg, #ffe502 0%, #ffa602 100%) !important;
   color: var(--black) !important;
   font-weight: bold !important;
   border-radius: 15px !important;
-  border: 1px solid var(--black) !important;
+  border: none !important;
+  transition: 0.3s all ease-in-out;
+}
+
+.btn:hover {
+  background: var(--orange) !important;
   transition: 0.3s all ease-in-out;
 }
 
@@ -44,7 +49,7 @@
   width: 50px;
   height: 50px;
   border-radius: 50%;
-  border: 1px solid var(--primary);
+  border: 1px solid var(--orange);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -53,13 +58,13 @@
 
 .size.active {
   background: var(--black) !important;
-  color: var(--primary) !important;
+  color: var(--orange) !important;
   transition: 0.3s all ease-in-out;
 }
 
 .size:hover {
   cursor: pointer;
-  border: 1px solid var(--white);
+  border: 1px solid var(--dark);
   transition: 0.3s all ease-in-out;
 }
 
@@ -69,7 +74,7 @@
 }
 
 .textarea {
-  background: rgb(9, 9, 9) !important;
+  background: var(--light) !important;
   border: none !important;
   color: var(--light) !important;
 }
