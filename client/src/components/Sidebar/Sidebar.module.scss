@@ -25,7 +25,7 @@
 }
 
 .ham:hover {
-  color: var(--primary);
+  color: var(--orange);
   transition: 0.3s all ease-in-out;
 }
 
@@ -37,7 +37,7 @@
 
 .text {
   padding-left: 10px;
-  color: var(--primary) !important;
+  color: var(--orange) !important;
 }
 
 .link {
@@ -58,7 +58,7 @@
     }
     h3,
     a {
-      color: var(--primary);
+      color: var(--orange);
       text-decoration: none;
       font-size: 16px;
       font-weight: 500;
@@ -89,14 +89,14 @@
       color: var(--light);
       margin-bottom: 15px;
       &:hover {
-        color: var(--primary);
+        color: var(--orange);
       }
     }
   }
 
   a.activeBackgroundColor {
     min-width: 80%;
-    background: var(--primary);
+    background: var(--orange);
     color: #fff;
     border-radius: 7px;
     transition: 0.4s;
@@ -111,15 +111,15 @@
       left: -60px;
       width: 16px;
       height: 100%;
-      background: var(--primary);
+      background: var(--orange);
       border-radius: 0 4px 4px 0;
     }
   }
   a.activeTextColor {
-    color: var(--primary);
+    color: var(--orange);
     font-weight: 500;
     &:hover {
-      color: var(--primary);
+      color: var(--orange);
     }
   }
 }

@@ -75,7 +75,7 @@ const SettingForm = ({ updateProfile, user }) => {
   });
   return (
     <div className={styles.wrapper}>
-      <Card bg="dark" text="light" className={styles.crd}>
+      <Card bg="white" text="dark" className={`${styles.crd} shadow`}>
         <Card.Title className="px-3 pt-3">
           <span className="fs-4">Profile</span>
         </Card.Title>
@@ -111,7 +111,7 @@ const SettingForm = ({ updateProfile, user }) => {
                           className={`${styles.img__wrapper} text-center mb-3`}
                         >
                           <img
-                            src={`${IMAGE_PATH}/small/${user.image}`}
+                            src={`${IMAGE_PATH}small/${user.image}`}
                             alt={user.username}
                             className="h-100"
                           />
@@ -122,7 +122,7 @@ const SettingForm = ({ updateProfile, user }) => {
                     </div>
                     <div className="d-flex justify-content-center align-items-center">
                       <Button
-                        variant="outline-light"
+                        variant="outline-dark"
                         onClick={() => fileRef.current.click()}
                       >
                         <span className="d-block mr-4">
@@ -194,13 +194,13 @@ const SettingForm = ({ updateProfile, user }) => {
                     className={styles.btn}
                     disabled={isLoading}
                   >
-                    {isLoading ? "Loading..." : "Update"}
+                    {isLoading ? "Loading..." : "Save"}
                   </Button>
                   <Button
                     variant="primary"
                     type="reset"
                     onClick={resetlHandeler}
-                    className={`${styles.btn_cancel} mx-3`}
+                    className={`${styles.btn} mx-3`}
                   >
                     Cancel
                   </Button>

@@ -21,6 +21,9 @@ import LoginPage from "./views/LoginPage/LoginPage";
 import { getRefreshToken } from "./actions/Auth.action";
 import { connect } from "react-redux";
 import DashboardPage from "./views/DashboardPage/DashboardPage";
+import SettingsPage from "./views/SettingsPage/SettingsPage";
+import PasswordChangeSettings from "./views/PasswordChangeSettings/PasswordChangeSettings";
+import AddUserPage from "./views/AddUserPage/AddUserPage";
 
 function App({ getRefreshToken }) {
   useEffect(() => {
@@ -47,6 +50,12 @@ function App({ getRefreshToken }) {
           <Route path="/*" element={<PrivateOutlet />}>
             <>
               <Route path="dashboard" element={<DashboardPage />} />
+              <Route path="add-user" element={<AddUserPage />} />
+              <Route path="settings" element={<SettingsPage />} />
+              <Route
+                path="settings/password"
+                element={<PasswordChangeSettings />}
+              />
             </>
           </Route>
         </Routes>

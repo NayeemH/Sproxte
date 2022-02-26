@@ -45,7 +45,7 @@ const UserInfoTopbar = ({ user, logout, getAuthUser, filter = false }) => {
       >
         <Dropdown.Item
           className={styles.dropdown_item}
-          href="dashboard"
+          href="#"
           onClick={() => navigate("/dashboard")}
         >
           <MdOutlineSpaceDashboard />{" "}
@@ -54,7 +54,7 @@ const UserInfoTopbar = ({ user, logout, getAuthUser, filter = false }) => {
         <Dropdown.Divider className={styles.divider} />
         <Dropdown.Item
           className={styles.dropdown_item}
-          href="#profile"
+          href="#"
           onClick={clickHandler}
         >
           <FaRegUserCircle /> <span className="d-block ms-2">Profile</span>

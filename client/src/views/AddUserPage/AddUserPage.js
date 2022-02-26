@@ -9,7 +9,7 @@ import styles from "./AddUserPage.module.css";
 
 const AddUserPage = () => {
   return (
-    <div className={`bg_dark text-light`} style={{ minHeight: "100vh" }}>
+    <div className={`bg_dark text-dark`} style={{ minHeight: "100vh" }}>
       <Topbar />
       <FilterDashboard />
       <Sidebar />

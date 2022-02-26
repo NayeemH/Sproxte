@@ -48,10 +48,10 @@ const LoginForm = ({ loginUserAccount, isAuthenticated }) => {
       .required("Email is required!"),
     password: Yup.string()
       .required("Password is required!")
-      .matches(
-        /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{6,})/,
-        "Password not strong enough!"
-      )
+      // .matches(
+      //   /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{6,})/,
+      //   "Password not strong enough!"
+      // )
       .min(6, "Password is too short!"),
   });
   return (

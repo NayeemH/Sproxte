@@ -14,7 +14,7 @@ const DashboardPage = () => {
       <Sidebar />
       <FilterDashboard selectedFilter="active" />
 
-      <DashboardCards />
+      {/* <DashboardCards /> */}
     </div>
   );
 };

@@ -57,7 +57,7 @@ const PasswordSettings = ({ updatePasswordProfile, user }) => {
   });
   return (
     <div className={styles.wrapper}>
-      <Card bg="dark" text="light" className={styles.crd}>
+      <Card bg="white" text="dark" className={`${styles.crd} shadow`}>
         <Card.Title className="px-3 pt-3">
           <span className="fs-4">Profile</span>
         </Card.Title>

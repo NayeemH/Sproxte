@@ -19,38 +19,38 @@
 
 .active_btn {
   background: none !important;
-  color: var(--primary) !important;
-  border-color: var(--primary) !important;
+  color: var(--orange) !important;
+  border-color: var(--orange) !important;
 }
 
 .active_btn:hover {
   background: none !important;
-  color: var(--primary-hover) !important;
-  border-color: var(--primary) !important;
+  color: var(--light) !important;
+  border-color: var(--orange) !important;
 }
 
 .btn {
   background: var(--dark) !important;
-  border-color: var(--primary) !important;
+  border-color: var(--orange) !important;
 }
 
 .btn:hover {
-  background: var(--primary-hover) !important;
-  border-color: var(--primary) !important;
+  background: var(--orange) !important;
+  border-color: var(--orange) !important;
 }
 
 .btn:focus,
 .active_btn:focus {
   box-shadow: none !important;
-  border-color: var(--primary) !important;
+  border-color: var(--orange) !important;
 }
 
 .btn__grp {
-  border-color: var(--primary) !important;
+  border-color: var(--orange) !important;
 }
 
 .ham {
-  color: var(--primary);
+  color: var(--orange);
   font-size: 28px;
   cursor: pointer;
   transition: 0.3s all ease-in-out;
@@ -82,17 +82,17 @@
 }
 
 .dropdown :global(.dropdown-menu) {
-  font-size: 12px !important;
-  background: var(--dark-bg) !important;
+  font-size: 14px !important;
+  background: var(--white) !important;
 }
 
 .dropdown_item {
-  background: var(--dark-bg) !important;
-  color: var(--light) !important;
+  background: var(--white) !important;
+  color: var(--dark) !important;
 }
 .dropdown_item:hover {
   background: var(--dark) !important;
-  color: var(--light) !important;
+  color: var(--orange) !important;
 }
 
 .dropdown button {

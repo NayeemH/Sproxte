@@ -149,7 +149,7 @@ export const getRefreshToken = () => async (dispatch) => {
 export const logout = () => async (dispatch) => {
   try {
     const refreshRes = await axios.post(
-      `${BASE_URL}/api/user/logout`,
+      `${BASE_URL}/api/v1/auth/logout`,
       {},
       {
         headers: {
@@ -169,9 +169,8 @@ export const logout = () => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: LOGOUT_FAIL,
-      payload: error.response.data.msg[0],
     });
-    error.response.data.msg.map((msg) => toast.error(msg));
+    console.log(error);
     return false;
   }
 };

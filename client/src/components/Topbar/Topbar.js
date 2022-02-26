@@ -5,13 +5,12 @@ import UserInfoTopbar from "./UserInfoTopbar/UserInfoTopbar";
 import { useDispatch, useSelector } from "react-redux";
 import { toogleSidebarVisibility } from "../../actions/Dashboard.action";
 import { useNavigate } from "react-router-dom";
-import { IMAGE_PATH } from "../../constants/URL";
+import logoSq from "../../assets/logoSq.png";
 
 const Topbar = () => {
   const dispatch = useDispatch();
-  const domain = useSelector((state) => state.domain);
   const navigate = useNavigate();
-  const role = useSelector((state) => state.dashboard.role);
+  const role = useSelector((state) => state.auth.user.userType);
 
   return (
     <nav className={`${styles.wrapper} ${role === "admin" && styles.admin}`}>
@@ -22,9 +21,9 @@ const Topbar = () => {
         <GoThreeBars />
       </span>
       <img
-        src={`${IMAGE_PATH}small/${domain.logo}`}
+        src={logoSq}
         className={styles.logo}
-        alt="company"
+        alt="Sproxte"
         onClick={() => navigate("/dashboard")}
       />
       <UserInfoTopbar />

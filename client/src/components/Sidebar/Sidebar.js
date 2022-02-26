@@ -15,7 +15,7 @@ const Sidebar = ({ logout }) => {
   let { sidebar_visible } = useSelector((state) => state.dashboard);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const role = useSelector((state) => state.dashboard.role);
+  const role = useSelector((state) => state.auth.user.userType);
 
   const handeleClick = () => {
     dispatch(toogleSidebarVisibility(false));
@@ -109,7 +109,7 @@ const Sidebar = ({ logout }) => {
                     <span>
                       <FiUserPlus />
                     </span>
-                    Add New User
+                    Invite IEP
                   </NavLink>
                 </div>
               </>

@@ -48,3 +48,7 @@ body {
 .bg-dark {
   background: var(--dark) !important;
 }
+
+.bg_dark {
+  background: var(--light) !important;
+}

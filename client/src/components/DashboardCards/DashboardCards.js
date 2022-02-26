@@ -4,7 +4,7 @@ import { Row, Container, Col, Spinner } from "react-bootstrap";
 import styles from "./DashboardCards.module.css";
 import GridItem from "./GridItem/GridItem";
 import ListItem from "./ListItem/ListItem";
-//import { fetchProjects } from "../../actions/Project.action";
+import { fetchProjects } from "../../actions/Project.action";
 
 const DashboardCards = () => {
   const dispatch = useDispatch();
@@ -14,7 +14,7 @@ const DashboardCards = () => {
   const loading = useSelector((state) => state.project.loading);
 
   useEffect(() => {
-    //dispatch(fetchProjects());
+    dispatch(fetchProjects());
   }, []);
 
   return (

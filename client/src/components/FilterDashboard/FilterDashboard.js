@@ -9,15 +9,15 @@ import {
 } from "../../actions/Dashboard.action";
 import { useNavigate } from "react-router-dom";
 import { BsFillGrid3X3GapFill } from "react-icons/bs";
-import { IMAGE_PATH } from "../../constants/URL";
 import UserInfoTopbar from "../Topbar/UserInfoTopbar/UserInfoTopbar";
 import { GoThreeBars } from "react-icons/go";
 import { useEffect } from "react";
+import logoImg from "../../assets/logoSq.png";
+import { AiOutlineHome, AiOutlineSearch } from "react-icons/ai";
 
 const FilterDashboard = ({ selectedFilter }) => {
   const listStyleGrid = useSelector((state) => state.dashboard.projectListGrid);
-  const domain = useSelector((state) => state.domain);
-  const role = useSelector((state) => state.dashboard.role);
+  const role = useSelector((state) => state.auth.user.userType);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const redirectToApprove = () => {
@@ -59,24 +59,26 @@ const FilterDashboard = ({ selectedFilter }) => {
               href="#"
               onClick={() => navigate("/")}
             >
-              My Projects
+              <AiOutlineHome className="me-2" /> Home
             </Dropdown.Item>
             <Dropdown.Divider className={styles.divider} />
-            <Dropdown.Item href="#" className={styles.dropdown_item}>
-              3D Model Library
-            </Dropdown.Item>
-            <Dropdown.Divider className={styles.divider} />
-            <Dropdown.Item href="#" className={styles.dropdown_item}>
-              visit www.website.com
+            <Dropdown.Item
+              href="#"
+              onClick={() => navigate("/discover")}
+              className={styles.dropdown_item}
+            >
+              <AiOutlineSearch className="me-2" /> Discover
             </Dropdown.Item>
           </DropdownButton>
           <img
-            src={`${IMAGE_PATH}small/${domain.logo}`}
+            src={logoImg}
             className={styles.logo}
-            alt="company"
+            alt="Sproxte"
             onClick={() => navigate("/dashboard")}
           />
-          <span className={styles.projects}>Projects</span>
+          <span className={`${styles.projects} gradient_title fw-bold`}>
+            Sproxte
+          </span>
         </div>
         <div className="d-flex align-items-center flex-column flex-md-row">
           <span className="">Filter Projects</span>
