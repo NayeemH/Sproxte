@@ -1,0 +1,23 @@
+.wrapper {
+  padding: 0 2.5rem;
+}
+
+.badge {
+  background: var(--primary) !important;
+  margin-right: 5px;
+  cursor: pointer;
+}
+
+.img {
+  height: 100%;
+}
+
+.img_wrapper {
+  height: 40px;
+  width: 40px;
+  border-radius: 50%;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

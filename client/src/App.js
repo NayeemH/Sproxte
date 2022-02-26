@@ -18,9 +18,12 @@ import { useEffect } from "react";
 import Aos from "aos";
 import "aos/dist/aos.css";
 import LoginPage from "./views/LoginPage/LoginPage";
+import { getRefreshToken } from "./actions/Auth.action";
+import { connect } from "react-redux";
 
-function App() {
+function App({ getRefreshToken }) {
   useEffect(() => {
+    getRefreshToken();
     Aos.init({
       duration: 2000,
     });
@@ -51,4 +54,4 @@ function App() {
   );
 }
 
-export default App;
+export default connect(null, { getRefreshToken })(App);

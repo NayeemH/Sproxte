@@ -1,0 +1,13 @@
+.bc_home {
+  color: var(--light) !important;
+  text-decoration: none !important;
+}
+
+.bc_name {
+  color: var(--primary) !important;
+  text-decoration: none !important;
+}
+
+.wrapper {
+  padding: 0.5rem 2.5rem;
+}

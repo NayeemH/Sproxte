@@ -12,7 +12,6 @@ const initialState = {
   token: "",
   isAuthenticated: false,
   user: {},
-  err: "",
   loading: true,
 };
 
@@ -50,7 +49,6 @@ const authReducer = (state = initialState, action) => {
         user: {},
         isAuthenticated: false,
         loading: false,
-        err: action.payload ? action.payload : "",
       };
     case AUTH_USER_LOAD:
       return {

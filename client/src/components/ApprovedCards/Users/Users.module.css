@@ -1,0 +1,27 @@
+.users {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+  row-gap: 10px;
+}
+
+.img_wrapper {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.img_wrapper img {
+  height: 28px;
+}
+
+.tooltiptext {
+  background-color: var(--light);
+  color: var(--dark);
+  text-align: center;
+  padding: 10px;
+  border-radius: 6px;
+}

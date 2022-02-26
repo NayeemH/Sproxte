@@ -9,6 +9,7 @@ import {
 import axios from "axios";
 import { toast } from "react-toastify";
 import { BASE_URL } from "../constants/URL";
+import { getRefreshToken } from "./Auth.action";
 
 export const toggleLandingSidebar = () => (dispatch) => {
   dispatch({
@@ -49,6 +50,7 @@ export const createUserAccount = (values) => async (dispatch) => {
         type: USER_REGISTER,
       });
       toast.success("User registered successfully");
+      dispatch(getRefreshToken());
       return true;
     }
   } catch (err) {
@@ -85,6 +87,7 @@ export const loginUserAccount = (values) => async (dispatch) => {
         type: USER_LOGIN,
       });
       toast.success("User logged in successfully");
+      dispatch(getRefreshToken());
       return true;
     }
   } catch (err) {

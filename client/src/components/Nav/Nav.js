@@ -1,12 +1,25 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styles from "./Nav.module.scss";
 import { AiOutlineAlignLeft, AiOutlineShoppingCart } from "react-icons/ai";
 import { BiUserPlus } from "react-icons/bi";
 import { connect } from "react-redux";
 import { toggleLandingSidebar } from "../../actions/Landing.action";
 import { Link, useNavigate } from "react-router-dom";
+import { getAuthUser } from "../../actions/Auth.action";
+import UserInfoTopbar from "../Topbar/UserInfoTopbar/UserInfoTopbar";
 
-const Nav = ({ toggleLandingSidebar, count }) => {
+const Nav = ({
+  toggleLandingSidebar,
+  count,
+  user,
+  isAuthenticated,
+  getAuthUser,
+}) => {
+  useEffect(() => {
+    if (user === {} && isAuthenticated) {
+      getAuthUser();
+    }
+  }, [isAuthenticated]);
   const navigate = useNavigate();
   return (
     <div className={styles.wrapper}>
@@ -44,12 +57,16 @@ const Nav = ({ toggleLandingSidebar, count }) => {
         >
           <AiOutlineShoppingCart />
         </span>
-        <span
-          className={`${styles.link} fs-3 text-light`}
-          onClick={() => navigate("/signup")}
-        >
-          <BiUserPlus />
-        </span>
+        {user === {} && !isAuthenticated ? (
+          <span
+            className={`${styles.link} fs-3 text-light`}
+            onClick={() => navigate("/login")}
+          >
+            <BiUserPlus />
+          </span>
+        ) : (
+          <UserInfoTopbar />
+        )}
         {count > 0 && <div className={styles.count}>{count}</div>}
       </div>
     </div>
@@ -58,6 +75,10 @@ const Nav = ({ toggleLandingSidebar, count }) => {
 
 const mapStateToProps = (state) => ({
   count: state.cart.cart.length,
+  user: state.auth.user,
+  isAuthenticated: state.isAuthenticated,
 });
 
-export default connect(mapStateToProps, { toggleLandingSidebar })(Nav);
+export default connect(mapStateToProps, { toggleLandingSidebar, getAuthUser })(
+  Nav
+);

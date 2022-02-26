@@ -1,0 +1,126 @@
+.wrapper {
+  background: var(--dark);
+  padding: 0 2.5rem;
+}
+
+.steps_wrapper {
+  color: var(--light) !important;
+}
+
+.task {
+  display: grid;
+  grid-template-columns: 220px 1fr 200px;
+  background: var(--light-bg);
+  margin-bottom: 20px;
+}
+
+.name {
+  color: var(--light) !important;
+  margin-left: 1.5rem;
+}
+
+.btn:disabled {
+  border: 1px dashed var(--primary) !important;
+  background: none !important;
+  color: var(--primary) !important;
+}
+.btn {
+  background: var(--primary) !important;
+  color: var(--light) !important;
+  border: none !important;
+}
+
+.btn:hover {
+  background: var(--primary-hover) !important;
+  color: var(--light) !important;
+}
+
+.button {
+  outline: none !important;
+  border: none !important;
+  padding: 8px 26px;
+  margin-bottom: 20px !important;
+  background: var(--primary) !important;
+  transition: 0.3s all ease-in-out;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: fit-content !important;
+  font-size: 1rem !important;
+}
+
+.button:first-child {
+  margin-right: 8px !important;
+}
+
+.button:hover {
+  background: var(--primary-hover) !important;
+  transition: 0.3s all ease-in-out;
+}
+
+.plus {
+  padding-right: 5px;
+}
+
+.stp:hover {
+  cursor: pointer;
+}
+
+.icon__text_wrapper {
+  height: 25px;
+  width: 25px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: var(--primary) !important;
+  font-size: 16px;
+  position: relative;
+}
+
+.count {
+  position: absolute;
+  top: -5px;
+  right: -8px;
+  background: var(--dark);
+  border: 1px solid var(--light-bg);
+  width: 15px;
+  height: 15px;
+  font-size: 10px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: var(--secondary) !important;
+}
+
+.btn__dwn {
+  border: 2px solid var(--primary) !important;
+  color: var(--light) !important;
+  padding: 2px 20px !important;
+  border-radius: 10px;
+}
+.btn__dwn:disabled {
+  border: 2px solid var(--light) !important;
+  color: var(--light) !important;
+  padding: 2px 20px !important;
+  border-radius: 10px;
+}
+.btn__dwn:hover {
+  border: 2px solid var(--primary) !important;
+  background: var(--dark) !important;
+}
+
+@media screen and (max-width: 768px) {
+  .wrapper {
+    padding: 5px 10px !important;
+  }
+  .task {
+    grid-template-columns: 1fr !important;
+    padding: 10px !important;
+    padding-bottom: 30px !important;
+  }
+
+  .name {
+    padding-top: 10px;
+  }
+}

@@ -1,0 +1,138 @@
+.img {
+  width: 100%;
+}
+
+.viewer {
+  width: 100% !important;
+}
+
+.img_wrapper {
+  width: 100%;
+  margin: 0 auto;
+  position: relative;
+}
+
+.nav {
+  color: var(--primary) !important;
+  font-size: 18px;
+  margin-right: 50px;
+}
+
+.arrows_section {
+  background: var(--dark-bg) !important;
+}
+
+.nav_right {
+  color: var(--primary) !important;
+  font-size: 18px;
+  margin-left: 50px;
+}
+
+.nav:hover,
+.nav_right:hover {
+  cursor: pointer;
+  color: var(--primary-hover) !important;
+}
+
+.back_icon,
+.icon {
+  color: var(--light) !important;
+  transition: 0.3s all ease-in-out;
+}
+
+.back_icon:hover,
+.icon:hover {
+  color: var(--primary) !important;
+  cursor: pointer;
+  transition: 0.3s all ease-in-out;
+}
+
+.history_wrapper {
+  position: relative;
+}
+
+.list {
+  position: absolute;
+  bottom: 25px;
+  left: 0;
+  padding: 10px 0;
+  background: var(--light-bg);
+  color: var(--light);
+  border-radius: 5px !important;
+  z-index: 9999;
+}
+
+.item {
+  padding: 5px 10px !important;
+  padding-right: 60px !important;
+  font-size: 14px;
+  color: var(--secondary-500);
+  border-bottom: 1px solid var(--secondary-500);
+}
+
+.item.active {
+  color: var(--light) !important;
+}
+
+.item:hover {
+  cursor: pointer;
+}
+
+.item:last-child {
+  border-bottom: none !important;
+}
+
+.history_heading {
+  display: block;
+  padding: 5px 5px;
+  margin: 0 5px;
+  margin-bottom: 10px;
+  color: var(--secondary-500);
+  font-size: 12px;
+  border-bottom: 1px solid var(--secondary-500);
+}
+
+.date {
+  color: var(--secondary-500);
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  padding-left: 10px;
+}
+
+.item:hover .date {
+  color: var(--primary);
+}
+
+.point {
+  position: absolute;
+  z-index: 9999;
+}
+
+.point__icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  font-size: 12px;
+  font-weight: bold !important;
+  border-radius: 50%;
+  color: var(--light);
+  background: var(--danger);
+  transition: 0.3s all ease-in-out;
+}
+
+.point__icon.active {
+  border: 2px solid var(--light) !important;
+  color: var(--light) !important;
+  background: var(--danger) !important;
+  transform: scale(1.2);
+  transition: 0.3s all ease-in-out;
+}
+
+@media screen and (max-width: 768px) {
+  .img_wrapper {
+    width: 100%;
+  }
+}
