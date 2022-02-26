@@ -16,10 +16,10 @@ const Nav = ({
   getAuthUser,
 }) => {
   useEffect(() => {
-    if (user === {} && isAuthenticated) {
+    if (!user && isAuthenticated) {
       getAuthUser();
     }
-  }, [isAuthenticated]);
+  }, [isAuthenticated, user]);
   const navigate = useNavigate();
   return (
     <div className={styles.wrapper}>
@@ -57,7 +57,7 @@ const Nav = ({
         >
           <AiOutlineShoppingCart />
         </span>
-        {user === {} && !isAuthenticated ? (
+        {!user || isAuthenticated === false ? (
           <span
             className={`${styles.link} fs-3 text-light`}
             onClick={() => navigate("/login")}

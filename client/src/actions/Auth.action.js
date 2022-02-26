@@ -27,8 +27,8 @@ export const getRefreshToken = () => async (dispatch) => {
       type: ACCESS_TOKEN_SUCCESS,
       payload: refreshRes.data.accessToken,
     });
-    dispatch(getAuthUser());
     setAuthToken(refreshRes.data.accessToken);
+    dispatch(getAuthUser());
 
     return true;
     //}

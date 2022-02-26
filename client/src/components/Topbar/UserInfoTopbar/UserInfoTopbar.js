@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { getAuthUser } from "../../../actions/Profile.action";
+import { getAuthUser } from "../../../actions/Auth.action";
 import { IMAGE_PATH } from "../../../constants/URL";
 import { useNavigate } from "react-router-dom";
 import { DropdownButton, Dropdown } from "react-bootstrap";
