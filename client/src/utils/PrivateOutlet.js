@@ -15,7 +15,7 @@ const PrivateOutlet = ({ getRefreshToken, auth, loading }) => {
       }
     }
   }, [auth, getRefreshToken]);
-  return auth === true && loading === false ? <Outlet /> : null;
+  return <Outlet />;
 };
 
 const mapStateToProps = (state) => ({

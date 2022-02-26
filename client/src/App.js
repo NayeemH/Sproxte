@@ -20,6 +20,7 @@ import "aos/dist/aos.css";
 import LoginPage from "./views/LoginPage/LoginPage";
 import { getRefreshToken } from "./actions/Auth.action";
 import { connect } from "react-redux";
+import DashboardPage from "./views/DashboardPage/DashboardPage";
 
 function App({ getRefreshToken }) {
   useEffect(() => {
@@ -45,7 +46,7 @@ function App({ getRefreshToken }) {
 
           <Route path="/*" element={<PrivateOutlet />}>
             <>
-              <Route path="dashboard" element={<SignupPage />} />
+              <Route path="dashboard" element={<DashboardPage />} />
             </>
           </Route>
         </Routes>

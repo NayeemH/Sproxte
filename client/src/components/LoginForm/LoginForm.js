@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Field, Formik, Form } from "formik";
 import {
   Button,
@@ -11,11 +11,18 @@ import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import styles from "./LoginForm.module.scss";
 import { loginUserAccount } from "../../actions/Landing.action";
 import { connect } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
-const LoginForm = ({ loginUserAccount }) => {
+const LoginForm = ({ loginUserAccount, isAuthenticated }) => {
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
   const [submitting, setSubmitting] = useState(false);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigate("/discover");
+    }
+  }, [isAuthenticated]);
 
   const onSubmitHandeler = async (values) => {
     setSubmitting(true);
@@ -142,4 +149,8 @@ const LoginForm = ({ loginUserAccount }) => {
   );
 };
 
-export default connect(null, { loginUserAccount })(LoginForm);
+const mapStateToProps = (state) => ({
+  isAuthenticated: state.auth.isAuthenticated,
+});
+
+export default connect(mapStateToProps, { loginUserAccount })(LoginForm);

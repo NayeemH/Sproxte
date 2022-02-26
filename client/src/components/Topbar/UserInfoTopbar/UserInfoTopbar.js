@@ -8,6 +8,7 @@ import { connect } from "react-redux";
 import { logout } from "../../../actions/Dashboard.action";
 import { FiLogOut } from "react-icons/fi";
 import { FaRegUserCircle } from "react-icons/fa";
+import { MdOutlineSpaceDashboard } from "react-icons/md";
 
 const UserInfoTopbar = ({ user, logout, getAuthUser, filter = false }) => {
   const navigate = useNavigate();
@@ -44,7 +45,16 @@ const UserInfoTopbar = ({ user, logout, getAuthUser, filter = false }) => {
       >
         <Dropdown.Item
           className={styles.dropdown_item}
-          href="#"
+          href="dashboard"
+          onClick={() => navigate("/dashboard")}
+        >
+          <MdOutlineSpaceDashboard />{" "}
+          <span className="d-block ms-2">Dashboard</span>
+        </Dropdown.Item>
+        <Dropdown.Divider className={styles.divider} />
+        <Dropdown.Item
+          className={styles.dropdown_item}
+          href="#profile"
           onClick={clickHandler}
         >
           <FaRegUserCircle /> <span className="d-block ms-2">Profile</span>
