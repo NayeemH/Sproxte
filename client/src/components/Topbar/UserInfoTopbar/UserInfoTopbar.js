@@ -34,7 +34,7 @@ const UserInfoTopbar = ({ user, logout, getAuthUser, filter = false }) => {
         title={
           <div className={styles.img_wrapper}>
             <img
-              src={`${IMAGE_PATH}small/${user?.image}`}
+              src={`${IMAGE_PATH}small/${user.image}`}
               className={styles.image}
               alt={`${user?.username}'s profile`}
             />
