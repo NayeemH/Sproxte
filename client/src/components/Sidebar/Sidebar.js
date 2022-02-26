@@ -96,16 +96,16 @@ const Sidebar = ({ logout }) => {
               <>
                 <div className={styles.link_base}>
                   <div></div>
-                  <NavLink to="/add-project" onClick={handeleClick}>
+                  <NavLink to="/types" onClick={handeleClick}>
                     <span>
                       <BiLayerPlus />
                     </span>
-                    Add Project
+                    Product Types
                   </NavLink>
                 </div>
                 <div className={styles.link_base}>
                   <div></div>
-                  <NavLink to="/add-user" onClick={handeleClick}>
+                  <NavLink to="/add-iep" onClick={handeleClick}>
                     <span>
                       <FiUserPlus />
                     </span>

@@ -24,6 +24,9 @@ import DashboardPage from "./views/DashboardPage/DashboardPage";
 import SettingsPage from "./views/SettingsPage/SettingsPage";
 import PasswordChangeSettings from "./views/PasswordChangeSettings/PasswordChangeSettings";
 import AddUserPage from "./views/AddUserPage/AddUserPage";
+import AddTypePage from "./views/AddTypePage/AddTypePage";
+import TypeListPage from "./views/TypeListPage/TypeListPage";
+import EditTypePage from "./views/EditTypePage/EditTypePage";
 
 function App({ getRefreshToken }) {
   useEffect(() => {
@@ -50,7 +53,10 @@ function App({ getRefreshToken }) {
           <Route path="/*" element={<PrivateOutlet />}>
             <>
               <Route path="dashboard" element={<DashboardPage />} />
-              <Route path="add-user" element={<AddUserPage />} />
+              <Route path="add-iep" element={<AddUserPage />} />
+              <Route path="add-type" element={<AddTypePage />} />
+              <Route path="type/edit/:id" element={<EditTypePage />} />
+              <Route path="types" element={<TypeListPage />} />
               <Route path="settings" element={<SettingsPage />} />
               <Route
                 path="settings/password"

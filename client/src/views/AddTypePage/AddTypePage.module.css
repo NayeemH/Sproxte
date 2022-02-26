@@ -1,0 +1,17 @@
+.bc_home {
+  color: var(--dark) !important;
+  text-decoration: none !important;
+}
+
+.bc_name {
+  color: var(--orange) !important;
+  text-decoration: none !important;
+}
+
+.wrapper {
+  padding: 0.5rem 2.5rem;
+}
+
+.table > :not(caption) > * > * {
+  background: var(--white) !important;
+}

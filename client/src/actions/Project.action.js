@@ -8,6 +8,8 @@ import {
   COLLECTION_INDEX,
   COLLECTION_NEXT,
   COLLECTION_PREV,
+  CREATE_TYPE_ERROR,
+  CREATE_TYPE_SUCCESS,
   EDIT_FEEDBACK_ERROR,
   EDIT_FEEDBACK_SUCCESS,
   FETCH_DASHBOARD_PROJECT,
@@ -33,6 +35,8 @@ import { BASE_URL } from "../constants/URL";
 import axios from "axios";
 //import invited from "../stub/projects/projectDetails";
 import { getRefreshToken } from "./Dashboard.action";
+import { TYPES_EDIT, TYPES_EDIT_ERROR } from "../constants/TypeLanding";
+import { getTypeList } from "./Landing.action";
 
 //GET PROJECT DETAILS WITH TASKS
 export const getProjectDetails = (id) => async (dispatch) => {
@@ -192,6 +196,105 @@ export const createProject = (values, file) => async (dispatch) => {
 
   return false;
 };
+
+// CREATE PRODUCT TYPE
+export const createProductType =
+  (values, file, previewFile) => async (dispatch) => {
+    let formData = new FormData();
+
+    formData.append("name", values.name);
+    formData.append("pngImage", file);
+    formData.append("svgImage", previewFile);
+    values.size
+      .trim()
+      .split(",")
+      .map((s, i) => {
+        formData.append(`sizes[${i}]`, s);
+      });
+
+    const config = {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+      withCredentials: true,
+    };
+    try {
+      // TODO ::: API CALL
+      const res = await axios.post(
+        `${BASE_URL}/api/v1/type/`,
+        formData,
+        config
+      );
+      // console.log(res);
+      if (res.status === 200) {
+        dispatch({
+          type: CREATE_TYPE_SUCCESS,
+        });
+        toast.success("Type created successfully");
+        return true;
+      }
+    } catch (err) {
+      dispatch({
+        type: CREATE_TYPE_ERROR,
+      });
+      toast.error(err.response.data.msg);
+      return false;
+    }
+
+    return false;
+  };
+
+// EDIT PRODUCT TYPE
+export const editProductType =
+  (values, id, file, previewFile) => async (dispatch) => {
+    let formData = new FormData();
+
+    formData.append("name", values.name);
+    if (file) {
+      formData.append("pngImage", file);
+    }
+    if (previewFile) {
+      formData.append("svgImage", previewFile);
+    }
+    values.size
+      .trim()
+      .split(",")
+      .map((s, i) => {
+        formData.append(`sizes[${i}]`, s);
+      });
+
+    const config = {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+      withCredentials: true,
+    };
+    try {
+      // TODO ::: API CALL
+      const res = await axios.patch(
+        `${BASE_URL}/api/v1/type/${id}`,
+        formData,
+        config
+      );
+      // console.log(res);
+      if (res.status === 200) {
+        dispatch({
+          type: TYPES_EDIT,
+        });
+        toast.success("Type edited successfully");
+        dispatch(getTypeList());
+        return true;
+      }
+    } catch (err) {
+      dispatch({
+        type: TYPES_EDIT_ERROR,
+      });
+      toast.error(err.response.data.msg);
+      return false;
+    }
+
+    return false;
+  };
 
 // FETCH PROJECTS FOR DASHBOARD
 export const fetchProjects = () => async (dispatch) => {

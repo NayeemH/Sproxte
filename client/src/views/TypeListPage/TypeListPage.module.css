@@ -1,0 +1,30 @@
+.bc_home {
+  color: var(--dark) !important;
+  text-decoration: none !important;
+}
+
+.bc_name {
+  color: var(--orange) !important;
+  text-decoration: none !important;
+}
+
+.wrapper {
+  padding: 0.5rem 2.5rem;
+}
+
+.btn {
+  outline: none !important;
+  border: none !important;
+  padding: 8px 26px;
+  margin-left: auto !important;
+  font-weight: bold !important;
+  border-radius: 30px !important;
+  color: var(--dark) !important;
+  background: linear-gradient(90deg, #ffe502 0%, #ffa602 100%) !important;
+  transition: 0.3s all ease-in-out;
+}
+
+.btn:hover {
+  background: linear-gradient(90deg, #fae41a 0%, #fcaf22 100%) !important;
+  transition: 0.3s all ease-in-out;
+}

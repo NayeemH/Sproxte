@@ -1,0 +1,19 @@
+.wrapper {
+  padding: 0 2.5rem;
+}
+
+.badge {
+  background: var(--orange) !important;
+  margin-right: 5px;
+}
+
+.img {
+  height: 40px;
+}
+
+.img_wrapper {
+  max-height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

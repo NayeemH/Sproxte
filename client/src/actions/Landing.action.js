@@ -1,6 +1,10 @@
 import {
   LANDING_SIDEBAR_TOGGLE,
   SELECT_TEMPLATE,
+  TYPES_DELETE,
+  TYPES_DELETE_ERROR,
+  TYPES_LOAD,
+  TYPES_LOAD_ERROR,
   USER_LOGIN,
   USER_LOGIN_ERROR,
   USER_REGISTER,
@@ -96,5 +100,43 @@ export const loginUserAccount = (values) => async (dispatch) => {
     });
     toast.error(err.response.data.message);
     return false;
+  }
+};
+
+//GET Type LIST ACTION
+export const getTypeList = () => async (dispatch) => {
+  try {
+    const res = await axios.get(`${BASE_URL}/api/v1/type/`);
+    // console.log(res);
+
+    dispatch({
+      type: TYPES_LOAD,
+      payload: res.data.types,
+    });
+  } catch (err) {
+    dispatch({
+      type: TYPES_LOAD_ERROR,
+    });
+    toast.error(err.response.data.message);
+  }
+};
+
+//DELETE TYPE ACTION
+export const deleteType = (id) => async (dispatch) => {
+  try {
+    const res = await axios.delete(`${BASE_URL}/api/v1/type/${id}`, {
+      withCredentials: true,
+    });
+    // console.log(res);
+    dispatch({
+      type: TYPES_DELETE,
+      payload: id,
+    });
+    toast.success("Type deleted successfully");
+  } catch (err) {
+    dispatch({
+      type: TYPES_DELETE_ERROR,
+    });
+    toast.error(err.response.data.message);
   }
 };
