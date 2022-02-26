@@ -1,3 +1,4 @@
+const path = require('path');
 const express = require('express');
 const cors = require('cors');
 const morgan = require('morgan');
@@ -31,6 +32,10 @@ app.use(express.urlencoded({extended: false}));
 app.use(morgan('dev'));
 app.use(compression());
 app.use(helmet());
+
+
+// Static files
+app.use(express.static(path.resolve('data')));
 
 
 // Main Routes
