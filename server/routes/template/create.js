@@ -4,13 +4,16 @@ const {saveImage, fileFetch} = require('../../lib/imageConverter');
 
 
 
-router.post('/', fileFetch.fields([{name: 'pngImageFront', maxCount: 1}, {name: 'pngImageBack', maxCount: 1}]), async (req, res, next) => {
+router.post('/', fileFetch.fields([{name: 'pngImageFront', maxCount: 1}, {name: 'pngImageBack', maxCount: 1}, {name: 'layouts', maxCount: 10}]), async (req, res, next) => {
     try {
-        const {name, sizes, price, description, quantity, featured, layouts, colors, productType} = req.body;
+        const {name, sizes, price, description, quantity, featured, colors, productType} = req.body;
 
         const images1 = await saveImage(req.files.pngImageFront[0]);
         const images2 = await saveImage(req.files.pngImageBack[0]);
 
+        const layouts = await Promise.all([
+            req.files.layouts.map(layout => saveImage(layout))
+        ]);
 
         const type = await new Template({
             name,
@@ -21,7 +24,7 @@ router.post('/', fileFetch.fields([{name: 'pngImageFront', maxCount: 1}, {name: 
             description,
             quantity,
             featured,
-            layouts,
+            layouts: layouts.map(image => ({image})),
             colors,
             productType
         }).save();

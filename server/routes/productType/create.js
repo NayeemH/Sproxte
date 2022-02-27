@@ -4,23 +4,25 @@ const {saveImage, fileFetch} = require('../../lib/imageConverter');
 
 
 
-router.post('/', fileFetch.fields([{name: 'pngImage', maxCount: 1}, {name: 'svgImage', maxCount: 1}]), async (req, res, next) => {
+router.post('/', fileFetch.fields([{name: 'pngImageFront', maxCount: 1}, {name: 'pngImageBack', maxCount: 1}]), async (req, res, next) => {
     try {
-        const {name, sizes} = req.body;
+        const {name, sizes, categoryType} = req.body;
 
-        const images1 = await saveImage(req.files.pngImage[0]);
-        const images2 = await saveImage(req.files.svgImage[0]);
+        const images = await Promise.all([
+            saveImage(req.files.pngImageFront[0]),
+            saveImage(req.files.pngImageBack[0])
+        ]);
 
 
-        const type = await new ProductType({
+        await new ProductType({
             name,
             sizes,
-            pngImage: images1,
-            svgImage: images2
+            categoryType,
+            pngImageFront: images[0],
+            pngImageBack: images[1]
         }).save();
 
         res.json({
-            success: true,
             msg: 'Product Type is added successfully',
         });
     }
