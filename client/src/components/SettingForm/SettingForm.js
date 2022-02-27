@@ -25,7 +25,11 @@ const SettingForm = ({ updateProfile, user }) => {
 
   const onSubmitHandeler = async (values) => {
     setIsLoading(true);
-    let check = await updateProfile(values.username, selectedFile);
+    let check = await updateProfile(
+      values.username,
+      values.address,
+      selectedFile
+    );
     if (check === true) {
       setIsLoading(false);
     } else {
@@ -63,13 +67,15 @@ const SettingForm = ({ updateProfile, user }) => {
   };
 
   let initVals = {
-    username: user.username,
+    username: user.name,
     image: "",
     email: user.email,
+    address: user.address ? user.address : "",
   };
 
   const SignupSchema = Yup.object().shape({
     username: Yup.string().required("Username is required!"),
+    address: Yup.string().required("Address is required!"),
     image: Yup.string().nullable(),
     email: Yup.string().notRequired(),
   });
@@ -150,7 +156,7 @@ const SettingForm = ({ updateProfile, user }) => {
                 <InputGroup className="my-3 d-flex flex-column">
                   <div className="d-flex justify-content-between align-items-center pb-2">
                     <label htmlFor="username" className="d-block">
-                      Username
+                      Name
                     </label>
                     {errors.username && touched.username ? (
                       <small className="text-danger pt-2">
@@ -160,12 +166,33 @@ const SettingForm = ({ updateProfile, user }) => {
                   </div>
                   <Field
                     as={BootstrapForm.Control}
-                    placeholder="Type username"
+                    placeholder="Type name"
                     name="username"
                     isValid={!errors.username && touched.username}
                     type="text"
                     className={`${styles.input} w-100`}
                     isInvalid={errors.username && touched.username}
+                  />
+                </InputGroup>
+                <InputGroup className="my-3 d-flex flex-column">
+                  <div className="d-flex justify-content-between align-items-center pb-2">
+                    <label htmlFor="address" className="d-block">
+                      Address
+                    </label>
+                    {errors.address && touched.address ? (
+                      <small className="text-danger pt-2">
+                        {errors.address}
+                      </small>
+                    ) : null}
+                  </div>
+                  <Field
+                    as={BootstrapForm.Control}
+                    placeholder="Type shipping address"
+                    name="address"
+                    isValid={!errors.address && touched.address}
+                    type="text"
+                    className={`${styles.input} w-100`}
+                    isInvalid={errors.address && touched.address}
                   />
                 </InputGroup>
                 <InputGroup className="mb-3 d-flex flex-column">

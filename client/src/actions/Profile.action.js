@@ -1,37 +1,17 @@
 import axios from "axios";
 import { BASE_URL } from "../constants/URL";
 import { toast } from "react-toastify";
-import {
-  AUTH_USER_LOAD,
-  AUTH_USER_LOAD_ERROR,
-  PROFILE_UPDATE,
-  PROFILE_UPDATE_ERROR,
-} from "../constants/Type";
-
-//GET USER DATA ACTION
-export const getAuthUser = () => async (dispatch) => {
-  try {
-    const res = await axios.get(`${BASE_URL}/api/profile/`, {
-      withCredentials: true,
-    });
-    dispatch({
-      type: AUTH_USER_LOAD,
-      payload: res.data.data,
-    });
-  } catch (error) {
-    dispatch({
-      type: AUTH_USER_LOAD_ERROR,
-      payload: error.response.data.msg[0],
-    });
-    error.response.data.msg.map((msg) => console.log(msg));
-  }
-};
+import { PROFILE_UPDATE, PROFILE_UPDATE_ERROR } from "../constants/Type";
+import { getAuthUser } from "./Auth.action";
 
 // UPDATE PROFILE ACTION
-export const updateProfile = (username, file) => async (dispatch) => {
+export const updateProfile = (username, address, file) => async (dispatch) => {
   let formData = new FormData();
-  formData.append("username", username);
-  formData.append("image", file);
+  formData.append("name", username);
+  formData.append("address", address);
+  if (file) {
+    formData.append("image", file);
+  }
 
   const config = {
     headers: {
@@ -41,7 +21,11 @@ export const updateProfile = (username, file) => async (dispatch) => {
   };
   try {
     // TODO ::: API CALL
-    const res = await axios.patch(`${BASE_URL}/api/profile/`, formData, config);
+    const res = await axios.patch(
+      `${BASE_URL}/api/v1/profile`,
+      formData,
+      config
+    );
     if (res.status === 200) {
       dispatch({
         type: PROFILE_UPDATE,
@@ -61,7 +45,7 @@ export const updateProfile = (username, file) => async (dispatch) => {
   return false;
 };
 
-// UPDATE PROFILE ACTION
+// UPDATE PASSWORD ACTION
 export const updatePasswordProfile =
   (password, newPassword) => async (dispatch) => {
     let formData = new FormData();
@@ -77,7 +61,7 @@ export const updatePasswordProfile =
     try {
       // TODO ::: API CALL
       const res = await axios.patch(
-        `${BASE_URL}/api/profile/`,
+        `${BASE_URL}/api/v1/profile`,
         formData,
         config
       );
