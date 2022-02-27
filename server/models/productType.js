@@ -7,12 +7,16 @@ const productTypeSchema = Schema({
         type: String,
         required: true,
     },
-    pngImage: {
+    pngImageFront: {
         type: String,
         required: true,
     },
-    svgImage: {
+    pngImageBack: {
         type: String,
+        required: true,
+    },
+    categoryType: {
+        type: Schema.Types.ObjectId,
         required: true,
     },
     sizes: {

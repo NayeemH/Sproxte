@@ -9,6 +9,7 @@ const activate = require('./activate');
 //const project = require('./projects');
 const profile = require('./profile');
 //const download = require('./download');
+const categoryType = require('./categoryType');
 const productType = require('./productType');
 const discover = require('./discover');
 const template = require('./template');
@@ -16,6 +17,9 @@ const order = require('./order');
 
 // User Register and login function 
 router.use('/auth', user);
+
+// ProductType
+router.use('/category', categoryType);
 
 // ProductType
 router.use('/type', productType);

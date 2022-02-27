@@ -1,6 +1,14 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
+const layoutSchema = Schema({
+    image: {
+        type: String,
+        required: true
+    }
+});
+
+
 // Actual project schema
 const templateSchema = Schema({
     name: {
@@ -36,7 +44,7 @@ const templateSchema = Schema({
         default: false
     },
     layouts: {
-        type: Array
+        type: [layoutSchema]
     },
     colors: {
         type: Array
