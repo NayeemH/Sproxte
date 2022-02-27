@@ -11,7 +11,9 @@ const fileFetch = multer({ storage: memoryStorage });
 const saveImage = async (image) => {
     const {mimetype, buffer} = image;
     
-    const ext = mimetype.split('/')[1];
+    let ext = mimetype.split('/')[1];
+    if(ext === 'svg+xml') ext = 'svg';
+    
     const imageName = `${Date.now()}${crypto.randomBytes(20).toString('hex')}.${ext}`;
 
     // Save the files
