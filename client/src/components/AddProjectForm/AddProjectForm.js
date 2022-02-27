@@ -1,9 +1,12 @@
-import React, { useRef, useEffect, useState } from "react";
+import React, { useRef, useState } from "react";
 import {
   Card,
   Form as BootstrapForm,
   InputGroup,
   Button,
+  Row,
+  Col,
+  Container,
 } from "react-bootstrap";
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
@@ -12,21 +15,37 @@ import { connect } from "react-redux";
 import { createProject } from "../../actions/Project.action";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
-import { ImUpload } from "react-icons/im";
+import colors from "../../config/Colors";
 
 const AddProjectForm = ({ createProject }) => {
   //STATES
   const [selectedFile, setSelectedFile] = useState();
-  const [preview, setPreview] = useState();
+  const [selectedFile2, setSelectedFile2] = useState();
+  const [selectedFile3, setSelectedFile3] = useState();
   const [isLoading, setIsLoading] = useState(false);
+  const [selectedColor, setSelectedColor] = useState([]);
+  const [colorInput, setColorInput] = useState("");
+  const [focus, setFocus] = useState(false);
   const navigate = useNavigate();
 
   const fileRef = useRef();
+  const fileRef2 = useRef();
+
+  const blurHandeler = () => {
+    setTimeout(() => {
+      setFocus(false);
+    }, 200);
+  };
 
   const onSubmitHandeler = async (values) => {
     if (selectedFile) {
       setIsLoading(true);
-      let check = await createProject(values, selectedFile);
+      let check = await createProject(
+        values,
+        selectedFile,
+        selectedFile2,
+        selectedFile3
+      );
       if (check) {
         setIsLoading(false);
         navigate("/dashboard");
@@ -37,20 +56,13 @@ const AddProjectForm = ({ createProject }) => {
     }
   };
 
-  useEffect(() => {
-    if (!selectedFile) {
-      setPreview(undefined);
-      return;
-    }
-    const objectUrl = URL.createObjectURL(selectedFile);
-    setPreview(objectUrl);
-    return () => URL.revokeObjectURL(objectUrl);
-  }, [selectedFile]);
-
   //RESET IMAGE
   const resetlHandeler = () => {
     setSelectedFile(undefined);
-    setPreview(undefined);
+    setSelectedFile2(undefined);
+    setSelectedFile3(undefined);
+    setSelectedColor([]);
+    setColorInput("");
   };
 
   //ONSELECT FILE HANDELER
@@ -66,22 +78,64 @@ const AddProjectForm = ({ createProject }) => {
     setSelectedFile(e.target.files[0]);
   };
 
+  //ONSELECT FILE HANDELER 2
+  const onSelectFile2 = (e) => {
+    if (!e.target.files || e.target.files.length === 0) {
+      setSelectedFile2(undefined);
+      return;
+    }
+    if (e.target.files[0].size > 2000000) {
+      toast.error("File size is too big");
+      return;
+    }
+    setSelectedFile2(e.target.files[0]);
+  };
+
+  //ONSELECT FILE HANDELER Multiple
+  const onSelectFile3 = (e) => {
+    if (!e.target.files || e.target.files.length === 0) {
+      setSelectedFile3(undefined);
+      return;
+    }
+
+    let flag = false;
+    let list = e.target.files;
+    for (let index = 0; index < list.length; index++) {
+      if (list[index].size > 2000000) {
+        toast.error("File size is too big");
+        flag = true;
+      }
+    }
+    if (!flag) {
+      setSelectedFile3(list);
+    }
+  };
+
   let initVals = {
     name: "",
+    price: 0,
+    quantity: 0,
+    productType: "",
+    size: "",
     image: "",
     description: "",
   };
 
   const SignupSchema = Yup.object().shape({
-    name: Yup.string().required("Project name is required!"),
+    name: Yup.string().required("Product name is required!"),
+    quantity: Yup.number().required("Product quantity is required!"),
+    price: Yup.number("Insert valid price", "Insert valid price").required(
+      "Product price is required!"
+    ),
+    size: Yup.string().required("Product size is required!"),
     image: Yup.string().nullable(),
     description: Yup.string().required("Description is required!"),
   });
   return (
     <div className={styles.wrapper}>
-      <Card bg="dark" text="light" className={styles.crd}>
+      <Card bg="white" text="dark" className={`${styles.crd} shadow`}>
         <Card.Header className="d-flex justify-content-center align-items-center">
-          <span className={styles.heading}>Add Project</span>
+          <span className={styles.heading}>Add Product</span>
         </Card.Header>
         <Card.Body>
           <Formik
@@ -94,7 +148,7 @@ const AddProjectForm = ({ createProject }) => {
                 <InputGroup className="mb-3 d-flex flex-column">
                   <div className="d-flex justify-content-between align-items-center pb-2">
                     <label htmlFor="name" className="d-block">
-                      Project Name
+                      Product Name
                     </label>
                     {errors.name && touched.name ? (
                       <small className="text-danger pt-2">{errors.name}</small>
@@ -102,7 +156,7 @@ const AddProjectForm = ({ createProject }) => {
                   </div>
                   <Field
                     as={BootstrapForm.Control}
-                    placeholder="Type project name"
+                    placeholder="Type product name"
                     name="name"
                     isValid={!errors.name && touched.name}
                     type="text"
@@ -131,41 +185,200 @@ const AddProjectForm = ({ createProject }) => {
                     isInvalid={errors.description && touched.description}
                   />
                 </InputGroup>
-                <div className="">
-                  <div className={styles.preview}>
-                    {selectedFile ? (
-                      <div className="text-center pb-3">
-                        <img
-                          src={preview}
-                          alt="admin"
-                          style={{ maxHeight: "200px" }}
-                        />
+
+                <Row>
+                  <Col md={6}>
+                    <InputGroup className=" d-flex flex-column">
+                      <div className="d-flex justify-content-between align-items-center pb-2">
+                        <label htmlFor="quantity" className="d-block">
+                          Colors
+                        </label>
                       </div>
-                    ) : (
-                      <></>
-                    )}
-                  </div>
+                      <BootstrapForm.Control
+                        placeholder="Type Color name or HEX code"
+                        type="text"
+                        value={colorInput}
+                        onChange={(e) => setColorInput(e.target.value)}
+                        onFocus={() => setFocus(true)}
+                        onBlur={blurHandeler}
+                        autoComplete="off"
+                        className={`${styles.input} w-100`}
+                      />
+                      <div
+                        className={styles.auth__list}
+                        style={{ display: focus ? "block" : "none" }}
+                      >
+                        <div className="list-group">
+                          {colors
+                            .filter((item) => {
+                              return item.name
+                                .toLowerCase()
+                                .includes(colorInput.toLowerCase());
+                            })
+                            .map((item, i) => (
+                              <div
+                                className={`list-group-item ${styles.item} d-flex`}
+                                key={i}
+                                onClick={() => {
+                                  //console.log("click");
+
+                                  let check = selectedColor.filter(
+                                    (clr) => clr.hex === item.hex
+                                  );
+                                  if (check.length === 0) {
+                                    setSelectedColor([...selectedColor, item]);
+                                  } else {
+                                    toast.error("Color already selected");
+                                  }
+                                  setColorInput("");
+                                }}
+                              >
+                                <div
+                                  className={`${styles.color} me-2`}
+                                  style={{ background: `${item.hex}` }}
+                                ></div>{" "}
+                                {item.name} ({item.hex})
+                              </div>
+                            ))}
+                        </div>
+                      </div>
+                    </InputGroup>
+                    <Row className="py-2 pb-4">
+                      {selectedColor.map((item, i) => (
+                        <Col xs={1} key={i}>
+                          <div
+                            className={styles.color}
+                            style={{ background: `${item.hex}` }}
+                          ></div>
+                        </Col>
+                      ))}
+                    </Row>
+                  </Col>
+                  <Col md={6}>
+                    <InputGroup className="mb-3 d-flex flex-column">
+                      <div className="d-flex justify-content-between align-items-center pb-2">
+                        <label htmlFor="size" className="d-block">
+                          Product Size
+                        </label>
+                        {errors.size && touched.size ? (
+                          <small className="text-danger pt-2">
+                            {errors.size}
+                          </small>
+                        ) : null}
+                      </div>
+                      <Field
+                        as={BootstrapForm.Control}
+                        placeholder="Type sizes comma separated. "
+                        name="size"
+                        isValid={!errors.size && touched.size}
+                        type="text"
+                        className={`${styles.input} w-100`}
+                        isInvalid={errors.size && touched.size}
+                      />
+                      <small>Example: L,XL,XXL,M</small>
+                    </InputGroup>
+                  </Col>
+                </Row>
+
+                <Row>
+                  <Col md={6}>
+                    <InputGroup className="mb-3 d-flex flex-column">
+                      <div className="d-flex justify-content-between align-items-center pb-2">
+                        <label htmlFor="price" className="d-block">
+                          Product Price
+                        </label>
+                        {errors.price && touched.price ? (
+                          <small className="text-danger pt-2">
+                            {errors.price}
+                          </small>
+                        ) : null}
+                      </div>
+                      <Field
+                        as={BootstrapForm.Control}
+                        placeholder="Type product price"
+                        name="price"
+                        isValid={!errors.price && touched.price}
+                        type="number"
+                        className={`${styles.input} w-100`}
+                        isInvalid={errors.price && touched.price}
+                      />
+                    </InputGroup>
+                  </Col>
+                  <Col md={6}>
+                    <InputGroup className="mb-3 d-flex flex-column">
+                      <div className="d-flex justify-content-between align-items-center pb-2">
+                        <label htmlFor="quantity" className="d-block">
+                          Product Quantity
+                        </label>
+                        {errors.quantity && touched.quantity ? (
+                          <small className="text-danger pt-2">
+                            {errors.quantity}
+                          </small>
+                        ) : null}
+                      </div>
+                      <Field
+                        as={BootstrapForm.Control}
+                        placeholder="Type product quantity"
+                        name="quantity"
+                        isValid={!errors.quantity && touched.quantity}
+                        type="number"
+                        className={`${styles.input} w-100`}
+                        isInvalid={errors.quantity && touched.quantity}
+                      />
+                    </InputGroup>
+                  </Col>
+                </Row>
+
+                <Row>
+                  <Col md={6} className="mb-3">
+                    <div className="d-flex  justify-content-between align-items-center">
+                      {" "}
+                      <label htmlFor="image" className="d-block">
+                        Front Image
+                      </label>
+                    </div>
+                    <div className="">
+                      <input
+                        ref={fileRef}
+                        type="file"
+                        name="image"
+                        className="form-control"
+                        onChange={onSelectFile}
+                      />
+                    </div>
+                  </Col>
+                  <Col md={6} className="mb-3">
+                    <div className="d-flex  justify-content-between align-items-center">
+                      {" "}
+                      <label htmlFor="image" className="d-block">
+                        Back Image (optional)
+                      </label>
+                    </div>
+                    <div className="">
+                      <input
+                        ref={fileRef2}
+                        type="file"
+                        name="image"
+                        className="form-control"
+                        onChange={onSelectFile2}
+                      />
+                    </div>
+                  </Col>
+                </Row>
+                <div className="">
                   <div className="d-flex  justify-content-between align-items-center">
                     {" "}
                     <label htmlFor="image" className="d-block">
-                      Image
+                      Layouts (Optional)
                     </label>
-                    <Button
-                      variant="outline-light"
-                      onClick={() => fileRef.current.click()}
-                    >
-                      <span className="d-block mr-4">
-                        <ImUpload />
-                      </span>{" "}
-                      <span className="pl-3 d-block"> Upload Image</span>
-                    </Button>
                   </div>
-                  <div className="" style={{ display: "none" }}>
+                  <div className="">
                     <input
-                      ref={fileRef}
+                      multiple
                       type="file"
                       name="image"
-                      onChange={onSelectFile}
+                      className="form-control"
+                      onChange={onSelectFile3}
                     />
                   </div>
                 </div>
@@ -183,7 +396,7 @@ const AddProjectForm = ({ createProject }) => {
                     variant="primary"
                     type="reset"
                     onClick={resetlHandeler}
-                    className={`${styles.btn_cancel} mx-md-3 mx-0`}
+                    className={`${styles.btn} mx-md-3 mx-0`}
                   >
                     Cancel
                   </Button>

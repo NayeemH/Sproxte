@@ -1,10 +1,10 @@
 .bc_home {
-  color: var(--light) !important;
+  color: var(--dark) !important;
   text-decoration: none !important;
 }
 
 .bc_name {
-  color: var(--primary) !important;
+  color: var(--orange) !important;
   text-decoration: none !important;
 }
 
@@ -13,5 +13,5 @@
 }
 
 .table > :not(caption) > * > * {
-  background: var(--dark-bg) !important;
+  background: var(--dark) !important;
 }

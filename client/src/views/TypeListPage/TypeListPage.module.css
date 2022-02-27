@@ -15,7 +15,7 @@
 .btn {
   outline: none !important;
   border: none !important;
-  padding: 8px 26px;
+  padding: 8px 26px !important;
   margin-left: auto !important;
   font-weight: bold !important;
   border-radius: 30px !important;
