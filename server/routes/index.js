@@ -13,6 +13,7 @@ const categoryType = require('./categoryType');
 const productType = require('./productType');
 const discover = require('./discover');
 const template = require('./template');
+const search = require('./search');
 const order = require('./order');
 
 // User Register and login function 
@@ -29,6 +30,9 @@ router.use('/discover', discover);
 
 // Template
 router.use('/template', template);
+
+// Search
+router.use('/search', search);
 
 // Order
 router.use('/order', isAuth, order);

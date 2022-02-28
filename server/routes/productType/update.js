@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const {saveImage, fileFetch} = require('../../lib/imageConverter');
+const {saveImage, fileFetch, deleteImage} = require('../../lib/imageConverter');
 const ProductType = require('../../models/productType');
 
 
@@ -33,12 +33,23 @@ router.patch('/:id', fileFetch.fields([{name: 'pngImageFront', maxCount: 1}, {na
             updatedItems.pngImageBack = images;
         }
 
-        await ProductType.findOneAndUpdate({_id: id}, {$set: updatedItems});
+        const types = await ProductType.findOneAndUpdate({_id: id}, {$set: updatedItems});
 
         res.json({
             success: true,
             message: 'Product Type is updated successfully',
         });
+
+        // delete
+        if(types) {
+            if(req.files && req.files.pngImageFront) {
+                await deleteImage(types.pngImageFront);
+            }
+    
+            if(req.files && req.files.pngImageBack) {
+                await deleteImage(types.pngImageBack);
+            }
+        }
     }
     catch(err) {
         next(err);

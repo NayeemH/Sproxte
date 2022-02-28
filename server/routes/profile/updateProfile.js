@@ -1,7 +1,7 @@
 const router = require('express').Router();
 const bcrypt = require('bcrypt');
 const User = require('../../models/user');
-const {saveImage, fileFetch} = require('../../lib/imageConverter');
+const {saveImage, fileFetch, deleteImage} = require('../../lib/imageConverter');
 const createError = require('http-errors');
 
 
@@ -31,12 +31,16 @@ router.patch('/', fileFetch.single('image'), async (req, res, next) => {
             updateInfo.image = images;
         }
         
-        await User.findOneAndUpdate({_id: userId}, {$set: updateInfo});
+        const user = await User.findOneAndUpdate({_id: userId}, {$set: updateInfo});
 
         res.json({
             success: true,
             msg: 'Profile is updated successfully',
         });
+
+        if(user && req.file && user.image !== 'default.png') {
+            await deleteImage(user.image);
+        }
     }
     catch(err) {
         next(err);

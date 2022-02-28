@@ -22,5 +22,14 @@ const saveImage = async (image) => {
     return imageName;
 }
 
+const deleteImage = async (imageName) => {
+    try {
+        await fs.unlink(path.resolve(`data/image/small/${imageName}`));
+    }
+    catch(error) {
+        console.log("Can't delete this file");
+    }
+}
 
-module.exports = {fileFetch, saveImage};
+
+module.exports = {fileFetch, saveImage, deleteImage};
