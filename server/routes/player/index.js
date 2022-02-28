@@ -1,6 +1,7 @@
 const router = require('express').Router();
 
 const isCoach = require('../authenticate/isCoach');
+
 // Import routes
 const getOne = require('./getOne');
 const getAll = require('./getAll');

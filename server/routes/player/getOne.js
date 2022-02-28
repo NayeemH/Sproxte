@@ -1,17 +1,17 @@
 const router = require('express').Router();
-const Team = require('../../models/team');
+const Player = require('../../models/player');
 
 
-router.get('/:teamId', async (req, res, next) => {
+router.get('/:playerId', async (req, res, next) => {
     try {
-        const {teamId} = req.params;
+        const {playerId} = req.params;
 
-        const team = await Team.findOne({_id: teamId}, {__v: 0});
+        const player = await Player.findOne({_id: playerId}, {__v: 0});
 
 
         res.json({
             success: true,
-            types: team,
+            types: player,
         });
     }
     catch(err) {
