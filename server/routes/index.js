@@ -15,6 +15,7 @@ const discover = require('./discover');
 const template = require('./template');
 const search = require('./search');
 const order = require('./order');
+const team = require('./team');
 
 // User Register and login function 
 router.use('/auth', user);
@@ -51,6 +52,9 @@ router.use('/profile', isAuth, profile);
 
 // Profile Info
 //router.use('/download', isAuth, download);
+
+// team
+router.use('/team',isAuth, team)
 
 
 module.exports = router;
