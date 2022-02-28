@@ -28,6 +28,9 @@ import AddTypePage from "./views/AddTypePage/AddTypePage";
 import TypeListPage from "./views/TypeListPage/TypeListPage";
 import EditTypePage from "./views/EditTypePage/EditTypePage";
 import AddProjectPage from "./views/AddProjectPage/AddProjectPage";
+import AddCategoryPage from "./views/AddCategoryPage/AddCategoryPage";
+import CategoryListPage from "./views/CategoryListPage/CategoryListPage";
+import EditCategoryPage from "./views/EditCategoryPage/EditCategoryPage";
 
 function App({ getRefreshToken }) {
   useEffect(() => {
@@ -56,9 +59,12 @@ function App({ getRefreshToken }) {
               <Route path="dashboard" element={<DashboardPage />} />
               <Route path="add-iep" element={<AddUserPage />} />
               <Route path="add-type" element={<AddTypePage />} />
+              <Route path="add-category" element={<AddCategoryPage />} />
               <Route path="add-product" element={<AddProjectPage />} />
               <Route path="type/edit/:id" element={<EditTypePage />} />
+              <Route path="category/edit/:id" element={<EditCategoryPage />} />
               <Route path="types" element={<TypeListPage />} />
+              <Route path="category" element={<CategoryListPage />} />
               <Route path="settings" element={<SettingsPage />} />
               <Route
                 path="settings/password"

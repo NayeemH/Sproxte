@@ -3,6 +3,7 @@ import { MdOutlineClose, MdSpaceDashboard } from "react-icons/md";
 import { AiFillHome } from "react-icons/ai";
 import { FiLogOut, FiUserPlus } from "react-icons/fi";
 import { BiCog, BiLayer, BiLayerPlus } from "react-icons/bi";
+import { VscTypeHierarchySub } from "react-icons/vsc";
 import { connect, useDispatch, useSelector } from "react-redux";
 import { NavLink, useNavigate } from "react-router-dom";
 import {
@@ -101,6 +102,15 @@ const Sidebar = ({ logout }) => {
                       <BiLayerPlus />
                     </span>
                     Product Types
+                  </NavLink>
+                </div>
+                <div className={styles.link_base}>
+                  <div></div>
+                  <NavLink to="/category" onClick={handeleClick}>
+                    <span>
+                      <VscTypeHierarchySub />
+                    </span>
+                    Categories
                   </NavLink>
                 </div>
                 <div className={styles.link_base}>
