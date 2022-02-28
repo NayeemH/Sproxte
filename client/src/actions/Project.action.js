@@ -203,8 +203,12 @@ export const createProductType =
     let formData = new FormData();
 
     formData.append("name", values.name);
-    formData.append("pngImage", file);
-    formData.append("svgImage", previewFile);
+    formData.append("categoryType", values.categoryType);
+    formData.append("pngImageFront", file);
+    if (previewFile) {
+      formData.append("pngImageBack", previewFile);
+    }
+
     values.size
       .trim()
       .split(",")

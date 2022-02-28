@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
   Card,
   Form as BootstrapForm,
@@ -12,18 +12,35 @@ import { connect } from "react-redux";
 import { createProductType } from "../../actions/Project.action";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import { getCategoryList } from "../../actions/Category.action";
 
-const AddTypeForm = ({ createProductType }) => {
+const AddTypeForm = ({ createProductType, getCategoryList, category }) => {
   //STATES
   const [selectedFile, setSelectedFile] = useState();
   const [selectedFile2, setSelectedFile2] = useState();
   const [isLoading, setIsLoading] = useState(false);
+  const [focus, setFocus] = useState(false);
+  const [catInput, setCatInput] = useState("");
+
+  useEffect(() => {
+    if (category.length === 0) {
+      getCategoryList();
+    }
+  }, []);
+
+  const blurHandeler = () => {
+    setTimeout(() => {
+      setFocus(false);
+    }, 200);
+  };
+
   const navigate = useNavigate();
 
   const fileRef = useRef();
   const fileRef2 = useRef();
 
   const onSubmitHandeler = async (values) => {
+    console.log(values);
     if (selectedFile && selectedFile2) {
       setIsLoading(true);
       let check = await createProductType(values, selectedFile, selectedFile2);
@@ -41,6 +58,8 @@ const AddTypeForm = ({ createProductType }) => {
   const resetlHandeler = () => {
     setSelectedFile(undefined);
     setSelectedFile2(undefined);
+    setCatInput("");
+    setFocus(false);
   };
 
   //ONSELECT FILE HANDELER
@@ -73,16 +92,18 @@ const AddTypeForm = ({ createProductType }) => {
     name: "",
     image: "",
     size: "",
+    categoryType: "",
   };
 
   const SignupSchema = Yup.object().shape({
     name: Yup.string().required("Product type name is required!"),
     image: Yup.string().nullable(),
     size: Yup.string().required("Size is required!"),
+    categoryType: Yup.string().required("Valid Category name is required!"),
   });
   return (
-    <div className={styles.wrapper}>
-      <Card bg="white" text="dark" className={`${styles.crd} shadow`}>
+    <div className={`${styles.wrapper} pb-5`}>
+      <Card bg="white" text="dark" className={`${styles.crd} shadow `}>
         <Card.Header className="d-flex justify-content-center align-items-center">
           <span className={styles.heading}>Add Type</span>
         </Card.Header>
@@ -92,7 +113,7 @@ const AddTypeForm = ({ createProductType }) => {
             validationSchema={SignupSchema}
             onSubmit={(values) => onSubmitHandeler(values)}
           >
-            {({ errors, touched }) => (
+            {({ errors, touched, setFieldValue }) => (
               <Form>
                 <InputGroup className="mb-3 d-flex flex-column">
                   <div className="d-flex justify-content-between align-items-center pb-2">
@@ -112,6 +133,52 @@ const AddTypeForm = ({ createProductType }) => {
                     className={`${styles.input} w-100`}
                     isInvalid={errors.name && touched.name}
                   />
+                </InputGroup>
+                <InputGroup className=" d-flex flex-column">
+                  <div className="d-flex justify-content-between align-items-center pb-2">
+                    <label htmlFor="quantity" className="d-block">
+                      Category
+                    </label>
+                  </div>
+                  <BootstrapForm.Control
+                    placeholder="Type category name"
+                    type="text"
+                    value={catInput}
+                    onChange={(e) => setCatInput(e.target.value)}
+                    isValid={!errors.categoryType && touched.categoryType}
+                    type="text"
+                    isInvalid={errors.categoryType && touched.categoryType}
+                    onFocus={() => setFocus(true)}
+                    onBlur={blurHandeler}
+                    autoComplete="off"
+                    className={`${styles.input} w-100`}
+                  />
+                  <div
+                    className={styles.auth__list}
+                    style={{ display: focus ? "block" : "none" }}
+                  >
+                    <div className="list-group">
+                      {category
+                        .filter((item) => {
+                          return item.name
+                            .toLowerCase()
+                            .includes(catInput.toLowerCase());
+                        })
+                        .map((item, i) => (
+                          <div
+                            className={`list-group-item ${styles.item} d-flex`}
+                            key={i}
+                            onClick={() => {
+                              setFieldValue("categoryType", item._id);
+                              setCatInput(item.name);
+                            }}
+                          >
+                            <div className={`${styles.color}`}></div>{" "}
+                            {item.name}
+                          </div>
+                        ))}
+                    </div>
+                  </div>
                 </InputGroup>
                 <InputGroup className="mb-3 d-flex flex-column">
                   <div className="d-flex justify-content-between align-items-center pb-2">
@@ -137,7 +204,7 @@ const AddTypeForm = ({ createProductType }) => {
                   <InputGroup className="">
                     <div className="pb-2">
                       <label htmlFor="temp" className="d-block ">
-                        Mockup Template
+                        Mockup Template Front Image
                       </label>
                     </div>
 
@@ -156,7 +223,7 @@ const AddTypeForm = ({ createProductType }) => {
                   <InputGroup className="pt-3">
                     <div className="pb-2">
                       <label htmlFor="temp2" className="d-block ">
-                        Thumbnile Image (SVG/PNG)
+                        Mockup Template Back Image (optional)
                       </label>
                     </div>
 
@@ -200,4 +267,10 @@ const AddTypeForm = ({ createProductType }) => {
   );
 };
 
-export default connect(null, { createProductType })(AddTypeForm);
+const mapStateToProps = (state) => ({
+  category: state.landing.category,
+});
+
+export default connect(mapStateToProps, { createProductType, getCategoryList })(
+  AddTypeForm
+);

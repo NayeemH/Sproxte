@@ -41,7 +41,7 @@ const TypeList = ({ deleteType }) => {
                 <td>
                   <div className={styles.img_wrapper}>
                     <img
-                      src={`${IMAGE_PATH}small/${item.svgImage}`}
+                      src={`${IMAGE_PATH}small/${item.pngImageFront}`}
                       alt={item.name}
                       className={styles.img}
                     />
@@ -50,7 +50,7 @@ const TypeList = ({ deleteType }) => {
                 <td>
                   <div className={styles.img_wrapper}>
                     <img
-                      src={`${IMAGE_PATH}small/${item.pngImage}`}
+                      src={`${IMAGE_PATH}small/${item.pngImageBack}`}
                       alt={item.name}
                       className={styles.img}
                     />

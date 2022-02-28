@@ -23,8 +23,8 @@
 .btn {
   outline: none !important;
   border: none !important;
-  padding: 8px 26px;
-  margin-top: 5px;
+  padding: 8px 26px !important;
+  margin-top: 5px !important;
   font-weight: bold !important;
   border-radius: 30px !important;
   color: var(--dark) !important;
@@ -33,7 +33,7 @@
 }
 
 .btn:hover {
-  background: linear-gradient(90deg, #fae41a 0%, #fcaf22 100%) !important;
+  background: linear-gradient(90deg, #f8e643 0%, #fcc154 100%) !important;
   transition: 0.3s all ease-in-out;
 }
 
@@ -60,6 +60,21 @@
     z-index: 8;
     color: var(--primary);
   }
+}
+
+.auth__list {
+  position: absolute;
+  z-index: 99;
+  top: 100%;
+  width: 100%;
+  max-height: 200px;
+  overflow-y: scroll;
+  background: white;
+  box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.1);
+}
+
+.item {
+  cursor: pointer;
 }
 
 @media screen and (max-width: 768px) {
