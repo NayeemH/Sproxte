@@ -74,6 +74,7 @@
   position: absolute;
   z-index: 99;
   top: 100%;
+  width: 100%;
   max-height: 200px;
   overflow-y: scroll;
   background: white;
@@ -82,6 +83,7 @@
 
 .item {
   cursor: pointer;
+  width: 100%;
 }
 
 @media screen and (max-width: 768px) {

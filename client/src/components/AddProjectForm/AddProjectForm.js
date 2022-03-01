@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
   Card,
   Form as BootstrapForm,
@@ -6,7 +6,6 @@ import {
   Button,
   Row,
   Col,
-  Container,
 } from "react-bootstrap";
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
@@ -16,8 +15,9 @@ import { createProject } from "../../actions/Project.action";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import colors from "../../config/Colors";
+import { getTypeList } from "../../actions/Landing.action";
 
-const AddProjectForm = ({ createProject }) => {
+const AddProjectForm = ({ category, createProject, getTypeList }) => {
   //STATES
   const [selectedFile, setSelectedFile] = useState();
   const [selectedFile2, setSelectedFile2] = useState();
@@ -25,19 +25,33 @@ const AddProjectForm = ({ createProject }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [selectedColor, setSelectedColor] = useState([]);
   const [colorInput, setColorInput] = useState("");
+  const [typeInput, setTypeInput] = useState("");
   const [focus, setFocus] = useState(false);
+  const [focus2, setFocus2] = useState(false);
   const navigate = useNavigate();
 
   const fileRef = useRef();
   const fileRef2 = useRef();
+
+  useEffect(() => {
+    if (category.length === 0) {
+      getTypeList();
+    }
+  }, []);
 
   const blurHandeler = () => {
     setTimeout(() => {
       setFocus(false);
     }, 200);
   };
+  const blurHandeler2 = () => {
+    setTimeout(() => {
+      setFocus2(false);
+    }, 200);
+  };
 
   const onSubmitHandeler = async (values) => {
+    console.log(values);
     if (selectedFile) {
       setIsLoading(true);
       let check = await createProject(
@@ -128,6 +142,7 @@ const AddProjectForm = ({ createProject }) => {
       "Product price is required!"
     ),
     size: Yup.string().required("Product size is required!"),
+    productType: Yup.string().required("Product template is required!"),
     image: Yup.string().nullable(),
     description: Yup.string().required("Description is required!"),
   });
@@ -143,7 +158,7 @@ const AddProjectForm = ({ createProject }) => {
             validationSchema={SignupSchema}
             onSubmit={(values) => onSubmitHandeler(values)}
           >
-            {({ errors, touched }) => (
+            {({ errors, touched, setFieldValue }) => (
               <Form>
                 <InputGroup className="mb-3 d-flex flex-column">
                   <div className="d-flex justify-content-between align-items-center pb-2">
@@ -164,29 +179,81 @@ const AddProjectForm = ({ createProject }) => {
                     isInvalid={errors.name && touched.name}
                   />
                 </InputGroup>
-                <InputGroup className="mb-3 d-flex flex-column">
-                  <div className="d-flex justify-content-between align-items-center pb-2">
-                    <label htmlFor="description" className="d-block">
-                      Description
-                    </label>
-                    {errors.description && touched.description ? (
-                      <small className="text-danger pt-2">
-                        {errors.description}
-                      </small>
-                    ) : null}
-                  </div>
-                  <Field
-                    as={BootstrapForm.Control}
-                    placeholder="Type project description"
-                    name="description"
-                    isValid={!errors.description && touched.description}
-                    type="text"
-                    className={`${styles.input} w-100`}
-                    isInvalid={errors.description && touched.description}
-                  />
-                </InputGroup>
 
                 <Row>
+                  <Col md={6}>
+                    <InputGroup className="mb-3 d-flex flex-column">
+                      <div className="d-flex justify-content-between align-items-center pb-2">
+                        <label htmlFor="description" className="d-block">
+                          Description
+                        </label>
+                        {errors.description && touched.description ? (
+                          <small className="text-danger pt-2">
+                            {errors.description}
+                          </small>
+                        ) : null}
+                      </div>
+                      <Field
+                        as={BootstrapForm.Control}
+                        placeholder="Type project description"
+                        name="description"
+                        isValid={!errors.description && touched.description}
+                        type="text"
+                        className={`${styles.input} w-100`}
+                        isInvalid={errors.description && touched.description}
+                      />
+                    </InputGroup>
+                  </Col>
+                  <Col md={6}>
+                    <InputGroup className="mb-3 d-flex flex-column">
+                      <div className="d-flex justify-content-between align-items-center pb-2">
+                        <label htmlFor="productType" className="d-block">
+                          Template
+                        </label>
+                        {errors.productType && touched.productType ? (
+                          <small className="text-danger pt-2">
+                            {errors.productType}
+                          </small>
+                        ) : null}
+                      </div>
+                      <BootstrapForm.Control
+                        placeholder="Type product template name"
+                        value={typeInput}
+                        isValid={!errors.productType && touched.productType}
+                        type="text"
+                        onChange={(e) => setTypeInput(e.target.value)}
+                        className={`${styles.input} w-100`}
+                        isInvalid={errors.productType && touched.productType}
+                        onFocus={() => setFocus2(true)}
+                        onBlur={blurHandeler2}
+                      />
+                      <div
+                        className={styles.auth__list}
+                        style={{ display: focus2 ? "block" : "none" }}
+                      >
+                        <div className="list-group">
+                          {category
+                            .filter((item) => {
+                              return item.name
+                                .toLowerCase()
+                                .includes(typeInput.toLowerCase());
+                            })
+                            .map((item, i) => (
+                              <div
+                                className={`list-group-item ${styles.item} d-flex`}
+                                key={i}
+                                onClick={() => {
+                                  setFieldValue("productType", item._id);
+                                  setTypeInput(item.name);
+                                }}
+                              >
+                                {item.name}
+                              </div>
+                            ))}
+                        </div>
+                      </div>
+                    </InputGroup>
+                  </Col>
                   <Col md={6}>
                     <InputGroup className=" d-flex flex-column">
                       <div className="d-flex justify-content-between align-items-center pb-2">
@@ -410,4 +477,10 @@ const AddProjectForm = ({ createProject }) => {
   );
 };
 
-export default connect(null, { createProject })(AddProjectForm);
+const mapStateToProps = (state) => ({
+  category: state.landing.types,
+});
+
+export default connect(mapStateToProps, { createProject, getTypeList })(
+  AddProjectForm
+);

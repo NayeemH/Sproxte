@@ -97,15 +97,6 @@ const Sidebar = ({ logout }) => {
               <>
                 <div className={styles.link_base}>
                   <div></div>
-                  <NavLink to="/types" onClick={handeleClick}>
-                    <span>
-                      <BiLayerPlus />
-                    </span>
-                    Product Types
-                  </NavLink>
-                </div>
-                <div className={styles.link_base}>
-                  <div></div>
                   <NavLink to="/category" onClick={handeleClick}>
                     <span>
                       <VscTypeHierarchySub />
@@ -113,6 +104,16 @@ const Sidebar = ({ logout }) => {
                     Categories
                   </NavLink>
                 </div>
+                <div className={styles.link_base}>
+                  <div></div>
+                  <NavLink to="/types" onClick={handeleClick}>
+                    <span>
+                      <BiLayerPlus />
+                    </span>
+                    Product Types
+                  </NavLink>
+                </div>
+
                 <div className={styles.link_base}>
                   <div></div>
                   <NavLink to="/add-product" onClick={handeleClick}>
