@@ -61,11 +61,12 @@ const AddProjectForm = ({ category, createProject, getTypeList }) => {
         selectedFile3,
         selectedColor
       );
-      // if (check) {
-      //   setIsLoading(false);
-      //   navigate("/dashboard");
-      // }
-      toast.success("Product created successfully");
+
+      if (check) {
+        setIsLoading(false);
+        navigate("/dashboard");
+      }
+
       setIsLoading(false);
     } else {
       toast.error("Please select a file");
