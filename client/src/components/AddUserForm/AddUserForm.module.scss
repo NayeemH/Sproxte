@@ -23,13 +23,16 @@
 .btn {
   outline: none !important;
   border: none !important;
-  padding: 8px 26px;
-  background: var(--primary) !important;
+  padding: 8px 26px !important;
+  font-weight: bold !important;
+  border-radius: 30px !important;
+  color: var(--dark) !important;
+  background: linear-gradient(90deg, #ffe502 0%, #ffa602 100%) !important;
   transition: 0.3s all ease-in-out;
 }
 
 .btn:hover {
-  background: var(--primary-hover) !important;
+  background: linear-gradient(90deg, #fae41a 0%, #fcaf22 100%) !important;
   transition: 0.3s all ease-in-out;
 }
 

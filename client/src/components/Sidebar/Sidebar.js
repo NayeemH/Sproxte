@@ -61,13 +61,13 @@ const Sidebar = ({ logout }) => {
                 </div>
                 <div className={styles.link_group}>
                   <NavLink to="/manager-list" onClick={handeleClick}>
-                    Manager list
+                    Individual Orders
                   </NavLink>
                   <NavLink to="/developer-list" onClick={handeleClick}>
-                    Developer List
+                    Team Orders
                   </NavLink>
                   <NavLink to="/client-list" onClick={handeleClick}>
-                    Client list
+                    Compeleted Orders
                   </NavLink>
                 </div>
               </>

@@ -51,19 +51,21 @@ const AddProjectForm = ({ category, createProject, getTypeList }) => {
   };
 
   const onSubmitHandeler = async (values) => {
-    console.log(values);
+    console.log(selectedFile3);
     if (selectedFile) {
       setIsLoading(true);
       let check = await createProject(
         values,
         selectedFile,
         selectedFile2,
-        selectedFile3
+        selectedFile3,
+        selectedColor
       );
-      if (check) {
-        setIsLoading(false);
-        navigate("/dashboard");
-      }
+      // if (check) {
+      //   setIsLoading(false);
+      //   navigate("/dashboard");
+      // }
+      toast.success("Product created successfully");
       setIsLoading(false);
     } else {
       toast.error("Please select a file");
@@ -457,7 +459,7 @@ const AddProjectForm = ({ category, createProject, getTypeList }) => {
                     className={styles.btn}
                     disabled={isLoading}
                   >
-                    {isLoading ? "Loading..." : "Add Project"}
+                    {isLoading ? "Loading..." : "Add Product"}
                   </Button>
                   <Button
                     variant="primary"

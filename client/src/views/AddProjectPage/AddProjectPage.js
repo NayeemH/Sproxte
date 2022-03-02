@@ -20,7 +20,7 @@ const AddProjectPage = () => {
           </Link>{" "}
         </Breadcrumb.Item>
         <Breadcrumb.Item className={styles.bc_name} active>
-          Add Project
+          Add Product
         </Breadcrumb.Item>
       </Breadcrumb>
       <AddProjectForm />

@@ -35,7 +35,12 @@ import { BASE_URL } from "../constants/URL";
 import axios from "axios";
 //import invited from "../stub/projects/projectDetails";
 import { getRefreshToken } from "./Dashboard.action";
-import { TYPES_EDIT, TYPES_EDIT_ERROR } from "../constants/TypeLanding";
+import {
+  GET_PRODUCT_LIST,
+  GET_PRODUCT_LIST_ERROR,
+  TYPES_EDIT,
+  TYPES_EDIT_ERROR,
+} from "../constants/TypeLanding";
 import { getTypeList } from "./Landing.action";
 
 //GET PROJECT DETAILS WITH TASKS
@@ -158,43 +163,87 @@ export const createAccountExisting = (id) => async (dispatch) => {
 };
 
 // CREATE PROJECT
-export const createProject = (values, file) => async (dispatch) => {
-  let formData = new FormData();
+export const createProject =
+  (values, file1, file2, file3, colors) => async (dispatch) => {
+    let formData = new FormData();
 
-  formData.append("description", values.description);
-  formData.append("name", values.name);
-  formData.append("image", file);
-
-  const config = {
-    headers: {
-      "Content-Type": "multipart/form-data",
-    },
-    withCredentials: true,
-  };
-  try {
-    // TODO ::: API CALL
-    const res = await axios.post(
-      `${BASE_URL}/api/admin/createProject`,
-      formData,
-      config
-    );
-    // console.log(res);
-    if (res.status === 200) {
-      dispatch({
-        type: PROJECT_CREATE_SUCCESS,
+    formData.append("name", values.name);
+    formData.append("price", values.price);
+    formData.append("quantity", values.quantity);
+    formData.append("productType", values.productType);
+    formData.append("description", values.description);
+    values.size
+      .trim()
+      .split(",")
+      .map((s, i) => {
+        formData.append(`sizes[${i}]`, s);
       });
-      toast.success("Project created successfully");
-      return true;
+    colors.map((c, i) => {
+      formData.append(`colors[${i}]`, c.hex);
+    });
+    if (file1) {
+      formData.append("pngImageFront", file1);
     }
+    if (file2) {
+      formData.append("pngImageBack", file2);
+    }
+
+    if (file3) {
+      for (let i = 0; i < file3.length; i++) {
+        formData.append(`layouts[${i}]`, file3[i]);
+      }
+    }
+
+    const config = {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+      withCredentials: true,
+    };
+    try {
+      // TODO ::: API CALL
+      const res = await axios.post(
+        `${BASE_URL}/api/v1/template`,
+        formData,
+        config
+      );
+      // console.log(res);
+      if (res.status === 200) {
+        dispatch({
+          type: PROJECT_CREATE_SUCCESS,
+        });
+        dispatch(getProjectsList());
+        toast.success("Project created successfully");
+        return true;
+      }
+    } catch (err) {
+      dispatch({
+        type: PROJECT_CREATE_ERROR,
+      });
+      err.response.data.msg.map((msg) => toast.error(msg));
+      return false;
+    }
+
+    return false;
+  };
+
+//GET CATEGORY LIST ACTION
+export const getProjectsList = () => async (dispatch) => {
+  try {
+    const res = await axios.get(`${BASE_URL}/api/v1/discover/all`);
+    // console.log(res);
+
+    dispatch({
+      type: GET_PRODUCT_LIST,
+      payload: res.data.templates.items,
+    });
   } catch (err) {
     dispatch({
-      type: PROJECT_CREATE_ERROR,
+      type: GET_PRODUCT_LIST_ERROR,
     });
-    err.response.data.msg.map((msg) => toast.error(msg));
-    return false;
+    console.log(err);
+    toast.error(err.response.data.message);
   }
-
-  return false;
 };
 
 // CREATE PRODUCT TYPE

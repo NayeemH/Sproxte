@@ -2,6 +2,7 @@ import types from "../config/ProductTypes";
 import {
   CATEGORY_DELETE,
   CATEGORY_LOAD,
+  GET_PRODUCT_LIST,
   LANDING_SIDEBAR_TOGGLE,
   SELECT_TEMPLATE,
   TYPES_DELETE,
@@ -13,6 +14,7 @@ const initialState = {
   template: types.filter((item) => item.id === 1)[0],
   types: [],
   category: [],
+  product: [],
 };
 
 const LandingReducer = (state = initialState, action) => {
@@ -32,6 +34,9 @@ const LandingReducer = (state = initialState, action) => {
         ...state,
         types: [...state.types.filter((item) => item._id !== payload)],
       };
+
+    case GET_PRODUCT_LIST:
+      return { ...state, product: payload };
 
     case CATEGORY_LOAD:
       return { ...state, category: payload };

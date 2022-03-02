@@ -54,7 +54,7 @@ const AddUserForm = () => {
           >
             {({ errors, touched }) => (
               <Form>
-                <InputGroup className="mb-3 d-flex flex-column">
+                {/* <InputGroup className="mb-3 d-flex flex-column">
                   <div className="d-flex justify-content-between align-items-center">
                     <label htmlFor="role" className="d-block">
                       Role of New User
@@ -76,7 +76,7 @@ const AddUserForm = () => {
                     <option value="developer">Developer</option>
                     <option value="client">Client</option>
                   </Field>
-                </InputGroup>
+                </InputGroup> */}
                 <InputGroup className="mb-3 d-flex flex-column">
                   <div className="d-flex justify-content-between align-items-center pb-2">
                     <label htmlFor="email" className="d-block">
