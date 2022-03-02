@@ -6,11 +6,26 @@ import { connect, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { deleteType } from "../../actions/Landing.action";
 import { IMAGE_PATH } from "../../constants/URL";
+import swal from "sweetalert";
 import styles from "./TypeList.module.scss";
 
 const TypeList = ({ deleteType }) => {
   const list = useSelector((state) => state.landing.types);
   const navigate = useNavigate();
+
+  const deleteHandeler = (id) => {
+    swal({
+      title: "Are you sure?",
+      text: "Are you sure that you want to Delete this Type?",
+      icon: "warning",
+      buttons: true,
+      dangerMode: true,
+    }).then((willDelete) => {
+      if (willDelete) {
+        deleteType(id);
+      }
+    });
+  };
 
   return (
     <div className={styles.wrapper}>
@@ -74,7 +89,7 @@ const TypeList = ({ deleteType }) => {
                   <Button
                     size="sm"
                     variant="danger"
-                    onClick={() => deleteType(item._id)}
+                    onClick={() => deleteHandeler(item._id)}
                   >
                     {" "}
                     <BsTrash /> Delete

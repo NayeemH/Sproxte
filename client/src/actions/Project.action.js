@@ -187,11 +187,8 @@ export const createProject =
     if (file2) {
       formData.append("pngImageBack", file2);
     }
-
     if (file3) {
-      for (let i = 0; i < file3.length; i++) {
-        formData.append(`layouts[${i}]`, file3[i]);
-      }
+      formData.append(`layouts`, file3);
     }
 
     const config = {

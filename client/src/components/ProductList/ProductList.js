@@ -10,13 +10,13 @@ import { IMAGE_PATH } from "../../constants/URL";
 import styles from "./CategoryList.module.scss";
 
 const CategoryList = ({ deleteCategory }) => {
-  const list = useSelector((state) => state.landing.category);
+  const list = useSelector((state) => state.landing.product);
   const navigate = useNavigate();
 
   const deleteHandeler = (id) => {
     swal({
       title: "Are you sure?",
-      text: "Are you sure that you want to Delete this Category?",
+      text: "Are you sure that you want to Delete this Product?",
       icon: "warning",
       buttons: true,
       dangerMode: true,
@@ -32,10 +32,13 @@ const CategoryList = ({ deleteCategory }) => {
       <Table striped bordered hover responsive variant="light">
         <thead>
           <tr>
-            <th>ID</th>
+            <th>#</th>
             <th>Name</th>
-            <th>Template</th>
-            <th>Thumbnile</th>
+            {/* <th>Template</th> */}
+            <th>Featured</th>
+            <th>Front Image</th>
+            <th>Price</th>
+            <th>Quantity</th>
             <th>Actions</th>
           </tr>
         </thead>
@@ -52,25 +55,19 @@ const CategoryList = ({ deleteCategory }) => {
               <tr key={i}>
                 <td>{i + 1}</td>
                 <td>{item.name}</td>
-                <td>
-                  <div className={styles.img_wrapper}>
-                    <img
-                      src={`${IMAGE_PATH}small/${item.svgImage}`}
-                      alt={item.name}
-                      className={styles.img}
-                    />
-                  </div>
-                </td>
-                <td>
-                  <div className={styles.img_wrapper}>
-                    <img
-                      src={`${IMAGE_PATH}small/${item.pngImage}`}
-                      alt={item.name}
-                      className={styles.img}
-                    />
-                  </div>
-                </td>
+                <td>{item.featured}</td>
 
+                <td>
+                  <div className={styles.img_wrapper}>
+                    <img
+                      src={`${IMAGE_PATH}small/${item.pngImageFront}`}
+                      alt={item.name}
+                      className={styles.img}
+                    />
+                  </div>
+                </td>
+                <td>{item.price}</td>
+                <td>{item.quantity}</td>
                 <td>
                   <Button
                     size="sm"
