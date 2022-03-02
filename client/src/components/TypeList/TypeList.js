@@ -82,7 +82,7 @@ const TypeList = ({ deleteType }) => {
                   <Button
                     size="sm"
                     className="me-3"
-                    onClick={() => navigate(`/type/edit/${item._id}`)}
+                    onClick={() => navigate(`/template/edit/${item._id}`)}
                   >
                     <AiFillEdit /> Edit
                   </Button>

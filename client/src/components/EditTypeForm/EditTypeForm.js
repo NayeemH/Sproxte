@@ -33,7 +33,7 @@ const EditTypeForm = ({ editProductType, data }) => {
     );
     if (check) {
       setIsLoading(false);
-      navigate("/types");
+      navigate("/templates");
     }
     setIsLoading(false);
   };
@@ -85,7 +85,7 @@ const EditTypeForm = ({ editProductType, data }) => {
     <div className={styles.wrapper}>
       <Card bg="white" text="dark" className={`${styles.crd} shadow`}>
         <Card.Header className="d-flex justify-content-center align-items-center">
-          <span className={styles.heading}>Edit Type</span>
+          <span className={styles.heading}>Edit Template</span>
         </Card.Header>
         <Card.Body>
           <Formik
@@ -99,7 +99,7 @@ const EditTypeForm = ({ editProductType, data }) => {
                 <InputGroup className="mb-3 d-flex flex-column">
                   <div className="d-flex justify-content-between align-items-center pb-2">
                     <label htmlFor="name" className="d-block">
-                      Type Name
+                      Template Name
                     </label>
                     {errors.name && touched.name ? (
                       <small className="text-danger pt-2">{errors.name}</small>
@@ -107,7 +107,7 @@ const EditTypeForm = ({ editProductType, data }) => {
                   </div>
                   <Field
                     as={BootstrapForm.Control}
-                    placeholder="Product type name"
+                    placeholder="Product Template name"
                     name="name"
                     isValid={!errors.name && touched.name}
                     type="text"
@@ -126,7 +126,7 @@ const EditTypeForm = ({ editProductType, data }) => {
                   </div>
                   <Field
                     as={BootstrapForm.Control}
-                    placeholder="Product type sizes"
+                    placeholder="Template sizes"
                     name="size"
                     isValid={!errors.size && touched.size}
                     type="text"

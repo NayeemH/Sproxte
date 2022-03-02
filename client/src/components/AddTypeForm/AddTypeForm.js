@@ -46,7 +46,7 @@ const AddTypeForm = ({ createProductType, getCategoryList, category }) => {
       let check = await createProductType(values, selectedFile, selectedFile2);
       if (check) {
         setIsLoading(false);
-        navigate("/types");
+        navigate("/templates");
       }
       setIsLoading(false);
     } else {
@@ -105,7 +105,7 @@ const AddTypeForm = ({ createProductType, getCategoryList, category }) => {
     <div className={`${styles.wrapper} pb-5`}>
       <Card bg="white" text="dark" className={`${styles.crd} shadow `}>
         <Card.Header className="d-flex justify-content-center align-items-center">
-          <span className={styles.heading}>Add Type</span>
+          <span className={styles.heading}>Add Template</span>
         </Card.Header>
         <Card.Body>
           <Formik
@@ -118,7 +118,7 @@ const AddTypeForm = ({ createProductType, getCategoryList, category }) => {
                 <InputGroup className="mb-3 d-flex flex-column">
                   <div className="d-flex justify-content-between align-items-center pb-2">
                     <label htmlFor="name" className="d-block">
-                      Type Name
+                      Template Name
                     </label>
                     {errors.name && touched.name ? (
                       <small className="text-danger pt-2">{errors.name}</small>
@@ -126,7 +126,7 @@ const AddTypeForm = ({ createProductType, getCategoryList, category }) => {
                   </div>
                   <Field
                     as={BootstrapForm.Control}
-                    placeholder="Product type name"
+                    placeholder="Product template name"
                     name="name"
                     isValid={!errors.name && touched.name}
                     type="text"
@@ -141,7 +141,7 @@ const AddTypeForm = ({ createProductType, getCategoryList, category }) => {
                     </label>
                   </div>
                   <BootstrapForm.Control
-                    placeholder="Type category name"
+                    placeholder="Template category name"
                     type="text"
                     value={catInput}
                     onChange={(e) => setCatInput(e.target.value)}
@@ -191,7 +191,7 @@ const AddTypeForm = ({ createProductType, getCategoryList, category }) => {
                   </div>
                   <Field
                     as={BootstrapForm.Control}
-                    placeholder="Product type sizes"
+                    placeholder="Template sizes"
                     name="size"
                     isValid={!errors.size && touched.size}
                     type="text"
@@ -247,7 +247,7 @@ const AddTypeForm = ({ createProductType, getCategoryList, category }) => {
                     className={styles.btn}
                     disabled={isLoading}
                   >
-                    {isLoading ? "Loading..." : "Add Product Type"}
+                    {isLoading ? "Loading..." : "Add Template"}
                   </Button>
                   <Button
                     variant="primary"

@@ -27,14 +27,14 @@ const TypeListPage = () => {
           </Link>{" "}
         </Breadcrumb.Item>
         <Breadcrumb.Item className={styles.bc_name} active>
-          Types
+          Templates
         </Breadcrumb.Item>
         <Button
           className="ms-auto"
-          onClick={() => navigate("/add-type")}
+          onClick={() => navigate("/add-template")}
           className={styles.btn}
         >
-          Add Type
+          Add Template
         </Button>
       </Breadcrumb>
       <TypeList />

@@ -106,11 +106,11 @@ const Sidebar = ({ logout }) => {
                 </div>
                 <div className={styles.link_base}>
                   <div></div>
-                  <NavLink to="/types" onClick={handeleClick}>
+                  <NavLink to="/templates" onClick={handeleClick}>
                     <span>
                       <BiLayerPlus />
                     </span>
-                    Product Types
+                    Templates
                   </NavLink>
                 </div>
 

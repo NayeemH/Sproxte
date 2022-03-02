@@ -20,7 +20,7 @@ const AddTypePage = () => {
           </Link>{" "}
         </Breadcrumb.Item>
         <Breadcrumb.Item className={styles.bc_name} active>
-          Add Type
+          Add Template
         </Breadcrumb.Item>
       </Breadcrumb>
       <AddTypeForm />

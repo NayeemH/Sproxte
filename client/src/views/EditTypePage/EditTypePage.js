@@ -31,7 +31,7 @@ const EditTypePage = ({ getTypeList }) => {
           </Link>{" "}
         </Breadcrumb.Item>
         <Breadcrumb.Item className={styles.bc_name} active>
-          Edit Type
+          Edit Template
         </Breadcrumb.Item>
         <Breadcrumb.Item className={styles.bc_name} active>
           {type && type.name}

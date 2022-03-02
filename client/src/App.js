@@ -60,14 +60,14 @@ function App({ getRefreshToken }) {
             <>
               <Route path="dashboard" element={<DashboardPage />} />
               <Route path="add-iep" element={<AddUserPage />} />
-              <Route path="add-type" element={<AddTypePage />} />
+              <Route path="add-template" element={<AddTypePage />} />
               <Route path="add-category" element={<AddCategoryPage />} />
               <Route path="products" element={<ProductListPage />} />
               <Route path="add-product" element={<AddProjectPage />} />
-              <Route path="type/edit/:id" element={<EditTypePage />} />
+              <Route path="template/edit/:id" element={<EditTypePage />} />
               <Route path="category/edit/:id" element={<EditCategoryPage />} />
               <Route path="product/edit/:id" element={<EditProductPage />} />
-              <Route path="types" element={<TypeListPage />} />
+              <Route path="templates" element={<TypeListPage />} />
               <Route path="category" element={<CategoryListPage />} />
               <Route path="settings" element={<SettingsPage />} />
               <Route
