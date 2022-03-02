@@ -51,7 +51,6 @@ const AddProjectForm = ({ category, createProject, getTypeList }) => {
   };
 
   const onSubmitHandeler = async (values) => {
-    console.log(selectedFile3);
     if (selectedFile) {
       setIsLoading(true);
       let check = await createProject(
@@ -64,7 +63,7 @@ const AddProjectForm = ({ category, createProject, getTypeList }) => {
 
       if (check) {
         setIsLoading(false);
-        navigate("/dashboard");
+        navigate("/products");
       }
 
       setIsLoading(false);
@@ -136,6 +135,7 @@ const AddProjectForm = ({ category, createProject, getTypeList }) => {
     size: "",
     image: "",
     description: "",
+    featured: false,
   };
 
   const SignupSchema = Yup.object().shape({
@@ -435,6 +435,7 @@ const AddProjectForm = ({ category, createProject, getTypeList }) => {
                     </div>
                   </Col>
                 </Row>
+
                 <div className="">
                   <div className="d-flex  justify-content-between align-items-center">
                     {" "}
@@ -452,6 +453,24 @@ const AddProjectForm = ({ category, createProject, getTypeList }) => {
                     />
                   </div>
                 </div>
+
+                <InputGroup className="my-3 d-flex flex-column">
+                  <div className="d-flex justify-content-between align-items-center pb-2">
+                    <label htmlFor="featured" className="d-flex">
+                      <Field
+                        as={BootstrapForm.Check}
+                        name="featured"
+                        isValid={!errors.featured && touched.featured}
+                        type="checkbox"
+                        isInvalid={errors.featured && touched.featured}
+                      />{" "}
+                      <span className="ms-2">Featured </span>
+                    </label>
+                  </div>
+                  <small>
+                    Check this if you want to make this product featured
+                  </small>
+                </InputGroup>
 
                 <div className="pt-3 d-flex flex-column flex-md-row justify-content-start align-items-center">
                   <Button

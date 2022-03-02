@@ -2,6 +2,7 @@ import types from "../config/ProductTypes";
 import {
   CATEGORY_DELETE,
   CATEGORY_LOAD,
+  DELETE_PRODUCT,
   GET_PRODUCT_LIST,
   LANDING_SIDEBAR_TOGGLE,
   SELECT_TEMPLATE,
@@ -45,6 +46,11 @@ const LandingReducer = (state = initialState, action) => {
       return {
         ...state,
         category: [...state.category.filter((item) => item._id !== payload)],
+      };
+    case DELETE_PRODUCT:
+      return {
+        ...state,
+        product: [...state.product.filter((item) => item._id !== payload)],
       };
 
     default:

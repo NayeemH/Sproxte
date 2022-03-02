@@ -41,7 +41,7 @@ const AddTypeForm = ({ createProductType, getCategoryList, category }) => {
 
   const onSubmitHandeler = async (values) => {
     console.log(values);
-    if (selectedFile && selectedFile2) {
+    if (selectedFile) {
       setIsLoading(true);
       let check = await createProductType(values, selectedFile, selectedFile2);
       if (check) {

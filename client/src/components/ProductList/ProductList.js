@@ -1,15 +1,15 @@
 import React from "react";
-import { Button, Spinner, Table } from "react-bootstrap";
-import { AiFillEdit } from "react-icons/ai";
+import { Badge, Button, Spinner, Table } from "react-bootstrap";
+import { AiFillEdit, AiOutlineStar } from "react-icons/ai";
 import { BsTrash } from "react-icons/bs";
 import { connect, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import swal from "sweetalert";
-import { deleteCategory } from "../../actions/Category.action";
+import { deleteProduct } from "../../actions/Project.action";
 import { IMAGE_PATH } from "../../constants/URL";
-import styles from "./CategoryList.module.scss";
+import styles from "./ProductList.module.scss";
 
-const CategoryList = ({ deleteCategory }) => {
+const ProductList = ({ deleteProduct }) => {
   const list = useSelector((state) => state.landing.product);
   const navigate = useNavigate();
 
@@ -22,7 +22,7 @@ const CategoryList = ({ deleteCategory }) => {
       dangerMode: true,
     }).then((willDelete) => {
       if (willDelete) {
-        deleteCategory(id);
+        deleteProduct(id);
       }
     });
   };
@@ -35,10 +35,12 @@ const CategoryList = ({ deleteCategory }) => {
             <th>#</th>
             <th>Name</th>
             {/* <th>Template</th> */}
-            <th>Featured</th>
+
             <th>Front Image</th>
             <th>Price</th>
             <th>Quantity</th>
+            <th>Sizes</th>
+
             <th>Actions</th>
           </tr>
         </thead>
@@ -54,8 +56,14 @@ const CategoryList = ({ deleteCategory }) => {
             list.map((item, i) => (
               <tr key={i}>
                 <td>{i + 1}</td>
-                <td>{item.name}</td>
-                <td>{item.featured}</td>
+                <td>
+                  {item.name}{" "}
+                  {item.featured && (
+                    <span style={{ color: "var(--orange" }}>
+                      <AiOutlineStar />
+                    </span>
+                  )}
+                </td>
 
                 <td>
                   <div className={styles.img_wrapper}>
@@ -68,6 +76,13 @@ const CategoryList = ({ deleteCategory }) => {
                 </td>
                 <td>{item.price}</td>
                 <td>{item.quantity}</td>
+                <td>
+                  {item.sizes.map((size, j) => (
+                    <Badge key={j} bg="var(--orange)" className={styles.badge}>
+                      {size}
+                    </Badge>
+                  ))}
+                </td>
                 <td>
                   <Button
                     size="sm"
@@ -94,4 +109,4 @@ const CategoryList = ({ deleteCategory }) => {
   );
 };
 
-export default connect(null, { deleteCategory })(CategoryList);
+export default connect(null, { deleteProduct })(ProductList);

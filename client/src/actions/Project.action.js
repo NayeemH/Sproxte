@@ -36,6 +36,8 @@ import axios from "axios";
 //import invited from "../stub/projects/projectDetails";
 import { getRefreshToken } from "./Dashboard.action";
 import {
+  DELETE_PRODUCT,
+  DELETE_PRODUCT_ERRROR,
   GET_PRODUCT_LIST,
   GET_PRODUCT_LIST_ERROR,
   TYPES_EDIT,
@@ -172,6 +174,9 @@ export const createProject =
     formData.append("quantity", values.quantity);
     formData.append("productType", values.productType);
     formData.append("description", values.description);
+    if (values.featured === true) {
+      formData.append("featured", values.featured);
+    }
     values.size
       .trim()
       .split(",")
@@ -227,7 +232,9 @@ export const createProject =
 //GET CATEGORY LIST ACTION
 export const getProjectsList = () => async (dispatch) => {
   try {
-    const res = await axios.get(`${BASE_URL}/api/v1/discover/all`);
+    const res = await axios.get(
+      `${BASE_URL}/api/v1/discover/all?page=1&limit=24`
+    );
     // console.log(res);
 
     dispatch({
@@ -239,6 +246,26 @@ export const getProjectsList = () => async (dispatch) => {
       type: GET_PRODUCT_LIST_ERROR,
     });
     console.log(err);
+    toast.error(err.response.data.message);
+  }
+};
+
+//DELETE CATEGORY ACTION
+export const deleteProduct = (id) => async (dispatch) => {
+  try {
+    const res = await axios.delete(`${BASE_URL}/api/v1/template/${id}`, {
+      withCredentials: true,
+    });
+    // console.log(res);
+    dispatch({
+      type: DELETE_PRODUCT,
+      payload: id,
+    });
+    toast.success("Product deleted successfully");
+  } catch (err) {
+    dispatch({
+      type: DELETE_PRODUCT_ERRROR,
+    });
     toast.error(err.response.data.message);
   }
 };

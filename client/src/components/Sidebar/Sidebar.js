@@ -116,7 +116,7 @@ const Sidebar = ({ logout }) => {
 
                 <div className={styles.link_base}>
                   <div></div>
-                  <NavLink to="/add-product" onClick={handeleClick}>
+                  <NavLink to="/products" onClick={handeleClick}>
                     <span>
                       <BiLayer />
                     </span>
