@@ -1,0 +1,148 @@
+.wrapper {
+  width: 100%;
+  height: 50px;
+  background: var(--dark);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 2.5rem;
+  color: var(--light);
+}
+
+.hr {
+  height: 1px;
+  width: calc(100% - 5rem);
+  margin: 0 auto;
+  opacity: 0.4;
+  background: var(--secondary);
+}
+
+.active_btn {
+  background: none !important;
+  color: var(--orange) !important;
+  border-color: var(--orange) !important;
+}
+
+.active_btn:hover {
+  background: none !important;
+  color: var(--light) !important;
+  border-color: var(--orange) !important;
+}
+
+.btn {
+  background: var(--dark) !important;
+  border-color: var(--orange) !important;
+}
+
+.btn:hover {
+  background: var(--orange) !important;
+  border-color: var(--orange) !important;
+}
+
+.btn:focus,
+.active_btn:focus {
+  box-shadow: none !important;
+  border-color: var(--orange) !important;
+}
+
+.btn__grp {
+  border-color: var(--orange) !important;
+}
+
+.ham {
+  color: var(--orange);
+  font-size: 28px;
+  cursor: pointer;
+  transition: 0.3s all ease-in-out;
+}
+
+.ham:hover {
+  color: var(--light);
+  transition: 0.3s all ease-in-out;
+}
+
+.logo {
+  height: 24px;
+  cursor: pointer;
+  margin: 0 10px;
+}
+
+.projects {
+  font-size: 16px !important;
+  border-left: 1px solid var(--light);
+  padding-left: 10px;
+  display: block;
+}
+
+.dropdown {
+  height: 35px;
+  width: 35px;
+  font-size: 20px !important;
+  background: var(--dark) !important;
+}
+
+.dropdown :global(.dropdown-menu) {
+  font-size: 14px !important;
+  background: var(--white) !important;
+}
+
+.dropdown_item {
+  background: var(--white) !important;
+  color: var(--dark) !important;
+}
+.dropdown_item:hover {
+  background: var(--dark) !important;
+  color: var(--orange) !important;
+}
+
+.dropdown button {
+  padding: 0 0 !important;
+  height: 37px !important;
+  overflow: hidden !important;
+}
+
+.dropdown button:focus,
+.dropdown button:active {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+.dropdown::after {
+  display: none !important;
+}
+
+:global(.dropdown-toggle::after) {
+  display: none !important;
+}
+
+.divider {
+  border-color: var(--secondary) !important;
+  margin-left: 0.5rem !important;
+  margin-right: 0.5rem !important;
+}
+
+@media screen and (max-width: 768px) {
+  .wrapper {
+    flex-direction: column !important;
+    height: auto !important;
+    padding: 0 0.5rem !important;
+  }
+  .list__icon {
+    display: none;
+  }
+  .projects {
+    display: none;
+  }
+  .logo {
+    display: none;
+  }
+  .ham {
+    display: none;
+  }
+  .dropdown {
+    display: none;
+  }
+  .btn__grp {
+    display: none !important;
+  }
+}

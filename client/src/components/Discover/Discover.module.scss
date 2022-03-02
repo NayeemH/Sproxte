@@ -1,5 +1,5 @@
 .wrapper {
-  background: rgb(9, 9, 9) !important;
+  background: var(--white) !important;
   min-height: calc(100vh - 228px);
   padding-bottom: 30px;
 }
@@ -8,11 +8,11 @@
   max-width: 900px !important;
   padding: 20px 0;
   margin: 0 auto !important;
-  border-bottom: 1px solid var(--black);
+  border-bottom: 1px solid var(--primary);
 }
 
 .link {
-  color: var(--white) !important;
+  color: var(--dark) !important;
   transition: 0.3s all ease-in-out;
 }
 

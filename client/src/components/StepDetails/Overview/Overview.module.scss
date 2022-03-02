@@ -1,0 +1,141 @@
+.wrapper {
+  background: var(--dark-bg);
+  padding: 1rem;
+}
+
+.desc {
+  font-size: 14px;
+  color: var(--secondary);
+}
+
+.btn {
+  outline: none !important;
+  border: none !important;
+  padding: 5px 26px;
+  width: 100% !important;
+  background: var(--primary) !important;
+  transition: 0.3s all ease-in-out;
+  margin-bottom: 12px;
+  margin-right: 2.5rem;
+}
+
+.btn:hover {
+  background: var(--primary-hover) !important;
+  transition: 0.3s all ease-in-out;
+}
+
+.btn_submit {
+  outline: none !important;
+  border: none !important;
+  color: #fff !important;
+  background: var(--primary) !important;
+  padding: 5px 26px;
+  transition: 0.3s all ease-in-out;
+  margin-bottom: 12px;
+  margin-right: 2.5rem;
+}
+
+.cancel_btn {
+  padding: 5px 26px !important;
+  margin-bottom: 12px;
+  margin-right: 2.5rem;
+}
+
+.btn_submit:hover {
+  transition: 0.3s all ease-in-out;
+}
+
+.btn_feedback {
+  outline: none !important;
+  border: 1px solid var(--primary) !important;
+  padding: 5px 26px;
+  width: 100% !important;
+  background: var(--primary-hover) !important;
+  transition: 0.3s all ease-in-out;
+  margin-bottom: 12px;
+}
+
+.btn_feedback:hover {
+  border-color: var(--primary-hover) !important;
+  transition: 0.3s all ease-in-out;
+}
+
+.fb_wrapper {
+  padding-top: 15px;
+}
+
+.feedback {
+  background: rgba($color: #000000, $alpha: 0.1) !important;
+  padding: 15px 10px;
+  margin-top: 8px;
+  display: flex;
+  border: 1px solid var(--dark-bg);
+  transition: 0.3s all ease-in-out;
+}
+
+.feedback.active {
+  border: 1px solid var(--primary) !important;
+  transition: 0.3s all ease-in-out;
+}
+
+.fb_text {
+  color: var(--light);
+  display: block;
+}
+
+.img_wrapper {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 5px;
+  margin-right: 8px;
+}
+
+.username {
+  font-size: 16px;
+  margin-right: 4px;
+  color: var(--light);
+}
+
+.userrole {
+  font-size: 13px;
+  color: var(--light);
+}
+
+.user_info {
+  padding-bottom: 8px;
+}
+
+.actions {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  width: 30px;
+}
+
+.delete:hover {
+  color: var(--danger);
+  cursor: pointer;
+  transition: 0.3s all ease-in-out;
+}
+.edit:hover {
+  color: var(--primary);
+  cursor: pointer;
+  transition: 0.3s all ease-in-out;
+}
+
+.fb_date {
+  font-size: 13px;
+  color: var(--secondary);
+}
+
+.textarea {
+  background: rgba($color: #000000, $alpha: 0.1) !important;
+  border: none !important;
+  color: var(--light) !important;
+}

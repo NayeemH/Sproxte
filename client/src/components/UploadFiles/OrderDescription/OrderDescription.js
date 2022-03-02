@@ -68,7 +68,7 @@ const OrderDescription = ({ size, setSize, addToCart }) => {
   };
   return (
     <div className={styles.wrapper}>
-      <Card className={styles.crd}>
+      <Card className={`${styles.crd} shadow`}>
         <Card.Body>
           <Row>
             <Col>
@@ -76,7 +76,7 @@ const OrderDescription = ({ size, setSize, addToCart }) => {
 
               <div className="pt-3">
                 <Button
-                  variant="outline-light"
+                  variant="outline-dark"
                   onClick={() => fileRef.current.click()}
                 >
                   <span className="d-block mr-4">
@@ -114,7 +114,7 @@ const OrderDescription = ({ size, setSize, addToCart }) => {
           </Row>
         </Card.Body>
       </Card>
-      <Card className={styles.crd_size}>
+      <Card className={`${styles.crd_size} shadow`}>
         <Card.Body>
           <span className="d-block fs-4">Select Size</span>
           <div
@@ -148,7 +148,7 @@ const OrderDescription = ({ size, setSize, addToCart }) => {
           </div>
         </Card.Body>
       </Card>
-      <Card className={styles.crd}>
+      <Card className={`${styles.crd} shadow`}>
         <Card.Body className="d-flex justify-content-between flex-column">
           <span className="d-block fs-4">Order Description</span>
           <textarea

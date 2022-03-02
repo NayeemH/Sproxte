@@ -1,11 +1,11 @@
 import React from "react";
 
-const Poster = () => {
+const Poster = ({ color = "#fff" }) => {
   return (
     <div>
       <svg
         viewBox="0 0 33 40"
-        fill="none"
+        fill="transparent"
         height={65}
         xmlns="http://www.w3.org/2000/svg"
       >
@@ -15,15 +15,16 @@ const Poster = () => {
           width="31.0887"
           height="39"
           rx="0.5"
-          className="stroke"
+          style={{ stroke: color }}
+          strokeWidth="1"
         ></rect>
         <rect
           x="2.125"
           y="2.125"
           width="27.75"
           height="35.75"
-          className="stroke"
-          strokeWidth="0.25"
+          style={{ stroke: color }}
+          strokeWidth="1"
         ></rect>
       </svg>
     </div>

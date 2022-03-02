@@ -1,0 +1,86 @@
+.wrapper {
+  padding: 0 2.5rem;
+}
+
+.steps_wrapper {
+  color: var(--light) !important;
+  background: var(--dark-bg) !important;
+  border: 1px solid var(--dark-bg);
+  padding: 0 0 !important;
+  border-radius: 7px;
+  overflow: hidden;
+  margin-bottom: 10px;
+  transition: 0.3s all ease-in-out;
+}
+
+.steps_wrapper:hover {
+  transition: 0.3s all ease-in-out;
+  border: 1px solid var(--primary);
+}
+
+.border_left {
+  border-left: 1px solid var(--light-bg);
+}
+
+.hr {
+  width: 100%;
+  height: 1px;
+  background: var(--secondary);
+  margin-bottom: 15px;
+}
+
+.img {
+  max-height: 120px;
+}
+
+.name {
+  font-size: 16px;
+  font-weight: normal;
+  padding-left: 15px;
+}
+
+.btn {
+  background: var(--primary) !important;
+  color: var(--light) !important;
+  border: none !important;
+  margin-right: 8px;
+}
+
+.btn:hover {
+  background: var(--primary-hover) !important;
+  color: var(--light) !important;
+}
+
+.down:hover,
+.down {
+  cursor: pointer;
+  padding-left: 20px;
+}
+
+.modal_wrapper {
+  width: 1500px !important;
+  background: #fff;
+}
+
+.down_btn {
+  border: 1px solid rgb(0, 134, 22) !important;
+  background: none !important;
+  color: rgb(0, 134, 22) !important;
+  transition: 0.3s all ease-in-out;
+}
+
+.down_btn:hover {
+  background: rgba(0, 134, 22, 0.3) !important;
+  transition: 0.3s all ease-in-out;
+}
+
+@media screen and (max-width: 768px) {
+  .img {
+    width: 100%;
+    max-height: none;
+  }
+
+  .name {
+    padding-top: 10px;
+  }
+}

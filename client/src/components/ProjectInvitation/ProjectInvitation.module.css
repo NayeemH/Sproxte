@@ -1,0 +1,84 @@
+.wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.heading {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.logo {
+  width: 40px;
+}
+
+.crd {
+  width: 22rem;
+  background: var(--dark) !important;
+}
+
+.project_image {
+  width: 100px;
+}
+
+.project_name {
+  font-size: 22px;
+  font-weight: bold;
+  color: var(--primary);
+}
+
+.project_desc {
+  font-size: 16px;
+  color: var(--secondary);
+  font-weight: normal;
+}
+
+.btn {
+  outline: none !important;
+  border: none !important;
+  padding: 8px 26px;
+  background: var(--primary) !important;
+  transition: 0.3s all ease-in-out;
+}
+
+.btn:hover {
+  background: var(--primary-hover) !important;
+  transition: 0.3s all ease-in-out;
+}
+.btn_reject {
+  outline: none !important;
+  border: none !important;
+  padding: 8px 26px;
+  background: var(--danger) !important;
+  transition: 0.3s all ease-in-out;
+}
+
+.btn_reject:hover {
+  background: var(--danger-hover) !important;
+  transition: 0.3s all ease-in-out;
+}
+
+.small_text {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  color: var(--secondary);
+}
+
+.input {
+  background: var(--dark) !important;
+  color: var(--light) !important;
+  border: none !important;
+}
+.input:disabled {
+  background: var(--dark) !important;
+  color: var(--secondary) !important;
+  border: none !important;
+}
+
+@media screen and (max-width: 768px) {
+  .crd {
+    width: 90%;
+  }
+}

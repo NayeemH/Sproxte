@@ -1,0 +1,86 @@
+.wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px 0;
+  max-height: 90vh;
+}
+
+.heading {
+  font-size: 24px;
+  font-weight: normal;
+}
+
+.logo {
+  width: 40px;
+}
+
+.crd {
+  width: 30rem;
+  background: var(--dark-bg) !important;
+  border: 1px solid var(--dark-bg) !important;
+  box-shadow: 3px 3px 3px rgba($color: var(--dark-bg), $alpha: 0.5) !important;
+}
+
+.btn {
+  outline: none !important;
+  border: none !important;
+  padding: 8px 26px;
+  margin-top: 5px;
+  background: var(--primary) !important;
+  transition: 0.3s all ease-in-out;
+}
+
+.btn:hover {
+  background: var(--primary-hover) !important;
+  transition: 0.3s all ease-in-out;
+}
+
+.btn_cancel {
+  outline: none !important;
+  border: none !important;
+  padding: 8px 26px;
+  margin-top: 5px;
+  background: var(--danger) !important;
+  transition: 0.3s all ease-in-out;
+}
+
+.btn_cancel:hover {
+  background: var(--danger-hover) !important;
+  transition: 0.3s all ease-in-out;
+}
+
+.dropdown {
+  position: relative;
+  .down_arrow {
+    position: absolute;
+    right: 7px;
+    bottom: 23%;
+    z-index: 8;
+    color: var(--primary);
+  }
+}
+
+.eyeIcon {
+  position: absolute;
+  right: 5px;
+  top: 58%;
+  cursor: pointer;
+  color: var(--dark) !important;
+  z-index: 99;
+}
+
+.req {
+  color: var(--secondary) !important;
+  font-size: 13px;
+}
+
+.preview {
+  max-height: 100px;
+}
+
+@media screen and (max-width: 768px) {
+  .crd {
+    width: 90%;
+  }
+}

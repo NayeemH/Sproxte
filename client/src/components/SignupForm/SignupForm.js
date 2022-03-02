@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Field, Formik, Form } from "formik";
 import {
   Button,
@@ -9,15 +9,31 @@ import {
 import * as Yup from "yup";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import styles from "./SignupForm.module.scss";
+import { createUserAccount } from "../../actions/Landing.action";
+import { connect } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
 
-const SignupForm = () => {
+const SignupForm = ({ createUserAccount, isAuthenticated }) => {
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
   const [isPasswordVisible2, setIsPasswordVisible2] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigate("/discover");
+    }
+  }, [isAuthenticated]);
 
   const onSubmitHandeler = async (values) => {
+    setSubmitting(true);
     // TODO ::: create account action
-    let check = true;
-    console.log(values);
+    let check = await createUserAccount(values);
+    if (check) {
+      console.log("SubmittEd");
+    }
+    setSubmitting(false);
   };
   let initVals = {
     username: "",
@@ -48,9 +64,11 @@ const SignupForm = () => {
   });
   return (
     <div className={styles.wrapper}>
-      <Card text="light" className={styles.crd}>
-        <Card.Header className="d-flex justify-content-center align-items-center">
-          <span className={styles.heading}>Create Account</span>
+      <Card className={`${styles.crd} shadow `}>
+        <Card.Header className="d-flex justify-content-center align-items-center bg-dark">
+          <span className={`${styles.heading} fw-bold gradient_title`}>
+            Create Account
+          </span>
         </Card.Header>
         <Card.Body>
           <Formik
@@ -164,14 +182,21 @@ const SignupForm = () => {
                     />
                   )}
                 </InputGroup>
+                <span className="d-block text-end">
+                  Already have an account?{" "}
+                  <Link to="/login" className={styles.link__page}>
+                    Login Now
+                  </Link>
+                </span>
 
                 <div className="pt-3">
                   <Button
                     variant="primary"
                     type="submit"
                     className={styles.btn}
+                    disabled={submitting}
                   >
-                    Create Account
+                    {submitting ? "Submitting..." : "Create Account"}
                   </Button>
                 </div>
               </Form>
@@ -183,4 +208,8 @@ const SignupForm = () => {
   );
 };
 
-export default SignupForm;
+const mapStateToProps = (state) => ({
+  isAuthenticated: state.auth.isAuthenticated,
+});
+
+export default connect(mapStateToProps, { createUserAccount })(SignupForm);

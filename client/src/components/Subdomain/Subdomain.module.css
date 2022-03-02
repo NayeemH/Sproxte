@@ -1,0 +1,63 @@
+.wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.heading {
+  font-size: 24px;
+  font-weight: lighter;
+}
+
+.logo {
+  width: 40px;
+}
+
+.crd {
+  width: 22rem;
+  background: var(--dark) !important;
+}
+
+.btn {
+  outline: none !important;
+  border: none !important;
+  padding: 8px 26px;
+  background: var(--primary) !important;
+  transition: 0.3s all ease-in-out;
+}
+
+.btn:hover {
+  background: var(--primary-hover) !important;
+  transition: 0.3s all ease-in-out;
+}
+
+.link {
+  color: var(--primary) !important;
+}
+
+.eyeIcon {
+  position: absolute;
+  right: 5px;
+  top: 58%;
+  cursor: pointer;
+  color: var(--dark) !important;
+  z-index: 99;
+}
+
+.input {
+  background: var(--dark-bg) !important;
+  color: var(--light) !important;
+  border: none !important;
+}
+.input:disabled {
+  background: var(--dark-bg) !important;
+  color: var(--secondary) !important;
+  border: none !important;
+}
+
+@media screen and (max-width: 768px) {
+  .crd {
+    width: 90%;
+  }
+}

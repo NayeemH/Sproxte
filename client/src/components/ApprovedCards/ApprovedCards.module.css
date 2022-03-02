@@ -1,0 +1,21 @@
+.wrapper {
+  padding: 0 2.5rem !important;
+  padding-bottom: 1.5rem !important;
+}
+
+.hr {
+  background: var(--primary) !important;
+}
+
+.border_bottom {
+  font-size: 1.4rem;
+  padding-bottom: 6px;
+  border-bottom: 1px solid var(--primary) !important;
+}
+
+@media screen and (max-width: 768px) {
+  .wrapper {
+    padding: 0 0.5rem !important;
+    padding-bottom: 1rem !important;
+  }
+}

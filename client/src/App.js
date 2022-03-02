@@ -14,8 +14,31 @@ import {
   RefundPolicyPage,
 } from "./views";
 import FileUploadPage from "./views/FileUploadPage/FileUploadPage";
+import { useEffect } from "react";
+import Aos from "aos";
+import "aos/dist/aos.css";
+import LoginPage from "./views/LoginPage/LoginPage";
+import { getRefreshToken } from "./actions/Auth.action";
+import { connect } from "react-redux";
+import DashboardPage from "./views/DashboardPage/DashboardPage";
+import SettingsPage from "./views/SettingsPage/SettingsPage";
+import PasswordChangeSettings from "./views/PasswordChangeSettings/PasswordChangeSettings";
+import AddUserPage from "./views/AddUserPage/AddUserPage";
+import AddTypePage from "./views/AddTypePage/AddTypePage";
+import TypeListPage from "./views/TypeListPage/TypeListPage";
+import EditTypePage from "./views/EditTypePage/EditTypePage";
+import AddProjectPage from "./views/AddProjectPage/AddProjectPage";
+import AddCategoryPage from "./views/AddCategoryPage/AddCategoryPage";
+import CategoryListPage from "./views/CategoryListPage/CategoryListPage";
+import EditCategoryPage from "./views/EditCategoryPage/EditCategoryPage";
 
-function App() {
+function App({ getRefreshToken }) {
+  useEffect(() => {
+    getRefreshToken();
+    Aos.init({
+      duration: 2000,
+    });
+  }, []);
   return (
     <>
       <ToastContainer newestOnTop theme="dark" />
@@ -24,6 +47,7 @@ function App() {
           <Route path="/" element={<LandingPage />} />
           <Route path="/discover" element={<DiscoverPage />} />
           <Route path="/signup" element={<SignupPage />} />
+          <Route path="/login" element={<LoginPage />} />
           <Route path="/cart" element={<CartPage />} />
           <Route path="/contact" element={<ContactPage />} />
           <Route path="/payment-methods" element={<PaymentMethodsPage />} />
@@ -32,7 +56,20 @@ function App() {
 
           <Route path="/*" element={<PrivateOutlet />}>
             <>
-              <Route path="dashboard" element={<SignupPage />} />
+              <Route path="dashboard" element={<DashboardPage />} />
+              <Route path="add-iep" element={<AddUserPage />} />
+              <Route path="add-type" element={<AddTypePage />} />
+              <Route path="add-category" element={<AddCategoryPage />} />
+              <Route path="add-product" element={<AddProjectPage />} />
+              <Route path="type/edit/:id" element={<EditTypePage />} />
+              <Route path="category/edit/:id" element={<EditCategoryPage />} />
+              <Route path="types" element={<TypeListPage />} />
+              <Route path="category" element={<CategoryListPage />} />
+              <Route path="settings" element={<SettingsPage />} />
+              <Route
+                path="settings/password"
+                element={<PasswordChangeSettings />}
+              />
             </>
           </Route>
         </Routes>
@@ -41,4 +78,4 @@ function App() {
   );
 }
 
-export default App;
+export default connect(null, { getRefreshToken })(App);

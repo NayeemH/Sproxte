@@ -11,8 +11,7 @@ import {
 const initialState = {
   token: "",
   isAuthenticated: false,
-  user: {},
-  err: "",
+  user: null,
   loading: true,
 };
 
@@ -47,10 +46,9 @@ const authReducer = (state = initialState, action) => {
       return {
         ...state,
         token: "",
-        user: {},
+        user: null,
         isAuthenticated: false,
         loading: false,
-        err: action.payload ? action.payload : "",
       };
     case AUTH_USER_LOAD:
       return {

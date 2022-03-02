@@ -4,6 +4,7 @@
   --grey: #464b5e;
   --secondary: #9d9da8;
   --primary: #ffe502;
+  --orange: #ffa602;
   --light: #f2f2f2;
   --white: #fff;
 }
@@ -35,4 +36,19 @@ body {
 .icon-hidden.form-control.is-valid,
 .icon-hidden .was-validated .form-control:invalid {
   background-image: none !important;
+}
+
+.gradient_title {
+  background-image: linear-gradient(90deg, #ffe502 0%, #ffa602 100%) !important;
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.bg-dark {
+  background: var(--dark) !important;
+}
+
+.bg_dark {
+  background: var(--light) !important;
 }
