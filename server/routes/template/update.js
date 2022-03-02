@@ -21,9 +21,9 @@ router.patch('/:id', fileFetch.fields([{name: 'pngImageFront', maxCount: 1}, {na
         if(productType) updatedItems.productType = productType;
 
         if(req.files && req.files.layouts) {
-            const images = await Promise.all([
+            const images = await Promise.all(
                 req.files.layouts.map(layout => saveImage(layout))
-            ]);
+            );
 
             updatedItems.layouts = images.map(image => ({image}));
         }

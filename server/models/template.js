@@ -20,8 +20,7 @@ const templateSchema = Schema({
         required: true,
     },
     pngImageBack: {
-        type: String,
-        required: true,
+        type: String
     },
     sizes: {
         type: Array,

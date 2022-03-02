@@ -9,11 +9,17 @@ router.post('/', fileFetch.fields([{name: 'pngImageFront', maxCount: 1}, {name: 
         const {name, sizes, price, description, quantity, featured, colors, productType} = req.body;
 
         const images1 = await saveImage(req.files.pngImageFront[0]);
-        const images2 = await saveImage(req.files.pngImageBack[0]);
 
-        const layouts = await Promise.all([
-            req.files.layouts.map(layout => saveImage(layout))
-        ]);
+        let images2, layouts;
+        if(req.files.pngImageBack) {
+            images2 = await saveImage(req.files.pngImageBack[0]);
+        }
+
+        if(req.files.layouts) {
+            layouts = await Promise.all(
+                req.files.layouts.map(layout => saveImage(layout))
+            );
+        }
 
         const type = await new Template({
             name,
@@ -24,7 +30,7 @@ router.post('/', fileFetch.fields([{name: 'pngImageFront', maxCount: 1}, {name: 
             description,
             quantity,
             featured,
-            layouts: layouts.map(image => ({image})),
+            layouts: layouts && layouts.map(image => ({image})),
             colors,
             productType
         }).save();
