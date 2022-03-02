@@ -2,9 +2,13 @@ const router = require("express").Router();
 const User = require('../../models/user');
 const { verifyToken, issueToken } = require("../../lib/JWTUtils");
 
-router.post("/", async (req, res, next) => {
+router.post("/:type", async (req, res, next) => {
 
 	try {
+        const {type} = req.params;
+
+        if(!(type === 'client' || type === 'guardian' || type === 'coach')) throw Error('Invalid type');
+
 		const { refreshToken } = req.cookies;
 
 		if (!refreshToken) throw Error("Refresh Token Required");
@@ -37,11 +41,11 @@ router.post("/", async (req, res, next) => {
 
 			// Create Refresh and Access Token
 			const newRefreshToken = await issueToken(
-				{ userId: user._id, userType: payload.userType, tokenType: "refresh" },
+				{ userId: user._id, userType: type, tokenType: "refresh" },
 				"180d"
 			);
 			const newAccessToken = await issueToken(
-				{ userId: user._id, userType: payload.userType, tokenType: "access" },
+				{ userId: user._id, userType: type, tokenType: "access" },
 				"300m"
 			);
 
