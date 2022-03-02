@@ -12,7 +12,7 @@ router.get('/all', async (req, res, next) => {
 
 
         const templates = await Template
-            .find({}, {name: 1, pngImageFront: 1, pngImageBack: 1})
+            .find({}, {_id: 1, name: 1, sizes: 1, price: 1, quantity: 1, featured: 1, pngImageFront: 1, pngImageBack: 1})
             .sort({_id: -1})
             .skip(skip)
             .limit(limit);
