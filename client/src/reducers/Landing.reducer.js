@@ -3,6 +3,7 @@ import {
   CATEGORY_DELETE,
   CATEGORY_LOAD,
   DELETE_PRODUCT,
+  GET_PRODUCT_DETAILS,
   GET_PRODUCT_LIST,
   LANDING_SIDEBAR_TOGGLE,
   SELECT_TEMPLATE,
@@ -16,6 +17,7 @@ const initialState = {
   types: [],
   category: [],
   product: [],
+  selected_product: {},
 };
 
 const LandingReducer = (state = initialState, action) => {
@@ -38,6 +40,9 @@ const LandingReducer = (state = initialState, action) => {
 
     case GET_PRODUCT_LIST:
       return { ...state, product: payload };
+
+    case GET_PRODUCT_DETAILS:
+      return { ...state, selected_product: payload };
 
     case CATEGORY_LOAD:
       return { ...state, category: payload };

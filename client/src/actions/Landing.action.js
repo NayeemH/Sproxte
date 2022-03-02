@@ -117,7 +117,7 @@ export const getTypeList = () => async (dispatch) => {
     dispatch({
       type: TYPES_LOAD_ERROR,
     });
-    toast.error(err.response.data.message);
+    console.log(err);
   }
 };
 

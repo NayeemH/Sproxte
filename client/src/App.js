@@ -32,6 +32,7 @@ import AddCategoryPage from "./views/AddCategoryPage/AddCategoryPage";
 import CategoryListPage from "./views/CategoryListPage/CategoryListPage";
 import EditCategoryPage from "./views/EditCategoryPage/EditCategoryPage";
 import ProductListPage from "./views/ProductListPage/ProductListPage";
+import EditProductPage from "./views/EditProductPage/EditProductPage";
 
 function App({ getRefreshToken }) {
   useEffect(() => {
@@ -65,6 +66,7 @@ function App({ getRefreshToken }) {
               <Route path="add-product" element={<AddProjectPage />} />
               <Route path="type/edit/:id" element={<EditTypePage />} />
               <Route path="category/edit/:id" element={<EditCategoryPage />} />
+              <Route path="product/edit/:id" element={<EditProductPage />} />
               <Route path="types" element={<TypeListPage />} />
               <Route path="category" element={<CategoryListPage />} />
               <Route path="settings" element={<SettingsPage />} />

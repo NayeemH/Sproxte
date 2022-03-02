@@ -38,6 +38,10 @@ import { getRefreshToken } from "./Dashboard.action";
 import {
   DELETE_PRODUCT,
   DELETE_PRODUCT_ERRROR,
+  EDIT_PRODUCT,
+  EDIT_PRODUCT_ERRROR,
+  GET_PRODUCT_DETAILS,
+  GET_PRODUCT_DETAILS_ERROR,
   GET_PRODUCT_LIST,
   GET_PRODUCT_LIST_ERROR,
   TYPES_EDIT,
@@ -229,7 +233,71 @@ export const createProject =
     return false;
   };
 
-//GET CATEGORY LIST ACTION
+// EDIT PRODUCT
+export const editProduct =
+  (values, file1, file2, file3, colors, id) => async (dispatch) => {
+    let formData = new FormData();
+
+    formData.append("name", values.name);
+    formData.append("price", values.price);
+    formData.append("quantity", values.quantity);
+    formData.append("description", values.description);
+    if (values.featured === true) {
+      formData.append("featured", values.featured);
+    }
+    values.size
+      .trim()
+      .split(",")
+      .map((s, i) => {
+        formData.append(`sizes[${i}]`, s);
+      });
+    colors.map((c, i) => {
+      formData.append(`colors[${i}]`, c.hex);
+    });
+    if (file1) {
+      formData.append("pngImageFront", file1);
+    }
+    if (file2) {
+      formData.append("pngImageBack", file2);
+    }
+    if (file3) {
+      formData.append(`layouts`, file3);
+    }
+
+    const config = {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+      withCredentials: true,
+    };
+    try {
+      // TODO ::: API CALL
+      const res = await axios.patch(
+        `${BASE_URL}/api/v1/template/${id}`,
+        formData,
+        config
+      );
+      // console.log(res);
+      if (res.status === 200) {
+        dispatch({
+          type: EDIT_PRODUCT,
+        });
+        dispatch(getProjectsList());
+        toast.success("Project edited successfully");
+        return true;
+      }
+    } catch (err) {
+      dispatch({
+        type: EDIT_PRODUCT_ERRROR,
+      });
+      err.response.data.msg.map((msg) => toast.error(msg));
+      return false;
+    }
+
+    return false;
+  };
+
+//GET PROJECT LIST ACTION
 export const getProjectsList = () => async (dispatch) => {
   try {
     const res = await axios.get(
@@ -244,6 +312,25 @@ export const getProjectsList = () => async (dispatch) => {
   } catch (err) {
     dispatch({
       type: GET_PRODUCT_LIST_ERROR,
+    });
+    console.log(err);
+    toast.error(err.response.data.message);
+  }
+};
+
+//GET Product DETAILS ACTION
+export const getProductDetails = (id) => async (dispatch) => {
+  try {
+    const res = await axios.get(`${BASE_URL}/api/v1/template/${id}`);
+    console.log(res);
+
+    dispatch({
+      type: GET_PRODUCT_DETAILS,
+      payload: res.data.types,
+    });
+  } catch (err) {
+    dispatch({
+      type: GET_PRODUCT_DETAILS_ERROR,
     });
     console.log(err);
     toast.error(err.response.data.message);

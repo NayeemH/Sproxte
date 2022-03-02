@@ -87,7 +87,7 @@ const ProductList = ({ deleteProduct }) => {
                   <Button
                     size="sm"
                     className="me-3"
-                    onClick={() => navigate(`/category/edit/${item._id}`)}
+                    onClick={() => navigate(`/product/edit/${item._id}`)}
                   >
                     <AiFillEdit /> Edit
                   </Button>
