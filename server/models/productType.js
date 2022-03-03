@@ -1,6 +1,13 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
+const layoutSchema = Schema({
+    image: {
+        type: String,
+        required: true
+    }
+});
+
 // Actual project schema
 const productTypeSchema = Schema({
     name: {
@@ -18,6 +25,9 @@ const productTypeSchema = Schema({
     categoryType: {
         type: Schema.Types.ObjectId,
         required: true,
+    },
+    layouts: {
+        type: [layoutSchema]
     },
     sizes: {
         type: Array,

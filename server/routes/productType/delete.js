@@ -10,12 +10,12 @@ router.delete('/:id', async (req, res, next) => {
         const type = await ProductType.findOneAndDelete({_id: id});
 
         res.json({
-            success: true,
             msg: 'Product Type is deleted successfully',
         });
 
         if(type) {
             await Promise.all([
+                ...type.layouts.map(layout => deleteImage(layout)),
                 deleteImage(type.pngImageFront),
                 deleteImage(type.pngImageBack)
             ]);

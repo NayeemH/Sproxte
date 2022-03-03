@@ -33,6 +33,14 @@ router.patch('/:id', fileFetch.fields([{name: 'pngImageFront', maxCount: 1}, {na
             updatedItems.pngImageBack = images;
         }
 
+        if(req.files && req.files.layouts) {
+            const images = await Promise.all(
+                req.files.layouts.map(layout => saveImage(layout))
+            );
+
+            updatedItems.layouts = images.map(image => ({image}));
+        }
+
         const types = await ProductType.findOneAndUpdate({_id: id}, {$set: updatedItems});
 
         res.json({
@@ -42,6 +50,11 @@ router.patch('/:id', fileFetch.fields([{name: 'pngImageFront', maxCount: 1}, {na
 
         // delete
         if(types) {
+            if(req.files && req.files.layouts) {
+                await Promise.all(
+                    types.layouts.map(layout => deleteImage(layout))
+                );
+            }
             if(req.files && req.files.pngImageFront) {
                 await deleteImage(types.pngImageFront);
             }
