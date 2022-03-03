@@ -1,11 +1,18 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Button, Col, Container, Row } from "react-bootstrap";
 import ProductCard from "../Shared/ProductCard/ProductCard";
 import styles from "./HeroLanding.module.scss";
-import img from "../../assets/templates/long.png";
 import TemplateSelect from "../TemplateSelect/TemplateSelect";
+import { connect } from "react-redux";
+import { getLandingList } from "../../actions/Landing.action";
+import { IMAGE_PATH } from "../../constants/URL";
 
-const HeroLanding = () => {
+const HeroLanding = ({ list, getLandingList }) => {
+  useEffect(() => {
+    if (list.length === 0) {
+      getLandingList();
+    }
+  }, [list]);
   return (
     <>
       <Container fluid>
@@ -37,30 +44,16 @@ const HeroLanding = () => {
             >
               <h1 className={`gradient_title `}>Browse Products</h1>
             </Col>
-            <Col md={3} className="p-2">
-              <ProductCard title="Extream Football" img={img} id={1} />
-            </Col>
-            <Col md={3} className="p-2">
-              <ProductCard title="Extream Football" img={img} id={1} />
-            </Col>
-            <Col md={3} className="p-2">
-              <ProductCard title="Extream Football" img={img} id={1} />
-            </Col>
-            <Col md={3} className="p-2">
-              <ProductCard title="Extream Football" img={img} id={1} />
-            </Col>
-            <Col md={3} className="p-2">
-              <ProductCard title="Extream Football" img={img} id={1} />
-            </Col>
-            <Col md={3} className="p-2">
-              <ProductCard title="Extream Football" img={img} id={1} />
-            </Col>
-            <Col md={3} className="p-2">
-              <ProductCard title="Extream Football" img={img} id={1} />
-            </Col>
-            <Col md={3} className="p-2">
-              <ProductCard title="Extream Football" img={img} id={1} />
-            </Col>
+            {list.length > 0 &&
+              list.map((item) => (
+                <Col md={3} key={item._id} className="p-2">
+                  <ProductCard
+                    title={item.name}
+                    img={`${IMAGE_PATH}small/${item.pngImageFront}`}
+                    id={item._id}
+                  />
+                </Col>
+              ))}
           </Row>
         </Container>
       </div>
@@ -68,4 +61,8 @@ const HeroLanding = () => {
   );
 };
 
-export default HeroLanding;
+const mapStateToProps = (state) => ({
+  list: state.landing.landing_list,
+});
+
+export default connect(mapStateToProps, { getLandingList })(HeroLanding);

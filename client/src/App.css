@@ -23,7 +23,7 @@ body {
 
 .swiper-button-prev,
 .swiper-button-next {
-  color: var(--primary) !important;
+  color: var(--dark) !important;
 }
 
 .swiper-button-next {

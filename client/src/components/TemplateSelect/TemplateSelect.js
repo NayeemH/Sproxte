@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { setSelectedTemplate } from "../../actions/Landing.action";
 import styles from "./TemplateSelect.module.scss";
@@ -7,8 +7,23 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination } from "swiper";
 import { Button, Col, Container, Row } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
+import { IMAGE_PATH } from "../../constants/URL";
+import { getCategoryList } from "../../actions/Category.action";
 
-const TemplateSelect = ({ setSelectedTemplate, template }) => {
+const TemplateSelect = ({
+  setSelectedTemplate,
+  category,
+  list,
+  getCategoryList,
+}) => {
+  useEffect(() => {
+    if (list.length === 0) {
+      getCategoryList();
+    }
+    if (category === {}) {
+      setSelectedTemplate(list[0]);
+    }
+  }, [list, category]);
   const navigate = useNavigate();
   return (
     <Container fluid className={styles.wrapper}>
@@ -16,12 +31,12 @@ const TemplateSelect = ({ setSelectedTemplate, template }) => {
         <Col className="px-0" data-aos="fade-up">
           <div className={`text-center py-3 ${styles.preview}`}>
             <img
-              src={template.template}
+              src={`${IMAGE_PATH}small/${category.pngImage}`}
               className={styles.template}
-              alt={template.name}
+              alt={category.name}
             />
-            <span className="text-center fs-2 d-block text-light  py-3">
-              {template.name}
+            <span className="text-center fs-2 d-block text-dark  py-3">
+              {category.name}
             </span>
           </div>
         </Col>
@@ -29,50 +44,54 @@ const TemplateSelect = ({ setSelectedTemplate, template }) => {
           <span className="d-block fs-1 text-center text-dark py-4">
             Customize Now
           </span>
-          <Swiper
-            slidesPerView={1}
-            slidesOffsetBefore={10}
-            className={styles.templates}
-            breakpoints={{
-              300: {
-                slidesPerView: 3,
-                spaceBetween: 30,
-              },
-              768: {
-                slidesPerView: 3,
-                spaceBetween: 30,
-              },
-            }}
-            modules={[Pagination, Navigation]}
-            navigation={true}
-            onSlideChange={(swiper) => {
-              setSelectedTemplate(
-                types[(swiper.activeIndex + 1) % types.length]
-              );
-            }}
-            onSwiper={(swiper) => setSelectedTemplate(types[0])}
-            centeredSlidesBounds={true}
-            centeredSlides={true}
-            centerInsufficientSlides={true}
-            loop={true}
-          >
-            {types.map((item, i) => (
-              <SwiperSlide key={i}>
-                <div
-                  className={` d-flex justify-content-center align-items-center ${
-                    styles.temp_item
-                  } ${template.id === item.id ? styles.active : ""}`}
-                >
-                  {item.svg}
-                </div>
-              </SwiperSlide>
-            ))}
-          </Swiper>
+          {list.length > 0 && (
+            <Swiper
+              slidesPerView={1}
+              slidesOffsetBefore={10}
+              className={styles.templates}
+              breakpoints={{
+                300: {
+                  slidesPerView: 3,
+                  spaceBetween: 30,
+                },
+                768: {
+                  slidesPerView: 3,
+                  spaceBetween: 30,
+                },
+              }}
+              modules={[Pagination, Navigation]}
+              navigation={true}
+              onSlideChange={(swiper) => {
+                setSelectedTemplate(list[swiper.activeIndex % list.length]);
+              }}
+              onSwiper={(swiper) => setSelectedTemplate(list[0])}
+              centeredSlidesBounds={true}
+              centeredSlides={true}
+              centerInsufficientSlides={true}
+              loop={true}
+            >
+              {list.map((item, i) => (
+                <SwiperSlide key={i}>
+                  <div
+                    className={` d-flex justify-content-center align-items-center ${
+                      styles.temp_item
+                    } ${category._id === item._id ? styles.active : ""}`}
+                  >
+                    <img
+                      src={`${IMAGE_PATH}small/${item.svgImage}`}
+                      className={`img-fluid p-2`}
+                      alt={item.name}
+                    />
+                  </div>
+                </SwiperSlide>
+              ))}
+            </Swiper>
+          )}
           <div className="text-center pt-5">
             <Button
               className={styles.btn}
               size="lg"
-              onClick={() => navigate(`/order/${template.id}`)}
+              onClick={() => navigate(`/order/${category._id}`)}
             >
               Order Now
             </Button>
@@ -84,9 +103,11 @@ const TemplateSelect = ({ setSelectedTemplate, template }) => {
 };
 
 const mapStateToProps = (state) => ({
-  template: state.landing.template,
+  category: state.landing.template,
+  list: state.landing.category,
 });
 
-export default connect(mapStateToProps, { setSelectedTemplate })(
-  TemplateSelect
-);
+export default connect(mapStateToProps, {
+  setSelectedTemplate,
+  getCategoryList,
+})(TemplateSelect);

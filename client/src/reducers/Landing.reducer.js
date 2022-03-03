@@ -1,8 +1,11 @@
-import types from "../config/ProductTypes";
 import {
   CATEGORY_DELETE,
   CATEGORY_LOAD,
   DELETE_PRODUCT,
+  DISCOVER_ALL,
+  DISCOVER_POPULAR,
+  DISCOVER_FEATURED,
+  GET_LANDING_LIST,
   GET_PRODUCT_DETAILS,
   GET_PRODUCT_LIST,
   LANDING_SIDEBAR_TOGGLE,
@@ -13,11 +16,15 @@ import {
 
 const initialState = {
   sidebarActive: false,
-  template: types.filter((item) => item.id === 1)[0],
+  template: {},
   types: [],
   category: [],
   product: [],
   selected_product: {},
+  landing_list: [],
+  discover_all: [],
+  discover_featured: [],
+  discover_popular: [],
 };
 
 const LandingReducer = (state = initialState, action) => {
@@ -28,6 +35,18 @@ const LandingReducer = (state = initialState, action) => {
 
     case SELECT_TEMPLATE:
       return { ...state, template: payload };
+
+    case GET_LANDING_LIST:
+      return { ...state, landing_list: payload };
+
+    case DISCOVER_ALL:
+      return { ...state, discover_all: payload };
+
+    case DISCOVER_FEATURED:
+      return { ...state, discover_featured: payload };
+
+    case DISCOVER_POPULAR:
+      return { ...state, discover_popular: payload };
 
     case TYPES_LOAD:
       return { ...state, types: payload };

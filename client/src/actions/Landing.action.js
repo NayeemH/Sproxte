@@ -1,4 +1,5 @@
 import {
+  GET_LANDING_LIST,
   LANDING_SIDEBAR_TOGGLE,
   SELECT_TEMPLATE,
   TYPES_DELETE,
@@ -138,5 +139,22 @@ export const deleteType = (id) => async (dispatch) => {
       type: TYPES_DELETE_ERROR,
     });
     toast.error(err.response.data.message);
+  }
+};
+
+//GET LANDING LIST
+export const getLandingList = () => async (dispatch) => {
+  try {
+    const res = await axios.get(
+      `${BASE_URL}/api/v1/discover/all?page=1&limit=8`
+    );
+    // console.log(res);
+
+    dispatch({
+      type: GET_LANDING_LIST,
+      payload: res.data.templates.items,
+    });
+  } catch (err) {
+    console.log(err);
   }
 };

@@ -32,7 +32,8 @@
   height: 100px;
   width: 100px;
   border-radius: 50%;
-  background: var(--dark);
+
+  background: linear-gradient(90deg, #ffe502 0%, #ffa602 100%) !important;
   border: 1px solid var(--black);
   opacity: 0.5;
 }
@@ -58,7 +59,7 @@
 }
 
 .preview {
-  background: var(--dark);
+  background: linear-gradient(90deg, #ffe502 0%, #ffa602 100%) !important;
   height: 430px;
   display: flex;
   align-items: center;
