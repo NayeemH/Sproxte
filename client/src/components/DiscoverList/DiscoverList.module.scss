@@ -1,0 +1,35 @@
+.wrapper {
+  background: var(--white) !important;
+  min-height: calc(100vh - 228px);
+  padding-bottom: 30px;
+}
+
+.list_row {
+  max-width: 900px !important;
+  padding: 20px 0;
+  margin: 0 auto !important;
+  border-bottom: 1px solid var(--orange);
+}
+
+.link {
+  cursor: pointer;
+  color: var(--dark) !important;
+  transition: 0.3s all ease-in-out;
+}
+
+.link.disabled {
+  cursor: none !important;
+  color: var(--grey) !important;
+  transition: 0.3s all ease-in-out;
+}
+
+.link:hover {
+  color: var(--orange) !important;
+  transition: 0.3s all ease-in-out;
+}
+
+.link.disabled:hover {
+  cursor: default !important;
+  color: var(--grey) !important;
+  transition: 0.3s all ease-in-out;
+}

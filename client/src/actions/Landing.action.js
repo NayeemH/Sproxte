@@ -1,6 +1,7 @@
 import {
   DISCOVER_ERROR,
   DISCOVER_LOAD,
+  DISCOVER_POPULAR,
   GET_LANDING_LIST,
   LANDING_SIDEBAR_TOGGLE,
   SELECT_TEMPLATE,
@@ -165,10 +166,26 @@ export const getLandingList = () => async (dispatch) => {
 export const getDiscover = () => async (dispatch) => {
   try {
     const res = await axios.get(`${BASE_URL}/api/v1/discover/`);
-    console.log(res);
+    //console.log(res);
     dispatch({
       type: DISCOVER_LOAD,
       payload: res.data.templates,
+    });
+  } catch (err) {
+    dispatch({ type: DISCOVER_ERROR });
+    console.log(err);
+  }
+};
+//GET POPULAR LIST ACTION
+export const getPopular = (page) => async (dispatch) => {
+  try {
+    const res = await axios.get(
+      `${BASE_URL}/api/v1/discover/popular?page=${page}&limit=2`
+    );
+    // console.log(res);
+    dispatch({
+      type: DISCOVER_POPULAR,
+      payload: res.data.popularTemplates,
     });
   } catch (err) {
     dispatch({ type: DISCOVER_ERROR });
