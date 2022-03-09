@@ -11,7 +11,7 @@ const DiscoverPage = () => {
       <LandingSidebar />
       <Nav />
       <Discover />
-      <BottomNav />
+      {/* <BottomNav /> */}
       <Footer />
     </div>
   );

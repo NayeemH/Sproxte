@@ -12,6 +12,7 @@ import {
   SELECT_TEMPLATE,
   TYPES_DELETE,
   TYPES_LOAD,
+  DISCOVER_LOAD,
 } from "../constants/TypeLanding";
 
 const initialState = {
@@ -23,6 +24,7 @@ const initialState = {
   selected_product: {},
   landing_list: [],
   discover_all: [],
+  discover: {},
   discover_featured: [],
   discover_popular: [],
 };
@@ -41,6 +43,9 @@ const LandingReducer = (state = initialState, action) => {
 
     case DISCOVER_ALL:
       return { ...state, discover_all: payload };
+
+    case DISCOVER_LOAD:
+      return { ...state, discover: payload };
 
     case DISCOVER_FEATURED:
       return { ...state, discover_featured: payload };

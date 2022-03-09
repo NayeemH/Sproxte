@@ -1,4 +1,6 @@
 import {
+  DISCOVER_ERROR,
+  DISCOVER_LOAD,
   GET_LANDING_LIST,
   LANDING_SIDEBAR_TOGGLE,
   SELECT_TEMPLATE,
@@ -155,6 +157,21 @@ export const getLandingList = () => async (dispatch) => {
       payload: res.data.templates.items,
     });
   } catch (err) {
+    console.log(err);
+  }
+};
+
+//GET Type LIST ACTION
+export const getDiscover = () => async (dispatch) => {
+  try {
+    const res = await axios.get(`${BASE_URL}/api/v1/discover/`);
+    console.log(res);
+    dispatch({
+      type: DISCOVER_LOAD,
+      payload: res.data.templates,
+    });
+  } catch (err) {
+    dispatch({ type: DISCOVER_ERROR });
     console.log(err);
   }
 };
