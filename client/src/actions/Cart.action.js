@@ -1,18 +1,27 @@
 import {
   CART_ADD_ITEM,
+  DISCOVER_ERROR,
   GET_PRODUCT_DETAILS,
   SET_CART_SIZE,
 } from "../constants/TypeLanding";
 import types from "../config/ProductTypes";
 import { toast } from "react-toastify";
+import { BASE_URL } from "../constants/URL";
+import axios from "axios";
 
 // GET PRODUCT
-export const getProduct = (id) => (dispatch) => {
-  console.log(types);
-  dispatch({
-    type: GET_PRODUCT_DETAILS,
-    payload: { ...types.filter((item) => item.id.toString() === id)[0] },
-  });
+export const getProduct = (id) => async (dispatch) => {
+  try {
+    const res = await axios.get(`${BASE_URL}/api/v1/type/${id}`);
+    // console.log(res);
+    dispatch({
+      type: GET_PRODUCT_DETAILS,
+      payload: { ...res.data.types },
+    });
+  } catch (err) {
+    dispatch({ type: DISCOVER_ERROR });
+    console.log(err);
+  }
 };
 
 // SET SIZE

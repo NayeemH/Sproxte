@@ -1,5 +1,6 @@
 import React from "react";
 import { Col, Container, Row } from "react-bootstrap";
+import { IMAGE_PATH } from "../../constants/URL";
 import ProductCard from "../Shared/ProductCard/ProductCard";
 import OrderDescription from "./OrderDescription/OrderDescription";
 import styles from "./UploadFiles.module.scss";
@@ -12,8 +13,8 @@ const UploadFiles = ({ product }) => {
           <Col md={6} className="py-md-5 py-3">
             <ProductCard
               title={product.name}
-              img={product.template}
-              id={product.id}
+              img={`${IMAGE_PATH}small/${product.pngImageFront}`}
+              id={product._id}
             />
           </Col>
           <Col md={6} className="py-md-5 py-3">

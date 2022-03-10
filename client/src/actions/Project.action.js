@@ -359,14 +359,18 @@ export const deleteProduct = (id) => async (dispatch) => {
 
 // CREATE PRODUCT TYPE
 export const createProductType =
-  (values, file, previewFile) => async (dispatch) => {
+  (values, file, previewFile, layouts) => async (dispatch) => {
     let formData = new FormData();
 
     formData.append("name", values.name);
     formData.append("categoryType", values.categoryType);
     formData.append("pngImageFront", file);
+
     if (previewFile) {
       formData.append("pngImageBack", previewFile);
+    }
+    if (layouts) {
+      formData.append(`layouts`, layouts);
     }
 
     values.size

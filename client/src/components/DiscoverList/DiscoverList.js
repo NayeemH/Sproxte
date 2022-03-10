@@ -66,6 +66,7 @@ const DiscoverList = ({ list, title, page, name }) => {
             list.items.map((item) => (
               <Col md={4} className="p-2">
                 <ProductCard
+                  template
                   title={item.name}
                   img={`${IMAGE_PATH}small/${item.pngImageFront}`}
                   id={item._id}

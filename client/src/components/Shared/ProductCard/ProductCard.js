@@ -3,13 +3,13 @@ import { Card } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import styles from "./ProductCard.module.scss";
 
-const ProductCard = ({ title, img, id }) => {
+const ProductCard = ({ title, img, id, template }) => {
   const navigate = useNavigate();
   return (
     <>
       <Card
         className={`${styles.crd} shadow-sm`}
-        onClick={() => navigate(`/product/${id}`)}
+        onClick={() => navigate(`/${template ? "template" : "product"}/${id}`)}
       >
         <Card.Body>
           <img src={img} alt={title} className="img-fluid" />

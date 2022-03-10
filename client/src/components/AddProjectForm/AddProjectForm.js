@@ -436,7 +436,7 @@ const AddProjectForm = ({ category, createProject, getTypeList }) => {
                   </Col>
                 </Row>
 
-                <div className="">
+                {/* <div className="">
                   <div className="d-flex  justify-content-between align-items-center">
                     {" "}
                     <label htmlFor="image" className="d-block">
@@ -452,7 +452,7 @@ const AddProjectForm = ({ category, createProject, getTypeList }) => {
                       onChange={onSelectFile3}
                     />
                   </div>
-                </div>
+                </div> */}
 
                 <InputGroup className="my-3 d-flex flex-column">
                   <div className="d-flex justify-content-between align-items-center pb-2">

@@ -21,6 +21,25 @@ const AddTypeForm = ({ createProductType, getCategoryList, category }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [focus, setFocus] = useState(false);
   const [catInput, setCatInput] = useState("");
+  const [selectedFile3, setSelectedFile3] = useState();
+  const onSelectFile3 = (e) => {
+    if (!e.target.files || e.target.files.length === 0) {
+      setSelectedFile3(undefined);
+      return;
+    }
+
+    let flag = false;
+    let list = e.target.files;
+    for (let index = 0; index < list.length; index++) {
+      if (list[index].size > 2000000) {
+        toast.error("File size is too big");
+        flag = true;
+      }
+    }
+    if (!flag) {
+      setSelectedFile3(list);
+    }
+  };
 
   useEffect(() => {
     if (category.length === 0) {
@@ -43,7 +62,12 @@ const AddTypeForm = ({ createProductType, getCategoryList, category }) => {
     console.log(values);
     if (selectedFile) {
       setIsLoading(true);
-      let check = await createProductType(values, selectedFile, selectedFile2);
+      let check = await createProductType(
+        values,
+        selectedFile,
+        selectedFile2,
+        selectedFile3
+      );
       if (check) {
         setIsLoading(false);
         navigate("/templates");
@@ -146,7 +170,6 @@ const AddTypeForm = ({ createProductType, getCategoryList, category }) => {
                     value={catInput}
                     onChange={(e) => setCatInput(e.target.value)}
                     isValid={!errors.categoryType && touched.categoryType}
-                    type="text"
                     isInvalid={errors.categoryType && touched.categoryType}
                     onFocus={() => setFocus(true)}
                     onBlur={blurHandeler}
@@ -180,7 +203,7 @@ const AddTypeForm = ({ createProductType, getCategoryList, category }) => {
                     </div>
                   </div>
                 </InputGroup>
-                <InputGroup className="mb-3 d-flex flex-column">
+                <InputGroup className="my-3 d-flex flex-column">
                   <div className="d-flex justify-content-between align-items-center pb-2">
                     <label htmlFor="size" className="d-block">
                       Sizes
@@ -238,6 +261,24 @@ const AddTypeForm = ({ createProductType, getCategoryList, category }) => {
                       />
                     </div>
                   </InputGroup>
+                </div>
+
+                <div className="pt-3">
+                  <div className="d-flex  justify-content-between align-items-center">
+                    {" "}
+                    <label htmlFor="image" className="d-block">
+                      Layouts (Optional)
+                    </label>
+                  </div>
+                  <div className="">
+                    <input
+                      multiple
+                      type="file"
+                      name="image"
+                      className="form-control"
+                      onChange={onSelectFile3}
+                    />
+                  </div>
                 </div>
 
                 <div className="pt-3 d-flex flex-column flex-md-row justify-content-start align-items-center">
