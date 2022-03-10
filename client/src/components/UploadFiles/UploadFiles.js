@@ -18,7 +18,7 @@ const UploadFiles = ({ product }) => {
             />
           </Col>
           <Col md={6} className="py-md-5 py-3">
-            <OrderDescription size={product.size ? product.size : "S"} />
+            <OrderDescription sizes={product.sizes} />
           </Col>
         </Row>
       </Container>

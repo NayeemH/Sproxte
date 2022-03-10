@@ -12,7 +12,7 @@ const ProductCard = ({ title, img, id, template }) => {
         onClick={() => navigate(`/${template ? "template" : "product"}/${id}`)}
       >
         <Card.Body>
-          <img src={img} alt={title} className="img-fluid" />
+          <img src={img} alt={title} className="w-100" />
         </Card.Body>
         <Card.Footer className={styles.footer}>
           <span className="d-block fs-5 text-center">{title}</span>

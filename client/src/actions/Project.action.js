@@ -361,6 +361,7 @@ export const deleteProduct = (id) => async (dispatch) => {
 export const createProductType =
   (values, file, previewFile, layouts) => async (dispatch) => {
     let formData = new FormData();
+    // console.log(layouts);
 
     formData.append("name", values.name);
     formData.append("categoryType", values.categoryType);

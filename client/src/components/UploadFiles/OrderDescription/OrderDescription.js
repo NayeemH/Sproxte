@@ -5,12 +5,18 @@ import { addToCart, setSize } from "../../../actions/Cart.action";
 import { ImUpload } from "react-icons/im";
 import { toast } from "react-toastify";
 import styles from "./OrderDescription.module.scss";
+import colors from "../../../config/Colors";
 
-const OrderDescription = ({ size, setSize, addToCart }) => {
+const OrderDescription = ({ sizes, addToCart }) => {
   const [selectedFile, setSelectedFile] = useState();
   const [preview, setPreview] = useState();
+  const [size, setSize] = useState();
   const [description, setDescription] = useState();
-
+  const [selectedLayout, setSelectedLayout] = useState(true);
+  const [mainText, setMainText] = useState("");
+  const [secondaryText, setSecondaryText] = useState("");
+  const [mainTextColor, setMainTextColor] = useState("");
+  const [secondaryTextColor, setSecondaryTextColor] = useState("");
   const fileRef = useRef();
 
   useEffect(() => {
@@ -121,30 +127,14 @@ const OrderDescription = ({ size, setSize, addToCart }) => {
             className="d-flex justify-content-between align-items-center pt-3"
             style={{ maxWidth: 300, maxHeight: 200 }}
           >
-            <div
-              className={`${styles.size} ${size === "S" && styles.active}`}
-              onClick={() => setSize("S")}
-            >
-              <span className="fs-5 d-block">S</span>
-            </div>
-            <div
-              className={`${styles.size} ${size === "L" && styles.active}`}
-              onClick={() => setSize("L")}
-            >
-              <span className="fs-5 d-block">L</span>
-            </div>
-            <div
-              className={`${styles.size} ${size === "XL" && styles.active}`}
-              onClick={() => setSize("XL")}
-            >
-              <span className="fs-5 d-block">XL</span>
-            </div>
-            <div
-              className={`${styles.size} ${size === "XXL" && styles.active}`}
-              onClick={() => setSize("XXL")}
-            >
-              <span className="fs-5 d-block">XXL</span>
-            </div>
+            {sizes.map((s) => (
+              <div
+                className={`${styles.size} ${size === s && styles.active}`}
+                onClick={() => setSize(s)}
+              >
+                <span className="fs-5 d-block">{s}</span>
+              </div>
+            ))}
           </div>
         </Card.Body>
       </Card>
@@ -160,11 +150,50 @@ const OrderDescription = ({ size, setSize, addToCart }) => {
             onChange={(e) => setDescription(e.target.value)}
             className={`${styles.textarea} form-control mb-3`}
           ></textarea>
-          <Button onClick={submitHandeler} className={styles.btn}>
-            Add To Cart
-          </Button>
         </Card.Body>
       </Card>
+      <Card className={`${styles.crd} shadow mt-4`}>
+        <Card.Body className="d-flex justify-content-between flex-column">
+          <span className="d-block fs-4">Layout Options</span>
+          <span className="d-block pt-3">Main Text</span>
+          <input
+            type="text"
+            className={`${styles.textarea} form-control mb-3`}
+            onChange={(e) => setMainText(e.target.value)}
+          />
+          <span className="d-block pt-2">Main Text Color</span>
+          <select
+            value={mainTextColor}
+            onChange={(e) => setMainTextColor(e.target.value)}
+            className={` form-control mb-3`}
+          >
+            {colors.map((clr) => (
+              <option value={clr.name}>{clr.name}</option>
+            ))}
+          </select>
+          <span className="d-block pt-3">Secondary Text</span>
+          <input
+            type="text"
+            value={secondaryText}
+            className={`${styles.textarea} form-control mb-3`}
+            onChange={(e) => setSecondaryText(e.target.value)}
+          />
+          <span className="d-block pt-2">Main Text Color</span>
+          <select
+            value={secondaryTextColor}
+            onChange={(e) => setSecondaryTextColor(e.target.value)}
+            className={` form-control mb-3`}
+          >
+            {colors.map((clr) => (
+              <option value={clr.name}>{clr.name}</option>
+            ))}
+          </select>
+        </Card.Body>
+      </Card>
+      <div className="py-3"></div>
+      <Button onClick={submitHandeler} className={styles.btn}>
+        Add To Cart
+      </Button>
     </div>
   );
 };

@@ -35,7 +35,7 @@ const TypeList = ({ deleteType }) => {
             <th>ID</th>
             <th>Name</th>
             <th>Template</th>
-            <th>Thumbnile</th>
+            <th>Back Image</th>
             <th>Sizes</th>
             <th>Actions</th>
           </tr>
@@ -64,11 +64,15 @@ const TypeList = ({ deleteType }) => {
                 </td>
                 <td>
                   <div className={styles.img_wrapper}>
-                    <img
-                      src={`${IMAGE_PATH}small/${item.pngImageBack}`}
-                      alt={item.name}
-                      className={styles.img}
-                    />
+                    {item.pngImageBack ? (
+                      <img
+                        src={`${IMAGE_PATH}small/${item.pngImageBack}`}
+                        alt={item.name}
+                        className={styles.img}
+                      />
+                    ) : (
+                      <span className="text-danger">Not Set</span>
+                    )}
                   </div>
                 </td>
                 <td>
