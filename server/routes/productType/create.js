@@ -8,10 +8,12 @@ router.post('/', fileFetch.fields([{name: 'pngImageFront', maxCount: 1}, {name: 
     try {
         const {name, sizes, categoryType} = req.body;
 
-        const images = await Promise.all([
-            saveImage(req.files.pngImageFront[0]),
-            saveImage(req.files.pngImageBack[0])
-        ]);
+        const frontImage = await saveImage(req.files.pngImageFront[0]);
+
+        let backImage;
+        if(req.files.pngImageBack) {
+            backImage = await saveImage(req.files.pngImageBack[0]);
+        }
 
         let layouts;
         if(req.files.layouts) {
@@ -25,8 +27,8 @@ router.post('/', fileFetch.fields([{name: 'pngImageFront', maxCount: 1}, {name: 
             sizes,
             categoryType,
             layouts: layouts && layouts.map(image => ({image})),
-            pngImageFront: images[0],
-            pngImageBack: images[1]
+            pngImageFront: frontImage,
+            pngImageBack: backImage
         }).save();
 
         res.json({

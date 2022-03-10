@@ -14,7 +14,7 @@ const productType = require('./productType');
 const discover = require('./discover');
 const template = require('./template');
 const search = require('./search');
-const order = require('./order');
+//const order = require('./order');
 
 // User Register and login function 
 router.use('/auth', user);
@@ -35,7 +35,7 @@ router.use('/template', template);
 router.use('/search', search);
 
 // Order
-router.use('/order', isAuth, order);
+//router.use('/order', isAuth, order);
 
 // Admin need permission
 //router.use('/admin', isAuth, isAdmin, admin);
