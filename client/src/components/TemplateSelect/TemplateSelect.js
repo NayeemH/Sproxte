@@ -91,9 +91,9 @@ const TemplateSelect = ({
             <Button
               className={styles.btn}
               size="lg"
-              onClick={() => navigate(`/order/${category._id}`)}
+              onClick={() => navigate(`/category/${category._id}`)}
             >
-              Order Now
+              Browse Now
             </Button>
           </div>
         </Col>

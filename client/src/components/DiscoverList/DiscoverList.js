@@ -18,47 +18,49 @@ const DiscoverList = ({ list, title, page, name }) => {
             <div className="">
               <span className="d-block fs-3 fw-light">{title}</span>
             </div>
-            <div className="">
-              {page > 1 ? (
-                <Link
-                  to={`/discover/${name}?page=${parseInt(page) - 1}`}
-                  className={`${styles.link} ${
-                    page === 1 ? styles.disabled : ""
-                  }`}
-                >
-                  <span className="fw-light fs-3">
-                    <AiOutlineLeft />
+            {page !== -1 && (
+              <div className="">
+                {page > 1 ? (
+                  <Link
+                    to={`/discover/${name}?page=${parseInt(page) - 1}`}
+                    className={`${styles.link} ${
+                      page === 1 ? styles.disabled : ""
+                    }`}
+                  >
+                    <span className="fw-light fs-3">
+                      <AiOutlineLeft />
+                    </span>
+                  </Link>
+                ) : (
+                  <span className={styles.link}>
+                    <span className="fw-light fs-3">
+                      <AiOutlineLeft />
+                    </span>
                   </span>
-                </Link>
-              ) : (
-                <span className={styles.link}>
-                  <span className="fw-light fs-3">
-                    <AiOutlineLeft />
-                  </span>
+                )}
+                <span className="">
+                  <span className="fw-light fs-3">{page}</span>
                 </span>
-              )}
-              <span className="">
-                <span className="fw-light fs-3">{page}</span>
-              </span>
-              {page < list.pageCount ? (
-                <Link
-                  to={`/discover/${name}?page=${parseInt(page) + 1}`}
-                  className={`${styles.link} ${
-                    page >= list.pageCount ? styles.disabled : ""
-                  }`}
-                >
-                  <span className="fw-light fs-3">
-                    <AiOutlineRight />
+                {page < list.pageCount ? (
+                  <Link
+                    to={`/discover/${name}?page=${parseInt(page) + 1}`}
+                    className={`${styles.link} ${
+                      page >= list.pageCount ? styles.disabled : ""
+                    }`}
+                  >
+                    <span className="fw-light fs-3">
+                      <AiOutlineRight />
+                    </span>
+                  </Link>
+                ) : (
+                  <span className={styles.link}>
+                    <span className="fw-light fs-3">
+                      <AiOutlineRight />
+                    </span>
                   </span>
-                </Link>
-              ) : (
-                <span className={styles.link}>
-                  <span className="fw-light fs-3">
-                    <AiOutlineRight />
-                  </span>
-                </span>
-              )}
-            </div>
+                )}
+              </div>
+            )}
           </Col>
           {list.items &&
             list.items.map((item) => (

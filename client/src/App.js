@@ -36,6 +36,7 @@ import EditProductPage from "./views/EditProductPage/EditProductPage";
 import PopularListPage from "./views/PopularListPage/PopularListPage";
 import FeatureListPage from "./views/FeatureListPage/FeatureListPage";
 import AllListPage from "./views/AllListPage/AllListPage";
+import ProductsByCategoryPage from "./views/ProductsByCategoryPage/ProductsByCategoryPage";
 
 function App({ getRefreshToken }) {
   useEffect(() => {
@@ -54,6 +55,7 @@ function App({ getRefreshToken }) {
           <Route path="/discover/feature" element={<FeatureListPage />} />
           <Route path="/discover/popular" element={<PopularListPage />} />
           <Route path="/discover/all" element={<AllListPage />} />
+          <Route path="/category/:id" element={<ProductsByCategoryPage />} />
           <Route path="/signup" element={<SignupPage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/cart" element={<CartPage />} />

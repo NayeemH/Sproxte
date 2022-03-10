@@ -13,6 +13,7 @@ import {
   TYPES_DELETE,
   TYPES_LOAD,
   DISCOVER_LOAD,
+  PRODUCT_BY_CATEGORY,
 } from "../constants/TypeLanding";
 
 const initialState = {
@@ -27,6 +28,8 @@ const initialState = {
   discover: {},
   discover_featured: {},
   discover_popular: {},
+  category_products: null,
+  loading: true,
 };
 
 const LandingReducer = (state = initialState, action) => {
@@ -36,25 +39,28 @@ const LandingReducer = (state = initialState, action) => {
       return { ...state, sidebarActive: !state.sidebarActive };
 
     case SELECT_TEMPLATE:
-      return { ...state, template: payload };
+      return { ...state, template: payload, loading: false };
 
     case GET_LANDING_LIST:
-      return { ...state, landing_list: payload };
+      return { ...state, landing_list: payload, loading: false };
 
     case DISCOVER_ALL:
-      return { ...state, discover_all: payload };
+      return { ...state, discover_all: payload, loading: false };
 
     case DISCOVER_LOAD:
-      return { ...state, discover: payload };
+      return { ...state, discover: payload, loading: false };
+
+    case PRODUCT_BY_CATEGORY:
+      return { ...state, category_products: payload, loading: false };
 
     case DISCOVER_FEATURED:
-      return { ...state, discover_featured: payload };
+      return { ...state, discover_featured: payload, loading: false };
 
     case DISCOVER_POPULAR:
-      return { ...state, discover_popular: payload };
+      return { ...state, discover_popular: payload, loading: false };
 
     case TYPES_LOAD:
-      return { ...state, types: payload };
+      return { ...state, types: payload, loading: false };
 
     case TYPES_DELETE:
       return {
@@ -63,13 +69,13 @@ const LandingReducer = (state = initialState, action) => {
       };
 
     case GET_PRODUCT_LIST:
-      return { ...state, product: payload };
+      return { ...state, product: payload, loading: false };
 
     case GET_PRODUCT_DETAILS:
-      return { ...state, selected_product: payload };
+      return { ...state, selected_product: payload, loading: false };
 
     case CATEGORY_LOAD:
-      return { ...state, category: payload };
+      return { ...state, category: payload, loading: false };
 
     case CATEGORY_DELETE:
       return {

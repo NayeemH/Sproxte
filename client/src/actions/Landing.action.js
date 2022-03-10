@@ -6,6 +6,7 @@ import {
   DISCOVER_POPULAR,
   GET_LANDING_LIST,
   LANDING_SIDEBAR_TOGGLE,
+  PRODUCT_BY_CATEGORY,
   SELECT_TEMPLATE,
   TYPES_DELETE,
   TYPES_DELETE_ERROR,
@@ -222,6 +223,21 @@ export const getAll = (page) => async (dispatch) => {
     dispatch({
       type: DISCOVER_ALL,
       payload: res.data.templates,
+    });
+  } catch (err) {
+    dispatch({ type: DISCOVER_ERROR });
+    console.log(err);
+  }
+};
+
+//GET CATEGORY LIST ACTION
+export const getCategoryProduct = (id) => async (dispatch) => {
+  try {
+    const res = await axios.get(`${BASE_URL}/api/v1/type/category/${id}`);
+    // console.log(res);
+    dispatch({
+      type: PRODUCT_BY_CATEGORY,
+      payload: res.data.types,
     });
   } catch (err) {
     dispatch({ type: DISCOVER_ERROR });
