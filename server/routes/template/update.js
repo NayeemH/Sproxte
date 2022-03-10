@@ -48,9 +48,9 @@ router.patch('/:id', fileFetch.fields([{name: 'pngImageFront', maxCount: 1}, {na
         // Delete files
         if(template) {
             if(req.files && req.files.layouts) {
-                await Promise.all([
+                await Promise.all(
                     template.layouts.map(layout => deleteImage(layout))
-                ]);
+                );
             }
     
             if(req.files && req.files.pngImageFront) {
