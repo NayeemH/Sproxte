@@ -19,8 +19,7 @@ const productTypeSchema = Schema({
         required: true,
     },
     pngImageBack: {
-        type: String,
-        required: true,
+        type: String
     },
     categoryType: {
         type: Schema.Types.ObjectId,
