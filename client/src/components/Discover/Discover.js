@@ -21,7 +21,7 @@ const Discover = ({ getDiscover, list }) => {
             className="d-flex justify-content-between align-items-center pb-3"
           >
             <span className="d-block fs-3 fw-light">FEATURED TEMPLATES</span>
-            <Link to="/discover/featured" className={styles.link}>
+            <Link to="/discover/feature" className={styles.link}>
               <span className="fw-light fs-3">
                 <AiOutlineRight />
               </span>

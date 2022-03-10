@@ -1,5 +1,7 @@
 import {
+  DISCOVER_ALL,
   DISCOVER_ERROR,
+  DISCOVER_FEATURED,
   DISCOVER_LOAD,
   DISCOVER_POPULAR,
   GET_LANDING_LIST,
@@ -180,12 +182,46 @@ export const getDiscover = () => async (dispatch) => {
 export const getPopular = (page) => async (dispatch) => {
   try {
     const res = await axios.get(
-      `${BASE_URL}/api/v1/discover/popular?page=${page}&limit=2`
+      `${BASE_URL}/api/v1/discover/popular?page=${page}&limit=12`
     );
     // console.log(res);
     dispatch({
       type: DISCOVER_POPULAR,
       payload: res.data.popularTemplates,
+    });
+  } catch (err) {
+    dispatch({ type: DISCOVER_ERROR });
+    console.log(err);
+  }
+};
+
+//GET FEATURE LIST ACTION
+export const getFeature = (page) => async (dispatch) => {
+  try {
+    const res = await axios.get(
+      `${BASE_URL}/api/v1/discover/feature?page=${page}&limit=12`
+    );
+    // console.log(res);
+    dispatch({
+      type: DISCOVER_FEATURED,
+      payload: res.data.featureTemplates,
+    });
+  } catch (err) {
+    dispatch({ type: DISCOVER_ERROR });
+    console.log(err);
+  }
+};
+
+//GET ALL LIST ACTION
+export const getAll = (page) => async (dispatch) => {
+  try {
+    const res = await axios.get(
+      `${BASE_URL}/api/v1/discover/all?page=${page}&limit=12`
+    );
+    // console.log(res);
+    dispatch({
+      type: DISCOVER_ALL,
+      payload: res.data.templates,
     });
   } catch (err) {
     dispatch({ type: DISCOVER_ERROR });

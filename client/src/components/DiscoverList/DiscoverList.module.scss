@@ -8,13 +8,14 @@
   max-width: 900px !important;
   padding: 20px 0;
   margin: 0 auto !important;
-  border-bottom: 1px solid var(--orange);
+  // border-bottom: 1px solid var(--orange);
 }
 
 .link {
   cursor: pointer;
   color: var(--dark) !important;
   transition: 0.3s all ease-in-out;
+  margin: 0 5px !important;
 }
 
 .link.disabled {
@@ -25,6 +26,11 @@
 
 .link:hover {
   color: var(--orange) !important;
+  transition: 0.3s all ease-in-out;
+}
+
+span.link:hover {
+  color: var(--grey) !important;
   transition: 0.3s all ease-in-out;
 }
 

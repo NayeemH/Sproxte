@@ -23,10 +23,10 @@ const initialState = {
   product: [],
   selected_product: {},
   landing_list: [],
-  discover_all: [],
+  discover_all: {},
   discover: {},
-  discover_featured: [],
-  discover_popular: [],
+  discover_featured: {},
+  discover_popular: {},
 };
 
 const LandingReducer = (state = initialState, action) => {
