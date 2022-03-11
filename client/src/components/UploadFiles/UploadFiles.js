@@ -16,7 +16,17 @@ const UploadFiles = ({ product }) => {
               img={`${IMAGE_PATH}small/${product.pngImageFront}`}
               id={product._id}
               template
+              price={product.price}
+              discount={product.discount}
             />
+            {/* <span className="d-block fs-4 pt-3">
+              Regular Price : {product.price}${" "}
+              <span className="text-danger">(-{product.discount}% OFF)</span>
+            </span>
+            <span className="d-block fs-4 pt-2">
+              Discounted Price :{" "}
+              {(product.price * (100 - product.discount)) / 100}$
+            </span> */}
           </Col>
           <Col md={7} className="py-md-5 py-3">
             <OrderDescription sizes={product.sizes} product={product} />

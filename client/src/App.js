@@ -37,6 +37,7 @@ import PopularListPage from "./views/PopularListPage/PopularListPage";
 import FeatureListPage from "./views/FeatureListPage/FeatureListPage";
 import AllListPage from "./views/AllListPage/AllListPage";
 import ProductsByCategoryPage from "./views/ProductsByCategoryPage/ProductsByCategoryPage";
+import PaymentPage from "./views/PaymentPage/PaymentPage";
 
 function App({ getRefreshToken }) {
   useEffect(() => {
@@ -59,6 +60,7 @@ function App({ getRefreshToken }) {
           <Route path="/signup" element={<SignupPage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/cart" element={<CartPage />} />
+          <Route path="/payment" element={<PaymentPage />} />
           <Route path="/contact" element={<ContactPage />} />
           <Route path="/payment-methods" element={<PaymentMethodsPage />} />
           <Route path="/policy" element={<RefundPolicyPage />} />

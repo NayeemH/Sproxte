@@ -23,3 +23,27 @@
   border-bottom-right-radius: 14px !important;
   transition: 0.3s all ease-in-out;
 }
+
+.price {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  font-size: 20px;
+  color: var(--dark);
+  font-weight: bold;
+  background: linear-gradient(90deg, #ffe502 0%, #ffa602 100%);
+  padding: 5px 25px;
+  border-top-left-radius: 14px;
+  border-bottom-right-radius: 14px;
+}
+.discount {
+  position: absolute;
+  bottom: 0px;
+  right: 0px;
+  font-size: 20px;
+  color: var(--light);
+  font-weight: bold;
+  background: var(--dark);
+  padding: 5px 25px;
+  border-top-left-radius: 14px;
+}

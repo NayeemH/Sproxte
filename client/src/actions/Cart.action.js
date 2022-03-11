@@ -46,6 +46,7 @@ export const addToCart =
     mainTextColor,
     secondaryTextColor,
     selectedLayout,
+    quantity,
     product
   ) =>
   (dispatch) => {
@@ -63,6 +64,7 @@ export const addToCart =
         secondaryText,
         secondaryTextColor,
         selectedLayout,
+        quantity,
         product,
       },
     });

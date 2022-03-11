@@ -4,6 +4,9 @@ import {
   Form as BootstrapForm,
   InputGroup,
   Button,
+  Container,
+  Row,
+  Col,
 } from "react-bootstrap";
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
@@ -117,6 +120,8 @@ const AddTypeForm = ({ createProductType, getCategoryList, category }) => {
     image: "",
     size: "",
     categoryType: "",
+    price: 0,
+    discount: 0,
   };
 
   const SignupSchema = Yup.object().shape({
@@ -124,6 +129,8 @@ const AddTypeForm = ({ createProductType, getCategoryList, category }) => {
     image: Yup.string().nullable(),
     size: Yup.string().required("Size is required!"),
     categoryType: Yup.string().required("Valid Category name is required!"),
+    price: Yup.number().min(0).required("Price is required!"),
+    discount: Yup.number().min(0).max(100).required("Discount is required!"),
   });
   return (
     <div className={`${styles.wrapper} pb-5`}>
@@ -203,7 +210,56 @@ const AddTypeForm = ({ createProductType, getCategoryList, category }) => {
                     </div>
                   </div>
                 </InputGroup>
-                <InputGroup className="my-3 d-flex flex-column">
+
+                <Row className="pt-3">
+                  <Col md={6}>
+                    <InputGroup className="mb-3 d-flex flex-column">
+                      <div className="d-flex justify-content-between align-items-center pb-2">
+                        <label htmlFor="price" className="d-block">
+                          Product Price
+                        </label>
+                      </div>
+                      <Field
+                        as={BootstrapForm.Control}
+                        placeholder="Type product price"
+                        name="price"
+                        isValid={!errors.price && touched.price}
+                        type="number"
+                        className={`${styles.input} w-100`}
+                        isInvalid={errors.price && touched.price}
+                      />
+                      {errors.price && touched.price ? (
+                        <small className="text-danger pt-2">
+                          {errors.price}
+                        </small>
+                      ) : null}
+                    </InputGroup>
+                  </Col>
+                  <Col md={6}>
+                    <InputGroup className="mb-3 d-flex flex-column">
+                      <div className="d-flex justify-content-between align-items-center pb-2">
+                        <label htmlFor="discount" className="d-block">
+                          Product discount
+                        </label>
+                      </div>
+                      <Field
+                        as={BootstrapForm.Control}
+                        placeholder="Type product discount"
+                        name="discount"
+                        isValid={!errors.discount && touched.discount}
+                        type="number"
+                        className={`${styles.input} w-100`}
+                        isInvalid={errors.discount && touched.discount}
+                      />
+                      {errors.discount && touched.discount ? (
+                        <small className="text-danger pt-2">
+                          {errors.discount}
+                        </small>
+                      ) : null}
+                    </InputGroup>
+                  </Col>
+                </Row>
+                <InputGroup className="mb-3 d-flex flex-column">
                   <div className="d-flex justify-content-between align-items-center pb-2">
                     <label htmlFor="size" className="d-block">
                       Sizes

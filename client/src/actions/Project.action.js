@@ -365,6 +365,8 @@ export const createProductType =
 
     formData.append("name", values.name);
     formData.append("categoryType", values.categoryType);
+    formData.append("price", values.price);
+    formData.append("discount", values.discount);
     formData.append("pngImageFront", file);
 
     if (previewFile) {

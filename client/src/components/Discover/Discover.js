@@ -29,7 +29,7 @@ const Discover = ({ getDiscover, list }) => {
           </Col>
           {list.feature &&
             list.feature.map((item) => (
-              <Col md={4} className="p-2">
+              <Col md={4} key={item._id} className="p-2">
                 <ProductCard
                   title={item.name}
                   img={`${IMAGE_PATH}small/${item.pngImageFront}`}
@@ -55,7 +55,7 @@ const Discover = ({ getDiscover, list }) => {
           </Col>
           {list.popular &&
             list.popular.map((item) => (
-              <Col md={4} className="p-2">
+              <Col md={4} key={item._id} className="p-2">
                 <ProductCard
                   title={item.name}
                   img={`${IMAGE_PATH}small/${item.pngImageFront}`}
@@ -81,7 +81,7 @@ const Discover = ({ getDiscover, list }) => {
 
           {list.recent &&
             list.recent.map((item) => (
-              <Col md={4} className="p-2">
+              <Col md={4} key={item._id} className="p-2">
                 <ProductCard
                   title={item.name}
                   img={`${IMAGE_PATH}small/${item.pngImageFront}`}

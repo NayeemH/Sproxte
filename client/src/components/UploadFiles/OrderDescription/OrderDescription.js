@@ -7,12 +7,14 @@ import { toast } from "react-toastify";
 import styles from "./OrderDescription.module.scss";
 import colors from "../../../config/Colors";
 import { IMAGE_PATH } from "../../../constants/URL";
+import { useNavigate } from "react-router-dom";
 
 const OrderDescription = ({ sizes, addToCart, product }) => {
   const [selectedFile, setSelectedFile] = useState();
   const [preview, setPreview] = useState();
   const [size, setSize] = useState();
   const [description, setDescription] = useState();
+  const [quantity, setQuantity] = useState(1);
   const [selectedLayout, setSelectedLayout] = useState();
   const [mainText, setMainText] = useState("");
   const [secondaryText, setSecondaryText] = useState("");
@@ -20,6 +22,7 @@ const OrderDescription = ({ sizes, addToCart, product }) => {
   const [secondaryTextColor, setSecondaryTextColor] = useState("");
   const [selectedFileBack, setSelectedFile2] = useState();
   const fileRef = useRef();
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (
@@ -41,6 +44,10 @@ const OrderDescription = ({ sizes, addToCart, product }) => {
     } else {
       if (!description) {
         toast.error("Please enter a description");
+      } else if (quantity < 1) {
+        toast.error("Please enter a valid quantity");
+      } else if (!size) {
+        toast.error("Please select size");
       } else {
         addToCart(
           description,
@@ -52,10 +59,12 @@ const OrderDescription = ({ sizes, addToCart, product }) => {
           mainTextColor,
           secondaryTextColor,
           selectedLayout,
+          quantity,
           product
         );
         resetlHandeler();
         setDescription("");
+        navigate("/cart");
       }
     }
   };
@@ -281,7 +290,16 @@ const OrderDescription = ({ sizes, addToCart, product }) => {
           </Card.Body>
         </Card>
       )}
-      <div className="py-3"></div>
+      <div className="py-4 d-flex align-items-center">
+        <span className="fs-5 fw-bold me-3">Quantity</span>
+        <input
+          type="number"
+          value={quantity}
+          onChange={(e) => setQuantity(e.target.value)}
+          className="form-control"
+          style={{ width: "60px" }}
+        />
+      </div>
       <Button onClick={submitHandeler} className={styles.btn}>
         Add To Cart
       </Button>
