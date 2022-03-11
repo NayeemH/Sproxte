@@ -25,7 +25,14 @@ app.use(cors({
 
 
 // Setup express middlewares'
-app.use(express.json());
+app.use(express.json({
+    verify: function (req, res, buf) {
+        if (req.originalUrl.startsWith('api/v1/payment/webhook')) {
+            req.rawBody = buf.toString();
+        }
+    }
+}));
+
 app.use(express.urlencoded({extended: false}));
 
 // Setup Middleware

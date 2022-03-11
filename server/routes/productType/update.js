@@ -6,7 +6,7 @@ const ProductType = require('../../models/productType');
 
 router.patch('/:id', fileFetch.fields([{name: 'pngImageFront', maxCount: 1}, {name: 'pngImageBack', maxCount: 1}]), async (req, res, next) => {
     try {
-        const {name, sizes, categoryType} = req.body;
+        const {name, sizes, categoryType, price, discount} = req.body;
         const {id} = req.params;
 
         const updatedItems = {};
@@ -17,6 +17,14 @@ router.patch('/:id', fileFetch.fields([{name: 'pngImageFront', maxCount: 1}, {na
 
         if(sizes) {
             updatedItems.sizes = sizes;
+        }
+
+        if(price) {
+            updatedItems.price = price;
+        }
+        
+        if(discount) {
+            updatedItems.discount = discount;
         }
 
         if(categoryType) {
