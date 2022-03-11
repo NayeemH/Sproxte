@@ -6,7 +6,7 @@ const Template = require('../../models/template');
 
 router.patch('/:id', fileFetch.fields([{name: 'pngImageFront', maxCount: 1}, {name: 'pngImageBack', maxCount: 1}, , {name: 'layouts', maxCount: 10}]), async (req, res, next) => {
     try {
-        const {name, sizes, price, description, quantity, featured, colors, productType} = req.body;
+        const {name, sizes, price, discount, description, quantity, featured, colors, productType} = req.body;
         const {id} = req.params;
 
         const updatedItems = {};
@@ -14,6 +14,7 @@ router.patch('/:id', fileFetch.fields([{name: 'pngImageFront', maxCount: 1}, {na
         if(name) updatedItems.name = name;
         if(sizes) updatedItems.sizes = sizes;
         if(price) updatedItems.price = price;
+        if(discount) updatedItems.discount = discount;
         if(description) updatedItems.description = description;
         if(quantity) updatedItems.quantity = quantity;
         if(featured) updatedItems.featured = featured;

@@ -1,20 +1,14 @@
 const router = require('express').Router();
 
-const isAuth = require('../authenticate/isAuth');
-const isAdmin = require('../authenticate/isAdmin');
 
 // Import routes
-const getOrder = require('./getOrder');
-const productType = require('./productType');
-const template = require('./template');
-//const team = require('./team');
+const createOrder = require('./createOrder');
+const addOrder = require('./addOrder');
 
 
 // Routes
-router.use('/', getOrder);
-router.use('/template', template);
-router.use('/productType', productType);
-//router.use('/', team);
+router.use('/', createOrder);
+router.use('/', addOrder);
 
 
 module.exports = router;

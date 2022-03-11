@@ -31,6 +31,18 @@ const productTypeSchema = Schema({
     sizes: {
         type: Array,
         required: true,
+    },
+    price: {
+        type: Number,
+        default: 0
+    },
+    discount: {
+        type: Number,
+        default: 0
+    },
+    sellCount: {
+        type: Number,
+        default: 0
     }
 }, {timestamps: true});
 

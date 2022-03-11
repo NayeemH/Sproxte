@@ -36,6 +36,7 @@
     "nodemailer": "^6.7.2",
     "nodemailer-express-handlebars": "^4.0.0",
     "sharp": "^0.30.1",
+    "stripe": "^8.208.0",
     "validator": "^13.7.0"
   },
   "devDependencies": {
