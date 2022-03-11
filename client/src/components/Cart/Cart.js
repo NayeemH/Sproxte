@@ -1,15 +1,28 @@
-import React from "react";
-import { Container, Row, Col, Button } from "react-bootstrap";
+import React, { useState } from "react";
+import { Container, Row, Col, Button, Form } from "react-bootstrap";
 import { AiOutlineClose } from "react-icons/ai";
 import { connect } from "react-redux";
+import { toast } from "react-toastify";
 import { removeFromCart } from "../../actions/Cart.action";
 import styles from "./Cart.module.scss";
 
 const Cart = ({ cart, removeFromCart }) => {
+  const [address, setAddress] = useState("");
+  const [phone, setPhone] = useState("");
   let totalPrice = 0;
   cart.map((item, i) => {
     totalPrice += item.price;
   });
+
+  const submitHandeler = (e) => {
+    e.preventDefault();
+    if (address.length === 0 || phone.length === 0) {
+      toast.error("Please fill all the fields");
+      return;
+    }
+    console.log(address, phone);
+  };
+
   return (
     <div className={styles.wrapper}>
       <Container className="pt-4 px-5">
@@ -56,9 +69,36 @@ const Cart = ({ cart, removeFromCart }) => {
               <Col xs="3">{totalPrice}</Col>
               <Col xs="1"></Col>
             </Row>
+
             <Row className="py-5 text-center">
-              <Col>
-                <Button className={styles.btn}>Checkout</Button>
+              <Col md={3}></Col>
+              <Col md={6}>
+                <h3>Shipping Information</h3>
+                <Form onSubmit={submitHandeler}>
+                  <Form.Group controlId="formBasicPhone">
+                    <Form.Label>Phone</Form.Label>
+                    <Form.Control
+                      type="text"
+                      placeholder="Enter Phone"
+                      value={phone}
+                      className={styles.input}
+                      onChange={(e) => setPhone(e.target.value)}
+                    />
+                  </Form.Group>
+                  <Form.Group controlId="formBasicEmail" className="py-3">
+                    <Form.Label>Address</Form.Label>
+                    <Form.Control
+                      type="text"
+                      placeholder="Enter Address"
+                      value={address}
+                      className={styles.input}
+                      onChange={(e) => setAddress(e.target.value)}
+                    />
+                  </Form.Group>
+                  <Button type="submit" className={styles.btn}>
+                    Checkout
+                  </Button>
+                </Form>
               </Col>
             </Row>
           </>

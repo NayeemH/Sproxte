@@ -361,7 +361,7 @@ export const deleteProduct = (id) => async (dispatch) => {
 export const createProductType =
   (values, file, previewFile, layouts) => async (dispatch) => {
     let formData = new FormData();
-    console.log(layouts);
+    //console.log(layouts);
 
     formData.append("name", values.name);
     formData.append("categoryType", values.categoryType);
@@ -372,9 +372,8 @@ export const createProductType =
     }
     if (layouts) {
       for (let i = 0; i < layouts.length; i++) {
-        formData.append(`layouts[${i}]`, layouts[i]);
+        formData.append(`layouts`, layouts[i]);
       }
-      // formData.append(`layouts`, layouts);
     }
 
     values.size
