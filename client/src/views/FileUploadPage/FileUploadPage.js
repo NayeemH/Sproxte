@@ -18,7 +18,7 @@ const FileUploadPage = ({ getProduct, product }) => {
       <LandingSidebar />
       <Nav />
       <UploadFiles product={product} />
-      <BottomNav />
+      {/* <BottomNav /> */}
       <Footer />
     </div>
   );

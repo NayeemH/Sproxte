@@ -1,0 +1,39 @@
+.wrapper {
+  min-height: 500px;
+}
+
+.heading {
+  font-weight: bold;
+}
+
+.close {
+  font-size: 18px;
+  color: var(--dark) !important;
+  transition: 0.3s all ease-in-out;
+}
+
+.item {
+  padding: 5px 0;
+}
+
+.close:hover {
+  cursor: pointer;
+  color: red !important;
+  transition: 0.3s all ease-in-out;
+}
+
+.btn {
+  background: linear-gradient(90deg, #ffe502 0%, #ffa602 100%) !important;
+  color: var(--black) !important;
+  font-weight: bold !important;
+  font-size: 16px !important;
+  border-radius: 30px !important;
+  padding: 8px 26px !important;
+  border: none !important;
+  transition: 0.3s all ease-in-out;
+}
+
+.btn:hover {
+  background: linear-gradient(90deg, #f8e646 0%, #f8bb49 100%) !important;
+  transition: 0.3s all ease-in-out;
+}

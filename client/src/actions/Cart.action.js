@@ -1,5 +1,6 @@
 import {
   CART_ADD_ITEM,
+  CART_REMOVE_ITEM,
   DISCOVER_ERROR,
   GET_PRODUCT_DETAILS,
   SET_CART_SIZE,
@@ -34,11 +35,43 @@ export const setSize = (size) => (dispatch) => {
 };
 
 // ADD TO CART
-export const addToCart = (desc, size, image) => (dispatch) => {
-  toast.success("Added to cart");
-  console.log(image);
+export const addToCart =
+  (
+    desc,
+    size,
+    image,
+    selectedFileBack,
+    mainText,
+    secondaryText,
+    mainTextColor,
+    secondaryTextColor,
+    selectedLayout,
+    product
+  ) =>
+  (dispatch) => {
+    toast.success("Added to cart");
+    console.log(image);
+    dispatch({
+      type: CART_ADD_ITEM,
+      payload: {
+        description: desc,
+        size,
+        images: image,
+        imageBack: selectedFileBack,
+        mainText,
+        mainTextColor,
+        secondaryText,
+        secondaryTextColor,
+        selectedLayout,
+        product,
+      },
+    });
+  };
+
+export const removeFromCart = (id) => (dispatch) => {
+  console.log(id);
   dispatch({
-    type: CART_ADD_ITEM,
-    payload: { description: desc, size, images: image },
+    type: CART_REMOVE_ITEM,
+    payload: id,
   });
 };

@@ -1,22 +1,24 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Button, Card, Col, Row } from "react-bootstrap";
+import { Button, Card, Col, Container, InputGroup, Row } from "react-bootstrap";
 import { connect } from "react-redux";
 import { addToCart, setSize } from "../../../actions/Cart.action";
 import { ImUpload } from "react-icons/im";
 import { toast } from "react-toastify";
 import styles from "./OrderDescription.module.scss";
 import colors from "../../../config/Colors";
+import { IMAGE_PATH } from "../../../constants/URL";
 
-const OrderDescription = ({ sizes, addToCart }) => {
+const OrderDescription = ({ sizes, addToCart, product }) => {
   const [selectedFile, setSelectedFile] = useState();
   const [preview, setPreview] = useState();
   const [size, setSize] = useState();
   const [description, setDescription] = useState();
-  const [selectedLayout, setSelectedLayout] = useState(true);
+  const [selectedLayout, setSelectedLayout] = useState();
   const [mainText, setMainText] = useState("");
   const [secondaryText, setSecondaryText] = useState("");
   const [mainTextColor, setMainTextColor] = useState("");
   const [secondaryTextColor, setSecondaryTextColor] = useState("");
+  const [selectedFileBack, setSelectedFile2] = useState();
   const fileRef = useRef();
 
   useEffect(() => {
@@ -40,7 +42,18 @@ const OrderDescription = ({ sizes, addToCart }) => {
       if (!description) {
         toast.error("Please enter a description");
       } else {
-        addToCart(description, size, selectedFile);
+        addToCart(
+          description,
+          size,
+          selectedFile,
+          selectedFileBack,
+          mainText,
+          secondaryText,
+          mainTextColor,
+          secondaryTextColor,
+          selectedLayout,
+          product
+        );
         resetlHandeler();
         setDescription("");
       }
@@ -51,6 +64,12 @@ const OrderDescription = ({ sizes, addToCart }) => {
   const resetlHandeler = () => {
     setSelectedFile(undefined);
     setPreview(undefined);
+    setMainText("");
+    setMainTextColor("");
+    setSecondaryText("");
+    setSecondaryTextColor("");
+    setSelectedFile2(undefined);
+    setSelectedLayout(undefined);
   };
 
   //ONSELECT FILE HANDELER
@@ -72,13 +91,26 @@ const OrderDescription = ({ sizes, addToCart }) => {
       setSelectedFile(list);
     }
   };
+
+  //ONSELECT FILE HANDELER 2
+  const onSelectFile2 = (e) => {
+    if (!e.target.files || e.target.files.length === 0) {
+      setSelectedFile2(undefined);
+      return;
+    }
+    if (e.target.files[0].size > 2000000) {
+      toast.error("File size is too big");
+      return;
+    }
+    setSelectedFile2(e.target.files[0]);
+  };
   return (
     <div className={styles.wrapper}>
       <Card className={`${styles.crd} shadow`}>
         <Card.Body>
           <Row>
             <Col>
-              <span className="d-block fs-4">Upload Images</span>
+              <span className="d-block fs-4">Upload Front Images</span>
 
               <div className="pt-3">
                 <Button
@@ -118,23 +150,47 @@ const OrderDescription = ({ sizes, addToCart }) => {
               </div>
             </Col>
           </Row>
+          <Row>
+            <Col>
+              <InputGroup className="pt-3">
+                <div className="pb-2">
+                  <label htmlFor="temp2" className="d-block ">
+                    Upload Back Image (optional)
+                  </label>
+                </div>
+
+                <div className="w-100">
+                  <input
+                    type="file"
+                    name="image2"
+                    className="form-control w-100"
+                    onChange={onSelectFile2}
+                    id="temp2"
+                  />
+                </div>
+              </InputGroup>
+            </Col>
+          </Row>
         </Card.Body>
       </Card>
       <Card className={`${styles.crd_size} shadow`}>
         <Card.Body>
           <span className="d-block fs-4">Select Size</span>
           <div
-            className="d-flex justify-content-between align-items-center pt-3"
+            className="d-flex justify-content-start align-items-center pt-3"
             style={{ maxWidth: 300, maxHeight: 200 }}
           >
-            {sizes.map((s) => (
-              <div
-                className={`${styles.size} ${size === s && styles.active}`}
-                onClick={() => setSize(s)}
-              >
-                <span className="fs-5 d-block">{s}</span>
-              </div>
-            ))}
+            {sizes &&
+              sizes.map((s) => (
+                <div
+                  className={`${styles.size} ${
+                    size === s && styles.active
+                  } me-2`}
+                  onClick={() => setSize(s)}
+                >
+                  <span className="fs-5 d-block">{s}</span>
+                </div>
+              ))}
           </div>
         </Card.Body>
       </Card>
@@ -152,44 +208,79 @@ const OrderDescription = ({ sizes, addToCart }) => {
           ></textarea>
         </Card.Body>
       </Card>
-      <Card className={`${styles.crd} shadow mt-4`}>
-        <Card.Body className="d-flex justify-content-between flex-column">
-          <span className="d-block fs-4">Layout Options</span>
-          <span className="d-block pt-3">Main Text</span>
-          <input
-            type="text"
-            className={`${styles.textarea} form-control mb-3`}
-            onChange={(e) => setMainText(e.target.value)}
-          />
-          <span className="d-block pt-2">Main Text Color</span>
-          <select
-            value={mainTextColor}
-            onChange={(e) => setMainTextColor(e.target.value)}
-            className={` form-control mb-3`}
-          >
-            {colors.map((clr) => (
-              <option value={clr.name}>{clr.name}</option>
-            ))}
-          </select>
-          <span className="d-block pt-3">Secondary Text</span>
-          <input
-            type="text"
-            value={secondaryText}
-            className={`${styles.textarea} form-control mb-3`}
-            onChange={(e) => setSecondaryText(e.target.value)}
-          />
-          <span className="d-block pt-2">Main Text Color</span>
-          <select
-            value={secondaryTextColor}
-            onChange={(e) => setSecondaryTextColor(e.target.value)}
-            className={` form-control mb-3`}
-          >
-            {colors.map((clr) => (
-              <option value={clr.name}>{clr.name}</option>
-            ))}
-          </select>
-        </Card.Body>
-      </Card>
+      {product && product.layouts && product.layouts.length > 0 && (
+        <Card className={`${styles.crd_size} shadow`}>
+          <Card.Body>
+            <span className="d-block fs-4">Select Layout</span>
+            <Container fluid>
+              <Row>
+                {product &&
+                  product.layouts &&
+                  product.layouts.map((l) => (
+                    <Col xs={6}>
+                      <div
+                        className={`${styles.layout} ${
+                          selectedLayout === l._id ? styles.active : ""
+                        } h-100 d-flex justify-content-center align-items-center`}
+                      >
+                        <img
+                          src={`${IMAGE_PATH}/small/${l.image}`}
+                          className="img-fluid"
+                          onClick={() =>
+                            selectedLayout === l._id
+                              ? setSelectedLayout(null)
+                              : setSelectedLayout(l._id)
+                          }
+                        />
+                      </div>
+                    </Col>
+                  ))}
+              </Row>
+            </Container>
+          </Card.Body>
+        </Card>
+      )}
+      {selectedLayout && (
+        <Card className={`${styles.crd} shadow mt-4`}>
+          <Card.Body className="d-flex justify-content-between flex-column">
+            <span className="d-block fs-4">Layout Options</span>
+            <span className="d-block pt-3">Main Text</span>
+            <input
+              type="text"
+              value={mainText}
+              className={`form-control mb-3`}
+              onChange={(e) => setMainText(e.target.value)}
+            />
+            <span className="d-block pt-2">Main Text Color</span>
+            <select
+              value={mainTextColor}
+              onChange={(e) => setMainTextColor(e.target.value)}
+              className={` form-control mb-3`}
+            >
+              {colors.map((clr) => (
+                <option value={clr.name}>{clr.name}</option>
+              ))}
+            </select>
+            <span className="d-block pt-3">Secondary Text</span>
+            <input
+              type="text"
+              value={secondaryText}
+              className={`form-control mb-3`}
+              onChange={(e) => setSecondaryText(e.target.value)}
+            />
+            <span className="d-block pt-2">Main Text Color</span>
+            <select
+              value={secondaryTextColor}
+              onChange={(e) => setSecondaryTextColor(e.target.value)}
+              className={` form-control mb-3`}
+            >
+              {colors.map((clr) => (
+                <option value={clr.name}>{clr.name}</option>
+              ))}
+            </select>
+          </Card.Body>
+        </Card>
+      )}
       <div className="py-3"></div>
       <Button onClick={submitHandeler} className={styles.btn}>
         Add To Cart

@@ -1,5 +1,6 @@
 import {
   CART_ADD_ITEM,
+  CART_REMOVE_ITEM,
   GET_PRODUCT_DETAILS,
   SET_CART_SIZE,
 } from "../constants/TypeLanding";
@@ -17,6 +18,11 @@ const CartReducer = (state = initialState, action) => {
       return {
         ...state,
         cart: [...state.cart, payload],
+      };
+    case CART_REMOVE_ITEM:
+      return {
+        ...state,
+        cart: [...state.cart.filter((item, i) => i !== payload)],
       };
     case GET_PRODUCT_DETAILS:
       return {

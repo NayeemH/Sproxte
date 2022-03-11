@@ -87,3 +87,17 @@
   border-radius: 50%;
   border: 1px solid var(--dark);
 }
+
+.layout.active {
+  border: 1px solid var(--orange) !important;
+}
+
+.layout {
+  border: 1px solid var(--white) !important;
+  transition: 0.3s all ease-in-out;
+}
+.layout:hover {
+  cursor: pointer;
+  border: 1px solid var(--orange) !important;
+  transition: 0.3s all ease-in-out;
+}

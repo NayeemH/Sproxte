@@ -37,7 +37,7 @@ const FilterDashboard = ({ selectedFilter }) => {
         <div className="d-flex justify-content-center align-items-center">
           {role === "admin" && (
             <span
-              className={`${styles.ham} pt-1 pe-4`}
+              className={`${styles.ham}  pe-4 d-flex justify-content-center align-items-center`}
               style={{ fontSize: 24 }}
               onClick={() => dispatch(toogleSidebarVisibility(true))}
             >
@@ -48,7 +48,10 @@ const FilterDashboard = ({ selectedFilter }) => {
             variant="transparent"
             className={styles.dropdown}
             title={
-              <span className="text-light pt-2" style={{ fontSize: 24 }}>
+              <span
+                className="text-light d-flex justify-content-center align-items-center"
+                style={{ fontSize: 24 }}
+              >
                 <BsFillGrid3X3GapFill />
               </span>
             }

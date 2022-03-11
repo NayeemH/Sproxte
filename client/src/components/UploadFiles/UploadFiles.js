@@ -10,15 +10,16 @@ const UploadFiles = ({ product }) => {
     <div className={styles.wrapper}>
       <Container>
         <Row>
-          <Col md={6} className="py-md-5 py-3">
+          <Col md={5} className="py-md-5 py-3">
             <ProductCard
               title={product.name}
               img={`${IMAGE_PATH}small/${product.pngImageFront}`}
               id={product._id}
+              template
             />
           </Col>
-          <Col md={6} className="py-md-5 py-3">
-            <OrderDescription sizes={product.sizes} />
+          <Col md={7} className="py-md-5 py-3">
+            <OrderDescription sizes={product.sizes} product={product} />
           </Col>
         </Row>
       </Container>

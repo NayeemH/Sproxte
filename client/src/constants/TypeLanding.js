@@ -3,6 +3,7 @@ export const SELECT_TEMPLATE = "SELECT_TEMPLATE";
 
 // CART REDUCER
 export const CART_ADD_ITEM = "CART_ADD_ITEM";
+export const CART_REMOVE_ITEM = "CART_REMOVE_ITEM";
 export const SET_CART_SIZE = "SET_CART_SIZE";
 
 // USER
