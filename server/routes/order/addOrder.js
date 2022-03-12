@@ -115,9 +115,9 @@ const addCustomTemplate = async (req) => {
                 secondaryColor,
                 frontImages, 
                 backImages
-            },
+            }},
             $inc: {price: netPrice}
-        }}
+        }
     );
 }
 
