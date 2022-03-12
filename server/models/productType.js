@@ -28,6 +28,9 @@ const productTypeSchema = Schema({
     layouts: {
         type: [layoutSchema]
     },
+    imageData: {
+        type: Array
+    },
     sizes: {
         type: Array,
         required: true,

@@ -49,6 +49,20 @@ router.patch('/:id', fileFetch.fields([{name: 'pngImageFront', maxCount: 1}, {na
             updatedItems.layouts = images.map(image => ({image}));
         }
 
+        
+        if(req.files.images) {
+            if(req.files.images.length === colors.length) {
+                const images = await Promise.all(
+                    req.files.images.map(image => saveImage(image))
+                );
+                
+                updatedItems.imageData = images.map((image, i) => ({color: colors[i], image}));
+            }
+            else {
+                throw Error('images and colors length not matched');
+            }
+        }
+
         const types = await ProductType.findOneAndUpdate({_id: id}, {$set: updatedItems});
 
         res.json({
