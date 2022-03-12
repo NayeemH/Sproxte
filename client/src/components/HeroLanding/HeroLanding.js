@@ -12,7 +12,7 @@ const HeroLanding = ({ list, getLandingList }) => {
     if (list.length === 0) {
       getLandingList();
     }
-  }, [list]);
+  }, []);
   return (
     <>
       <Container fluid>

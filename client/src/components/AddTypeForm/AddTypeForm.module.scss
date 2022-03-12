@@ -77,6 +77,55 @@
   cursor: pointer;
 }
 
+.plus {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: var(--dark);
+  background: var(--light);
+  font-size: 20px;
+  padding: 3px 15px;
+  transition: 0.3s all ease-in-out;
+}
+
+.plus:hover {
+  cursor: pointer;
+  color: var(--orange);
+  transition: 0.3s all ease-in-out;
+}
+
+.del {
+  transition: 0.3s all ease-in-out;
+}
+
+.del:hover {
+  cursor: pointer;
+  color: var(--dark) !important;
+}
+
+.color {
+  width: 20px !important;
+  height: 20px !important;
+  border-radius: 50% !important;
+  border: 1px solid var(--dark) !important;
+}
+
+.auth__list {
+  position: absolute;
+  z-index: 99;
+  top: 100%;
+  width: 100%;
+  max-height: 200px;
+  overflow-y: scroll;
+  background: white;
+  box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.1);
+}
+
+.item {
+  cursor: pointer;
+  width: 100%;
+}
+
 @media screen and (max-width: 768px) {
   .crd {
     width: 90%;

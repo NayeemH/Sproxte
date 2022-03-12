@@ -16,6 +16,9 @@ import { createProductType } from "../../actions/Project.action";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { getCategoryList } from "../../actions/Category.action";
+import { AiOutlinePlus } from "react-icons/ai";
+import { BiTrash } from "react-icons/bi";
+import colors from "../../config/Colors";
 
 const AddTypeForm = ({ createProductType, getCategoryList, category }) => {
   //STATES
@@ -25,6 +28,10 @@ const AddTypeForm = ({ createProductType, getCategoryList, category }) => {
   const [focus, setFocus] = useState(false);
   const [catInput, setCatInput] = useState("");
   const [selectedFile3, setSelectedFile3] = useState();
+  const [variant, setVariant] = useState([]);
+  const [colorInput, setColorInput] = useState("");
+  const [focus2, setFocus2] = useState(undefined);
+
   const onSelectFile3 = (e) => {
     if (!e.target.files || e.target.files.length === 0) {
       setSelectedFile3(undefined);
@@ -55,21 +62,26 @@ const AddTypeForm = ({ createProductType, getCategoryList, category }) => {
       setFocus(false);
     }, 200);
   };
-
+  const blurHandeler2 = (i) => {
+    setTimeout(() => {
+      if (focus2 === i) setFocus2(undefined);
+    }, 200);
+  };
   const navigate = useNavigate();
 
   const fileRef = useRef();
   const fileRef2 = useRef();
 
   const onSubmitHandeler = async (values) => {
-    console.log(values);
+    console.log(variant);
     if (selectedFile) {
       setIsLoading(true);
       let check = await createProductType(
         values,
         selectedFile,
         selectedFile2,
-        selectedFile3
+        selectedFile3,
+        variant
       );
       if (check) {
         setIsLoading(false);
@@ -100,6 +112,28 @@ const AddTypeForm = ({ createProductType, getCategoryList, category }) => {
       return;
     }
     setSelectedFile(e.target.files[0]);
+  };
+
+  //ONSELECT FILE HANDELER
+  const onSelectFileColor = (e, i) => {
+    if (!e.target.files || e.target.files.length === 0) {
+      setVariant(
+        variant.map((item, index) =>
+          index === i ? { ...item, image: undefined } : item
+        )
+      );
+      return;
+    }
+    if (e.target.files[0].size > 2000000) {
+      toast.error("File size is too big");
+      return;
+    }
+    setVariant(
+      variant.map((item, index) =>
+        index === i ? { ...item, image: e.target.files[0] } : item
+      )
+    );
+    console.log(variant);
   };
 
   //ONSELECT FILE HANDELER 2
@@ -279,6 +313,127 @@ const AddTypeForm = ({ createProductType, getCategoryList, category }) => {
                   />
                   <small>Please insert comma separated sizes.</small>
                 </InputGroup>
+
+                {variant.map((item, i) => (
+                  <Row className="pb-3">
+                    <Col xs={5}>
+                      <InputGroup className=" d-flex flex-column">
+                        {/* <div className="d-flex justify-content-between align-items-center pb-2">
+                          <label htmlFor="quantity" className="d-block">
+                            Color
+                          </label>
+                        </div> */}
+                        <BootstrapForm.Control
+                          placeholder="Type Color name or HEX code"
+                          type="text"
+                          value={item.color}
+                          onChange={(e) =>
+                            setVariant([
+                              ...variant.map((itemRaw, p) =>
+                                p === i
+                                  ? { ...itemRaw, color: e.target.value }
+                                  : itemRaw
+                              ),
+                            ])
+                          }
+                          onFocus={() => setFocus2(i)}
+                          onBlur={() => blurHandeler2(i)}
+                          autoComplete="off"
+                          className={`${styles.input} w-100`}
+                        />
+                        <div
+                          className={styles.auth__list}
+                          style={{ display: focus2 === i ? "block" : "none" }}
+                        >
+                          <div className="list-group">
+                            {colors
+                              .filter((item) => {
+                                return item.name
+                                  .toLowerCase()
+                                  .includes(colorInput.toLowerCase());
+                              })
+                              .map((item, k) => (
+                                <div
+                                  className={`list-group-item ${styles.item} d-flex`}
+                                  key={k}
+                                  onClick={() => {
+                                    //console.log("click");
+                                    let check = variant.filter(
+                                      (v) => v.color === item.hex
+                                    );
+
+                                    if (check.length === 0) {
+                                      setVariant([
+                                        ...variant.map((vr, j) =>
+                                          j === i
+                                            ? {
+                                                ...vr,
+                                                color: `${
+                                                  item.name
+                                                }-${item.hex.trim()}`,
+                                              }
+                                            : vr
+                                        ),
+                                      ]);
+                                    } else {
+                                      toast.error("Color already selected");
+                                    }
+                                    setColorInput("");
+                                  }}
+                                >
+                                  <div
+                                    className={`${styles.color} me-2`}
+                                    style={{ background: `${item.hex}` }}
+                                  ></div>{" "}
+                                  {item.name} ({item.hex})
+                                </div>
+                              ))}
+                          </div>
+                        </div>
+                      </InputGroup>
+                    </Col>
+                    <Col xs={6}>
+                      <input
+                        type="file"
+                        name="image"
+                        className="form-control w-100"
+                        onChange={(e) => onSelectFileColor(e, i)}
+                        id=""
+                      />
+                    </Col>
+                    <Col
+                      xs={1}
+                      className="d-flex justufy-content-end align-items-center"
+                    >
+                      <span
+                        className={`${styles.del} text-danger`}
+                        onClick={() =>
+                          setVariant([...variant.filter((it, j) => j !== i)])
+                        }
+                      >
+                        <BiTrash />
+                      </span>
+                    </Col>
+                  </Row>
+                ))}
+                <Row className="pb-4">
+                  <Col xs={12}>
+                    <span
+                      className={`${styles.plus} shadow`}
+                      onClick={() =>
+                        setVariant([
+                          ...variant,
+                          {
+                            color: "",
+                            image: undefined,
+                          },
+                        ])
+                      }
+                    >
+                      <AiOutlinePlus /> Add Type
+                    </span>
+                  </Col>
+                </Row>
                 <div className="">
                   <InputGroup className="">
                     <div className="pb-2">

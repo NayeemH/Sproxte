@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { Breadcrumb, Button } from "react-bootstrap";
-import { useDispatch } from "react-redux";
+import { connect } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import FilterDashboard from "../../components/FilterDashboard/FilterDashboard";
 import Sidebar from "../../components/Sidebar/Sidebar";
@@ -9,11 +9,12 @@ import styles from "./CategoryListPage.module.css";
 import { getCategoryList } from "../../actions/Category.action";
 import CategoryList from "../../components/CategoryList/CategoryList";
 
-const CategoryListPage = () => {
-  const dispatch = useDispatch();
+const CategoryListPage = ({ getCategoryList, category }) => {
   const navigate = useNavigate();
   useEffect(() => {
-    dispatch(getCategoryList());
+    if (category.length === 0) {
+      getCategoryList();
+    }
   }, []);
   return (
     <div className={`bg_dark text-light`} style={{ minHeight: "100vh" }}>
@@ -41,4 +42,8 @@ const CategoryListPage = () => {
   );
 };
 
-export default CategoryListPage;
+const mapStateToProps = (state) => ({
+  category: state.landing.category,
+});
+
+export default connect(mapStateToProps, { getCategoryList })(CategoryListPage);
