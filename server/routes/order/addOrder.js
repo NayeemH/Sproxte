@@ -89,7 +89,11 @@ const addCustomTemplate = async (req) => {
 
     if(count < 0) count = - count;
 
-    const { price } = await ProductType.findOne({_id: productTypeId}, {price: 1, discount: 1});
+    const productType = await ProductType.findOne({_id: productTypeId}, {price: 1, discount: 1});
+
+    if(!productType) throw Error('Product Type not found');
+    
+    const { price, discount } = productType;
 
     const netPrice = price * count * (1 - discount / 100);
 
