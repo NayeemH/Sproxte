@@ -359,7 +359,7 @@ export const deleteProduct = (id) => async (dispatch) => {
 
 // CREATE PRODUCT TYPE
 export const createProductType =
-  (values, file, previewFile, layouts) => async (dispatch) => {
+  (values, file, previewFile, layouts, varient) => async (dispatch) => {
     let formData = new FormData();
     //console.log(layouts);
 
@@ -375,6 +375,13 @@ export const createProductType =
     if (layouts) {
       for (let i = 0; i < layouts.length; i++) {
         formData.append(`layouts`, layouts[i]);
+      }
+    }
+
+    if (varient.length > 0) {
+      for (let i = 0; i < varient.length; i++) {
+        formData.append(`colors`, varient[i].color);
+        formData.append(`images`, varient[i].image);
       }
     }
 
