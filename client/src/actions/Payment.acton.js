@@ -39,7 +39,7 @@ export const setPaymentToken = (id) => async (dispatch) => {
     // :::::::::::: TODO ::::::::::::
     dispatch({
       type: SET_TOKEN,
-      payload: res.data.paymentKey,
+      payload: res.data.clientSecret,
     });
   } catch (err) {
     dispatch({ type: PAYMENT_ERROR });

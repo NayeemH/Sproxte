@@ -380,7 +380,7 @@ export const createProductType =
 
     if (varient.length > 0) {
       for (let i = 0; i < varient.length; i++) {
-        formData.append(`colors`, varient[i].color);
+        formData.append(`colors`, `#${varient[i].color.split("#")[1]}`);
         formData.append(`images`, varient[i].image);
       }
     }

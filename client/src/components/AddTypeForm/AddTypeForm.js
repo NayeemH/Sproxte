@@ -73,7 +73,7 @@ const AddTypeForm = ({ createProductType, getCategoryList, category }) => {
   const fileRef2 = useRef();
 
   const onSubmitHandeler = async (values) => {
-    console.log(values);
+    console.log(variant);
     if (selectedFile) {
       setIsLoading(true);
       let check = await createProductType(
@@ -112,6 +112,28 @@ const AddTypeForm = ({ createProductType, getCategoryList, category }) => {
       return;
     }
     setSelectedFile(e.target.files[0]);
+  };
+
+  //ONSELECT FILE HANDELER
+  const onSelectFileColor = (e, i) => {
+    if (!e.target.files || e.target.files.length === 0) {
+      setVariant(
+        variant.map((item, index) =>
+          index === i ? { ...item, image: undefined } : item
+        )
+      );
+      return;
+    }
+    if (e.target.files[0].size > 2000000) {
+      toast.error("File size is too big");
+      return;
+    }
+    setVariant(
+      variant.map((item, index) =>
+        index === i ? { ...item, image: e.target.files[0] } : item
+      )
+    );
+    console.log(variant);
   };
 
   //ONSELECT FILE HANDELER 2
@@ -375,7 +397,7 @@ const AddTypeForm = ({ createProductType, getCategoryList, category }) => {
                         type="file"
                         name="image"
                         className="form-control w-100"
-                        onChange={onSelectFile}
+                        onChange={(e) => onSelectFileColor(e, i)}
                         id=""
                       />
                     </Col>
