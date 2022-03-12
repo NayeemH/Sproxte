@@ -84,6 +84,11 @@ router.patch('/:id', fileFetch.fields([{name: 'pngImageFront', maxCount: 1}, {na
             if(req.files && req.files.pngImageBack) {
                 await deleteImage(types.pngImageBack);
             }
+            if(req.files.images) {
+                await Promise.all(
+                    types.imageData.map(({image}) => deleteImage(image))
+                )
+            }
         }
     }
     catch(err) {
