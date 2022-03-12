@@ -1,16 +1,12 @@
 .crd {
-  background: var(--light) !important;
+  background: var(--white) !important;
   color: var(--dark) !important;
   border-radius: 15px !important;
-  cursor: pointer;
   transition: 0.3s all ease-in-out;
   border: none !important;
-  border: 1px solid var(--orange) !important;
-}
-
-.crd:hover {
-  border: 1px solid var(--primary) !important;
+  border: 0px solid transparent !important;
   transition: 0.3s all ease-in-out;
+  overflow: hidden;
 }
 
 .crd:hover .footer {
@@ -26,8 +22,8 @@
 
 .price {
   position: absolute;
-  top: 0px;
-  left: 0px;
+  top: -1rem;
+  left: -1rem;
   font-size: 20px;
   color: var(--dark);
   font-weight: bold;
@@ -46,4 +42,29 @@
   background: var(--dark);
   padding: 5px 25px;
   border-top-left-radius: 14px;
+}
+
+.arrow {
+  width: 38px;
+  height: 38px;
+  font-size: 18px;
+  background: var(--orange);
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: 0.3s all ease-in-out;
+}
+
+.arrow:hover {
+  background: var(--dark);
+  cursor: pointer;
+  color: var(--light);
+  transition: 0.3s all ease-in-out;
+}
+
+.title {
+  font-size: 18px !important;
+  color: var(--dark);
+  margin-bottom: 5px;
 }
