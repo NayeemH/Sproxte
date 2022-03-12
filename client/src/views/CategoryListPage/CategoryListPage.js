@@ -30,7 +30,6 @@ const CategoryListPage = () => {
           Category
         </Breadcrumb.Item>
         <Button
-          className="ms-auto"
           onClick={() => navigate("/add-category")}
           className={styles.btn}
         >

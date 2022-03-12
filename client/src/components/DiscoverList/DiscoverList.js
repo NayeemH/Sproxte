@@ -67,6 +67,8 @@ const DiscoverList = ({ list, title, page, name }) => {
               <Col md={4} className="p-2">
                 <ProductCard
                   template
+                  price={item.price}
+                  discount={item.discount}
                   title={item.name}
                   img={`${IMAGE_PATH}small/${item.pngImageFront}`}
                   id={item._id}

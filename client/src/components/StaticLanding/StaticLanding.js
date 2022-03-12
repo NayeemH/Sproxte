@@ -5,10 +5,11 @@ import { Link } from "react-router-dom";
 import demoLanding from "../../assets/landing/demoLanding.png";
 import dots from "../../assets/landing/dots.png";
 import callToAction from "../../assets/landing/callToAction.png";
-import types from "../../config/ProductTypes";
 import styles from "./StaticLanding.module.scss";
+import { connect } from "react-redux";
+import { IMAGE_PATH } from "../../constants/URL";
 
-const StaticLanding = () => {
+const StaticLanding = ({ category }) => {
   return (
     <Container className="py-5">
       <span
@@ -34,7 +35,7 @@ const StaticLanding = () => {
         <img src={demoLanding} style={{ width: "90%" }} alt="" />
       </div>
 
-      <Row>
+      <Row className="pb-5">
         <Col md={12} className="px-md-5 px-0 pb-md-5 pb-4">
           <span
             className="d-block px-5 pt-5 text-center fs-3 fw-bold"
@@ -54,18 +55,24 @@ const StaticLanding = () => {
             of the printing and typesetting industry.
           </span>
         </Col>
-        {types.map((item, i) => (
+        {category.map((item, i) => (
           <Col
             md={3}
             className={`d-flex justify-content-center align-items-center flex-column`}
-            key={i}
+            key={item._id}
             data-aos="fade-up"
           >
-            <div className={styles.cat_wrapper}>{item.svg}</div>
+            <div className={styles.cat_wrapper}>
+              <img
+                src={`${IMAGE_PATH}small/${item.svgImage}`}
+                alt=""
+                className="img fluid p-2"
+              />
+            </div>
             <span className="d-block text-center fs-6 text-secondary pt-3">
               {item.name}
             </span>
-            <Link to={`/type/${item.name}`} className={styles.arrow}>
+            <Link to={`/category/${item._id}`} className={styles.arrow}>
               <span>
                 <AiOutlineArrowRight />
               </span>
@@ -105,4 +112,8 @@ const StaticLanding = () => {
   );
 };
 
-export default StaticLanding;
+const mapStateToProps = (state) => ({
+  category: state.landing.category,
+});
+
+export default connect(mapStateToProps, null)(StaticLanding);

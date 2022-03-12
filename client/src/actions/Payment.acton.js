@@ -5,6 +5,7 @@ import {
   ORDER_SUCCESS,
   PAYMENT_ERROR,
   SET_KEY,
+  SET_TOKEN,
 } from "../constants/TypeLanding";
 import { BASE_URL } from "../constants/URL";
 
@@ -22,7 +23,7 @@ export const setPaymentKey = () => async (dispatch) => {
   }
 };
 
-export const setPaymentToken = () => async (dispatch) => {
+export const setPaymentToken = (id) => async (dispatch) => {
   try {
     const config = {
       headers: {
@@ -30,10 +31,14 @@ export const setPaymentToken = () => async (dispatch) => {
       },
       withCredentials: true,
     };
-    const res = await axios.post(`${BASE_URL}/api/v1/payment/publishableKey`);
-    // console.log(res);
+    const res = await axios.post(
+      `${BASE_URL}/api/v1/payment/paymentToken/${id}`,
+      {},
+      config
+    );
+    // :::::::::::: TODO ::::::::::::
     dispatch({
-      type: SET_KEY,
+      type: SET_TOKEN,
       payload: res.data.paymentKey,
     });
   } catch (err) {
@@ -66,7 +71,7 @@ export const createOrder = (address, phone, cart) => async (dispatch) => {
         let frmData = new FormData();
         let item = cart[i];
         frmData.append("type", "custom");
-        frmData.append("templateId", item.product._id);
+        frmData.append("productTypeId", item.product._id);
         frmData.append("count", item.quantity);
         frmData.append("description", item.description);
         frmData.append("size", item.size);
