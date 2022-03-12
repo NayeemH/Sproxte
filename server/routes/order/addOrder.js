@@ -36,8 +36,9 @@ router.put('/:id', fileFetch.fields([{name: 'frontImages', maxCount: 10}, {name:
 const addTemplate = async (req) => {
     const {userId} = req.user;
     const {id} =req.params;
-    const {templateId, count, size, color} = req.body;
+    const {templateId, count: stringCount, size, color} = req.body;
 
+    const count = parseInt(stringCount);
     if(count < 0) count = - count;
 
     const template = await Template.findOne({_id: templateId}, {price: 1, discount: 1});
@@ -46,12 +47,12 @@ const addTemplate = async (req) => {
 
     const { price, discount } = template;
 
-    const netPrice = Math.round(price * parseInt(count) * (1 - discount / 100));
+    const netPrice = Math.round(price * count * (1 - discount / 100));
 
     await Order.findOneAndUpdate(
         {_id: id, userId}, 
         {
-            $push: {orders: {templateId, count: parseInt(count), size, color}},
+            $push: {orders: {templateId, count: count, size, color}},
             $inc: {price: netPrice}
         }
     );
@@ -63,7 +64,7 @@ const addCustomTemplate = async (req) => {
     const {id} =req.params;
     const {
         productTypeId, 
-        count, 
+        count: stringCount, 
         size, 
         color, 
         description, 
@@ -87,6 +88,7 @@ const addCustomTemplate = async (req) => {
         );
     }
 
+    const count = parseInt(stringCount);
     if(count < 0) count = - count;
 
     const productType = await ProductType.findOne({_id: productTypeId}, {price: 1, discount: 1});
@@ -95,7 +97,7 @@ const addCustomTemplate = async (req) => {
     
     const { price, discount } = productType;
 
-    const netPrice = price * count * (1 - discount / 100);
+    const netPrice = Math.round(price * count * (1 - discount / 100));
 
     await Order.findOneAndUpdate(
         {_id: id, userId}, 
