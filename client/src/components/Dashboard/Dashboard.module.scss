@@ -2,3 +2,46 @@
   min-height: 400px;
   background: var(--light) !important;
 }
+
+.active_btn {
+  margin-left: 10px !important;
+  border-radius: 25px;
+  padding: 7px 20px !important;
+  background: none !important;
+  margin-left: 10px !important;
+  color: var(--orange) !important;
+  border-color: var(--orange) !important;
+  transition: 0.3s all ease-in-out;
+}
+
+.active_btn:hover {
+  background: none !important;
+  color: var(--dark) !important;
+  border-color: var(--dark) !important;
+  transition: 0.3s all ease-in-out;
+}
+
+.btn {
+  margin-left: 10px !important;
+  border-radius: 25px;
+  padding: 7px 20px !important;
+  background: var(--orange) !important;
+  border-color: var(--orange) !important;
+  transition: 0.3s all ease-in-out;
+}
+
+.btn:hover {
+  background: var(--dark) !important;
+  border-color: var(--dark) !important;
+  transition: 0.3s all ease-in-out;
+}
+
+.btn:focus,
+.active_btn:focus {
+  box-shadow: none !important;
+  border-color: var(--orange) !important;
+}
+
+.btn__grp {
+  border-color: var(--orange) !important;
+}

@@ -12,6 +12,7 @@
   background: var(--white) !important;
   color: var(--dark) !important;
   border-radius: 15px !important;
+  border: 1px solid var(--orange) !important;
   transition: 0.3s all ease-in-out;
 }
 .crd_size {
@@ -21,6 +22,7 @@
   background: var(--white) !important;
   color: var(--dark) !important;
   border-radius: 15px !important;
+  border: 1px solid var(--orange) !important;
   transition: 0.3s all ease-in-out;
 }
 
@@ -81,7 +83,7 @@
 
 .textarea {
   background: var(--light) !important;
-  border: 1px solid var(--secondary) !important;
+  border: none !important;
   color: var(--dark) !important;
 }
 
