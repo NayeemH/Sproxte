@@ -16,6 +16,8 @@
 
 .crd {
   width: 30rem;
+  border-radius: 15px !important;
+  overflow: hidden;
   background: var(--white) !important;
   border: 1px solid var(--white) !important;
 }
