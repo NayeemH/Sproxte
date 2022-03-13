@@ -1,22 +1,26 @@
-import React from "react";
-import BottomNav from "../../components/BottomNav/BottomNav";
+import React, { useEffect } from "react";
+import { useLocation } from "react-router-dom";
+import { toast } from "react-toastify";
 import Footer from "../../components/Footer/Footer";
 import HeroLanding from "../../components/HeroLanding/HeroLanding";
-import LandingSidebar from "../../components/LandingSidebar/LandingSidebar";
 import Nav from "../../components/Nav/Nav";
 import StaticLanding from "../../components/StaticLanding/StaticLanding";
-import TemplateSelect from "../../components/TemplateSelect/TemplateSelect";
+const queryString = require("query-string");
 
 const LandingPage = () => {
+  const location = useLocation();
+  const parsed = queryString.parse(location.search);
+  useEffect(() => {
+    if (parsed.payment && parsed.payment === "success") {
+      toast.success("Payment Successful!");
+    }
+  }, []);
+
   return (
     <div>
       <Nav />
       <HeroLanding />
       <StaticLanding />
-      {/* <LandingSidebar />
-      <TemplateSelect />
-      <BottomNav />
-    */}
       <Footer />
     </div>
   );

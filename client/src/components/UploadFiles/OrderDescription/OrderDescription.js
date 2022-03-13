@@ -9,7 +9,7 @@ import colors from "../../../config/Colors";
 import { IMAGE_PATH } from "../../../constants/URL";
 import { useNavigate } from "react-router-dom";
 
-const OrderDescription = ({ sizes, addToCart, product }) => {
+const OrderDescription = ({ sizes, addToCart, product, color }) => {
   const [selectedFile, setSelectedFile] = useState();
   const [preview, setPreview] = useState();
   const [size, setSize] = useState();
@@ -18,8 +18,8 @@ const OrderDescription = ({ sizes, addToCart, product }) => {
   const [selectedLayout, setSelectedLayout] = useState();
   const [mainText, setMainText] = useState("");
   const [secondaryText, setSecondaryText] = useState("");
-  const [mainTextColor, setMainTextColor] = useState("");
-  const [secondaryTextColor, setSecondaryTextColor] = useState("");
+  const [mainTextColor, setMainTextColor] = useState("#d80009");
+  const [secondaryTextColor, setSecondaryTextColor] = useState("#d80009");
   const [selectedFileBack, setSelectedFile2] = useState();
   const fileRef = useRef();
   const navigate = useNavigate();
@@ -48,6 +48,8 @@ const OrderDescription = ({ sizes, addToCart, product }) => {
         toast.error("Please enter a valid quantity");
       } else if (!size) {
         toast.error("Please select size");
+      } else if (!color) {
+        toast.error("Please select color");
       } else {
         addToCart(
           description,
@@ -60,7 +62,9 @@ const OrderDescription = ({ sizes, addToCart, product }) => {
           secondaryTextColor,
           selectedLayout,
           quantity,
-          product
+          product,
+          color,
+          "custom"
         );
         resetlHandeler();
         setDescription("");
@@ -263,8 +267,10 @@ const OrderDescription = ({ sizes, addToCart, product }) => {
               onChange={(e) => setMainTextColor(e.target.value)}
               className={` form-control mb-3`}
             >
-              {colors.map((clr) => (
-                <option value={clr.name}>{clr.name}</option>
+              {colors.map((clr, i) => (
+                <option key={i} value={clr.name}>
+                  {clr.name}
+                </option>
               ))}
             </select>
             <span className="d-block pt-3">Secondary Text</span>
@@ -280,8 +286,10 @@ const OrderDescription = ({ sizes, addToCart, product }) => {
               onChange={(e) => setSecondaryTextColor(e.target.value)}
               className={` form-control mb-3`}
             >
-              {colors.map((clr) => (
-                <option value={clr.name}>{clr.name}</option>
+              {colors.map((clr, i) => (
+                <option key={i} value={clr.name}>
+                  {clr.name}
+                </option>
               ))}
             </select>
           </Card.Body>

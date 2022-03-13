@@ -38,5 +38,8 @@
   transition: 0.3s all ease-in-out;
 }
 
-.input {
+.crd {
+  background: var(--white) !important;
+  border: 1px solid var(--white) !important;
+  border-radius: 15px !important;
 }

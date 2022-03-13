@@ -28,7 +28,7 @@ const AddTypeForm = ({ createProductType, getCategoryList, category }) => {
   const [focus, setFocus] = useState(false);
   const [catInput, setCatInput] = useState("");
   const [selectedFile3, setSelectedFile3] = useState();
-  const [variant, setVariant] = useState([]);
+  const [variant, setVariant] = useState([{ color: "", image: "" }]);
   const [colorInput, setColorInput] = useState("");
   const [focus2, setFocus2] = useState(undefined);
 
@@ -73,9 +73,15 @@ const AddTypeForm = ({ createProductType, getCategoryList, category }) => {
   const fileRef2 = useRef();
 
   const onSubmitHandeler = async (values) => {
-    console.log(variant);
     if (selectedFile) {
       setIsLoading(true);
+      variant.forEach((item) => {
+        if (!item.image || item.color === "") {
+          toast.error("Please select image for all color");
+          setIsLoading(false);
+          return;
+        }
+      });
       let check = await createProductType(
         values,
         selectedFile,
@@ -405,14 +411,16 @@ const AddTypeForm = ({ createProductType, getCategoryList, category }) => {
                       xs={1}
                       className="d-flex justufy-content-end align-items-center"
                     >
-                      <span
-                        className={`${styles.del} text-danger`}
-                        onClick={() =>
-                          setVariant([...variant.filter((it, j) => j !== i)])
-                        }
-                      >
-                        <BiTrash />
-                      </span>
+                      {i !== 0 && (
+                        <span
+                          className={`${styles.del} text-danger`}
+                          onClick={() =>
+                            setVariant([...variant.filter((it, j) => j !== i)])
+                          }
+                        >
+                          <BiTrash />
+                        </span>
+                      )}
                     </Col>
                   </Row>
                 ))}

@@ -2,25 +2,17 @@ import { PaymentElement } from "@stripe/react-stripe-js";
 import { useEffect, useState } from "react";
 import { useStripe, useElements } from "@stripe/react-stripe-js";
 import { toast } from "react-toastify";
+import styles from "./CheckoutForm.module.scss";
+import { Spinner } from "react-bootstrap";
 
 export default function CheckoutForm() {
   const stripe = useStripe();
   const elements = useElements();
-  const [message, setMessage] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
-  useEffect(() => {
-    console.log(stripe);
-
-    console.log(elements);
-    console.log(isLoading);
-  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(stripe);
 
-    console.log(elements);
-    console.log(isLoading);
     if (!stripe || !elements) {
       // Stripe.js has not yet loaded.
       // Make sure to disable form submission until Stripe.js has loaded.
@@ -33,7 +25,7 @@ export default function CheckoutForm() {
       elements,
       confirmParams: {
         // Make sure to change this to your payment completion page
-        return_url: `${window.location.origin}/dashboard`,
+        return_url: `${window.location.origin}?payment=success`,
       },
     });
 
@@ -54,13 +46,15 @@ export default function CheckoutForm() {
   return (
     <form id="payment-form" onSubmit={handleSubmit}>
       <PaymentElement id="payment-element" />
-      <button disabled={isLoading || !stripe || !elements} id="submit">
+      <button
+        disabled={isLoading || !stripe || !elements}
+        id="submit"
+        className={styles.btn}
+      >
         <span id="button-text">
-          {isLoading ? <div className="spinner" id="spinner"></div> : "Pay now"}
+          {isLoading ? <Spinner variant="dark" /> : "Pay now"}
         </span>
       </button>
-      {/* Show any error or success messages */}
-      {message && <div id="payment-message">{message}</div>}
     </form>
   );
 }

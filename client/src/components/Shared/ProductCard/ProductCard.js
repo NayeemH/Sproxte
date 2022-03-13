@@ -35,9 +35,9 @@ const ProductCard = ({
                 </span>
               )}
               <img src={img} alt={title} className="w-100" />
-              {discount && discount > 0 && (
+              {discount && discount > 0 ? (
                 <span className={styles.discount}>-{discount}%</span>
-              )}
+              ) : null}
             </Col>
             <Col md={9}>
               <span

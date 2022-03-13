@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Container, Row, Col, Button, Form } from "react-bootstrap";
+import { Container, Row, Col, Button, Form, Card } from "react-bootstrap";
 import { AiOutlineClose } from "react-icons/ai";
 import { connect } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -8,8 +8,17 @@ import { removeFromCart } from "../../actions/Cart.action";
 import { createOrder, setPaymentKey } from "../../actions/Payment.acton";
 import styles from "./Cart.module.scss";
 
-const Cart = ({ cart, removeFromCart, setPaymentKey, createOrder, auth }) => {
-  const [address, setAddress] = useState("");
+const Cart = ({
+  cart,
+  removeFromCart,
+  setPaymentKey,
+  createOrder,
+  auth,
+  user,
+}) => {
+  const [address, setAddress] = useState(
+    user && user.address ? user.address : ""
+  );
   const [phone, setPhone] = useState("");
   const [loading, setLoading] = useState(false);
 
@@ -87,10 +96,12 @@ const Cart = ({ cart, removeFromCart, setPaymentKey, createOrder, auth }) => {
                 <Col xs="2">{item.quantity}</Col>
                 <Col xs="2">
                   $
-                  {(item.product.price *
-                    (100 - item.product.discount) *
-                    item.quantity) /
-                    100}
+                  {(
+                    (item.product.price *
+                      (100 - item.product.discount) *
+                      item.quantity) /
+                    100
+                  ).toFixed(2)}
                 </Col>
                 <Col xs="1">
                   <span
@@ -109,43 +120,47 @@ const Cart = ({ cart, removeFromCart, setPaymentKey, createOrder, auth }) => {
                 <span className={styles.heading}>Total Price</span>
               </Col>
               <Col xs="4"></Col>
-              <Col xs="2">${totalPrice}</Col>
+              <Col xs="2">${totalPrice.toFixed(2)}</Col>
             </Row>
 
             <Row className="py-5 text-center">
               <Col md={3}></Col>
               <Col md={6}>
-                <h3>Shipping Information</h3>
-                <Form onSubmit={submitHandeler}>
-                  <Form.Group controlId="formBasicPhone">
-                    <Form.Label>Phone</Form.Label>
-                    <Form.Control
-                      type="text"
-                      placeholder="Enter Phone"
-                      value={phone}
-                      className={styles.input}
-                      onChange={(e) => setPhone(e.target.value)}
-                    />
-                  </Form.Group>
-                  <Form.Group controlId="formBasicEmail" className="py-3">
-                    <Form.Label>Address</Form.Label>
-                    <Form.Control
-                      type="text"
-                      placeholder="Enter Address"
-                      value={address}
-                      className={styles.input}
-                      onChange={(e) => setAddress(e.target.value)}
-                    />
-                  </Form.Group>
-                  <Button
-                    disabled={loading}
-                    type="submit"
-                    className={styles.btn}
-                    // onClick={() => setLoading(true)}
-                  >
-                    {loading ? "Loading..." : "Checkout"}
-                  </Button>
-                </Form>
+                <Card className={`${styles.crd} shadow`}>
+                  <Card.Body>
+                    <h3>Shipping Information</h3>
+                    <Form onSubmit={submitHandeler}>
+                      <Form.Group controlId="formBasicPhone">
+                        <Form.Label>Phone</Form.Label>
+                        <Form.Control
+                          type="text"
+                          placeholder="Enter Phone"
+                          value={phone}
+                          className={styles.input}
+                          onChange={(e) => setPhone(e.target.value)}
+                        />
+                      </Form.Group>
+                      <Form.Group controlId="formBasicEmail" className="py-3">
+                        <Form.Label>Address</Form.Label>
+                        <Form.Control
+                          type="text"
+                          placeholder="Enter Address"
+                          value={address}
+                          className={styles.input}
+                          onChange={(e) => setAddress(e.target.value)}
+                        />
+                      </Form.Group>
+                      <Button
+                        disabled={loading}
+                        type="submit"
+                        className={styles.btn}
+                        // onClick={() => setLoading(true)}
+                      >
+                        {loading ? "Loading..." : "Checkout"}
+                      </Button>
+                    </Form>
+                  </Card.Body>
+                </Card>
               </Col>
             </Row>
           </>
@@ -160,6 +175,7 @@ const Cart = ({ cart, removeFromCart, setPaymentKey, createOrder, auth }) => {
 const mapStateToProps = (state) => ({
   cart: state.cart.cart,
   auth: state.auth.token,
+  user: state.auth.user,
 });
 
 export default connect(mapStateToProps, {

@@ -64,23 +64,36 @@ export const createOrder = (address, phone, cart) => async (dispatch) => {
       JSON.stringify(formData),
       config
     );
-    console.log(res);
     let check = 0;
     if (res.data.orderId) {
       for (let i = 0; i < cart.length; i++) {
         let frmData = new FormData();
         let item = cart[i];
-        frmData.append("type", "custom");
-        frmData.append("productTypeId", item.product._id);
+
+        frmData.append("type", item.type);
+        if (item.type === "custom") {
+          frmData.append("productTypeId", item.product._id);
+        }
+        if (item.type === "template") {
+          frmData.append("templateId", item.product._id);
+        }
         frmData.append("count", item.quantity);
-        frmData.append("description", item.description);
+        if (item.description) {
+          frmData.append("description", item.description);
+        }
         frmData.append("size", item.size);
-        frmData.append("color", "white");
-        frmData.append("layoutId", item.selectedLayout);
-        frmData.append("primaryText", item.mainText);
-        frmData.append("primaryColor", item.mainColor);
-        frmData.append("secondaryText", item.secondaryText);
-        frmData.append("secondaryColor", item.secondaryTextColor);
+        if (item.color) {
+          frmData.append("color", item.color);
+        }
+
+        if (item.selectedLayout) {
+          frmData.append("layoutId", item.selectedLayout);
+          frmData.append("primaryText", item.mainText);
+          frmData.append("primaryColor", item.mainTextColor);
+          frmData.append("secondaryText", item.secondaryText);
+          frmData.append("secondaryColor", item.secondaryTextColor);
+        }
+
         if (item.images) {
           for (let i = 0; i < item.images.length; i++) {
             frmData.append("frontImages", item.images[i]);

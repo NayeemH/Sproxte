@@ -1,3 +1,4 @@
-import UploadFilesReadyMade from "./UploadFilesReadyMade";
 
-export { UploadFilesReadyMade };
+import UploadFiles from './UploadFiles';
+
+export { UploadFiles };

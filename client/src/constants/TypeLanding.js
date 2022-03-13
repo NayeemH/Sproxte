@@ -51,3 +51,6 @@ export const SET_TOKEN = "SET_TOKEN";
 export const PAYMENT_ERROR = "PAYMENT_ERROR";
 export const ORDER_SUCCESS = "ORDER_SUCCESS";
 export const ORDER_ERROR = "ORDER_ERROR";
+
+export const GET_TEMPLATE_DETAILS = "GET_TEMPLATE_DETAILS";
+export const TEMPLATE_ERROR = "TEMPLATE_ERROR";
