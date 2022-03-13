@@ -3,27 +3,20 @@ import { Breadcrumb } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import FilterDashboard from "../../components/FilterDashboard/FilterDashboard";
 import SettingForm from "../../components/SettingForm/SettingForm";
+import Layout from "../../components/Shared/Layout/Layout";
 import Sidebar from "../../components/Sidebar/Sidebar";
 import Topbar from "../../components/Topbar/Topbar";
 import styles from "./SettingsPage.module.css";
 
 const SettingsPage = () => {
   return (
-    <div className={`bg_dark text-light`} style={{ minHeight: "100vh" }}>
+    <div className={`bg_dark `} style={{ minHeight: "100vh" }}>
       <Topbar />
-      <FilterDashboard />
+      {/* <FilterDashboard /> */}
       <Sidebar />
-      <Breadcrumb className={styles.wrapper}>
-        <Breadcrumb.Item>
-          <Link to="/dashboard" className={styles.bc_home}>
-            Dashboard
-          </Link>{" "}
-        </Breadcrumb.Item>
-        <Breadcrumb.Item className={styles.bc_name} active>
-          Settings
-        </Breadcrumb.Item>
-      </Breadcrumb>
-      <SettingForm />
+      <Layout>
+        <SettingForm />
+      </Layout>
     </div>
   );
 };

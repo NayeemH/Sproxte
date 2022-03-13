@@ -6,22 +6,23 @@
 
 .name {
   font-size: 18px;
+  margin-left: 10px;
 }
 
 .img_wrapper {
-  height: 35px;
-  width: 35px;
+  height: 45px;
+  width: 45px;
   display: flex !important;
   justify-content: center !important;
   align-items: center !important;
   border-radius: 50%;
-  margin-left: 8px;
   overflow: hidden;
+  border: 1px solid var(--secondary);
   background: var(--grey);
 }
 .dropdown {
-  height: 35px;
-  width: 35px;
+  height: 45px;
+  width: 45px;
   background: transparent !important;
 }
 
@@ -38,7 +39,7 @@
 
 .dropdown button {
   padding: 0 0 !important;
-  height: 37px !important;
+  height: 48px !important;
   overflow: hidden !important;
 }
 
@@ -53,7 +54,7 @@
 }
 
 .image {
-  height: 35px;
+  height: 45px;
 }
 
 .image:hover {
