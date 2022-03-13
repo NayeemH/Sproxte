@@ -49,7 +49,7 @@ const ProductCard = ({
                 <span
                   className={`d-block fs-6 text-secondary text-start  d-flex align-items-center `}
                 >
-                  <IoIosTimer className="me-2" /> {description}
+                  <IoIosTimer className="me-1" /> {description}
                 </span>
               )}
             </Col>

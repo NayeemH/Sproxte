@@ -14,16 +14,15 @@ const Dashboard = ({ dashboard }) => {
         order
         id={2}
         status="Active"
-        
       />
     </Col>
   );
   return (
     <Container className={styles.wrapper}>
-      <div className="d-flex justify-content-between align-items-center">
+      <div className="d-flex justify-content-between align-items-center flex-md-row flex-column">
         <h3 className="pb-3">Running Orders</h3>
 
-        <div className="d-flex">
+        <div className="d-flex flex-column flex-md-row">
           <Button
             className={dashboard ? styles.active_btn : styles.btn}
             onClick={() => console.log("Active")}
@@ -31,7 +30,9 @@ const Dashboard = ({ dashboard }) => {
             Active Orders
           </Button>
           <Button
-            className={!dashboard ? styles.active_btn : styles.btn}
+            className={`${
+              !dashboard ? styles.active_btn : styles.btn
+            } mt-3 mt-md-0`}
             onClick={() => console.log("completed")}
           >
             Completed Orders

@@ -19,7 +19,7 @@ const ProductListPage = () => {
   return (
     <div className={`bg_dark `} style={{ minHeight: "100vh" }}>
       <Layout>
-        <div className="d-flex justify-content-between align-items-center pb-3 px-4">
+        <div className="d-flex justify-content-between align-items-center pb-3 px-4 flex-column flex-md-row">
           <h3 className="">Products</h3>
           <Button
             variant="primary"

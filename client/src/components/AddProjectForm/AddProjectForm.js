@@ -485,7 +485,7 @@ const AddProjectForm = ({ category, createProject, getTypeList }) => {
                     variant="primary"
                     type="reset"
                     onClick={resetlHandeler}
-                    className={`${styles.btn} mx-md-3 mx-0`}
+                    className={`${styles.btn} mx-md-3 mx-0 mt-md-0 mt-2`}
                   >
                     Cancel
                   </Button>
