@@ -11,22 +11,23 @@
 .crd {
   margin: 0 auto;
   width: 28rem;
+  border-radius: 15px !important;
+  overflow: hidden;
 }
 
 .btn {
   outline: none !important;
   border: none !important;
   padding: 8px 26px !important;
-  background: linear-gradient(90deg, #ffe502 0%, #ffa602 100%) !important;
   color: var(--dark) !important;
   font-weight: bold !important;
   border-radius: 30px !important;
+  background: linear-gradient(90deg, #ffe502 0%, #ffa602 100%) !important;
   transition: 0.3s all ease-in-out;
 }
 
 .btn:hover {
-  background: rgb(9, 9, 9) !important;
-  color: var(--primary) !important;
+  background: linear-gradient(90deg, #fae41a 0%, #fcaf22 100%) !important;
   transition: 0.3s all ease-in-out;
 }
 
@@ -52,4 +53,12 @@
 .link__page:hover {
   color: var(--primary) !important;
   transition: 0.3s all ease-in-out;
+}
+
+.input {
+  background: var(--light) !important;
+  color: var(--dark) !important;
+  border: 1px solid var(--secondary) !important;
+  padding: 7px 15px !important;
+  border-radius: 15px !important;
 }

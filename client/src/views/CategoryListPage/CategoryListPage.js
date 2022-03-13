@@ -8,6 +8,7 @@ import Topbar from "../../components/Topbar/Topbar";
 import styles from "./CategoryListPage.module.css";
 import { getCategoryList } from "../../actions/Category.action";
 import CategoryList from "../../components/CategoryList/CategoryList";
+import Layout from "../../components/Shared/Layout/Layout";
 
 const CategoryListPage = ({ getCategoryList, category }) => {
   const navigate = useNavigate();
@@ -18,26 +19,9 @@ const CategoryListPage = ({ getCategoryList, category }) => {
   }, []);
   return (
     <div className={`bg_dark text-light`} style={{ minHeight: "100vh" }}>
-      <Topbar />
-      <FilterDashboard />
-      <Sidebar />
-      <Breadcrumb className={styles.wrapper}>
-        <Breadcrumb.Item>
-          <Link to="/dashboard" className={styles.bc_home}>
-            Dashboard
-          </Link>{" "}
-        </Breadcrumb.Item>
-        <Breadcrumb.Item className={styles.bc_name} active>
-          Category
-        </Breadcrumb.Item>
-        <Button
-          onClick={() => navigate("/add-category")}
-          className={styles.btn}
-        >
-          Add Category
-        </Button>
-      </Breadcrumb>
-      <CategoryList />
+      <Layout>
+        <CategoryList />
+      </Layout>
     </div>
   );
 };

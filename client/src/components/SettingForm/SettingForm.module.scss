@@ -18,6 +18,7 @@
   width: 30rem;
   background: var(--white) !important;
   border: 1px solid var(--white) !important;
+  border-radius: 15px !important;
   margin-bottom: 15px !important;
 }
 
@@ -45,7 +46,7 @@
 .btn {
   outline: none !important;
   border: none !important;
-  padding: 8px 26px;
+  padding: 8px 26px !important;
   color: var(--dark) !important;
   font-weight: bold !important;
   border-radius: 30px !important;
@@ -89,12 +90,13 @@
 .input {
   background: var(--light) !important;
   color: var(--dark) !important;
-  border: none !important;
+  border: 1px solid var(--secondary) !important;
+  padding: 7px 15px !important;
+  border-radius: 15px !important;
 }
 .input:disabled {
   background: var(--light) !important;
   color: var(--dark) !important;
-  border: none !important;
 }
 
 @media screen and (max-width: 768px) {

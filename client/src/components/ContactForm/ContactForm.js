@@ -33,9 +33,11 @@ const ContactForm = () => {
   });
   return (
     <div className={styles.wrapper}>
-      <Card text="light" className={styles.crd}>
-        <Card.Header className="d-flex justify-content-center align-items-center">
-          <span className={styles.heading}>Contact Us</span>
+      <Card text="light" className={`${styles.crd} shadow`}>
+        <Card.Header className="d-flex justify-content-center align-items-center bg-dark gradient_title">
+          <span className={`gradient_title fw-bold ${styles.heading}`}>
+            Contact Us
+          </span>
         </Card.Header>
         <Card.Body>
           <Formik
@@ -99,6 +101,7 @@ const ContactForm = () => {
                     as="textarea"
                     placeholder="Type message"
                     name="message"
+                    rows="5"
                     isValid={!errors.message && touched.message}
                     className={`${styles.input} form-control w-100 icon-hidden`}
                     isInvalid={errors.message && touched.message}

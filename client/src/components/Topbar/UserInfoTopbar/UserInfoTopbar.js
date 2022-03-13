@@ -10,7 +10,13 @@ import { FiLogOut } from "react-icons/fi";
 import { FaRegUserCircle } from "react-icons/fa";
 import { MdOutlineSpaceDashboard } from "react-icons/md";
 
-const UserInfoTopbar = ({ user, logout, getAuthUser, filter = false }) => {
+const UserInfoTopbar = ({
+  user,
+  logout,
+  getAuthUser,
+  name = false,
+  filter = false,
+}) => {
   const navigate = useNavigate();
   const clickHandler = () => {
     navigate("/settings");
@@ -28,7 +34,6 @@ const UserInfoTopbar = ({ user, logout, getAuthUser, filter = false }) => {
   }, []);
   return (
     <div className={`${styles.wrapper} ${filter && styles.active}`} id="user">
-      {/* {!filter && <span className={styles.name}>{user.username}</span>} */}
       <DropdownButton
         variant="transparent"
         className={styles.dropdown}
@@ -68,6 +73,7 @@ const UserInfoTopbar = ({ user, logout, getAuthUser, filter = false }) => {
           <FiLogOut /> <span className="d-block ms-2">Logout</span>
         </Dropdown.Item>
       </DropdownButton>
+      {name && <span className={styles.name}>{user.name}</span>}
     </div>
   );
 };
