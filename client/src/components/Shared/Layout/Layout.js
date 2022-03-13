@@ -4,19 +4,20 @@ import styles from "./Layout.module.scss";
 import logo from "../../../assets/logoSq.png";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import { VscHome, VscTypeHierarchySub } from "react-icons/vsc";
-import { TiCogOutline, TiTick } from "react-icons/ti";
+import { TiCogOutline } from "react-icons/ti";
 import { BsArrowLeftRight, BsMinecartLoaded } from "react-icons/bs";
 import { IoMdNotificationsOutline } from "react-icons/io";
 import { logout } from "../../../actions/Dashboard.action";
 import { connect } from "react-redux";
 import UserInfoTopbar from "../../Topbar/UserInfoTopbar/UserInfoTopbar";
 import { FiLogOut } from "react-icons/fi";
-import { AiFillHome } from "react-icons/ai";
+import { GoThreeBars } from "react-icons/go";
 import { MdDownloadDone } from "react-icons/md";
 import { BiLayer, BiLayerPlus } from "react-icons/bi";
 
 const Layout = ({ logout, children, role }) => {
   const navigate = useNavigate();
+  const [show, setShow] = React.useState(false);
 
   const logoutHandeler = async () => {
     let check = await logout();
@@ -27,15 +28,26 @@ const Layout = ({ logout, children, role }) => {
   return (
     <div>
       <Container fluid>
-        <Row>
-          <Col md={2} className={`px-4 ${styles.wrapper}`}>
-            <Link
-              to="/"
-              className="d-flex align-items-center py-3 text-decoration-none text-dark"
-            >
-              <img src={logo} alt="" className={styles.logo} />
-              <span className="d-block fs-2 fw-bolder pb-2">Sproxte</span>
-            </Link>
+        <Row className="position-relative">
+          <Col
+            md={2}
+            className={`px-4 ${styles.wrapper} ${show ? styles.active : ""}`}
+          >
+            <div className="d-flex justify-content-between align-items-center w-100">
+              <Link
+                to="/"
+                className="d-flex align-items-center py-3 text-decoration-none text-dark"
+              >
+                <img src={logo} alt="" className={styles.logo} />
+                <span className="d-block fs-2 fw-bolder pb-2">Sproxte</span>
+              </Link>
+              <div
+                className={`${styles.ham}  ms-auto`}
+                onClick={() => setShow(!show)}
+              >
+                <GoThreeBars />
+              </div>
+            </div>
             <div className={styles.nav}>
               <NavLink to="/dashboard" className={styles.nav__item}>
                 <span className={styles.icon}>
@@ -136,6 +148,12 @@ const Layout = ({ logout, children, role }) => {
           </Col>
           <Col md={10}>
             <div className="d-flex justify-content-end align-items-center py-3">
+              <div
+                className={`${styles.ham}  me-auto`}
+                onClick={() => setShow(!show)}
+              >
+                <GoThreeBars />
+              </div>
               <NavLink to="/notification" className={styles.right__item}>
                 <IoMdNotificationsOutline />
               </NavLink>

@@ -9,17 +9,17 @@ import colors from "../../../config/Colors";
 import { IMAGE_PATH } from "../../../constants/URL";
 import { useNavigate } from "react-router-dom";
 
-const OrderDescription = ({ sizes, addToCart, product, color }) => {
+const OrderDescription = ({ sizes, addToCart, product }) => {
   const [selectedFile, setSelectedFile] = useState();
   const [preview, setPreview] = useState();
   const [size, setSize] = useState();
   const [description, setDescription] = useState();
   const [quantity, setQuantity] = useState(1);
   const [selectedLayout, setSelectedLayout] = useState();
-  const [mainText, setMainText] = useState("");
-  const [secondaryText, setSecondaryText] = useState("");
-  const [mainTextColor, setMainTextColor] = useState("#d80009");
-  const [secondaryTextColor, setSecondaryTextColor] = useState("#d80009");
+  const [mainText, setMainText] = useState(undefined);
+  const [secondaryText, setSecondaryText] = useState(undefined);
+  const [mainTextColor, setMainTextColor] = useState(undefined);
+  const [secondaryTextColor, setSecondaryTextColor] = useState(undefined);
   const [selectedFileBack, setSelectedFile2] = useState();
   const fileRef = useRef();
   const navigate = useNavigate();
@@ -39,37 +39,29 @@ const OrderDescription = ({ sizes, addToCart, product, color }) => {
 
   //Submit handeler
   const submitHandeler = () => {
-    if (!selectedFile) {
-      toast.error("Please select a file");
+    if (quantity < 1) {
+      toast.error("Please enter a valid quantity");
+    } else if (!size) {
+      toast.error("Please select size");
     } else {
-      if (!description) {
-        toast.error("Please enter a description");
-      } else if (quantity < 1) {
-        toast.error("Please enter a valid quantity");
-      } else if (!size) {
-        toast.error("Please select size");
-      } else if (!color) {
-        toast.error("Please select color");
-      } else {
-        addToCart(
-          description,
-          size,
-          selectedFile,
-          selectedFileBack,
-          mainText,
-          secondaryText,
-          mainTextColor,
-          secondaryTextColor,
-          selectedLayout,
-          quantity,
-          product,
-          color,
-          "custom"
-        );
-        resetlHandeler();
-        setDescription("");
-        navigate("/cart");
-      }
+      addToCart(
+        undefined,
+        size,
+        undefined,
+        undefined,
+        mainText,
+        secondaryText,
+        mainTextColor,
+        secondaryTextColor,
+        selectedLayout,
+        quantity,
+        product,
+        undefined,
+        "template"
+      );
+      resetlHandeler();
+      setDescription("");
+      navigate("/cart");
     }
   };
 
@@ -119,7 +111,7 @@ const OrderDescription = ({ sizes, addToCart, product, color }) => {
   };
   return (
     <div className={styles.wrapper}>
-      <Card className={`${styles.crd} shadow`}>
+      {/* <Card className={`${styles.crd} shadow`}>
         <Card.Body>
           <Row>
             <Col>
@@ -185,7 +177,7 @@ const OrderDescription = ({ sizes, addToCart, product, color }) => {
             </Col>
           </Row>
         </Card.Body>
-      </Card>
+      </Card> */}
       <Card className={`${styles.crd_size} shadow`}>
         <Card.Body>
           <span className="d-block fs-4">Select Size</span>
@@ -204,7 +196,7 @@ const OrderDescription = ({ sizes, addToCart, product, color }) => {
           </div>
         </Card.Body>
       </Card>
-      <Card className={`${styles.crd} shadow`}>
+      {/* <Card className={`${styles.crd} shadow`}>
         <Card.Body className="d-flex justify-content-between flex-column">
           <span className="d-block fs-4">Order Description</span>
           <textarea
@@ -217,84 +209,8 @@ const OrderDescription = ({ sizes, addToCart, product, color }) => {
             className={`${styles.textarea} form-control mb-3`}
           ></textarea>
         </Card.Body>
-      </Card>
-      {product && product.layouts && product.layouts.length > 0 && (
-        <Card className={`${styles.crd_size} shadow`}>
-          <Card.Body>
-            <span className="d-block fs-4">Select Layout</span>
-            <Container fluid>
-              <Row>
-                {product &&
-                  product.layouts &&
-                  product.layouts.map((l) => (
-                    <Col xs={6}>
-                      <div
-                        className={`${styles.layout} ${
-                          selectedLayout === l._id ? styles.active : ""
-                        } h-100 d-flex justify-content-center align-items-center`}
-                      >
-                        <img
-                          src={`${IMAGE_PATH}/small/${l.image}`}
-                          className="img-fluid"
-                          onClick={() =>
-                            selectedLayout === l._id
-                              ? setSelectedLayout(null)
-                              : setSelectedLayout(l._id)
-                          }
-                        />
-                      </div>
-                    </Col>
-                  ))}
-              </Row>
-            </Container>
-          </Card.Body>
-        </Card>
-      )}
-      {selectedLayout && (
-        <Card className={`${styles.crd} shadow mt-4`}>
-          <Card.Body className="d-flex justify-content-between flex-column">
-            <span className="d-block fs-4">Layout Options</span>
-            <span className="d-block pt-3">Main Text</span>
-            <input
-              type="text"
-              value={mainText}
-              className={`form-control mb-3`}
-              onChange={(e) => setMainText(e.target.value)}
-            />
-            <span className="d-block pt-2">Main Text Color</span>
-            <select
-              value={mainTextColor}
-              onChange={(e) => setMainTextColor(e.target.value)}
-              className={` form-control mb-3`}
-            >
-              {colors.map((clr, i) => (
-                <option key={i} value={clr.name}>
-                  {clr.name}
-                </option>
-              ))}
-            </select>
-            <span className="d-block pt-3">Secondary Text</span>
-            <input
-              type="text"
-              value={secondaryText}
-              className={`form-control mb-3`}
-              onChange={(e) => setSecondaryText(e.target.value)}
-            />
-            <span className="d-block pt-2">Main Text Color</span>
-            <select
-              value={secondaryTextColor}
-              onChange={(e) => setSecondaryTextColor(e.target.value)}
-              className={` form-control mb-3`}
-            >
-              {colors.map((clr, i) => (
-                <option key={i} value={clr.name}>
-                  {clr.name}
-                </option>
-              ))}
-            </select>
-          </Card.Body>
-        </Card>
-      )}
+      </Card> */}
+
       <div className="py-4 d-flex align-items-center">
         <span className="fs-5 fw-bold me-3">Quantity</span>
         <input

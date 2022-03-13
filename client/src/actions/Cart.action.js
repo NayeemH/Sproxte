@@ -3,7 +3,9 @@ import {
   CART_REMOVE_ITEM,
   DISCOVER_ERROR,
   GET_PRODUCT_DETAILS,
+  GET_TEMPLATE_DETAILS,
   SET_CART_SIZE,
+  TEMPLATE_ERROR,
 } from "../constants/TypeLanding";
 import types from "../config/ProductTypes";
 import { toast } from "react-toastify";
@@ -21,6 +23,21 @@ export const getProduct = (id) => async (dispatch) => {
     });
   } catch (err) {
     dispatch({ type: DISCOVER_ERROR });
+    console.log(err);
+  }
+};
+
+// GET TEMPLATE
+export const getTemplate = (id) => async (dispatch) => {
+  try {
+    const res = await axios.get(`${BASE_URL}/api/v1/template/${id}`);
+    // console.log(res);
+    dispatch({
+      type: GET_TEMPLATE_DETAILS,
+      payload: { ...res.data.types },
+    });
+  } catch (err) {
+    dispatch({ type: TEMPLATE_ERROR });
     console.log(err);
   }
 };
@@ -47,7 +64,9 @@ export const addToCart =
     secondaryTextColor,
     selectedLayout,
     quantity,
-    product
+    product,
+    color,
+    type
   ) =>
   (dispatch) => {
     toast.success("Added to cart");
@@ -66,6 +85,8 @@ export const addToCart =
         selectedLayout,
         quantity,
         product,
+        color,
+        type,
       },
     });
   };

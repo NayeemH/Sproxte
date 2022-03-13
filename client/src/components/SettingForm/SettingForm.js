@@ -146,7 +146,7 @@ const SettingForm = ({ updateProfile, user }) => {
                       />
                     </div>
                   </div>
-                  <div className={`text-end ${styles.change}`}>
+                  <div className={`text-end ${styles.change} ms-2`}>
                     <Link to="/settings/password" className="btn btn-primary">
                       Change Password
                     </Link>

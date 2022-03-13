@@ -257,7 +257,7 @@ const AddProjectForm = ({ category, createProject, getTypeList }) => {
                       </div>
                     </InputGroup>
                   </Col>
-                  <Col md={6}>
+                  {/* <Col md={6}>
                     <InputGroup className=" d-flex flex-column">
                       <div className="d-flex justify-content-between align-items-center pb-2">
                         <label htmlFor="quantity" className="d-block">
@@ -323,8 +323,8 @@ const AddProjectForm = ({ category, createProject, getTypeList }) => {
                         </Col>
                       ))}
                     </Row>
-                  </Col>
-                  <Col md={6}>
+                  </Col> */}
+                  <Col md={12}>
                     <InputGroup className="mb-3 d-flex flex-column">
                       <div className="d-flex justify-content-between align-items-center pb-2">
                         <label htmlFor="size" className="d-block">
@@ -485,7 +485,7 @@ const AddProjectForm = ({ category, createProject, getTypeList }) => {
                     variant="primary"
                     type="reset"
                     onClick={resetlHandeler}
-                    className={`${styles.btn} mx-md-3 mx-0`}
+                    className={`${styles.btn} mx-md-3 mx-0 mt-md-0 mt-2`}
                   >
                     Cancel
                   </Button>

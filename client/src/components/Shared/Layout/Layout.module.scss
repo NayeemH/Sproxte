@@ -66,3 +66,40 @@
   border: 1px solid var(--dark);
   transition: 0.3s all ease-in-out;
 }
+
+.ham {
+  display: none;
+}
+
+@media screen and (max-width: 768px) {
+  .wrapper {
+    display: block;
+    position: fixed;
+    z-index: 9;
+    width: 100%;
+    left: -105%;
+    min-height: 100vh !important;
+    transition: 0.3s all ease-in-out;
+  }
+
+  .wrapper.active {
+    left: 0;
+    transition: 0.3s all ease-in-out;
+  }
+
+  .ham {
+    display: block;
+    text-decoration: none !important;
+    color: var(--dark) !important;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 22px;
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    border: 1px solid var(--dark);
+    margin-right: 10px;
+    transition: 0.3s all ease-in-out;
+  }
+}

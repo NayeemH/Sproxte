@@ -38,6 +38,7 @@ import FeatureListPage from "./views/FeatureListPage/FeatureListPage";
 import AllListPage from "./views/AllListPage/AllListPage";
 import ProductsByCategoryPage from "./views/ProductsByCategoryPage/ProductsByCategoryPage";
 import PaymentPage from "./views/PaymentPage/PaymentPage";
+import FileUploadPageReady from "./views/FileUploadPageReady/FileUploadPageReady";
 
 function App({ getRefreshToken }) {
   useEffect(() => {
@@ -65,6 +66,7 @@ function App({ getRefreshToken }) {
           <Route path="/payment-methods" element={<PaymentMethodsPage />} />
           <Route path="/policy" element={<RefundPolicyPage />} />
           <Route path="/template/:id" element={<FileUploadPage />} />
+          <Route path="/product/:id" element={<FileUploadPageReady />} />
 
           <Route path="/*" element={<PrivateOutlet />}>
             <>

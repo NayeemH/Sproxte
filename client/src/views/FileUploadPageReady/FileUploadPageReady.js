@@ -1,30 +1,29 @@
 import { connect } from "react-redux";
 import React, { useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { getProduct } from "../../actions/Cart.action";
-import BottomNav from "../../components/BottomNav/BottomNav";
+import { getTemplate } from "../../actions/Cart.action";
 import Footer from "../../components/Footer/Footer";
 import LandingSidebar from "../../components/LandingSidebar/LandingSidebar";
 import Nav from "../../components/Nav/Nav";
-import UploadFiles from "../../components/UploadFiles/UploadFiles";
+import { ReadyUpload } from "../../components/ReadyUpload";
 
-const FileUploadPage = ({ getProduct, product }) => {
+const FileUploadPageReady = ({ getTemplate, product }) => {
   const { id } = useParams();
   useEffect(() => {
-    getProduct(id);
+    getTemplate(id);
   }, []);
   return (
     <div>
       <LandingSidebar />
       <Nav />
-      <UploadFiles product={product} />
+      <ReadyUpload product={product} />
       <Footer />
     </div>
   );
 };
 
 const mapStateToProps = (state) => ({
-  product: state.cart.selected_cart,
+  product: state.landing.selected_template,
 });
 
-export default connect(mapStateToProps, { getProduct })(FileUploadPage);
+export default connect(mapStateToProps, { getTemplate })(FileUploadPageReady);

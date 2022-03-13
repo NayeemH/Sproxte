@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Container } from "react-bootstrap";
+import { Card, Container } from "react-bootstrap";
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 import styles from "./Payment.module.scss";
@@ -8,10 +8,12 @@ import CheckoutForm from "./CheckoutForm/CheckoutForm";
 import { setPaymentToken } from "../../actions/Payment.acton";
 import { BASE_URL } from "../../constants/URL";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
-const Payment = ({ id, token, setPaymentToken }) => {
+const Payment = ({ id, auth }) => {
   const [stripePromise, setStripePromise] = useState(null);
   const [clientSecret, setClientSecret] = useState(null);
+  const navigate = useNavigate();
   useEffect(() => {
     const fetchToken = async () => {
       try {
@@ -26,12 +28,15 @@ const Payment = ({ id, token, setPaymentToken }) => {
         setClientSecret(res.data.clientSecret);
         if (resKey.data.paymentKey) {
           setStripePromise(loadStripe(resKey.data.paymentKey));
-          console.log(":::::::::::::::::::::::::::::::");
-          console.log(resKey.data.paymentKey);
-          console.log(":::::::::::::::::::::::::::::::");
+        }
+        if (!auth) {
+          navigate("/login");
         }
       } catch (error) {
         console.log(error);
+        if (!auth) {
+          navigate("/login");
+        }
       }
     };
     if (id) {
@@ -41,14 +46,18 @@ const Payment = ({ id, token, setPaymentToken }) => {
 
   return (
     <div className={styles.wrapper}>
-      <Container className="py-4">
-        <h2>Checkout</h2>
-        {clientSecret && (
-          <Elements stripe={stripePromise} options={{ clientSecret }}>
-            <CheckoutForm />
-          </Elements>
-        )}
-      </Container>
+      <div className="py-4 d-flex justify-content-center align-items-center">
+        <Card className={`${styles.crd} shadow w-100`}>
+          <Card.Body>
+            <h2 className="text-center pb-3">Checkout</h2>
+            {clientSecret && (
+              <Elements stripe={stripePromise} options={{ clientSecret }}>
+                <CheckoutForm />
+              </Elements>
+            )}
+          </Card.Body>
+        </Card>
+      </div>
     </div>
   );
 };
@@ -57,6 +66,7 @@ const mapStateToProps = (state) => ({
   id: state.payment.id,
   key: state.payment.key,
   token: state.payment.token,
+  auth: state.auth.isAuthenticated,
 });
 
 export default connect(mapStateToProps, { setPaymentToken })(Payment);
