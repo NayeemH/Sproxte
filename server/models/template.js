@@ -53,8 +53,7 @@ const templateSchema = Schema({
         type: Array
     },
     productType: {
-        type:  Schema.Types.ObjectId,
-        required: true
+        type:  Schema.Types.ObjectId
     },
     sellCount: {
         type: Number,

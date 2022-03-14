@@ -1,14 +1,15 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-// Actual project schema
-const orderSchema = Schema({
+
+const collectionSchema = Schema({
     userId: {
         type: Schema.Types.ObjectId,
         required: true,
     },
     projectId: {
-        type: Schema.Types.ObjectId
+        type: Schema.Types.ObjectId,
+        required: true,
     },
     address: {
         type: String,
@@ -29,15 +30,12 @@ const orderSchema = Schema({
     price: {
         type: Number,
         default: 0
-    },
-    orders: {
-        type: Array
-    },
+    }
 }, {timestamps: true});
 
 
 
-const Order = mongoose.model('order', orderSchema);
+const Collection = mongoose.model('collection', collectionSchema);
 
 
-module.exports = Order;
+module.exports = Collection;
