@@ -2,42 +2,40 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 // Actual project schema
-const orderSchema = Schema({
+const projectSchema = Schema({
     userId: {
         type: Schema.Types.ObjectId,
         required: true,
     },
-    projectId: {
-        type: Schema.Types.ObjectId
+    orderId: {
+        type: Schema.Types.ObjectId,
+        required: true,
     },
-    address: {
+    active: {
+        type: Boolean,
+        default: true
+    },
+    name: {
         type: String,
         required: true,
     },
-    phone: {
+    image: {
         type: String,
         required: true
     },
-    deleveryStatus: {
+    status: {
         type: String,   // pending, accepted, shipping, delevered
         default: 'pending'
-    },
-    paymentStatus: {
-        type: String,   // due paid
-        default: 'due'
     },
     price: {
         type: Number,
         default: 0
-    },
-    orders: {
-        type: Array
-    },
+    }
 }, {timestamps: true});
 
 
+// Creating the project model
+const Project = mongoose.model('project', projectSchema);
 
-const Order = mongoose.model('order', orderSchema);
 
-
-module.exports = Order;
+module.exports = Project;

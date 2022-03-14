@@ -17,7 +17,7 @@ router.post('/:id', async (req, res, next) => {
         if(order.price < 1) throw Error('No need to payment');
 
         const clientSecret = await stripe.paymentIntents.create({
-            amount: order.price,
+            amount: Math.round(order.price * 100),
             currency: 'usd',
             payment_method_types: ['card'],
             metadata: {

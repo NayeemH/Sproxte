@@ -36,7 +36,7 @@ router.put('/:id', fileFetch.fields([{name: 'frontImages', maxCount: 10}, {name:
 const addTemplate = async (req) => {
     const {userId} = req.user;
     const {id} =req.params;
-    const {templateId, count: stringCount, size, color} = req.body;
+    const {type, templateId, count: stringCount, size, color} = req.body;
 
     const count = parseInt(stringCount);
     if(count < 0) count = - count;
@@ -52,7 +52,7 @@ const addTemplate = async (req) => {
     await Order.findOneAndUpdate(
         {_id: id, userId}, 
         {
-            $push: {orders: {templateId, count: count, size, color}},
+            $push: {orders: {type, templateId, count: count, size, color}},
             $inc: {price: netPrice}
         }
     );
@@ -63,6 +63,7 @@ const addCustomTemplate = async (req) => {
     const {userId} = req.user;
     const {id} =req.params;
     const {
+        type,
         productTypeId, 
         count: stringCount, 
         size, 
@@ -103,6 +104,7 @@ const addCustomTemplate = async (req) => {
         {_id: id, userId}, 
         {
             $push: {orders: {
+                type,
                 productTypeId, 
                 count, 
                 size, 
