@@ -4,6 +4,7 @@ import CartReducer from "./Cart.reducer";
 import LandingReducer from "./Landing.reducer";
 import DashboardReducer from "./Dashboard.reducer";
 import paymentReducer from "./Payment.reducer";
+import projectReducer from "./Project.reducer";
 
 const reducer = combineReducers({
   auth: authReducer,
@@ -11,6 +12,7 @@ const reducer = combineReducers({
   cart: CartReducer,
   dashboard: DashboardReducer,
   payment: paymentReducer,
+  project: projectReducer,
 });
 
 export default reducer;

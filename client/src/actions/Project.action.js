@@ -477,7 +477,7 @@ export const editProductType =
   };
 
 // FETCH PROJECTS FOR DASHBOARD
-export const fetchProjects = () => async (dispatch) => {
+export const fetchProjects = (page) => async (dispatch) => {
   const config = {
     headers: {
       "Content-Type": "application/json",
@@ -486,7 +486,10 @@ export const fetchProjects = () => async (dispatch) => {
   };
   try {
     // TODO ::: API CALL
-    const res = await axios.get(`${BASE_URL}/api/project/active`, config);
+    const res = await axios.get(
+      `${BASE_URL}/api/v1/project/active?page=${page}&limit=12`,
+      config
+    );
     if (res.status === 200) {
       dispatch({
         type: FETCH_DASHBOARD_PROJECT,

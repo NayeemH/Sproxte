@@ -1,10 +1,17 @@
-import React from "react";
-import { Button, ButtonGroup, Col, Container, Row } from "react-bootstrap";
+import React, { useEffect } from "react";
+import { Button, Col, Container, Row } from "react-bootstrap";
 import ProductCard from "../Shared/ProductCard/ProductCard";
 import demoImg from "../../assets/templates/long.png";
 import styles from "./Dashboard.module.scss";
+import { fetchProjects } from "../../actions/Project.action";
+import { connect } from "react-redux";
 
-const Dashboard = ({ dashboard }) => {
+const Dashboard = ({ dashboard, projects, fetchProjects }) => {
+  useEffect(() => {
+    if (projects && projects.length <= 0) {
+      fetchProjects();
+    }
+  }, []);
   const CardItem = (
     <Col md={3} className="p-3">
       <ProductCard
@@ -51,4 +58,8 @@ const Dashboard = ({ dashboard }) => {
   );
 };
 
-export default Dashboard;
+const mapStateToProps = (state) => ({
+  projects: state.dashboard.projects,
+});
+
+export default connect(mapStateToProps, { fetchProjects })(Dashboard);
