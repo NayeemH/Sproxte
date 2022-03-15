@@ -1,35 +1,42 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
+const feedbackSchema = Schema({
+    user: {
+        type: Schema.Types.ObjectId,
+        required: true,
+        ref: 'user'
+    },
+    message: {
+        type: String,
+        required: true
+    },
+    points: {
+        type: Array,
+        required: true
+    }
+}, {timestamps: true});
+
 
 const collectionSchema = Schema({
     userId: {
         type: Schema.Types.ObjectId,
         required: true,
     },
-    projectId: {
+    productId: {
         type: Schema.Types.ObjectId,
         required: true,
     },
-    address: {
-        type: String,
-        required: true,
-    },
-    phone: {
+    title: {
         type: String,
         required: true
     },
-    deleveryStatus: {
-        type: String,   // pending, accepted, shipping, delevered
-        default: 'pending'
+    image: {
+        type: String,
+        required: true,
     },
-    paymentStatus: {
-        type: String,   // due paid
-        default: 'due'
-    },
-    price: {
-        type: Number,
-        default: 0
+    feedbacks: {
+        type: [feedbackSchema],
     }
 }, {timestamps: true});
 
