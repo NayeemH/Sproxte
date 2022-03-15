@@ -6,7 +6,8 @@ const user = require('./user');
 const isAuth = require('./authenticate/isAuth');
 const isAdmin = require('./authenticate/isAdmin');
 const activate = require('./activate');
-//const project = require('./projects');
+const project = require('./project');
+const product = require('./product');
 const profile = require('./profile');
 //const download = require('./download');
 const categoryType = require('./categoryType');
@@ -49,7 +50,10 @@ router.use('/payment', payment);
 router.use('/activate', activate);
 
 // Projects routes
-//router.use('/project',isAuth, project);
+router.use('/project',isAuth, project);
+
+// Product routes
+router.use('/product',isAuth, product);
 
 // Profile Info
 router.use('/profile', isAuth, profile);
