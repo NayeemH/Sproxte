@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { AiOutlineArrowRight } from "react-icons/ai";
 import { IoIosTimer } from "react-icons/io";
 import styles from "./ProductCard.module.scss";
+import Moment from "react-moment";
 
 const ProductCard = ({
   title,
@@ -49,7 +50,8 @@ const ProductCard = ({
                 <span
                   className={`d-block fs-6 text-secondary text-start  d-flex align-items-center `}
                 >
-                  <IoIosTimer className="me-1" /> {description}
+                  <IoIosTimer className="me-1" />{" "}
+                  <Moment fromNow>{description}</Moment>
                 </span>
               )}
             </Col>

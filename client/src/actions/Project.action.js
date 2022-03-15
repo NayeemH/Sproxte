@@ -493,7 +493,7 @@ export const fetchProjects = (page) => async (dispatch) => {
     if (res.status === 200) {
       dispatch({
         type: FETCH_DASHBOARD_PROJECT,
-        payload: res.data,
+        payload: res.data.projects,
       });
     }
   } catch (err) {

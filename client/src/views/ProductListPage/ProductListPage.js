@@ -1,14 +1,10 @@
 import React, { useEffect } from "react";
-import { Breadcrumb, Button } from "react-bootstrap";
+import { Button } from "react-bootstrap";
 import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { getProjectsList } from "../../actions/Project.action";
-import FilterDashboard from "../../components/FilterDashboard/FilterDashboard";
 import ProductList from "../../components/ProductList/ProductList";
 import Layout from "../../components/Shared/Layout/Layout";
-import Sidebar from "../../components/Sidebar/Sidebar";
-import Topbar from "../../components/Topbar/Topbar";
-import styles from "./ProductListPage.module.css";
 
 const ProductListPage = () => {
   const dispatch = useDispatch();
