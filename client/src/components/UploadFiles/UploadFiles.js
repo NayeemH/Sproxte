@@ -14,6 +14,7 @@ const UploadFiles = ({ product }) => {
           <Col md={5} className="py-md-5 py-3">
             <ProductCard
               title={product.name}
+              h
               img={
                 selectedColor
                   ? `${IMAGE_PATH}small/${

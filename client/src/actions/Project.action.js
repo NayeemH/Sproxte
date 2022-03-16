@@ -487,7 +487,7 @@ export const fetchProjects = (page) => async (dispatch) => {
   try {
     // TODO ::: API CALL
     const res = await axios.get(
-      `${BASE_URL}/api/v1/project/active?page=${page}&limit=12`,
+      `${BASE_URL}/api/v1/project/active?page=${page}&limit=2`,
       config
     );
     if (res.status === 200) {

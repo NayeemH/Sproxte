@@ -17,11 +17,16 @@ const ProductCard = ({
   order,
   status,
   noshadow,
+  h,
 }) => {
   const navigate = useNavigate();
   return (
     <>
-      <Card className={`${styles.crd} ${!noshadow ? "shadow" : ""}`}>
+      <Card
+        className={`${styles.crd} ${!h && "h-100"} ${
+          !noshadow ? "shadow" : ""
+        }`}
+      >
         <Card.Body>
           <Row>
             <Col xs={12} style={{ position: "relative" }}>
@@ -47,11 +52,9 @@ const ProductCard = ({
                 {title}
               </span>
               {description && (
-                <span
-                  className={`d-block fs-6 text-secondary text-start  d-flex align-items-center `}
-                >
+                <span className={`d-block fs-6 text-secondary text-start`}>
                   <IoIosTimer className="me-1" />{" "}
-                  <Moment fromNow>{description}</Moment>
+                  <Moment format="DD-MM-YYYY">{description}</Moment>
                 </span>
               )}
             </Col>
