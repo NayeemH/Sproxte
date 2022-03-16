@@ -40,6 +40,7 @@ import ProductsByCategoryPage from "./views/ProductsByCategoryPage/ProductsByCat
 import PaymentPage from "./views/PaymentPage/PaymentPage";
 import FileUploadPageReady from "./views/FileUploadPageReady/FileUploadPageReady";
 import OrderTemplatePage from "./views/OrderTemplatePage/OrderTemplatePage";
+import ProjectDetailsPage from "./views/ProjectDetailsPage/ProjectDetailsPage";
 
 function App({ getRefreshToken }) {
   useEffect(() => {
@@ -73,8 +74,8 @@ function App({ getRefreshToken }) {
             <>
               <Route path="dashboard" element={<DashboardPage />} />
               <Route
-                path="dashboard/template/:id"
-                element={<OrderTemplatePage />}
+                path="dashboard/order/:id"
+                element={<ProjectDetailsPage />}
               />
               <Route path="add-iep" element={<AddUserPage />} />
               <Route path="add-template" element={<AddTypePage />} />

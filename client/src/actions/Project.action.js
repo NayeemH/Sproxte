@@ -52,14 +52,15 @@ import { getTypeList } from "./Landing.action";
 //GET PROJECT DETAILS WITH TASKS
 export const getProjectDetails = (id) => async (dispatch) => {
   try {
-    const res = await axios.get(`${BASE_URL}/api/project/one/${id}`);
-    // console.log(res);
+    const res = await axios.get(`${BASE_URL}/api/v1/project/${id}`);
+    console.log(res);
 
     dispatch({
       type: GET_PROJECT_DETAILS,
       payload: res.data,
     });
   } catch (err) {
+    console.log(err);
     err.response.data.msg.map((msg) => toast.error(msg));
   }
 };

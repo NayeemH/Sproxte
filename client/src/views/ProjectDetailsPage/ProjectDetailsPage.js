@@ -1,15 +1,15 @@
 import React, { useEffect } from "react";
-import { Breadcrumb, Spinner } from "react-bootstrap";
-import { useDispatch, useSelector } from "react-redux";
-import { Link, useParams } from "react-router-dom";
+import { connect, useDispatch, useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
 import { getProjectDetails } from "../../actions/Project.action";
+import OrderDetails from "../../components/OrderDetails/OrderDetails";
+import Layout from "../../components/Shared/Layout/Layout";
 
-const ProjectDetailsPage = () => {
+const ProjectDetailsPage = ({ getProjectDetails, project }) => {
   const { id } = useParams();
-  const dispatch = useDispatch();
-  const project = useSelector((state) => state.project.selected_project);
+
   useEffect(() => {
-    dispatch(getProjectDetails(id));
+    getProjectDetails(id);
   }, [id]);
   return (
     <div
@@ -17,10 +17,16 @@ const ProjectDetailsPage = () => {
       style={{ minHeight: "100vh", position: "relative" }}
     >
       <Layout>
-        <Dashboard />
+        <OrderDetails data={project} />
       </Layout>
     </div>
   );
 };
 
-export default ProjectDetailsPage;
+const mapStateToProps = (state) => ({
+  project: state.project.selected_project,
+});
+
+export default connect(mapStateToProps, { getProjectDetails })(
+  ProjectDetailsPage
+);
