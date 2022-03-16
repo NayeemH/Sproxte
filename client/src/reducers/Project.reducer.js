@@ -85,7 +85,7 @@ const projectReducer = (state = initialState, action) => {
       return {
         ...state,
         selected_step: { ...payload },
-        selected_collection: payload.collections.length - 1,
+        // selected_collection: payload.collections.length - 1,
         loading: false,
       };
     case COLLECTION_NEXT:

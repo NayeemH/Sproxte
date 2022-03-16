@@ -23,16 +23,11 @@ const Preview = ({
   collections,
   projectId,
   feedbackActive,
-  showForm,
   setShowForm,
   points,
   setPoints,
   hoverFB,
   setHoverFB,
-  ReactPannellum,
-  addHotSpot,
-  lookAt,
-  mouseEventToCoords,
 }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -41,100 +36,10 @@ const Preview = ({
   const project = useSelector((state) => state.project.selected_project);
   const { stepId } = useParams();
 
-  useEffect(() => {
-    window.addEventListener("keyup", (e) => {
-      if (e.keyCode === 37) {
-        if (index > 0) {
-          dispatch(selectIndex(index - 1));
-        }
-      }
-      if (e.keyCode === 39) {
-        if (index !== length - 1) {
-          dispatch(selectIndex(index + 1));
-        }
-      }
-      if (e.keyCode === 38) {
-        let currentProd = undefined;
-        let currentStep = undefined;
-
-        project.productList.map((item, i) => {
-          item.steps.map((stp, j) => {
-            if (stepId === stp._id) {
-              currentProd = i;
-              currentStep = j;
-            }
-            return null;
-          });
-          return null;
-        });
-
-        let len = project.productList[currentProd].steps.length;
-
-        //console.log(currentProd, currentStep, len);
-        if (
-          currentProd !== undefined &&
-          currentStep !== undefined &&
-          len - 1 > currentStep
-        ) {
-          navigate(
-            `/project/${projectId}/step/${
-              project.productList[currentProd].steps[currentStep + 1]._id
-            }`
-          );
-        }
-      }
-      if (e.keyCode === 40) {
-        let currentProd = undefined;
-        let currentStep = undefined;
-
-        project.productList.map((item, i) => {
-          item.steps.map((stp, j) => {
-            if (stepId === stp._id) {
-              currentProd = i;
-              currentStep = j;
-            }
-            return null;
-          });
-          return null;
-        });
-
-        // console.log(currentProd, currentStep.len);
-        if (
-          currentProd !== undefined &&
-          currentStep !== undefined &&
-          currentStep > 0
-        ) {
-          navigate(
-            `/project/${projectId}/step/${
-              project.productList[currentProd].steps[currentStep - 1]._id
-            }`
-          );
-        }
-      }
-    });
-  }, [collections]);
-
-  const mouseClick3D = (e) => {
-    if (data.imageType && data.imageType === "3d" && feedbackActive) {
-      let coords = mouseEventToCoords(e);
-      addHotSpot({
-        pitch: coords[0],
-        yaw: coords[1],
-        type: "info",
-        text: "",
-      });
-
-      setPoints({ x: coords[0], y: coords[1], stepId: data._id });
-
-      setShowForm(true);
-    }
-  };
+  useEffect(() => {}, [collections]);
 
   const downloadImage = () => {
-    saveAs(
-      `${IMAGE_PATH}original/${data.image}`,
-      `${data.title} ${data.image}`
-    );
+    saveAs(`${IMAGE_PATH}small/${data.image}`, `${data.title} ${data.image}`);
   };
 
   const historyHandeler = () => {
@@ -169,7 +74,7 @@ const Preview = ({
         <span className={styles.back_icon}>
           <AiOutlineLeft
             size={20}
-            onClick={() => navigate(`/project/${projectId}`)}
+            onClick={() => navigate(`/dashboard/order/${projectId}`)}
           />
         </span>
         <div className="d-flex justify-content-center align-items-center w-100">
@@ -194,48 +99,14 @@ const Preview = ({
           </span>
         </div>
       </div>
-      <div
-        className={styles.img_wrapper}
-        ref={imgRef}
-        onClick={(e) => mouseClick3D(e)}
-      >
-        {data.imageType && data.imageType === "3d" ? (
-          <ReactPannellum
-            id="test"
-            sceneId="firstScene"
-            imageSource={`${IMAGE_PATH}original/${data.image}`}
-            config={{
-              autoLoad: true,
-              hotSpotDebug: true,
-              showZoomCtrl: false,
-              showFullscreenCtrl: false,
-              hotSpots: [
-                ...data.feedbacks.map((item, i) => {
-                  return {
-                    id: item._id,
-                    pitch: item.points[0],
-                    yaw: item.points[1],
-                    type: "info",
-                    content: `${i + 1}`,
-                    text: item.message,
-                  };
-                }),
-              ],
-            }}
-            style={{
-              width: "100%",
-              height: "90vh",
-            }}
-          />
-        ) : (
-          <img
-            src={`${IMAGE_PATH}original/${data.image}`}
-            alt=""
-            id="img"
-            onClick={(e) => imgClickHandeler(e)}
-            className={styles.img}
-          />
-        )}
+      <div className={styles.img_wrapper} ref={imgRef}>
+        <img
+          src={`${IMAGE_PATH}original/${data.image}`}
+          alt=""
+          id="img"
+          onClick={(e) => imgClickHandeler(e)}
+          className={styles.img}
+        />
 
         {data.imageType &&
           data.imageType !== "3d" &&
@@ -249,7 +120,7 @@ const Preview = ({
             </div>
           )}
 
-        {(!data.imageType || data.imageType !== "3d") &&
+        {data.feedbacks &&
           data.feedbacks.map((feedback, i) => (
             <div
               className={`${styles.point} 
@@ -287,10 +158,6 @@ const Preview = ({
         >
           {showHistory && (
             <div className={styles.list}>
-              {/* <span className={styles.history_heading}>
-                Use arrow keys left and right to <br />
-                step through history.
-              </span> */}
               {collections.map((item, i) => (
                 <div
                   key={item._id}

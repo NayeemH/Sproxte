@@ -15,7 +15,7 @@ import { GoThreeBars } from "react-icons/go";
 import { MdDownloadDone } from "react-icons/md";
 import { BiLayer, BiLayerPlus } from "react-icons/bi";
 
-const Layout = ({ logout, children, role }) => {
+const Layout = ({ logout, children, role, title }) => {
   const navigate = useNavigate();
   const [show, setShow] = React.useState(false);
 
@@ -154,6 +154,9 @@ const Layout = ({ logout, children, role }) => {
               >
                 <GoThreeBars />
               </div>
+              {title && (
+                <h3 className="me-auto ps-4 fs-3 my-auto text-dark">{title}</h3>
+              )}
               <NavLink to="/notification" className={styles.right__item}>
                 <IoMdNotificationsOutline />
               </NavLink>

@@ -1,0 +1,22 @@
+.line {
+  height: 40px !important;
+  width: 4px !important;
+  border-radius: 3px !important;
+  background: linear-gradient(55deg, #ffe502 0%, #ffa602 100%) !important;
+}
+
+.small {
+  font-size: 14px !important;
+}
+
+.link {
+  text-decoration: none !important;
+  color: var(--dark) !important;
+  transition: 0.3s all ease-in-out;
+}
+
+.link:hover {
+  cursor: pointer;
+  color: var(--orange) !important;
+  transition: 0.3s all ease-in-out;
+}

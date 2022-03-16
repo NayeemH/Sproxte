@@ -39,8 +39,9 @@ import AllListPage from "./views/AllListPage/AllListPage";
 import ProductsByCategoryPage from "./views/ProductsByCategoryPage/ProductsByCategoryPage";
 import PaymentPage from "./views/PaymentPage/PaymentPage";
 import FileUploadPageReady from "./views/FileUploadPageReady/FileUploadPageReady";
-import OrderTemplatePage from "./views/OrderTemplatePage/OrderTemplatePage";
+import StepDetailsPage from "./views/StepDetailsPage/StepDetailsPage";
 import ProjectDetailsPage from "./views/ProjectDetailsPage/ProjectDetailsPage";
+import NotificationPage from "./views/NotificationPage/NotificationPage";
 
 function App({ getRefreshToken }) {
   useEffect(() => {
@@ -74,6 +75,10 @@ function App({ getRefreshToken }) {
             <>
               <Route path="dashboard" element={<DashboardPage />} />
               <Route
+                path="dashboard/:projectId/:stepId"
+                element={<StepDetailsPage />}
+              />
+              <Route
                 path="dashboard/order/:id"
                 element={<ProjectDetailsPage />}
               />
@@ -88,6 +93,7 @@ function App({ getRefreshToken }) {
               <Route path="templates" element={<TypeListPage />} />
               <Route path="category" element={<CategoryListPage />} />
               <Route path="settings" element={<SettingsPage />} />
+              <Route path="notification" element={<NotificationPage />} />
               <Route
                 path="settings/password"
                 element={<PasswordChangeSettings />}

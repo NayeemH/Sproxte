@@ -17,7 +17,7 @@ const ProjectDetailsPage = ({ getProjectDetails, project }) => {
       style={{ minHeight: "100vh", position: "relative" }}
     >
       <Layout>
-        <OrderDetails data={project} />
+        <OrderDetails data={project} id={id} />
       </Layout>
     </div>
   );

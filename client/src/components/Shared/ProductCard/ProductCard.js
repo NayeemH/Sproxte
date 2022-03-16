@@ -1,5 +1,5 @@
 import React from "react";
-import { Card, Col, Row } from "react-bootstrap";
+import { Badge, Card, Col, Row } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { AiOutlineArrowRight } from "react-icons/ai";
 import { IoIosTimer } from "react-icons/io";
@@ -19,6 +19,9 @@ const ProductCard = ({
   noshadow,
   h,
   dashboard,
+  tags,
+  bottom,
+  hidden,
 }) => {
   const navigate = useNavigate();
   return (
@@ -45,8 +48,9 @@ const ProductCard = ({
               {discount && discount > 0 ? (
                 <span className={styles.discount}>-{discount}%</span>
               ) : null}
+              {bottom ? <span className={styles.bottom}>{bottom}</span> : null}
             </Col>
-            <Col md={9}>
+            <Col md={!hidden ? 9 : 12}>
               <span
                 className={`d-block fs-5 text-start  d-flex align-items-center pt-2 ${styles.title}`}
               >
@@ -58,30 +62,35 @@ const ProductCard = ({
                   <Moment format="DD-MM-YYYY">{description}</Moment>
                 </span>
               )}
+              {tags &&
+                tags.length > 0 &&
+                tags.map((tag) => <Badge className={styles.bdg}>{tag} </Badge>)}
             </Col>
-            <Col
-              md={3}
-              className="d-flex justify-content-end align-items-center pt-2"
-            >
-              <span
-                className={styles.arrow}
-                onClick={() =>
-                  navigate(
-                    `/${
-                      dashboard
-                        ? dashboard
-                        : template
-                        ? "template"
-                        : order
-                        ? "order"
-                        : "product"
-                    }/${id ? id : ""}`
-                  )
-                }
+            {!hidden && (
+              <Col
+                md={3}
+                className="d-flex justify-content-end align-items-center pt-2"
               >
-                <AiOutlineArrowRight />
-              </span>
-            </Col>
+                <span
+                  className={styles.arrow}
+                  onClick={() =>
+                    navigate(
+                      `/${
+                        dashboard
+                          ? dashboard
+                          : template
+                          ? "template"
+                          : order
+                          ? "order"
+                          : "product"
+                      }/${id ? id : ""}`
+                    )
+                  }
+                >
+                  <AiOutlineArrowRight />
+                </span>
+              </Col>
+            )}
           </Row>
         </Card.Body>
       </Card>

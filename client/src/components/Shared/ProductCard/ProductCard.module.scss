@@ -46,16 +46,30 @@
   border-top-left-radius: 14px;
   border-bottom-right-radius: 14px;
 }
+
 .discount {
   position: absolute;
   bottom: 0px;
-  right: 0px;
+  right: -5px;
   font-size: 20px;
   color: var(--light);
   font-weight: bold;
   background: var(--dark);
   padding: 5px 25px;
   border-top-left-radius: 14px;
+}
+
+.bottom {
+  position: absolute;
+  bottom: 0px;
+  right: -5px;
+  font-size: 20px;
+  color: var(--light);
+  font-weight: bold;
+  background: var(--dark);
+  padding: 5px 25px;
+  border-top-left-radius: 14px;
+  text-transform: capitalize;
 }
 
 .arrow {
@@ -81,4 +95,12 @@
   font-size: 18px !important;
   color: var(--dark);
   margin-bottom: 5px;
+}
+
+.bdg {
+  background: linear-gradient(90deg, #ffe502 0%, #ffa602 100%) !important;
+  color: var(--dark) !important;
+  margin-right: 3px !important;
+  font-size: 16px !important;
+  border-radius: 15px !important;
 }

@@ -53,7 +53,7 @@ import { getTypeList } from "./Landing.action";
 export const getProjectDetails = (id) => async (dispatch) => {
   try {
     const res = await axios.get(`${BASE_URL}/api/v1/project/${id}`);
-    console.log(res);
+    //console.log(res);
 
     dispatch({
       type: GET_PROJECT_DETAILS,
@@ -604,21 +604,19 @@ export const createProjectTask =
 //GET STEP DATA
 export const getStepDetails = (id) => async (dispatch) => {
   try {
-    const res = await axios.get(`${BASE_URL}/api/project/step/${id}`);
+    const res = await axios.get(`${BASE_URL}/api/v1/product/${id}`);
     //console.log(res);
 
     dispatch({
       type: GET_STEP,
-      payload: res.data,
+      payload: res.data.product,
     });
     //console.log(res);
   } catch (err) {
     dispatch({
       type: GET_STEP_ERROR,
     });
-    if (err.response.data.msg) {
-      err.response.data.msg.map((msg) => toast.error(msg));
-    }
+    console.log(err);
   }
 };
 
