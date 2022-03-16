@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const {saveImage, fileFetch, deleteImage} = require('../../lib/imageConverter');
+const {saveImage, fileFetch} = require('../../lib/imageConverter');
 const ProductType = require('../../models/productType');
 
 
