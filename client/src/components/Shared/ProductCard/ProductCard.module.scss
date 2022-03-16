@@ -32,6 +32,20 @@
   border-top-left-radius: 14px;
   border-bottom-right-radius: 14px;
 }
+
+.status {
+  position: absolute;
+  top: -1rem;
+  left: -1rem;
+  font-size: 20px;
+  color: var(--dark);
+  font-weight: bold;
+  background: linear-gradient(90deg, #ffe502 0%, #ffa602 100%);
+  padding: 5px 25px;
+  text-transform: capitalize;
+  border-top-left-radius: 14px;
+  border-bottom-right-radius: 14px;
+}
 .discount {
   position: absolute;
   bottom: 0px;

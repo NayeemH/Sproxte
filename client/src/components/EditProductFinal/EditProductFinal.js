@@ -9,15 +9,15 @@ import {
 } from "react-bootstrap";
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
-import styles from "./AddProjectForm.module.scss";
+import styles from "./EditProductFinal.module.scss";
 import { connect } from "react-redux";
-import { createProject } from "../../actions/Project.action";
+import { editProduct } from "../../actions/Project.action";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import colors from "../../config/Colors";
 import { getTypeList } from "../../actions/Landing.action";
 
-const AddProjectForm = ({ category, createProject, getTypeList }) => {
+const EditProductFinal = ({ category, editProduct, getTypeList, data }) => {
   //STATES
   const [selectedFile, setSelectedFile] = useState();
   const [selectedFile2, setSelectedFile2] = useState();
@@ -51,25 +51,30 @@ const AddProjectForm = ({ category, createProject, getTypeList }) => {
   };
 
   const onSubmitHandeler = async (values) => {
-    if (selectedFile) {
-      setIsLoading(true);
-      let check = await createProject(
-        values,
-        selectedFile,
-        selectedFile2,
-        selectedFile3,
-        selectedColor
-      );
+    setIsLoading(true);
+    // let check = await createProject(
+    //   values,
+    //   selectedFile,
+    //   selectedFile2,
+    //   selectedFile3,
+    //   selectedColor
+    // );
 
-      if (check) {
-        setIsLoading(false);
-        navigate("/products");
-      }
+    let check = await editProduct(
+      values,
+      selectedFile,
+      selectedFile2,
+      selectedFile3,
+      selectedColor,
+      data._id && data._id
+    );
 
+    if (check) {
       setIsLoading(false);
-    } else {
-      toast.error("Please select a file");
+      navigate("/products");
     }
+
+    setIsLoading(false);
   };
 
   //RESET IMAGE
@@ -128,14 +133,15 @@ const AddProjectForm = ({ category, createProject, getTypeList }) => {
   };
 
   let initVals = {
-    name: "",
-    price: 0,
-    quantity: 0,
-    productType: "",
-    size: "",
+    name: data && data.name ? data.name : "",
+    price: data && data.price ? parseInt(data.price) : 0,
+    quantity: data && data.quantity ? parseInt(data.quantity) : 0,
+    productType: data && data.productType ? data.productType : "",
+    size:
+      data && data.sizes && data.sizes.length > 0 ? data.sizes.join(",") : "",
     image: "",
-    description: "",
-    featured: false,
+    description: data && data.description ? data.description : "",
+    featured: data && data.featured == true ? true : false,
   };
 
   const SignupSchema = Yup.object().shape({
@@ -145,7 +151,7 @@ const AddProjectForm = ({ category, createProject, getTypeList }) => {
       "Product price is required!"
     ),
     size: Yup.string().required("Product size is required!"),
-    productType: Yup.string().required("Product template is required!"),
+    productType: Yup.string().nullable(),
     image: Yup.string().nullable(),
     description: Yup.string().required("Description is required!"),
   });
@@ -153,12 +159,15 @@ const AddProjectForm = ({ category, createProject, getTypeList }) => {
     <div className={styles.wrapper}>
       <Card bg="white" text="dark" className={`${styles.crd} shadow`}>
         <Card.Header className="d-flex justify-content-center align-items-center">
-          <span className={styles.heading}>Add Product</span>
+          <span className={styles.heading}>
+            {data && data.name ? data.name : "Edit Product"}
+          </span>
         </Card.Header>
         <Card.Body>
           <Formik
             initialValues={initVals}
             validationSchema={SignupSchema}
+            enableReinitialize
             onSubmit={(values) => onSubmitHandeler(values)}
           >
             {({ errors, touched, setFieldValue }) => (
@@ -479,7 +488,7 @@ const AddProjectForm = ({ category, createProject, getTypeList }) => {
                     className={styles.btn}
                     disabled={isLoading}
                   >
-                    {isLoading ? "Loading..." : "Add Product"}
+                    {isLoading ? "Loading..." : "Edit Product"}
                   </Button>
                   <Button
                     variant="primary"
@@ -503,6 +512,6 @@ const mapStateToProps = (state) => ({
   category: state.landing.types,
 });
 
-export default connect(mapStateToProps, { createProject, getTypeList })(
-  AddProjectForm
+export default connect(mapStateToProps, { editProduct, getTypeList })(
+  EditProductFinal
 );

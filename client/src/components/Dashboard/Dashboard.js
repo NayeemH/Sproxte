@@ -75,8 +75,8 @@ const Dashboard = ({ dashboard, projects, fetchProjects }) => {
                 title={project.name}
                 img={`${IMAGE_PATH}small/${project.image}`}
                 description={project.createdAt}
-                order
-                id={2}
+                dashboard={`dashboard/template/${project._id}`}
+                template
                 status={project.status}
               />
             </Col>

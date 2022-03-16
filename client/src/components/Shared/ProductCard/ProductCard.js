@@ -18,6 +18,7 @@ const ProductCard = ({
   status,
   noshadow,
   h,
+  dashboard,
 }) => {
   const navigate = useNavigate();
   return (
@@ -36,7 +37,7 @@ const ProductCard = ({
                 </span>
               )}
               {status && (
-                <span className={styles.price}>
+                <span className={styles.status}>
                   <span>{status}</span>
                 </span>
               )}
@@ -67,8 +68,14 @@ const ProductCard = ({
                 onClick={() =>
                   navigate(
                     `/${
-                      template ? "template" : order ? "order" : "product"
-                    }/${id}`
+                      dashboard
+                        ? dashboard
+                        : template
+                        ? "template"
+                        : order
+                        ? "order"
+                        : "product"
+                    }/${id ? id : ""}`
                   )
                 }
               >

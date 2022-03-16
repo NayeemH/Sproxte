@@ -426,15 +426,31 @@ export const createProductType =
 
 // EDIT PRODUCT TYPE
 export const editProductType =
-  (values, id, file, previewFile) => async (dispatch) => {
+  (values, id, file, previewFile, layouts, varient) => async (dispatch) => {
     let formData = new FormData();
 
     formData.append("name", values.name);
-    if (file) {
-      formData.append("pngImage", file);
+    // formData.append("categoryType", values.categoryType);
+    formData.append("price", values.price);
+    formData.append("discount", values.discount);
+    formData.append("pngImageFront", file);
+
+    // if (previewFile) {
+    //   formData.append("pngImageBack", previewFile);
+    // }
+    if (layouts) {
+      for (let i = 0; i < layouts.length; i++) {
+        formData.append(`layouts`, layouts[i]);
+      }
     }
-    if (previewFile) {
-      formData.append("svgImage", previewFile);
+
+    if (varient.length > 0) {
+      for (let i = 0; i < varient.length; i++) {
+        if (varient[i].color && varient[i].image) {
+          formData.append(`colors`, `#${varient[i].color.split("#")[1]}`);
+          formData.append(`images`, varient[i].image);
+        }
+      }
     }
     values.size
       .trim()

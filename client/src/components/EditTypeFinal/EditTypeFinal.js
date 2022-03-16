@@ -10,9 +10,9 @@ import {
 } from "react-bootstrap";
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
-import styles from "./AddTypeForm.module.scss";
+import styles from "./EditTypeFinal.module.scss";
 import { connect } from "react-redux";
-import { createProductType } from "../../actions/Project.action";
+import { editProductType } from "../../actions/Project.action";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { getCategoryList } from "../../actions/Category.action";
@@ -20,7 +20,12 @@ import { AiOutlinePlus } from "react-icons/ai";
 import { BiTrash } from "react-icons/bi";
 import colors from "../../config/Colors";
 
-const AddTypeForm = ({ createProductType, getCategoryList, category }) => {
+const EditTypeFinal = ({
+  editProductType,
+  getCategoryList,
+  category,
+  data,
+}) => {
   //STATES
   const [selectedFile, setSelectedFile] = useState();
   const [selectedFile2, setSelectedFile2] = useState();
@@ -73,30 +78,27 @@ const AddTypeForm = ({ createProductType, getCategoryList, category }) => {
   const fileRef2 = useRef();
 
   const onSubmitHandeler = async (values) => {
-    if (selectedFile) {
-      setIsLoading(true);
-      variant.forEach((item) => {
-        if (!item.image || item.color === "") {
-          toast.error("Please select image for all color");
-          setIsLoading(false);
-          return;
-        }
-      });
-      let check = await createProductType(
-        values,
-        selectedFile,
-        selectedFile2,
-        selectedFile3,
-        variant
-      );
-      if (check) {
+    setIsLoading(true);
+    variant.forEach((item, i) => {
+      if (!item.image || (item.color === "" && i !== 0)) {
+        toast.error("Please select image for all color");
         setIsLoading(false);
-        navigate("/templates");
+        return;
       }
+    });
+    let check = await editProductType(
+      values,
+      data && data._id,
+      selectedFile,
+      selectedFile2,
+      selectedFile3,
+      variant
+    );
+    if (check) {
       setIsLoading(false);
-    } else {
-      toast.error("Please select all files");
+      navigate("/templates");
     }
+    setIsLoading(false);
   };
 
   //RESET IMAGE
@@ -156,19 +158,20 @@ const AddTypeForm = ({ createProductType, getCategoryList, category }) => {
   };
 
   let initVals = {
-    name: "",
+    name: data && data.name ? data.name : "",
     image: "",
-    size: "",
-    categoryType: "",
-    price: 0,
-    discount: 0,
+    size:
+      data && data.sizes && data.sizes.length > 0 ? data.sizes.join(",") : "",
+    // categoryType: data && data.categoryType ? data.categoryType : "",
+    price: data && data.price ? parseInt(data.price) : 0,
+    discount: data && data.discount ? parseInt(data.discount) : 0,
   };
 
   const SignupSchema = Yup.object().shape({
     name: Yup.string().required("Product type name is required!"),
     image: Yup.string().nullable(),
     size: Yup.string().required("Size is required!"),
-    categoryType: Yup.string().required("Valid Category name is required!"),
+    // categoryType: Yup.string().required("Valid Category name is required!"),
     price: Yup.number().min(0).required("Price is required!"),
     discount: Yup.number().min(0).max(100).required("Discount is required!"),
   });
@@ -176,12 +179,15 @@ const AddTypeForm = ({ createProductType, getCategoryList, category }) => {
     <div className={`${styles.wrapper} pb-5`}>
       <Card bg="white" text="dark" className={`${styles.crd} shadow `}>
         <Card.Header className="d-flex justify-content-center align-items-center">
-          <span className={styles.heading}>Add Template</span>
+          <span className={styles.heading}>
+            {data.name ? data.name : "Edit Template"}
+          </span>
         </Card.Header>
         <Card.Body>
           <Formik
             initialValues={initVals}
             validationSchema={SignupSchema}
+            enableReinitialize
             onSubmit={(values) => onSubmitHandeler(values)}
           >
             {({ errors, touched, setFieldValue }) => (
@@ -205,7 +211,7 @@ const AddTypeForm = ({ createProductType, getCategoryList, category }) => {
                     isInvalid={errors.name && touched.name}
                   />
                 </InputGroup>
-                <InputGroup className=" d-flex flex-column">
+                {/* <InputGroup className=" d-flex flex-column">
                   <div className="d-flex justify-content-between align-items-center pb-2">
                     <label htmlFor="quantity" className="d-block">
                       Category
@@ -249,7 +255,7 @@ const AddTypeForm = ({ createProductType, getCategoryList, category }) => {
                         ))}
                     </div>
                   </div>
-                </InputGroup>
+                </InputGroup> */}
 
                 <Row className="pt-3">
                   <Col md={6}>
@@ -507,7 +513,7 @@ const AddTypeForm = ({ createProductType, getCategoryList, category }) => {
                     className={styles.btn}
                     disabled={isLoading}
                   >
-                    {isLoading ? "Loading..." : "Add Template"}
+                    {isLoading ? "Loading..." : "Edit Template"}
                   </Button>
                   <Button
                     variant="primary"
@@ -531,6 +537,6 @@ const mapStateToProps = (state) => ({
   category: state.landing.category,
 });
 
-export default connect(mapStateToProps, { createProductType, getCategoryList })(
-  AddTypeForm
+export default connect(mapStateToProps, { editProductType, getCategoryList })(
+  EditTypeFinal
 );

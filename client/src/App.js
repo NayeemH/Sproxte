@@ -39,6 +39,7 @@ import AllListPage from "./views/AllListPage/AllListPage";
 import ProductsByCategoryPage from "./views/ProductsByCategoryPage/ProductsByCategoryPage";
 import PaymentPage from "./views/PaymentPage/PaymentPage";
 import FileUploadPageReady from "./views/FileUploadPageReady/FileUploadPageReady";
+import OrderTemplatePage from "./views/OrderTemplatePage/OrderTemplatePage";
 
 function App({ getRefreshToken }) {
   useEffect(() => {
@@ -71,6 +72,10 @@ function App({ getRefreshToken }) {
           <Route path="/*" element={<PrivateOutlet />}>
             <>
               <Route path="dashboard" element={<DashboardPage />} />
+              <Route
+                path="dashboard/template/:id"
+                element={<OrderTemplatePage />}
+              />
               <Route path="add-iep" element={<AddUserPage />} />
               <Route path="add-template" element={<AddTypePage />} />
               <Route path="add-category" element={<AddCategoryPage />} />
