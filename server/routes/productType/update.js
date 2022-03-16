@@ -65,26 +65,7 @@ router.patch('/:id', fileFetch.fields([{name: 'pngImageFront', maxCount: 1}, {na
             message: 'Product Type is updated successfully',
         });
 
-        // delete
-        if(types) {
-            if(req.files && req.files.layouts) {
-                await Promise.all(
-                    types.layouts.map(layout => deleteImage(layout))
-                );
-            }
-            if(req.files && req.files.pngImageFront) {
-                await deleteImage(types.pngImageFront);
-            }
-    
-            if(req.files && req.files.pngImageBack) {
-                await deleteImage(types.pngImageBack);
-            }
-            if(req.files.images) {
-                await Promise.all(
-                    types.imageData.map(({image}) => deleteImage(image))
-                )
-            }
-        }
+       
     }
     catch(err) {
         next(err);
