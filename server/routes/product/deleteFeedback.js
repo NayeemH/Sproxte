@@ -10,10 +10,10 @@ router.delete('/:id', async (req, res, next) => {
 
 
         if(userType === 'admin' || userType === 'iep') {
-            await Collection.findOneAndUpdate({'feedbacks._id': id}, {$pull: {feedbacks: {_id: feedbackId}}});
+            await Collection.findOneAndUpdate({'feedbacks._id': id}, {$pull: {feedbacks: {_id: id}}});
         }
         else if(userType === 'client' || userType === 'coach') {
-            const collection = await Collection.findOneAndUpdate({'feedbacks._id': id, userId}, {$pull: {feedbacks: {_id: feedbackId}}});
+            const collection = await Collection.findOneAndUpdate({'feedbacks._id': id, userId}, {$pull: {feedbacks: {_id: id}}});
 
             if(!collection) throw Error('You can not delete feedback');
         }
