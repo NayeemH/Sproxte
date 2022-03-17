@@ -147,7 +147,6 @@ const Overview = ({
         onHide={() => setsubmitModal(false)}
         centered
         style={{ zIndex: "9999" }}
-        className={styles.modal}
       >
         <Modal.Body className={styles.modal}>
           <h4>Send Feedback</h4>
@@ -166,7 +165,7 @@ const Overview = ({
                     type="reset"
                     variant="outline-dark"
                     onClick={() => cancelHandelerModal()}
-                    className={`${styles.cancel_btn} w-100 ms-3`}
+                    className="btn_primary w-100  me-2"
                   >
                     <span style={{ marginRight: 5 }}>
                       <FaTimes />{" "}
@@ -176,7 +175,7 @@ const Overview = ({
                   <Button
                     type="submit"
                     disabled={messageLoading}
-                    className={styles.btn}
+                    className="btn_primary w-100"
                   >
                     <span style={{ marginRight: 5 }}>
                       <AiOutlineCheck />{" "}
@@ -205,20 +204,20 @@ const Overview = ({
                   type="text"
                   value={editMsg === "" ? feedback.message : editMsg}
                   onChange={(e) => setEditMsg(e.target.value)}
-                  className="form-control"
+                  className={`${styles.input} form-control`}
                 />
                 <div className="d-flex justify-content-around align-items-center pt-4">
                   <Button
                     type="submit"
                     disabled={editLoading}
-                    className={styles.btn}
+                    className="btn_primary w-100 me-3"
                   >
                     {editLoading ? "Loading..." : "Save"}
                   </Button>
                   <Button
                     type="reset"
                     onClick={() => toogleEditModalVisibility({})}
-                    className={styles.btn_feedback}
+                    className="btn_primary w-100"
                   >
                     Cancel
                   </Button>

@@ -87,7 +87,7 @@ const Preview = ({
               style={index === 0 && { color: "#ccc", cursor: "auto" }}
             />
           </span>
-          <span>{data.title}</span>
+          <span className="text-dark">{data.title}</span>
           <span className={styles.nav_right}>
             <AiOutlineRight
               size={20}

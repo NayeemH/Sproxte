@@ -49,7 +49,7 @@ const StepDetails = ({
               Approve
             </Button>
           </Col>
-          <Col md={!role === "admin" || role === "iep" ? 8 : 12}>
+          <Col md={role === "admin" || role === "iep" ? 8 : 12}>
             <Row>
               {selectedCollectionIndex >= 0 && (
                 <Preview
