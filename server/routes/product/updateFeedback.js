@@ -5,24 +5,19 @@ const sendNotification = require('../../lib/sendNotification');
 const Product = require('../../models/product');
 
 
-router.put('/:id', async (req, res, next) => {
+router.patch('/:id', async (req, res, next) => {
     try {
         const {id} = req.params;
         const {userId, userType} = req.user;
-        const {message, points} = req.body;
+        const {message, feedbackId} = req.body;
 
-        const feedbacks = {
-            user: userId,
-            message,
-            points
-        };
 
         let collection;
-        if(userType === 'admin' || userType === 'iep') {
-            collection = await Collection.findOneAndUpdate({_id: id}, {$push: {feedbacks}});
+        if(userType === 'admin') {
+            collection = await Collection.findOneAndUpdate({_id: id, 'feedbacks._id': feedbackId}, {$set: {'feedbacks.$.message': message}});
         }
         else if(userType === 'client' || userType === 'coach') {
-            collection = await Collection.findOneAndUpdate({_id: id, userId}, {$push: {feedbacks}});
+            collection = await Collection.findOneAndUpdate({_id: id, 'feedbacks.user': userId, 'feedbacks._id': feedbackId}, {$set: {'feedbacks.$.message': message}});
             if(!collection) throw Error('You can not add Feedback');
         }
         else {
@@ -38,7 +33,7 @@ router.put('/:id', async (req, res, next) => {
 
         userIds.push(product.userId.toString());
         
-        await sendNotification('New feedback is added', users, product.projectId, product._id);
+        await sendNotification('New feedback is updated', users, product.projectId, product._id);
         
 
         res.json({

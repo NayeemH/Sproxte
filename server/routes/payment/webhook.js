@@ -1,6 +1,7 @@
 const router = require('express').Router();
 const stripe = require('stripe');
 const imageMerge = require('../../lib/imageMerge');
+const sendNotification = require('../../lib/sendNotification');
 const path = require('path');
 const fs = require('fs/promises');
 
@@ -10,6 +11,7 @@ const Product = require('../../models/product');
 const Template = require('../../models/template');
 const ProductType = require('../../models/productType');
 const Collection = require('../../models/collection');
+const User = require('../../models/user');
 
 
 
@@ -157,7 +159,16 @@ const paymentHandle = async (object) => {
         })
     );
 
+    // Put project id to order
     await Order.findOneAndUpdate({_id: orderId}, {$set: {projectId: project._id}});
+
+    // Send notification
+    const users = await User.find({$or: [{userType: 'admin'}, {userType: 'iep'}]}, {_id: 1});
+    const userIds = users.map(({_id}) => _id.toString());
+
+    userIds.push(userId);
+    
+    await sendNotification('New project is added', users, project._id);
 }
 
 
