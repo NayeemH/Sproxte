@@ -36,7 +36,7 @@ const userSchema = mongoose.Schema({
     },
     userType: {
         type: String,
-        default: 'clinet'
+        default: 'client'
     },
     image: {
         type: String,

@@ -1,6 +1,5 @@
 const router = require('express').Router();
 const pagination = require('../../lib/pagination');
-const Project = require('../../models/project');
 const Order = require('../../models/order');
 
 
