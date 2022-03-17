@@ -21,7 +21,7 @@ router.get('/:type', async (req, res, next) => {
 
         let projects;
         if(userType === 'admin' || userType === 'iep') {
-            totalCount = await Project.find().countDocuments({active});
+            totalCount = await Project.find({active}).countDocuments();
 
             projects = await Project
                 .find({active}, {__v: 0, userId: 0, active: 0})

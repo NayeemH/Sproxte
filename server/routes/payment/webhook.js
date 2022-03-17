@@ -1,11 +1,15 @@
 const router = require('express').Router();
 const stripe = require('stripe');
+const imageMerge = require('../../lib/imageMerge');
+const path = require('path');
+const fs = require('fs/promises');
 
 const Order = require('../../models/order');
 const Project = require('../../models/project');
 const Product = require('../../models/product');
 const Template = require('../../models/template');
 const ProductType = require('../../models/productType');
+const Collection = require('../../models/collection');
 
 
 
@@ -89,7 +93,7 @@ const paymentHandle = async (object) => {
     }).save();
 
 
-    await Promise.all([
+    const products = await Promise.all([
         ...templateOrders.map((order, i) => new Product({
             userId,
             projectId: project._id,
@@ -132,6 +136,26 @@ const paymentHandle = async (object) => {
     ]);
 
     // Create Collections
+
+    await Promise.all(
+        products.map(async product => {
+            if(product.type === 'template') return;
+
+            const buffers = await Promise.all([
+                fs.readFile(path.resolve(`data/image/small/${product.image.front}`)),
+                fs.readFile(path.resolve(`data/image/small/${product.colorImage}`))
+            ]);
+
+            const mergeImage = await imageMerge(buffers[0], buffers[1], 200);
+
+            return new Collection({
+                userId: product.userId,
+                productId: product._id,
+                title: product.name,
+                image: mergeImage
+            }).save();
+        })
+    );
 
     await Order.findOneAndUpdate({_id: orderId}, {$set: {projectId: project._id}});
 }
