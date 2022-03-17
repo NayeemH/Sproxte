@@ -17,6 +17,7 @@ import {
 } from "../../../actions/Step.action";
 import { AiOutlineCheck, AiOutlinePlus } from "react-icons/ai";
 import Moment from "react-moment";
+import { BiTimeFive } from "react-icons/bi";
 
 const Overview = ({
   collection,
@@ -88,7 +89,12 @@ const Overview = ({
     setMessageLoading(true);
     e.preventDefault();
     //console.log("X = ", points.x, "Y = ", points.y, "id", points.stepId);
-    let check = await postReview(points, message, selectedStep._id);
+    let check = await postReview(
+      points,
+      message,
+      selectedStep._id,
+      collection._id
+    );
     if (check === true) {
       cancelHandeler();
     }
@@ -142,7 +148,7 @@ const Overview = ({
         centered
         style={{ zIndex: "9999" }}
       >
-        <Modal.Body className="bg_dark_bg text-light">
+        <Modal.Body className="bg_dark_bg text-dark">
           <h4>Send Feedback</h4>
           <div className="pt-3">
             {feedback && (
@@ -157,7 +163,7 @@ const Overview = ({
                 <div className="d-flex justify-content-end align-items-center pt-4">
                   <Button
                     type="reset"
-                    variant="outline-light"
+                    variant="outline-dark"
                     onClick={() => cancelHandelerModal()}
                     className={`${styles.cancel_btn} w-100 ms-3`}
                   >
@@ -189,7 +195,7 @@ const Overview = ({
         centered
         style={{ zIndex: "9999" }}
       >
-        <Modal.Body className="bg_dark_bg bordered text-light">
+        <Modal.Body className=" bordered text-dark">
           <h4>Edit Feedback</h4>
           <div className="pt-3">
             {feedback && (
@@ -229,35 +235,23 @@ const Overview = ({
         )}
       {collection && (
         <>
-          <h5>
+          <h5 className="text-dark">
             {currentIndex + 1}. {collection.title}
           </h5>
-          <p className={styles.desc}>{collection.description}</p>
+          {/* <p className={styles.desc}>{collection.description}</p> */}
           {final && (
             <>
-              {(role === "client" || role === "admin" || role === "manager") &&
-                selectedStep.finalImage === null &&
-                currentStepHandeler() && (
-                  <Button
-                    onClick={() =>
-                      approveStep(selectedStep._id, selectedStep.projectId)
-                    }
-                    className={styles.btn}
-                  >
-                    Agree
-                  </Button>
-                )}
-              {selectedStep.finalImage === null && feedbackActive ? (
+              {selectedStep.status === "pending" && feedbackActive ? (
                 <div className="">
-                  <span className="fw-bold d-block">
+                  <span className="fw-bold d-block text-dark">
                     Click on the image to add feedback
                   </span>
                 </div>
               ) : (
-                selectedStep.finalImage === null && (
+                (!selectedStep.status || selectedStep.status === "pending") && (
                   <Button
                     onClick={() => handleClickFeedback()}
-                    className={styles.btn_feedback}
+                    className={`btn_primary`}
                   >
                     <AiOutlinePlus className=" fs-6" /> New Feedback
                   </Button>
@@ -282,8 +276,8 @@ const Overview = ({
                           <Button
                             type="submit"
                             disabled={messageLoading}
-                            variant="outline-light"
-                            className={`w-100 mb-2`}
+                            variant="primary"
+                            className={`w-100 mb-2 btn_primary`}
                           >
                             {messageLoading ? "Loading..." : "Submit"}
                           </Button>
@@ -291,8 +285,8 @@ const Overview = ({
                             <Button
                               type="reset"
                               onClick={cancelHandeler}
-                              variant="outline-light"
-                              className={`w-100 mb-2`}
+                              variant="primary"
+                              className={`w-100 mb-2 btn_primary`}
                             >
                               Cancel
                             </Button>
@@ -311,16 +305,11 @@ const Overview = ({
               {collection.feedbacks.map((item, i) => (
                 <div
                   key={i}
-                  className={`${styles.feedback} ${
+                  className={`${styles.feedback} shadow-sm ${
                     hoverFB === item._id ? styles.active : ""
                   }`}
                   onMouseEnter={() => setHoverFB(item._id)}
                   onMouseLeave={() => setHoverFB("")}
-                  onClick={() =>
-                    collection.imageType &&
-                    collection.imageType === "3d" &&
-                    lookAt(item.points[0], item.points[1])
-                  }
                 >
                   <div className="w-100">
                     <div
@@ -328,19 +317,20 @@ const Overview = ({
                     >
                       <div className={styles.img_wrapper}>
                         <img
-                          src={`${IMAGE_PATH}small/${item.userImage}`}
-                          alt={`${item.userName}`}
+                          src={`${IMAGE_PATH}small/${item.user.image}`}
+                          alt={`${item.user.name}`}
                           className="h-100"
                         />
                       </div>
-                      <span className={styles.username}>{item.userName}</span>
+                      <span className={styles.username}>{item.user.name}</span>
                       {/* <span className={styles.userrole}>{item.userRole}</span> */}
                     </div>
-                    <hr className="mt-0 mb-2" />
+                    <hr className="mt-0 mb-2 bg-danger" />
                     <span className={styles.fb_text}>
-                      {i + 1}. {item.message}
+                      <span className="fw-bold"> {i + 1}.</span> {item.message}
                     </span>
                     <span className={styles.fb_date}>
+                      <BiTimeFive />{" "}
                       <Moment format="DD-MM-YYYY hh:mm">
                         {item.updatedAt}
                       </Moment>
@@ -374,7 +364,7 @@ const mapStateToProps = (state) => ({
   selectedStep: state.project.selected_step,
   selectedProject: state.project.selected_project,
   currentIndex: state.project.selected_collection,
-  role: state.dashboard.role,
+  role: state.auth.user.userType,
   isModalOpen: state.project.feedback_modal,
   feedback: state.project.selected_feedback,
 });

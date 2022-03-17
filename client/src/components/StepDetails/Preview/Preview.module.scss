@@ -13,17 +13,17 @@
 }
 
 .nav {
-  color: var(--primary) !important;
+  color: var(--orange) !important;
   font-size: 18px;
   margin-right: 50px;
 }
 
 .arrows_section {
-  background: var(--dark-bg) !important;
+  background: var(--light) !important;
 }
 
 .nav_right {
-  color: var(--primary) !important;
+  color: var(--orange) !important;
   font-size: 18px;
   margin-left: 50px;
 }
@@ -31,18 +31,18 @@
 .nav:hover,
 .nav_right:hover {
   cursor: pointer;
-  color: var(--primary-hover) !important;
+  color: var(--orange) !important;
 }
 
 .back_icon,
 .icon {
-  color: var(--light) !important;
+  color: var(--dark) !important;
   transition: 0.3s all ease-in-out;
 }
 
 .back_icon:hover,
 .icon:hover {
-  color: var(--primary) !important;
+  color: var(--orange) !important;
   cursor: pointer;
   transition: 0.3s all ease-in-out;
 }
@@ -56,8 +56,9 @@
   bottom: 25px;
   left: 0;
   padding: 10px 0;
-  background: var(--light-bg);
-  color: var(--light);
+  box-shadow: 2px 3px 4px 0 rgba(0, 0, 0, 0.2);
+  background: var(--white) !important;
+  color: var(--dark) !important;
   border-radius: 5px !important;
   z-index: 9999;
 }
@@ -66,8 +67,8 @@
   padding: 5px 10px !important;
   padding-right: 60px !important;
   font-size: 14px;
-  color: var(--secondary-500);
-  border-bottom: 1px solid var(--secondary-500);
+  color: var(--dark);
+  border-bottom: 1px solid var(--secondary);
 }
 
 .item.active {
@@ -87,13 +88,13 @@
   padding: 5px 5px;
   margin: 0 5px;
   margin-bottom: 10px;
-  color: var(--secondary-500);
+  color: var(--secondary);
   font-size: 12px;
-  border-bottom: 1px solid var(--secondary-500);
+  border-bottom: 1px solid var(--secondary);
 }
 
 .date {
-  color: var(--secondary-500);
+  color: var(--secondary);
   display: flex;
   justify-content: start;
   align-items: center;
@@ -101,7 +102,7 @@
 }
 
 .item:hover .date {
-  color: var(--primary);
+  color: var(--orange);
 }
 
 .point {

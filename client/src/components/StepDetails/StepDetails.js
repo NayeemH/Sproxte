@@ -15,6 +15,7 @@ const StepDetails = ({
   getStepDetails,
   loading,
   selectedCollectionIndex,
+  role,
 }) => {
   const { stepId, projectId } = useParams();
 
@@ -48,7 +49,45 @@ const StepDetails = ({
               Approve
             </Button>
           </Col>
-          <Col md={8}></Col>
+          <Col md={!role === "admin" || role === "iep" ? 8 : 12}>
+            <Row>
+              {selectedCollectionIndex >= 0 && (
+                <Preview
+                  data={step.collections[selectedCollectionIndex]}
+                  length={step.collections.length}
+                  index={selectedCollectionIndex}
+                  collections={step.collections}
+                  projectId={projectId}
+                  feedbackActive={feedbackActive}
+                  setFeedbackActive={setFeedbackActive}
+                  showForm={showForm}
+                  setShowForm={setShowForm}
+                  points={points}
+                  setPoints={setPoints}
+                  hoverFB={hoverFB}
+                  setHoverFB={setHoverFB}
+                />
+              )}
+              {selectedCollectionIndex >= 0 && (
+                <Overview
+                  collection={step.collections[selectedCollectionIndex]}
+                  final={
+                    step.collections.length - 1 === selectedCollectionIndex
+                  }
+                  index={selectedCollectionIndex}
+                  feedbackActive={feedbackActive}
+                  setFeedbackActive={setFeedbackActive}
+                  showForm={showForm}
+                  setShowForm={setShowForm}
+                  points={points}
+                  setPoints={setPoints}
+                  hoverFB={hoverFB}
+                  setHoverFB={setHoverFB}
+                />
+              )}
+              {step.collections.length === 0 && <Overview />}
+            </Row>
+          </Col>
           <Col md={4}>
             <Card className={`${styles.crd} shadow mb-4`}>
               <Card.Body>
@@ -138,8 +177,10 @@ const StepDetails = ({
                             {step.primaryColor} (
                             {
                               colors.filter(
-                                (item) => step.primaryColor === item.name
-                              )[0].hex
+                                (item) =>
+                                  step.primaryColor === item.name ||
+                                  step.primaryColor === item.hex
+                              )[0]?.hex
                             }
                             )
                             <div
@@ -147,8 +188,10 @@ const StepDetails = ({
                               style={{
                                 background: `${
                                   colors.filter(
-                                    (item) => step.primaryColor === item.name
-                                  )[0].hex
+                                    (item) =>
+                                      step.primaryColor === item.name ||
+                                      step.primaryColor === item.hex
+                                  )[0]?.hex
                                 }`,
                               }}
                             ></div>
@@ -170,8 +213,10 @@ const StepDetails = ({
                             {step.secondaryColor} (
                             {
                               colors.filter(
-                                (item) => step.secondaryColor === item.name
-                              )[0].hex
+                                (item) =>
+                                  step.secondaryColor === item.name ||
+                                  step.secondaryColor === item.hex
+                              )[0]?.hex
                             }
                             )
                             <div
@@ -179,8 +224,10 @@ const StepDetails = ({
                               style={{
                                 background: `${
                                   colors.filter(
-                                    (item) => step.secondaryColor === item.name
-                                  )[0].hex
+                                    (item) =>
+                                      step.secondaryColor === item.name ||
+                                      step.secondaryColor === item.hex
+                                  )[0]?.hex
                                 }`,
                               }}
                             ></div>
@@ -193,39 +240,6 @@ const StepDetails = ({
               </Card.Body>
             </Card>
           </Col>
-          {/* {selectedCollectionIndex >= 0 && (
-            <Preview
-              // data={step.collections[selectedCollectionIndex]}
-              // length={step.collections.length}
-              // index={selectedCollectionIndex}
-              // collections={step.collections}
-              projectId={projectId}
-              feedbackActive={feedbackActive}
-              setFeedbackActive={setFeedbackActive}
-              showForm={showForm}
-              setShowForm={setShowForm}
-              points={points}
-              setPoints={setPoints}
-              hoverFB={hoverFB}
-              setHoverFB={setHoverFB}
-            />
-          )}
-          {selectedCollectionIndex >= 0 && (
-            <Overview
-              // collection={step.collections[selectedCollectionIndex]}
-              // final={step.collections.length - 1 === selectedCollectionIndex}
-              // index={selectedCollectionIndex}
-              feedbackActive={feedbackActive}
-              setFeedbackActive={setFeedbackActive}
-              showForm={showForm}
-              setShowForm={setShowForm}
-              points={points}
-              setPoints={setPoints}
-              hoverFB={hoverFB}
-              setHoverFB={setHoverFB}
-            />
-          )} */}
-          {/* {step.collections.length === 0 && <Overview />} */}
         </Row>
       )}
     </div>
@@ -234,7 +248,8 @@ const StepDetails = ({
 
 const mapStateToProps = (state) => ({
   step: state.project.selected_step,
-  // selectedCollectionIndex: state.project.selected_collection,
+  selectedCollectionIndex: state.project.selected_collection,
+  role: state.auth.user.userType,
   loading: state.project.loading,
 });
 

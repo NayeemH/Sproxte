@@ -15,7 +15,7 @@ export const deleteComment = (collectionId, feedbackId) => async (dispatch) => {
   try {
     // TODO ::: API CALL
     const res = await axios.delete(
-      `${BASE_URL}/api/project/feedback/${feedbackId}`,
+      `${BASE_URL}/api/v1/product/feedback/${feedbackId}`,
       config
     );
 

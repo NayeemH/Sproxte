@@ -101,10 +101,10 @@ const Preview = ({
       </div>
       <div className={styles.img_wrapper} ref={imgRef}>
         <img
-          src={`${IMAGE_PATH}original/${data.image}`}
+          src={`${IMAGE_PATH}small/${data.image}`}
           alt=""
           id="img"
-          onClick={(e) => imgClickHandeler(e)}
+          onClick={(e) => feedbackActive && imgClickHandeler(e)}
           className={styles.img}
         />
 
@@ -166,7 +166,7 @@ const Preview = ({
                   }`}
                   onClick={() => selectFunc(i)}
                 >
-                  <span className="d-block">
+                  <span className="d-block text-dark">
                     {i + 1}. {item.title}
                   </span>
                   <span className={styles.date}>

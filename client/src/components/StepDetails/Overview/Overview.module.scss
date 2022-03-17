@@ -1,5 +1,5 @@
 .wrapper {
-  background: var(--dark-bg);
+  background: var(--white);
   padding: 1rem;
 }
 
@@ -13,14 +13,14 @@
   border: none !important;
   padding: 5px 26px;
   width: 100% !important;
-  background: var(--primary) !important;
+  background: var(--orange) !important;
   transition: 0.3s all ease-in-out;
   margin-bottom: 12px;
   margin-right: 2.5rem;
 }
 
 .btn:hover {
-  background: var(--primary-hover) !important;
+  background: var(--orange) !important;
   transition: 0.3s all ease-in-out;
 }
 
@@ -28,7 +28,7 @@
   outline: none !important;
   border: none !important;
   color: #fff !important;
-  background: var(--primary) !important;
+  background: var(--orange) !important;
   padding: 5px 26px;
   transition: 0.3s all ease-in-out;
   margin-bottom: 12px;
@@ -47,16 +47,16 @@
 
 .btn_feedback {
   outline: none !important;
-  border: 1px solid var(--primary) !important;
+  border: 1px solid var(--orange) !important;
   padding: 5px 26px;
   width: 100% !important;
-  background: var(--primary-hover) !important;
+  background: var(--orange) !important;
   transition: 0.3s all ease-in-out;
   margin-bottom: 12px;
 }
 
 .btn_feedback:hover {
-  border-color: var(--primary-hover) !important;
+  border-color: var(--orange) !important;
   transition: 0.3s all ease-in-out;
 }
 
@@ -65,22 +65,25 @@
 }
 
 .feedback {
-  background: rgba($color: #000000, $alpha: 0.1) !important;
+  background: var(--light) !important;
+  // box-shadow: 2px 3px 4px 0 rgba(0, 0, 0, 0.1);
   padding: 15px 10px;
   margin-top: 8px;
   display: flex;
-  border: 1px solid var(--dark-bg);
+  border: 1px solid var(--light);
+  border-radius: 15px !important;
   transition: 0.3s all ease-in-out;
 }
 
 .feedback.active {
-  border: 1px solid var(--primary) !important;
+  border: 1px solid var(--orange) !important;
   transition: 0.3s all ease-in-out;
 }
 
 .fb_text {
-  color: var(--light);
+  color: var(--dark);
   display: block;
+  padding-bottom: 8px;
 }
 
 .img_wrapper {
@@ -98,12 +101,12 @@
 .username {
   font-size: 16px;
   margin-right: 4px;
-  color: var(--light);
+  color: var(--dark);
 }
 
 .userrole {
   font-size: 13px;
-  color: var(--light);
+  color: var(--dark);
 }
 
 .user_info {
@@ -117,14 +120,24 @@
   align-items: center;
   width: 30px;
 }
+.delete {
+  color: var(--danger) !important;
+  transition: 0.3s all ease-in-out;
+}
 
 .delete:hover {
-  color: var(--danger);
+  color: var(--orange) !important;
+  cursor: pointer;
+  transition: 0.3s all ease-in-out;
+}
+
+.edit {
+  color: var(--dark);
   cursor: pointer;
   transition: 0.3s all ease-in-out;
 }
 .edit:hover {
-  color: var(--primary);
+  color: var(--orange);
   cursor: pointer;
   transition: 0.3s all ease-in-out;
 }
@@ -137,5 +150,7 @@
 .textarea {
   background: rgba($color: #000000, $alpha: 0.1) !important;
   border: none !important;
-  color: var(--light) !important;
+  margin-top: 10px;
+  border-radius: 15px !important;
+  color: var(--dark) !important;
 }

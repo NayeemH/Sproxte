@@ -609,7 +609,7 @@ export const getStepDetails = (id) => async (dispatch) => {
 
     dispatch({
       type: GET_STEP,
-      payload: res.data.product,
+      payload: res.data.data,
     });
     //console.log(res);
   } catch (err) {
@@ -709,7 +709,7 @@ export const approveStep = (id, projectId) => async (dispatch) => {
 };
 
 // POST REVIEW
-export const postReview = (points, msg, stepId) => async (dispatch) => {
+export const postReview = (points, msg, stepId, id) => async (dispatch) => {
   const config = {
     headers: {
       "Content-Type": "application/json",
@@ -723,8 +723,8 @@ export const postReview = (points, msg, stepId) => async (dispatch) => {
   };
   try {
     // TODO ::: API CALL
-    await axios.post(
-      `${BASE_URL}/api/project/feedback/${points.stepId}`,
+    await axios.put(
+      `${BASE_URL}/api/v1/product/feedback/${id}`,
       JSON.stringify(formData),
       config
     );
