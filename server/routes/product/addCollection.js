@@ -1,7 +1,7 @@
 const router = require('express').Router();
 const Collection = require('../../models/collection');
 const Product = require('../../models/product');
-const {saveImage, fileFetch} = require('../../lib/imageConverter');
+const {fileFetch} = require('../../lib/imageConverter');
 const User = require('../../models/user');
 const sendNotification = require('../../lib/sendNotification');
 const imageMerge = require('../../lib/imageMerge');
