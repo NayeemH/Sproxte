@@ -144,8 +144,8 @@ const paymentHandle = async (object) => {
             if(product.type === 'template') return;
 
             const buffers = await Promise.all([
-                fs.readFile(path.resolve(`data/image/small/${product.image.front}`)),
-                fs.readFile(path.resolve(`data/image/small/${product.colorImage}`))
+                fs.readFile(path.resolve(`data/image/small/${product.colorImage}`)),
+                fs.readFile(path.resolve(`data/image/small/${product.frontImages[0]}`))
             ]);
 
             const mergeImage = await imageMerge(buffers[0], buffers[1], 200);
@@ -167,7 +167,7 @@ const paymentHandle = async (object) => {
     const userIds = users.map(({_id}) => _id.toString());
 
     userIds.push(userId);
-    
+
     await sendNotification('New project is added', users, project._id);
 }
 
