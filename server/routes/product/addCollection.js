@@ -2,6 +2,8 @@ const router = require('express').Router();
 const Collection = require('../../models/collection');
 const Product = require('../../models/product');
 const {saveImage, fileFetch} = require('../../lib/imageConverter');
+const User = require('../../models/user');
+const sendNotification = require('../../lib/sendNotification');
 
 
 router.post('/:id', fileFetch.single('image'), async (req, res, next) => {
@@ -32,6 +34,15 @@ router.post('/:id', fileFetch.single('image'), async (req, res, next) => {
         else {
             throw Error('You can not add collection');
         }
+
+        // Send notification
+        const users = await User.find({$or: [{userType: 'admin'}, {userType: 'iep'}]}, {_id: 1});
+        const userIds = users.map(({_id}) => _id.toString());
+
+        userIds.push(product.userId.toString());
+        
+        await sendNotification('Uploaded new preview file for you', users, product.projectId, product._id);
+        
         res.json({
             message: 'Collection is added successfully',
         });

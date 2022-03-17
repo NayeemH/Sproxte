@@ -9,7 +9,6 @@ const activate = require('./activate');
 const project = require('./project');
 const product = require('./product');
 const profile = require('./profile');
-//const download = require('./download');
 const categoryType = require('./categoryType');
 const productType = require('./productType');
 const discover = require('./discover');
@@ -17,7 +16,7 @@ const template = require('./template');
 const search = require('./search');
 const order = require('./order');
 const payment = require('./payment');
-
+const notification = require('./notification');
 
 // User Register and login function 
 router.use('/auth', user);
@@ -46,9 +45,6 @@ router.use('/order', isAuth, order);
 // payment
 router.use('/payment', payment);
 
-// Admin need permission
-//router.use('/admin', isAuth, isAdmin, admin);
-
 // Activation routes
 router.use('/activate', activate);
 
@@ -61,8 +57,9 @@ router.use('/product',isAuth, product);
 // Profile Info
 router.use('/profile', isAuth, profile);
 
-// Profile Info
-//router.use('/download', isAuth, download);
+// Notification
+router.use('/notification', isAuth, notification);
+
 
 
 module.exports = router;
