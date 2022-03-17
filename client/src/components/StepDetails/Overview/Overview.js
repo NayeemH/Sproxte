@@ -147,6 +147,7 @@ const Overview = ({
         onHide={() => setsubmitModal(false)}
         centered
         style={{ zIndex: "9999" }}
+        className={styles.modal}
       >
         <Modal.Body className={styles.modal}>
           <h4>Send Feedback</h4>
