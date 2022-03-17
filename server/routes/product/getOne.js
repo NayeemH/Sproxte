@@ -1,5 +1,6 @@
 const router = require('express').Router();
 const Product = require('../../models/product');
+const Collection = require('../../models/collection');
 
 
 
@@ -9,12 +10,17 @@ router.get('/:id', async (req, res, next) => {
         const {id} = req.params;
 
 
-        let product;
+        let product, collections;
         if(userType === 'admin' || userType === 'iep') {
             product = await Product.findOne(
                 {_id: id}, 
                 {__v: 0}
             );
+
+            collections = await Collection
+                .find({productId: product._id}, {__v: 0})
+                .sort({_id: -1})
+                .populate('feedbacks.user', '_id name image userType');
         }
         else if(userType === 'client' || userType === 'coach') {
             product = await Product.findOne(
@@ -22,16 +28,24 @@ router.get('/:id', async (req, res, next) => {
                 {__v: 0}
             );
 
-            if(!product.length) throw Error('You are not authorized in this product or not exist');
+            if(!product) throw Error('You are not authorized in this product or not exist');
+
+            collections = await Collection
+                .find({productId: product._id}, {__v: 0})
+                .sort({_id: -1})
+                .populate('feedbacks.user', '_id name image userType');
         }
         else if(userType === 'guardian') {
             // TODO: fetch for guardian 
         }
 
-        
+
         res.json({
             message: `Product for ${userType}`,
-            product
+            data: {
+                product,
+                collections
+            }
         });
     }
     catch(err) {

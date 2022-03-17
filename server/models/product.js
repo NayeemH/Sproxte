@@ -35,7 +35,7 @@ const productSchema = Schema({
     },
     status: {
         type: String,
-        default: 'pending'
+        default: 'pending' // working approved
     },
     price: {
         type: Number,
