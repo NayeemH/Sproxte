@@ -23,7 +23,6 @@ const Overview = ({
   collection,
   selectedStep,
   selectedProject,
-  approveStep,
   final,
   isModalOpen,
   feedbackActive,
@@ -41,7 +40,6 @@ const Overview = ({
   hoverFB,
   setHoverFB,
   currentIndex,
-  lookAt,
   removeHotSpot,
 }) => {
   const navigate = useNavigate();
@@ -122,7 +120,12 @@ const Overview = ({
   const editSubmitHandeler = async (e) => {
     e.preventDefault();
     setEditLoading(true);
-    let check = await editReview(editMsg, feedback._id, selectedStep._id);
+    let check = await editReview(
+      editMsg,
+      feedback._id,
+      selectedStep._id,
+      collection._id
+    );
     if (check === true) {
       toogleEditModalVisibility({});
       setEditLoading(false);
@@ -133,9 +136,6 @@ const Overview = ({
 
   const deleteFeedbackHandeler = async (id) => {
     deleteComment(collection._id, id);
-    if (collection.imageType && collection.imageType === "3d") {
-      removeHotSpot(id, "firstScene");
-    }
   };
 
   return (
@@ -148,7 +148,7 @@ const Overview = ({
         centered
         style={{ zIndex: "9999" }}
       >
-        <Modal.Body className="bg_dark_bg text-dark">
+        <Modal.Body className={styles.modal}>
           <h4>Send Feedback</h4>
           <div className="pt-3">
             {feedback && (

@@ -12,6 +12,7 @@ export const deleteComment = (collectionId, feedbackId) => async (dispatch) => {
   const config = {
     withCredentials: true,
   };
+
   try {
     // TODO ::: API CALL
     const res = await axios.delete(

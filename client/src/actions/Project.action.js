@@ -745,36 +745,38 @@ export const postReview = (points, msg, stepId, id) => async (dispatch) => {
 };
 
 // EDIT REVIEW
-export const editReview = (msg, id, stepId) => async (dispatch) => {
-  const config = {
-    headers: {
-      "Content-Type": "application/json",
-    },
-    withCredentials: true,
-  };
+export const editReview =
+  (msg, id, stepId, collectionId) => async (dispatch) => {
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+      },
+      withCredentials: true,
+    };
 
-  const formData = {
-    message: msg,
+    const formData = {
+      message: msg,
+      feedbackId: id,
+    };
+    try {
+      // TODO ::: API CALL
+      await axios.patch(
+        `${BASE_URL}/api/v1/product/feedback/${collectionId}`,
+        JSON.stringify(formData),
+        config
+      );
+      //console.log(res);
+      dispatch({
+        type: EDIT_FEEDBACK_SUCCESS,
+      });
+      dispatch(getStepDetails(stepId));
+      toast.success("Feedback edited successfully");
+      return true;
+    } catch (err) {
+      dispatch({
+        type: EDIT_FEEDBACK_ERROR,
+      });
+      err.response.data.msg.map((msg) => toast.error(msg));
+      return false;
+    }
   };
-  try {
-    // TODO ::: API CALL
-    await axios.patch(
-      `${BASE_URL}/api/project/feedback/${id}`,
-      JSON.stringify(formData),
-      config
-    );
-    //console.log(res);
-    dispatch({
-      type: EDIT_FEEDBACK_SUCCESS,
-    });
-    dispatch(getStepDetails(stepId));
-    toast.success("Feedback edited successfully");
-    return true;
-  } catch (err) {
-    dispatch({
-      type: EDIT_FEEDBACK_ERROR,
-    });
-    err.response.data.msg.map((msg) => toast.error(msg));
-    return false;
-  }
-};

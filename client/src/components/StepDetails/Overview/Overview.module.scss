@@ -154,3 +154,12 @@
   border-radius: 15px !important;
   color: var(--dark) !important;
 }
+
+.modal {
+  border-radius: 15px !important;
+  overflow: hidden;
+  color: var(--dark) !important;
+  background-position: top;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
