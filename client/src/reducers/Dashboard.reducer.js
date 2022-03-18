@@ -14,8 +14,8 @@ const initialState = {
   sidebar_visible: false,
   loading: true,
   role: "",
-  list: [],
-  clients: [],
+  list: null,
+  clients: null,
 };
 
 const dashboardReducer = (state = initialState, action) => {
@@ -43,14 +43,13 @@ const dashboardReducer = (state = initialState, action) => {
     case DEVELOPER_LIST_LOAD:
       return {
         ...state,
-        list: [...payload],
+        list: payload,
         loading: false,
       };
     case CLIENT_LIST_LOAD:
       return {
         ...state,
-        clients: [...payload],
-        list: [...payload],
+        clients: payload,
         loading: false,
       };
     case LOGOUT_SUCCESS:

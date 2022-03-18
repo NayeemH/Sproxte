@@ -18,6 +18,7 @@
     "query-string": "^7.1.1",
     "rc-steps": "^4.1.4",
     "react": "^17.0.2",
+    "react-apexcharts": "^1.4.0",
     "react-bootstrap": "^2.1.2",
     "react-dom": "^17.0.2",
     "react-icons": "^4.3.1",

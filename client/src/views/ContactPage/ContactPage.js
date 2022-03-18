@@ -11,7 +11,7 @@ const ContactPage = () => {
       <LandingSidebar />
       <Nav />
       <ContactForm />
-      <BottomNav />
+      {/* <BottomNav /> */}
       <Footer />
     </div>
   );

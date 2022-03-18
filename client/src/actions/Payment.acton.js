@@ -1,5 +1,6 @@
 import axios from "axios";
 import { toast } from "react-toastify";
+import { CLIENT_LIST_LOAD, DEVELOPER_LIST_LOAD } from "../constants/Type";
 import {
   CHANGE_STATUS,
   CHANGE_STATUS_ERROR,
@@ -215,5 +216,49 @@ export const changeProjectStatus = (status, id) => async (dispatch) => {
     dispatch({
       type: CHANGE_STATUS_ERROR,
     });
+  }
+};
+
+//GET USERS
+export const getUserList = (page) => async (dispatch) => {
+  try {
+    const config = {
+      withCredentials: true,
+    };
+    const res = await axios.get(
+      `${BASE_URL}/api/v1/admin/user?page=${page}&limit=12`,
+      config
+    );
+    console.log(res);
+
+    dispatch({
+      type: CLIENT_LIST_LOAD,
+      payload: res.data.users,
+    });
+    //console.log(res);
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+//GET IEP
+export const getIepList = (page) => async (dispatch) => {
+  try {
+    const config = {
+      withCredentials: true,
+    };
+    const res = await axios.get(
+      `${BASE_URL}/api/v1/admin/iep?page=${page}&limit=12`,
+      config
+    );
+    console.log(res);
+
+    dispatch({
+      type: DEVELOPER_LIST_LOAD,
+      payload: res.data.users,
+    });
+    //console.log(res);
+  } catch (err) {
+    console.log(err);
   }
 };

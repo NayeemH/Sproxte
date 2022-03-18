@@ -45,6 +45,7 @@ import NotificationPage from "./views/NotificationPage/NotificationPage";
 import UploadStepImagePage from "./views/UploadStepImagePage/UploadStepImagePage";
 import OrdersListPage from "./views/OrdersListPage/OrdersListPage";
 import CompletedOrdersListPage from "./views/CompletedOrdersListPage/CompletedOrdersListPage";
+import UserIepPage from "./views/UserIepPage/UserIepPage";
 
 function App({ getRefreshToken }) {
   useEffect(() => {
@@ -76,6 +77,8 @@ function App({ getRefreshToken }) {
 
           <Route path="/*" element={<PrivateOutlet />}>
             <>
+              <Route path="users" element={<UserIepPage />} />
+              <Route path="users/iep" element={<UserIepPage iep />} />
               <Route path="dashboard" element={<DashboardPage />} />
               <Route
                 path="dashboard/completed"
