@@ -625,8 +625,6 @@ export const uploadStep = (values, file, id, projectId) => async (dispatch) => {
   let formData = new FormData();
 
   formData.append("title", values.title);
-  formData.append("description", values.description);
-  formData.append("imageType", values.type);
   formData.append("image", file);
 
   const config = {
@@ -638,7 +636,7 @@ export const uploadStep = (values, file, id, projectId) => async (dispatch) => {
   try {
     // TODO ::: API CALL
     const res = await axios.post(
-      `${BASE_URL}/api/project/collection/${id}`,
+      `${BASE_URL}/api/v1/product/collection/${id}`,
       formData,
       config
     );
@@ -655,7 +653,7 @@ export const uploadStep = (values, file, id, projectId) => async (dispatch) => {
     dispatch({
       type: ADD_COLLECTION_ERROR,
     });
-    err.response.data.msg.map((msg) => toast.error(msg));
+    console.log(err);
     return false;
   }
 
@@ -691,19 +689,20 @@ export const approveStep = (id, projectId) => async (dispatch) => {
   };
   try {
     // TODO ::: API CALL
-    await axios.post(`${BASE_URL}/api/project/stepApprove/${id}`, {}, config);
+    await axios.patch(`${BASE_URL}/api/v1/product/approve/${id}`, {}, config);
     // console.log(res);
     dispatch({
       type: STEP_APPROVED,
     });
     dispatch(getProjectDetails(projectId));
+    dispatch(getProductDetails(id));
     toast.success("Step Approved successfully");
     return true;
   } catch (err) {
     dispatch({
       type: STEP_APPROVE_ERROR,
     });
-    err.response.data.msg.map((msg) => toast.error(msg));
+    console.log(err);
     return false;
   }
 };

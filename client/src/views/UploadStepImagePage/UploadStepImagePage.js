@@ -1,42 +1,16 @@
 import React from "react";
-import { Breadcrumb } from "react-bootstrap";
 import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
-import FilterDashboard from "../../components/FilterDashboard/FilterDashboard";
-import Sidebar from "../../components/Sidebar/Sidebar";
-import Topbar from "../../components/Topbar/Topbar";
+import Layout from "../../components/Shared/Layout/Layout";
 import UploadStepForm from "../../components/UploadStepForm/UploadStepForm";
-import styles from "./UploadStepImagePage.module.css";
 
 const UploadStepImagePage = () => {
   const selectedStep = useSelector((state) => state.project.selected_step);
-  const selectedProject = useSelector(
-    (state) => state.project.selected_project
-  );
+  const selectedProject = useSelector((state) => state.project.selected_step);
   return (
-    <div className={`bg_dark text-light`} style={{ minHeight: "100vh" }}>
-      <Topbar />
-      <FilterDashboard />
-      <Sidebar />
-      <Breadcrumb className={styles.wrapper}>
-        <Breadcrumb.Item>
-          <Link to="/dashboard" className={styles.bc_home}>
-            Dashboard
-          </Link>{" "}
-        </Breadcrumb.Item>
-        <Breadcrumb.Item>
-          <Link
-            to={`/project/${selectedProject._id}`}
-            className={styles.bc_home}
-          >
-            {selectedProject.name}
-          </Link>{" "}
-        </Breadcrumb.Item>
-        <Breadcrumb.Item className={styles.bc_name} active>
-          {selectedStep.name}
-        </Breadcrumb.Item>
-      </Breadcrumb>
-      <UploadStepForm />
+    <div className={`bg_dark text-dark`} style={{ minHeight: "100vh" }}>
+      <Layout title={selectedProject.name}>
+        <UploadStepForm />
+      </Layout>
     </div>
   );
 };
