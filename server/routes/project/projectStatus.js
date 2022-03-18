@@ -1,6 +1,7 @@
 const router = require('express').Router();
 const Project = require('../../models/project');
 const User = require('../../models/user');
+const Order = require('../../models/order');
 const sendNotification = require('../../lib/sendNotification');
 
 
@@ -14,6 +15,7 @@ router.patch('/:id', async (req, res, next) => {
         if(userType === 'admin' || userType === 'iep') {
 
             const project = await Project.findOneAndUpdate({_id: id}, {$set: {status}});
+            await Order.findOneAndUpdate({projectId: id}, {$set: {deleveryStatus: status}});
 
             // Send notification
             const users = await User.find({$or: [{userType: 'admin'}, {userType: 'iep'}]}, {_id: 1});

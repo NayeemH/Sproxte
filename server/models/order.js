@@ -20,7 +20,7 @@ const orderSchema = Schema({
         required: true
     },
     deleveryStatus: {
-        type: String,   // pending, accepted, shipping, delevered
+        type: String,   // pending, accepted, shipping, delivered
         default: 'pending'
     },
     paymentStatus: {
