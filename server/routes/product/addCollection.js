@@ -1,9 +1,12 @@
 const router = require('express').Router();
 const Collection = require('../../models/collection');
 const Product = require('../../models/product');
-const {saveImage, fileFetch} = require('../../lib/imageConverter');
+const {fileFetch} = require('../../lib/imageConverter');
 const User = require('../../models/user');
 const sendNotification = require('../../lib/sendNotification');
+const imageMerge = require('../../lib/imageMerge');
+const path = require('path');
+const fs = require('fs/promises');
 
 
 router.post('/:id', fileFetch.single('image'), async (req, res, next) => {
@@ -16,17 +19,16 @@ router.post('/:id', fileFetch.single('image'), async (req, res, next) => {
         if(product.status === 'approved') throw Error('This product is already approved');
 
 
-        let image;
-        if(req.file) {
-            image = await saveImage(req.file);
-        }
+        const parentImage = await fs.readFile(path.resolve(`data/image/small/${product.colorImage}`));
+
+        const mergeImage = await imageMerge(parentImage, req.file, 200);
 
         if(userType === 'admin' || userType === 'iep') {
             await new Collection({
                 userId,
                 productId: id,
                 title,
-                image
+                image: mergeImage
             }).save();
 
             await Product.findOneAndUpdate({_id: id}, {$set: {status: 'working'}});
