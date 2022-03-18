@@ -21,7 +21,7 @@ router.post('/:id', fileFetch.single('image'), async (req, res, next) => {
 
         const parentImage = await fs.readFile(path.resolve(`data/image/small/${product.colorImage}`));
 
-        const mergeImage = await imageMerge(parentImage, req.file);
+        const mergeImage = await imageMerge(parentImage, req.file.buffer);
 
         if(userType === 'admin' || userType === 'iep') {
             await new Collection({
