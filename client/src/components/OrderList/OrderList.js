@@ -8,6 +8,7 @@ import { AiOutlineLeft, AiOutlineRight } from "react-icons/ai";
 import { getRunningOrders } from "../../actions/Payment.acton";
 import { BsArrowRight } from "react-icons/bs";
 import demoImg from "../../assets/logoSq.png";
+import { IMAGE_PATH } from "../../constants/URL";
 const queryString = require("query-string");
 
 const OrderList = ({ item, getRunningOrders }) => {
@@ -64,10 +65,14 @@ const OrderList = ({ item, getRunningOrders }) => {
                           className={`${styles.small} d-flex align-items-center flex-column`}
                         >
                           <div className={styles.img_wrapper}>
-                            <img src={demoImg} alt="" className={styles.img} />
+                            <img
+                              src={`${IMAGE_PATH}small/${notification.userId.image}`}
+                              alt=""
+                              className={styles.img}
+                            />
                           </div>
                           <span className="d-block text-center">
-                            Tanvir Mahin
+                            {notification.userId.name}
                           </span>
                         </Col>
                         <Col
