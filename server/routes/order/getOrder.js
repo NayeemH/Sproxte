@@ -24,7 +24,8 @@ router.get('/:type', async (req, res, next) => {
                     .find({deleveryStatus: {$ne: 'delevered'}, paymentStatus: 'paid'}, {__v: 0, orders: 0})
                     .sort({_id: -1})
                     .skip(skip)
-                    .limit(limit);
+                    .limit(limit)
+                    .populate('userId', '_id name image');
             }
             else if(type === 'completed'){
                 totalCount = await Order.find({deleveryStatus: 'delevered', paymentStatus: 'paid'}).countDocuments();
@@ -33,7 +34,8 @@ router.get('/:type', async (req, res, next) => {
                     .find({deleveryStatus: 'delevered', paymentStatus: 'paid'}, {__v: 0, orders: 0})
                     .sort({_id: -1})
                     .skip(skip)
-                    .limit(limit);
+                    .limit(limit)
+                    .populate('userId', '_id name image');
             }
             else return next();
         }
@@ -45,7 +47,8 @@ router.get('/:type', async (req, res, next) => {
                     .find({deleveryStatus: {$ne: 'delevered'}, userId, paymentStatus: 'paid'}, {__v: 0, orders: 0})
                     .sort({_id: -1})
                     .skip(skip)
-                    .limit(limit);
+                    .limit(limit)
+                    .populate('userId', '_id name image');
             }
             else if(type === 'completed'){
                 totalCount = await Order.find({deleveryStatus: 'delevered', userId, paymentStatus: 'paid'}).countDocuments();
@@ -54,7 +57,8 @@ router.get('/:type', async (req, res, next) => {
                     .find({deleveryStatus: 'delevered', userId, paymentStatus: 'paid'}, {__v: 0, orders: 0})
                     .sort({_id: -1})
                     .skip(skip)
-                    .limit(limit);
+                    .limit(limit)
+                    .populate('userId', '_id name image');
             }
             else return next();
             totalCount = await Order.find({deleveryStatus, userId, paymentStatus: 'paid'}).countDocuments();
@@ -63,7 +67,8 @@ router.get('/:type', async (req, res, next) => {
                 .find({deleveryStatus, userId, paymentStatus: 'paid'}, {__v: 0, orders: 0})
                 .sort({_id: -1})
                 .skip(skip)
-                .limit(limit);
+                .limit(limit)
+                .populate('userId', '_id name image');
         }
 
         // No payment list for gurdian
