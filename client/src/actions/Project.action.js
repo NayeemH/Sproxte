@@ -5,6 +5,8 @@ import {
   ADD_COLLECTION_ERROR,
   ADD_COLLECTION_SUCCESS,
   ADD_FAVORITE_PROJECT,
+  APPROVED_PROJECT_LOAD,
+  APPROVED_PROJECT_LOAD_ERROR,
   COLLECTION_INDEX,
   COLLECTION_NEXT,
   COLLECTION_PREV,
@@ -504,7 +506,7 @@ export const fetchProjects = (page) => async (dispatch) => {
   try {
     // TODO ::: API CALL
     const res = await axios.get(
-      `${BASE_URL}/api/v1/project/active?page=${page}&limit=2`,
+      `${BASE_URL}/api/v1/project/active?page=${page}&limit=12`,
       config
     );
     if (res.status === 200) {
@@ -516,6 +518,33 @@ export const fetchProjects = (page) => async (dispatch) => {
   } catch (err) {
     dispatch({
       type: FETCH_DASHBOARD_PROJECT_ERROR,
+    });
+  }
+};
+
+// FETCH PROJECTS FOR DASHBOARD
+export const fetchCompletedProjects = (page) => async (dispatch) => {
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+    },
+    withCredentials: true,
+  };
+  try {
+    // TODO ::: API CALL
+    const res = await axios.get(
+      `${BASE_URL}/api/v1/project/completed?page=${page}&limit=12`,
+      config
+    );
+    if (res.status === 200) {
+      dispatch({
+        type: APPROVED_PROJECT_LOAD,
+        payload: res.data.projects,
+      });
+    }
+  } catch (err) {
+    dispatch({
+      type: APPROVED_PROJECT_LOAD_ERROR,
     });
   }
 };

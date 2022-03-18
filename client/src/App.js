@@ -44,6 +44,7 @@ import ProjectDetailsPage from "./views/ProjectDetailsPage/ProjectDetailsPage";
 import NotificationPage from "./views/NotificationPage/NotificationPage";
 import UploadStepImagePage from "./views/UploadStepImagePage/UploadStepImagePage";
 import OrdersListPage from "./views/OrdersListPage/OrdersListPage";
+import CompletedOrdersListPage from "./views/CompletedOrdersListPage/CompletedOrdersListPage";
 
 function App({ getRefreshToken }) {
   useEffect(() => {
@@ -77,6 +78,10 @@ function App({ getRefreshToken }) {
             <>
               <Route path="dashboard" element={<DashboardPage />} />
               <Route
+                path="dashboard/completed"
+                element={<DashboardPage completed={true} />}
+              />
+              <Route
                 path="dashboard/:projectId/:stepId"
                 element={<StepDetailsPage />}
               />
@@ -98,6 +103,10 @@ function App({ getRefreshToken }) {
               <Route path="product/edit/:id" element={<EditProductPage />} />
               <Route path="templates" element={<TypeListPage />} />
               <Route path="orders" element={<OrdersListPage />} />
+              <Route
+                path="compeleted-orders"
+                element={<CompletedOrdersListPage />}
+              />
               <Route path="category" element={<CategoryListPage />} />
               <Route path="settings" element={<SettingsPage />} />
               <Route path="notification" element={<NotificationPage />} />

@@ -10,7 +10,7 @@ import { IoMdNotificationsOutline } from "react-icons/io";
 import { logout } from "../../../actions/Dashboard.action";
 import { connect } from "react-redux";
 import UserInfoTopbar from "../../Topbar/UserInfoTopbar/UserInfoTopbar";
-import { FiLogOut } from "react-icons/fi";
+import { FiLogOut, FiUsers } from "react-icons/fi";
 import { GoThreeBars } from "react-icons/go";
 import { MdDownloadDone } from "react-icons/md";
 import { BiLayer, BiLayerPlus } from "react-icons/bi";
@@ -59,17 +59,15 @@ const Layout = ({ logout, children, role, title }) => {
             {role === "admin" && (
               <>
                 <div className={styles.nav}>
-                  <NavLink to="/individual-orders" className={styles.nav__item}>
+                  <NavLink to="/users" className={styles.nav__item}>
                     <span className={styles.icon}>
-                      <BsMinecartLoaded />
+                      <FiUsers />
                     </span>
-                    <span className={styles.nav__item_text}>
-                      Individual Order
-                    </span>
+                    <span className={styles.nav__item_text}>User & IEP</span>
                   </NavLink>
                 </div>
                 <div className={styles.nav}>
-                  <NavLink to="/compeleted-oders" className={styles.nav__item}>
+                  <NavLink to="/compeleted-orders" className={styles.nav__item}>
                     <span className={styles.icon}>
                       <MdDownloadDone />
                     </span>

@@ -331,20 +331,22 @@ const Overview = ({
                       </Moment>
                     </span>
                   </div>
-                  <div className={styles.actions}>
-                    <span
-                      className={styles.delete}
-                      onClick={() => deleteFeedbackHandeler(item._id)}
-                    >
-                      <FaTimes />
-                    </span>
-                    <span
-                      className={styles.edit}
-                      onClick={() => toogleEditModalVisibility(item)}
-                    >
-                      <MdModeEdit />
-                    </span>
-                  </div>
+                  {selectedStep.status !== "approved" && (
+                    <div className={styles.actions}>
+                      <span
+                        className={styles.delete}
+                        onClick={() => deleteFeedbackHandeler(item._id)}
+                      >
+                        <FaTimes />
+                      </span>
+                      <span
+                        className={styles.edit}
+                        onClick={() => toogleEditModalVisibility(item)}
+                      >
+                        <MdModeEdit />
+                      </span>
+                    </div>
+                  )}
                 </div>
               ))}
             </div>

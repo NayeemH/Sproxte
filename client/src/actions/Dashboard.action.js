@@ -277,9 +277,6 @@ export const getManagerList = () => async (dispatch) => {
 // FETCH PROJECTS FOR DASHBOARD
 export const fetchApprovedProject = () => async (dispatch) => {
   const config = {
-    headers: {
-      "Content-Type": "application/json",
-    },
     withCredentials: true,
   };
   try {

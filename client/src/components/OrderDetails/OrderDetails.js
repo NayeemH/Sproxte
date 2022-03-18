@@ -19,7 +19,15 @@ const OrderDetails = ({ projects, id, data, changeProjectStatus }) => {
             textTransform: "capitalize",
           }}
         >
-          Current Status: <span className="fw-bold">{data.status}</span>
+          Current Status:{" "}
+          <span
+            className="fw-bold"
+            style={{
+              textTransform: "capitalize",
+            }}
+          >
+            {data.status}
+          </span>
         </div>
         <div className="d-flex">
           <Dropdown>
@@ -36,6 +44,7 @@ const OrderDetails = ({ projects, id, data, changeProjectStatus }) => {
                 <Dropdown.Item
                   key={item.id}
                   onClick={() => setStatus(item.name)}
+                  style={{ textTransform: "capitalize" }}
                 >
                   {item.name}
                 </Dropdown.Item>

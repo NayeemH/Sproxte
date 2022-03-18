@@ -1,50 +1,23 @@
-.wrapper {
-  min-height: 400px;
-  background: var(--light) !important;
+.line {
+  height: 80px !important;
+  width: 4px !important;
+  border-radius: 3px !important;
+  background: linear-gradient(55deg, #ffe502 0%, #ffa602 100%) !important;
 }
 
-.active_btn {
-  margin-left: 10px !important;
-  border-radius: 25px !important;
-  padding: 7px 20px !important;
-  background: none !important;
-  margin-left: 10px !important;
-  color: var(--orange) !important;
+.small {
+  font-size: 14px !important;
+}
+
+.lnk {
   text-decoration: none !important;
-  border: 1px solid var(--orange) !important;
-  transition: 0.3s all ease-in-out;
-}
-
-.active_btn:hover {
-  background: none !important;
   color: var(--dark) !important;
-  border: 1px solid var(--dark) !important;
   transition: 0.3s all ease-in-out;
 }
 
-.btn {
-  margin-left: 10px !important;
-  border-radius: 25px !important;
-  padding: 7px 20px !important;
-  background: var(--orange) !important;
-  border: 1px solid var(--orange) !important;
+.lnk:hover {
+  color: var(--orange) !important;
   transition: 0.3s all ease-in-out;
-}
-
-.btn:hover {
-  background: var(--dark) !important;
-  border: 1px solid var(--dark) !important;
-  transition: 0.3s all ease-in-out;
-}
-
-.btn:focus,
-.active_btn:focus {
-  box-shadow: none !important;
-  border: 1px solid var(--orange) !important;
-}
-
-.btn__grp {
-  border: 1px solid var(--orange) !important;
 }
 
 .link {
@@ -97,4 +70,18 @@ span.link:hover {
   cursor: default !important;
   color: var(--grey) !important;
   transition: 0.3s all ease-in-out;
+}
+
+.img_wrapper {
+  width: 45px !important;
+  height: 45px !important;
+  border-radius: 50% !important;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.img {
+  height: 45px !important;
 }

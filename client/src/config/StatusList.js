@@ -1,19 +1,23 @@
 const status = [
   {
     id: 1,
-    name: "Pending",
+    name: "pending",
   },
   {
     id: 2,
-    name: "Working",
+    name: "working",
   },
   {
     id: 3,
-    name: "Completed",
+    name: "completed",
+  },
+  {
+    id: 5,
+    name: "delivered",
   },
   {
     id: 4,
-    name: "Cancled",
+    name: "cancled",
   },
 ];
 
