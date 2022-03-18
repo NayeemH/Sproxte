@@ -1,6 +1,6 @@
 const router = require('express').Router();
 const Product = require('../../models/product');
-
+const Project = require('../../models/project');
 
 
 router.get('/:id', async (req, res, next) => {
@@ -8,6 +8,7 @@ router.get('/:id', async (req, res, next) => {
         const {userId, userType} = req.user;
         const {id} = req.params;
 
+        const project = await Project.findOne({_id: id}, {status: 1});
 
         let products;
         if(userType === 'admin' || userType === 'iep') {
@@ -31,6 +32,7 @@ router.get('/:id', async (req, res, next) => {
         
         res.json({
             message: `Product for ${userType}`,
+            status: project.status,
             products
         });
     }

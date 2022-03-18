@@ -19,7 +19,6 @@ router.get('/:id', async (req, res, next) => {
 
             collections = await Collection
                 .find({productId: product._id}, {__v: 0})
-                .sort({_id: -1})
                 .populate('feedbacks.user', '_id name image userType');
         }
         else if(userType === 'client' || userType === 'coach') {
@@ -32,7 +31,6 @@ router.get('/:id', async (req, res, next) => {
 
             collections = await Collection
                 .find({productId: product._id}, {__v: 0})
-                .sort({_id: -1})
                 .populate('feedbacks.user', '_id name image userType');
         }
         else if(userType === 'guardian') {

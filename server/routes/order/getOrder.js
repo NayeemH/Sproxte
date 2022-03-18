@@ -18,19 +18,19 @@ router.get('/:type', async (req, res, next) => {
         let orders;
         if(userType === 'admin' || userType === 'iep') {
             if(type === 'active') {
-                totalCount = await Order.find({deleveryStatus: {$ne: 'delevered'}}).countDocuments();
+                totalCount = await Order.find({deleveryStatus: {$ne: 'delevered'}, paymentStatus: 'paid'}).countDocuments();
 
                 orders = await Order
-                    .find({deleveryStatus: {$ne: 'delevered'}}, {__v: 0, orders: 0})
+                    .find({deleveryStatus: {$ne: 'delevered'}, paymentStatus: 'paid'}, {__v: 0, orders: 0})
                     .sort({_id: -1})
                     .skip(skip)
                     .limit(limit);
             }
             else if(type === 'completed'){
-                totalCount = await Order.find({deleveryStatus: 'delevered'}).countDocuments();
+                totalCount = await Order.find({deleveryStatus: 'delevered', paymentStatus: 'paid'}).countDocuments();
 
                 orders = await Order
-                    .find({deleveryStatus: 'delevered'}, {__v: 0, orders: 0})
+                    .find({deleveryStatus: 'delevered', paymentStatus: 'paid'}, {__v: 0, orders: 0})
                     .sort({_id: -1})
                     .skip(skip)
                     .limit(limit);
@@ -39,28 +39,28 @@ router.get('/:type', async (req, res, next) => {
         }
         else if(userType === 'client' || userType === 'coach') {
             if(type === 'active') {
-                totalCount = await Order.find({deleveryStatus: {$ne: 'delevered'}, userId}).countDocuments();
+                totalCount = await Order.find({deleveryStatus: {$ne: 'delevered'}, userId, paymentStatus: 'paid'}).countDocuments();
 
                 orders = await Order
-                    .find({deleveryStatus: {$ne: 'delevered'}, userId}, {__v: 0, orders: 0})
+                    .find({deleveryStatus: {$ne: 'delevered'}, userId, paymentStatus: 'paid'}, {__v: 0, orders: 0})
                     .sort({_id: -1})
                     .skip(skip)
                     .limit(limit);
             }
             else if(type === 'completed'){
-                totalCount = await Order.find({deleveryStatus: 'delevered', userId}).countDocuments();
+                totalCount = await Order.find({deleveryStatus: 'delevered', userId, paymentStatus: 'paid'}).countDocuments();
 
                 orders = await Order
-                    .find({deleveryStatus: 'delevered', userId}, {__v: 0, orders: 0})
+                    .find({deleveryStatus: 'delevered', userId, paymentStatus: 'paid'}, {__v: 0, orders: 0})
                     .sort({_id: -1})
                     .skip(skip)
                     .limit(limit);
             }
             else return next();
-            totalCount = await Order.find({deleveryStatus, userId}).countDocuments();
+            totalCount = await Order.find({deleveryStatus, userId, paymentStatus: 'paid'}).countDocuments();
 
             orders = await Order
-                .find({deleveryStatus, userId}, {__v: 0, orders: 0})
+                .find({deleveryStatus, userId, paymentStatus: 'paid'}, {__v: 0, orders: 0})
                 .sort({_id: -1})
                 .skip(skip)
                 .limit(limit);
