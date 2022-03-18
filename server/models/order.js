@@ -6,6 +6,7 @@ const orderSchema = Schema({
     userId: {
         type: Schema.Types.ObjectId,
         required: true,
+        ref: 'user'
     },
     projectId: {
         type: Schema.Types.ObjectId
