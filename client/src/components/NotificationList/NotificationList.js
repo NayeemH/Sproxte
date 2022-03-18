@@ -88,62 +88,57 @@ const NotificationList = ({ item, getNotifications }) => {
                 </Col>
               </Row>
             ))}
-
-          <Row>
-            <Col
-              className={`d-flex justify-content-end align-items-center py-4`}
-            >
-              {page !== -1 && (
-                <div className="d-flex justify-content-end align-items-center">
-                  {parsed.page > 1 ? (
-                    <Link
-                      to={`/notification?page=${page - 1}`}
-                      className={`${styles.link} ${
-                        parsed.page === 1 ? styles.disabled : ""
-                      } ${styles.link_arrow}`}
-                    >
-                      <span className="fw-light fs-3 d-flex justify-content-center align-items-center">
-                        <AiOutlineLeft />
-                      </span>
-                    </Link>
-                  ) : (
-                    <span
-                      className={`${styles.link} ${styles.disabled} ${styles.link_arrow}`}
-                    >
-                      <span className="fw-light fs-3 d-flex justify-content-center align-items-center">
-                        <AiOutlineLeft />
-                      </span>
-                    </span>
-                  )}
-                  {item.pageCount > 0 ? getPages(item.pageCount) : null}
-                  {page < item.pageCount ? (
-                    <Link
-                      to={`/notification?page=${page + 1}`}
-                      className={`${styles.link} ${styles.link_arrow} ${
-                        styles.link_arrow
-                      } ${
-                        parsed.page >= item.pageCount ? styles.disabled : ""
-                      }`}
-                    >
-                      <span className="fw-light fs-3 d-flex justify-content-center align-items-center">
-                        <AiOutlineRight />
-                      </span>
-                    </Link>
-                  ) : (
-                    <span
-                      className={`${styles.link} ${styles.disabled} ${styles.link_arrow}`}
-                    >
-                      <span className="fw-light fs-3 d-flex justify-content-center align-items-center">
-                        <AiOutlineRight />
-                      </span>
-                    </span>
-                  )}
-                </div>
-              )}
-            </Col>
-          </Row>
         </Card.Body>
       </Card>
+      <Row>
+        <Col className={`d-flex justify-content-end align-items-center py-4`}>
+          {page !== -1 && (
+            <div className="d-flex justify-content-end align-items-center">
+              {parsed.page > 1 ? (
+                <Link
+                  to={`/notification?page=${page - 1}`}
+                  className={`${styles.link} ${
+                    parsed.page === 1 ? styles.disabled : ""
+                  } ${styles.link_arrow}`}
+                >
+                  <span className="fw-light fs-3 d-flex justify-content-center align-items-center">
+                    <AiOutlineLeft />
+                  </span>
+                </Link>
+              ) : (
+                <span
+                  className={`${styles.link} ${styles.disabled} ${styles.link_arrow}`}
+                >
+                  <span className="fw-light fs-3 d-flex justify-content-center align-items-center">
+                    <AiOutlineLeft />
+                  </span>
+                </span>
+              )}
+              {item.pageCount > 0 ? getPages(item.pageCount) : null}
+              {page < item.pageCount ? (
+                <Link
+                  to={`/notification?page=${page + 1}`}
+                  className={`${styles.link} ${styles.link_arrow} ${
+                    styles.link_arrow
+                  } ${parsed.page >= item.pageCount ? styles.disabled : ""}`}
+                >
+                  <span className="fw-light fs-3 d-flex justify-content-center align-items-center">
+                    <AiOutlineRight />
+                  </span>
+                </Link>
+              ) : (
+                <span
+                  className={`${styles.link} ${styles.disabled} ${styles.link_arrow}`}
+                >
+                  <span className="fw-light fs-3 d-flex justify-content-center align-items-center">
+                    <AiOutlineRight />
+                  </span>
+                </span>
+              )}
+            </div>
+          )}
+        </Col>
+      </Row>
     </Container>
   );
 };
