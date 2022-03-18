@@ -16,7 +16,7 @@ const ProjectDetailsPage = ({ getProjectDetails, project }) => {
       className="bg_dark"
       style={{ minHeight: "100vh", position: "relative" }}
     >
-      <Layout>
+      <Layout title="Order Details">
         <OrderDetails data={project} id={id} />
       </Layout>
     </div>

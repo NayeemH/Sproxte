@@ -1,6 +1,10 @@
 import axios from "axios";
 import { toast } from "react-toastify";
 import {
+  GET_COMPLETED_ORDERS,
+  GET_COMPLETED_ORDERS_ERROR,
+  GET_RUNNING_ORDERS,
+  GET_RUNNING_ORDERS_ERROR,
   ORDER_ERROR,
   ORDER_SUCCESS,
   PAYMENT_ERROR,
@@ -132,5 +136,47 @@ export const createOrder = (address, phone, cart) => async (dispatch) => {
     dispatch({ type: ORDER_ERROR });
     console.log(err);
     return false;
+  }
+};
+
+//GET RUNNING ORDERS
+export const getRunningOrders = (page) => async (dispatch) => {
+  try {
+    const res = await axios.get(
+      `${BASE_URL}/api/v1/order/active?page=${page}&limit=12`
+    );
+    //console.log(res);
+
+    dispatch({
+      type: GET_RUNNING_ORDERS,
+      payload: res.data.orders,
+    });
+    //console.log(res);
+  } catch (err) {
+    dispatch({
+      type: GET_RUNNING_ORDERS_ERROR,
+    });
+    console.log(err);
+  }
+};
+
+//GET COMPLETED ORDERS
+export const getCompletedOrders = (page) => async (dispatch) => {
+  try {
+    const res = await axios.get(
+      `${BASE_URL}/api/v1/order/completed?page=${page}&limit=12`
+    );
+    //console.log(res);
+
+    dispatch({
+      type: GET_COMPLETED_ORDERS,
+      payload: res.data.orders,
+    });
+    //console.log(res);
+  } catch (err) {
+    dispatch({
+      type: GET_COMPLETED_ORDERS_ERROR,
+    });
+    console.log(err);
   }
 };

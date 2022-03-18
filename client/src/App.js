@@ -43,6 +43,7 @@ import StepDetailsPage from "./views/StepDetailsPage/StepDetailsPage";
 import ProjectDetailsPage from "./views/ProjectDetailsPage/ProjectDetailsPage";
 import NotificationPage from "./views/NotificationPage/NotificationPage";
 import UploadStepImagePage from "./views/UploadStepImagePage/UploadStepImagePage";
+import OrdersListPage from "./views/OrdersListPage/OrdersListPage";
 
 function App({ getRefreshToken }) {
   useEffect(() => {
@@ -96,6 +97,7 @@ function App({ getRefreshToken }) {
               <Route path="category/edit/:id" element={<EditCategoryPage />} />
               <Route path="product/edit/:id" element={<EditProductPage />} />
               <Route path="templates" element={<TypeListPage />} />
+              <Route path="orders" element={<OrdersListPage />} />
               <Route path="category" element={<CategoryListPage />} />
               <Route path="settings" element={<SettingsPage />} />
               <Route path="notification" element={<NotificationPage />} />

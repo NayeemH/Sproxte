@@ -1,9 +1,17 @@
-import { ORDER_SUCCESS, SET_KEY, SET_TOKEN } from "../constants/TypeLanding";
+import {
+  GET_COMPLETED_ORDERS,
+  GET_RUNNING_ORDERS,
+  ORDER_SUCCESS,
+  SET_KEY,
+  SET_TOKEN,
+} from "../constants/TypeLanding";
 
 const initialValue = {
   key: "",
   token: "",
   id: "",
+  running_orders: null,
+  completed_orders: null,
   loading: true,
 };
 
@@ -26,6 +34,18 @@ const paymentReducer = (state = initialValue, action) => {
       return {
         ...state,
         id: payload,
+        loading: false,
+      };
+    case GET_RUNNING_ORDERS:
+      return {
+        ...state,
+        running_orders: payload,
+        loading: false,
+      };
+    case GET_COMPLETED_ORDERS:
+      return {
+        ...state,
+        completed_orders: payload,
         loading: false,
       };
     default:

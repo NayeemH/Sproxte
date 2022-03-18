@@ -68,8 +68,7 @@ export const getProjectDetails = (id) => async (dispatch) => {
 // SEND INVITATION LINK TO PROJECT
 export const sendInvitation = (values) => async (dispatch) => {
   let formData = {
-    projectId: values.project,
-    userType: values.role,
+    name: values.name,
     email: values.email,
   };
 
@@ -82,7 +81,7 @@ export const sendInvitation = (values) => async (dispatch) => {
   try {
     // TODO ::: API CALL
     const res = await axios.post(
-      `${BASE_URL}/api/admin/sendLoginMail`,
+      `${BASE_URL}/api/v1/admin/createIEP`,
       JSON.stringify(formData),
       config
     );
@@ -91,12 +90,14 @@ export const sendInvitation = (values) => async (dispatch) => {
       dispatch({
         type: PROJECT_INVITATION_SUCCESS,
       });
-      toast.success("Invitation sent successfully");
+      toast.success("IEP added successfully");
+      return res.data.password;
     }
   } catch (err) {
     dispatch({
       type: PROJECT_INVITATION_ERROR,
     });
+    return false;
     err.response.data.msg.map((msg) => toast.error(msg));
   }
 };
