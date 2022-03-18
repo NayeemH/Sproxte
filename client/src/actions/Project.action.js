@@ -98,7 +98,6 @@ export const sendInvitation = (values) => async (dispatch) => {
       type: PROJECT_INVITATION_ERROR,
     });
     return false;
-    err.response.data.msg.map((msg) => toast.error(msg));
   }
 };
 

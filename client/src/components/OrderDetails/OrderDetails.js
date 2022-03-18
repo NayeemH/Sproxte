@@ -6,13 +6,21 @@ import { getProjectDetails } from "../../actions/Project.action";
 import { connect } from "react-redux";
 import { IMAGE_PATH } from "../../constants/URL";
 import statusList from "../../config/StatusList";
+import { changeProjectStatus } from "../../actions/Payment.acton";
 
-const OrderDetails = ({ projects, id, data }) => {
+const OrderDetails = ({ projects, id, data, changeProjectStatus }) => {
   const [status, setStatus] = useState("");
   return (
     <Container className={styles.wrapper}>
       <div className="d-flex flex-column flex-md-row justify-content-between align-items-center">
-        <span>Current Status: {data.status}</span>
+        <div
+          className={`${styles.active_btn}`}
+          style={{
+            textTransform: "capitalize",
+          }}
+        >
+          Current Status: <span className="fw-bold">{data.status}</span>
+        </div>
         <div className="d-flex">
           <Dropdown>
             <Dropdown.Toggle
@@ -37,7 +45,7 @@ const OrderDetails = ({ projects, id, data }) => {
           {status === "" ? null : (
             <Button
               className={styles.btn}
-              onClick={() => console.log("Active")}
+              onClick={() => changeProjectStatus(status, id) && setStatus("")}
             >
               Save
             </Button>
@@ -76,4 +84,7 @@ const mapStateToProps = (state) => ({
   projects: state.project.selected_project,
 });
 
-export default connect(mapStateToProps, { getProjectDetails })(OrderDetails);
+export default connect(mapStateToProps, {
+  getProjectDetails,
+  changeProjectStatus,
+})(OrderDetails);

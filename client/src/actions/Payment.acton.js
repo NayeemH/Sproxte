@@ -1,6 +1,8 @@
 import axios from "axios";
 import { toast } from "react-toastify";
 import {
+  CHANGE_STATUS,
+  CHANGE_STATUS_ERROR,
   GET_COMPLETED_ORDERS,
   GET_COMPLETED_ORDERS_ERROR,
   GET_RUNNING_ORDERS,
@@ -12,6 +14,7 @@ import {
   SET_TOKEN,
 } from "../constants/TypeLanding";
 import { BASE_URL } from "../constants/URL";
+import { getProjectDetails } from "./Project.action";
 
 export const setPaymentKey = () => async (dispatch) => {
   try {
@@ -178,5 +181,39 @@ export const getCompletedOrders = (page) => async (dispatch) => {
       type: GET_COMPLETED_ORDERS_ERROR,
     });
     console.log(err);
+  }
+};
+
+// CHANGE STATUS
+export const changeProjectStatus = (status, id) => async (dispatch) => {
+  let formData = {
+    status: status,
+  };
+
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+    },
+    withCredentials: true,
+  };
+  try {
+    // TODO ::: API CALL
+    const res = await axios.patch(
+      `${BASE_URL}/api/v1/project/status/${id}`,
+      JSON.stringify(formData),
+      config
+    );
+    // console.log(res);
+    if (res.status === 200) {
+      dispatch({
+        type: CHANGE_STATUS,
+      });
+      toast.success("Status changed successfully");
+      dispatch(getProjectDetails(id));
+    }
+  } catch (err) {
+    dispatch({
+      type: CHANGE_STATUS_ERROR,
+    });
   }
 };
