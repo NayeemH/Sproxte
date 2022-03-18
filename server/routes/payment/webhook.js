@@ -148,7 +148,7 @@ const paymentHandle = async (object) => {
                 fs.readFile(path.resolve(`data/image/small/${product.frontImages[0]}`))
             ]);
 
-            const mergeImage = await imageMerge(buffers[0], buffers[1], 200);
+            const mergeImage = await imageMerge(buffers[0], buffers[1]);
 
             return new Collection({
                 userId: product.userId,
