@@ -29,7 +29,7 @@ router.patch('/:id', async (req, res, next) => {
 
         userIds.push(product.userId);
         
-        await sendNotification('Product approved', users, product.projectId, product._id);
+        await sendNotification('Product approved', userIds, product.projectId, product._id);
 
         res.json({
             message: 'Feedback is added successfully',

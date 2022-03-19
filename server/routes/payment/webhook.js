@@ -168,7 +168,7 @@ const paymentHandle = async (object) => {
 
     userIds.push(userId);
 
-    await sendNotification('New project is added', users, project._id);
+    await sendNotification('New project is added', userIds, project._id);
 }
 
 
