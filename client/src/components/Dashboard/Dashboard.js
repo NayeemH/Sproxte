@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { Button, Col, Container, Dropdown, Row } from "react-bootstrap";
 import ProductCard from "../Shared/ProductCard/ProductCard";
 import styles from "./Dashboard.module.scss";
@@ -21,8 +21,8 @@ const Dashboard = ({ dashboard, projects, fetchProjects }) => {
     if (parsed.page) {
       page = parsed.page;
     }
-    fetchProjects(page, status);
-  }, [parsed.page]);
+    fetchProjects(page, parsed.status ? parsed.status : -1);
+  }, [parsed.page, parsed.status]);
 
   const getPages = (totalPage) => {
     let pages = [];
@@ -61,11 +61,24 @@ const Dashboard = ({ dashboard, projects, fetchProjects }) => {
                 variant="success"
                 id="dropdown-basic"
                 className={`${styles.active_btn} mt-3 mt-md-0`}
+                style={{ textTransform: "capitalize" }}
               >
-                Select Status
+                {parsed.status ? parsed.status : "Select Status"}
               </Dropdown.Toggle>
 
               <Dropdown.Menu>
+                <Dropdown.Item
+                  onClick={() =>
+                    navigate(
+                      `/dashboard?page=${
+                        parseInt(parsed.page) ? parseInt(parsed.page) : 1
+                      }`
+                    )
+                  }
+                  style={{ textTransform: "capitalize" }}
+                >
+                  All
+                </Dropdown.Item>
                 {statusList.map((item) => (
                   <Dropdown.Item
                     key={item.id}
