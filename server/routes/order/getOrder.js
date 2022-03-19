@@ -61,14 +61,6 @@ router.get('/:type', async (req, res, next) => {
                     .populate('userId', '_id name image');
             }
             else return next();
-            totalCount = await Order.find({deleveryStatus, userId, paymentStatus: 'paid'}).countDocuments();
-
-            orders = await Order
-                .find({deleveryStatus, userId, paymentStatus: 'paid'}, {__v: 0, orders: 0})
-                .sort({_id: -1})
-                .skip(skip)
-                .limit(limit)
-                .populate('userId', '_id name image');
         }
 
         // No payment list for gurdian
