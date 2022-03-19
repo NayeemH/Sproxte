@@ -8,11 +8,14 @@ router.get('/:type', async (req, res, next) => {
     try {
         const {userId, userType} = req.user;
         const {type} = req.params;
+        const {status} = req.query;
 
         let active;
         if(type === 'active') active = true;
         else if(type === 'completed') active = false;
         else return next();
+
+        
 
         // Data for pagination
         let totalCount;
@@ -21,19 +24,32 @@ router.get('/:type', async (req, res, next) => {
 
         let projects;
         if(userType === 'admin' || userType === 'iep') {
-            totalCount = await Project.find({active}).countDocuments();
+            // Setup filder
+            const filder = {
+                active
+            };
+            if(status) filder.status = status;
+
+            totalCount = await Project.find(filder).countDocuments();
 
             projects = await Project
-                .find({active}, {__v: 0, userId: 0, active: 0})
+                .find(filder, {__v: 0, userId: 0, active: 0})
                 .sort({_id: -1})
                 .skip(skip)
                 .limit(limit);
         }
         else if(userType === 'client' || userType === 'coach') {
-            totalCount = await Project.find({active, userId}).countDocuments();
+             // Setup filder
+             const filder = {
+                active,
+                userId
+            };
+            if(status) filder.status = status;
+
+            totalCount = await Project.find(status).countDocuments();
 
             projects = await Project
-                .find({active, userId}, {__v: 0, userId: 0, active: 0})
+                .find(status, {__v: 0, userId: 0, active: 0})
                 .sort({_id: -1})
                 .skip(skip)
                 .limit(limit);
