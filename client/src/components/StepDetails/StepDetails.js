@@ -40,30 +40,32 @@ const StepDetails = ({
         </div>
       ) : (
         <Row>
-          <Col xs={12} className={`d-flex align-items-center pb-3`}>
-            {step.status !== "approved" ? (
-              <>
-                <Button
-                  variant="primary"
-                  type="reset"
-                  onClick={() => approveStep(stepId, projectId)}
-                  className={`${styles.btn} mx-md-3 mx-0`}
-                >
-                  Approve
-                </Button>
-
-                {role === "admin" || role === "iep" ? (
-                  <Link
-                    to={`/dashboard/${projectId}/${stepId}/upload`}
+          {step.status !== "delivered" ? (
+            <Col xs={12} className={`d-flex align-items-center pb-3`}>
+              {step.status !== "approved" ? (
+                <>
+                  <Button
                     variant="primary"
-                    className={`${styles.btn} text-decoration-none `}
+                    type="reset"
+                    onClick={() => approveStep(stepId, projectId)}
+                    className={`${styles.btn} mx-md-3 mx-0`}
                   >
-                    Upload New Image
-                  </Link>
-                ) : null}
-              </>
-            ) : null}
-          </Col>
+                    Approve
+                  </Button>
+
+                  {role === "admin" || role === "iep" ? (
+                    <Link
+                      to={`/dashboard/${projectId}/${stepId}/upload`}
+                      variant="primary"
+                      className={`${styles.btn} text-decoration-none `}
+                    >
+                      Upload New Image
+                    </Link>
+                  ) : null}
+                </>
+              ) : null}
+            </Col>
+          ) : null}
           <Col md={role === "admin" || role === "iep" ? 8 : 12}>
             <Row>
               {selectedCollectionIndex >= 0 && (

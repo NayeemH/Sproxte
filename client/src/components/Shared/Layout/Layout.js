@@ -14,6 +14,8 @@ import { FiLogOut, FiUsers } from "react-icons/fi";
 import { GoThreeBars } from "react-icons/go";
 import { MdDownloadDone } from "react-icons/md";
 import { BiLayer, BiLayerPlus } from "react-icons/bi";
+import { HiOutlineMail } from "react-icons/hi";
+import { ImStatsBars } from "react-icons/im";
 
 const Layout = ({ logout, children, role, title }) => {
   const navigate = useNavigate();
@@ -58,6 +60,14 @@ const Layout = ({ logout, children, role, title }) => {
             </div>
             {role === "admin" && (
               <>
+                <div className={styles.nav}>
+                  <NavLink to="/report" className={styles.nav__item}>
+                    <span className={styles.icon}>
+                      <ImStatsBars />
+                    </span>
+                    <span className={styles.nav__item_text}>Report</span>
+                  </NavLink>
+                </div>
                 <div className={styles.nav}>
                   <NavLink to="/users" className={styles.nav__item}>
                     <span className={styles.icon}>
@@ -106,6 +116,16 @@ const Layout = ({ logout, children, role, title }) => {
                       <MdDownloadDone />
                     </span>
                     <span className={styles.nav__item_text}>Invite IEP</span>
+                  </NavLink>
+                </div>
+                <div className={styles.nav}>
+                  <NavLink to="/contact-list" className={styles.nav__item}>
+                    <span className={styles.icon}>
+                      <HiOutlineMail />
+                    </span>
+                    <span className={styles.nav__item_text}>
+                      Contact Submission
+                    </span>
                   </NavLink>
                 </div>
               </>

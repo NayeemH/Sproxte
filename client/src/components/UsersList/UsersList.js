@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Button, Card, Col, Container, Row, Spinner } from "react-bootstrap";
 import Moment from "react-moment";
 import { connect } from "react-redux";
@@ -6,11 +6,15 @@ import styles from "./UsersList.module.scss";
 import { Link, useLocation } from "react-router-dom";
 import { AiOutlineLeft, AiOutlineRight } from "react-icons/ai";
 import { getUserList } from "../../actions/Payment.acton";
-import { BsArrowRight } from "react-icons/bs";
+import { BsTrash } from "react-icons/bs";
 import { IMAGE_PATH } from "../../constants/URL";
+import ModalCard from "../Shared/ModalCard/ModalCard";
+import { toast } from "react-toastify";
+import { deleteUser } from "../../actions/Dashboard.action";
 const queryString = require("query-string");
 
-const UsersList = ({ item, getUserList, dashboard }) => {
+const UsersList = ({ item, getUserList, dashboard, deleteUser }) => {
+  const [deleteModal, setDeleteModal] = useState(null);
   const location = useLocation();
   const parsed = queryString.parse(location.search);
   let page = parsed.page ? parseInt(parsed.page) : 1;
@@ -40,8 +44,45 @@ const UsersList = ({ item, getUserList, dashboard }) => {
 
     return pages;
   };
+
+  const deleteHandeler = async () => {
+    let check = await deleteUser(deleteModal);
+    if (check) {
+      setDeleteModal(null);
+    } else {
+      toast.error("Something went wrong");
+    }
+  };
   return (
     <Container>
+      {deleteModal !== null ? (
+        <ModalCard
+          title={
+            <>
+              You are about to <br /> delete user.
+            </>
+          }
+        >
+          <div
+            className="d-flex justify-content-center align-items-center pb-4"
+            style={{ zIndex: 999999 }}
+          >
+            <Button
+              className={`${styles.btn_modal} btn_primary mx-2 `}
+              onClick={deleteHandeler}
+            >
+              Delete
+            </Button>
+            <Button
+              variant="primary"
+              className={`${styles.btn_modal} btn_primary mx-2 `}
+              onClick={() => setDeleteModal(null)}
+            >
+              Cancel
+            </Button>
+          </div>
+        </ModalCard>
+      ) : null}
       {!item || !item.pageCount ? (
         <div
           className="d-flex justify-content-center align-items-center crd"
@@ -96,7 +137,7 @@ const UsersList = ({ item, getUserList, dashboard }) => {
                     </Col>
                     <Col
                       xs={9}
-                      className="d-flex justify-content-center-center flex-column"
+                      className="d-flex justify-content-center flex-column"
                     >
                       <div className={`d-block fw-bold ${styles.lnk}`}>
                         Name : {notification.name}
@@ -107,6 +148,17 @@ const UsersList = ({ item, getUserList, dashboard }) => {
                       <span className="d-block fw-light text-secondary">
                         Address: {notification.address}
                       </span>
+                    </Col>
+                    <Col
+                      xs={1}
+                      className="d-flex justify-content-end align-items-center"
+                    >
+                      <div
+                        className={`d-block fw-bold ${styles.delete}`}
+                        onClick={() => setDeleteModal(notification._id)}
+                      >
+                        <BsTrash />
+                      </div>
                     </Col>
                   </Row>
                 ))}
@@ -175,4 +227,4 @@ const UsersList = ({ item, getUserList, dashboard }) => {
 const mapStateToProps = (state) => ({
   item: state.dashboard.clients,
 });
-export default connect(mapStateToProps, { getUserList })(UsersList);
+export default connect(mapStateToProps, { getUserList, deleteUser })(UsersList);

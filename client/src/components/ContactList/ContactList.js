@@ -2,21 +2,20 @@ import React, { useEffect } from "react";
 import { Card, Col, Container, Row, Spinner } from "react-bootstrap";
 import Moment from "react-moment";
 import { connect } from "react-redux";
-import styles from "./OrderList.module.scss";
+import styles from "./ContactList.module.scss";
 import { Link, useLocation } from "react-router-dom";
 import { AiOutlineLeft, AiOutlineRight } from "react-icons/ai";
-import { getRunningOrders } from "../../actions/Payment.acton";
+import { getContactList } from "../../actions/Payment.acton";
 import { BsArrowRight } from "react-icons/bs";
-import demoImg from "../../assets/logoSq.png";
 import { IMAGE_PATH } from "../../constants/URL";
 const queryString = require("query-string");
 
-const OrderList = ({ item, getRunningOrders }) => {
+const ContactList = ({ item, getContactList }) => {
   const location = useLocation();
   const parsed = queryString.parse(location.search);
   let page = parsed.page ? parseInt(parsed.page) : 1;
   useEffect(() => {
-    getRunningOrders(page);
+    getContactList(page);
   }, [parsed.page]);
 
   const getPages = (totalPage) => {
@@ -24,7 +23,7 @@ const OrderList = ({ item, getRunningOrders }) => {
     for (let i = 1; i <= totalPage; i++) {
       pages.push(
         <Link
-          to={`/orders?page=${parseInt(i)}`}
+          to={`/contact-list?page=${parseInt(i)}`}
           key={i}
           className={`${styles.link} ${
             (!parsed.page && i == 1) || parsed.page == i
@@ -58,22 +57,18 @@ const OrderList = ({ item, getRunningOrders }) => {
                 item.items &&
                 item.items.map((notification) => (
                   <Row className="mb-3 border-bottom pb-3">
-                    <Col xs={2}>
+                    <Col
+                      xs={3}
+                      className="d-flex align-items-center justify-content-center"
+                    >
                       <Row>
                         <Col
-                          md={7}
-                          className={`${styles.small} d-flex align-items-center flex-column`}
+                          md={9}
+                          className={`${styles.small} d-flex align-items-center flex-column justify-content-center`}
                         >
-                          <div className={styles.img_wrapper}>
-                            <img
-                              src={`${IMAGE_PATH}small/${notification.userId.image}`}
-                              alt=""
-                              className={styles.img}
-                            />
-                          </div>
-                          <span className="d-block text-center">
-                            {notification.userId.name}
-                          </span>
+                          <Moment format="dddd, MMMM DD YYYY">
+                            {notification.createdAt}
+                          </Moment>
                         </Col>
                         <Col
                           xs={3}
@@ -84,20 +79,15 @@ const OrderList = ({ item, getRunningOrders }) => {
                       </Row>
                     </Col>
                     <Col
-                      xs={5}
-                      className="d-flex justify-content-center-center flex-column"
+                      xs={4}
+                      className="d-flex justify-content-center flex-column"
                     >
                       <div className={`d-block fw-bold ${styles.lnk}`}>
-                        Address : {notification.address}
+                        Name : {notification.name}
                       </div>
                       <div className={`d-block ${styles.lnk}`}>
-                        Phone : {notification.phone}
+                        Email : {notification.email}
                       </div>
-                      <span className="d-block fw-light text-secondary">
-                        <Moment format="dddd, MMMM DD YYYY">
-                          {notification.createdAt}
-                        </Moment>
-                      </span>
                     </Col>
                     <Col xs={4}>
                       <Row>
@@ -112,20 +102,11 @@ const OrderList = ({ item, getRunningOrders }) => {
                           className="d-flex justify-content-center-center flex-column"
                         >
                           <div className={`d-block fw-bold ${styles.lnk}`}>
-                            Price : ${notification.price}
+                            Message :
                           </div>
-                          <div
-                            className={`d-block ${styles.lnk}`}
-                            style={{ textTransform: "capitalize" }}
-                          >
-                            Status : {notification.deleveryStatus}
+                          <div className={`d-block ${styles.lnk}`}>
+                            {notification.message}
                           </div>
-                          <Link
-                            to={`/dashboard/order/${notification.projectId}`}
-                            className={`${styles.lnk}`}
-                          >
-                            <BsArrowRight />
-                          </Link>
                         </Col>
                       </Row>
                     </Col>
@@ -141,7 +122,7 @@ const OrderList = ({ item, getRunningOrders }) => {
                 <div className="d-flex justify-content-end align-items-center">
                   {parsed.page > 1 ? (
                     <Link
-                      to={`/orders?page=${page - 1}`}
+                      to={`/contact-list?page=${page - 1}`}
                       className={`${styles.link} ${
                         parsed.page === 1 ? styles.disabled : ""
                       } ${styles.link_arrow}`}
@@ -164,7 +145,7 @@ const OrderList = ({ item, getRunningOrders }) => {
                     : null}
                   {item && item.pageCount && page < item.pageCount ? (
                     <Link
-                      to={`/orders?page=${page + 1}`}
+                      to={`/contact-list?page=${page + 1}`}
                       className={`${styles.link} ${styles.link_arrow} ${
                         styles.link_arrow
                       } ${
@@ -194,6 +175,6 @@ const OrderList = ({ item, getRunningOrders }) => {
   );
 };
 const mapStateToProps = (state) => ({
-  item: state.payment.running_orders,
+  item: state.payment.contact,
 });
-export default connect(mapStateToProps, { getRunningOrders })(OrderList);
+export default connect(mapStateToProps, { getContactList })(ContactList);

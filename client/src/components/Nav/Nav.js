@@ -44,9 +44,9 @@ const Nav = ({
         <Link to="/contact" className={styles.link}>
           Contact
         </Link>
-        <Link to="/about" className={styles.link}>
+        {/* <Link to="/about" className={styles.link}>
           About
-        </Link>
+        </Link> */}
       </div>
       <div
         className={`${styles.cart} d-flex justify-content-around align-items-around`}

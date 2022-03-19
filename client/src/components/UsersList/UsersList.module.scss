@@ -130,3 +130,18 @@ span.link:hover {
 .btn__grp {
   border: 1px solid var(--orange) !important;
 }
+
+.delete {
+  color: var(--danger);
+  font-size: 22px;
+  transition: 0.3s all ease-in-out;
+}
+.delete:hover {
+  color: var(--dark);
+  font-size: 22px;
+  cursor: pointer;
+  transition: 0.3s all ease-in-out;
+}
+.btn_modal:hover {
+  cursor: pointer !important;
+}

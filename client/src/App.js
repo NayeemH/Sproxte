@@ -46,6 +46,8 @@ import UploadStepImagePage from "./views/UploadStepImagePage/UploadStepImagePage
 import OrdersListPage from "./views/OrdersListPage/OrdersListPage";
 import CompletedOrdersListPage from "./views/CompletedOrdersListPage/CompletedOrdersListPage";
 import UserIepPage from "./views/UserIepPage/UserIepPage";
+import ContactListPage from "./views/ContactListPage/ContactListPage";
+import ReportsPage from "./views/ReportsPage/ReportsPage";
 
 function App({ getRefreshToken }) {
   useEffect(() => {
@@ -96,7 +98,9 @@ function App({ getRefreshToken }) {
                 path="dashboard/order/:id"
                 element={<ProjectDetailsPage />}
               />
+              <Route path="report" element={<ReportsPage />} />
               <Route path="add-iep" element={<AddUserPage />} />
+              <Route path="contact-list" element={<ContactListPage />} />
               <Route path="add-template" element={<AddTypePage />} />
               <Route path="add-category" element={<AddCategoryPage />} />
               <Route path="products" element={<ProductListPage />} />

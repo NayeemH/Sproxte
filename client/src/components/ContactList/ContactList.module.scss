@@ -1,5 +1,6 @@
 .line {
-  height: 80px !important;
+  min-height: 50px !important;
+  height: 100%;
   width: 4px !important;
   border-radius: 3px !important;
   background: linear-gradient(55deg, #ffe502 0%, #ffa602 100%) !important;
@@ -84,64 +85,4 @@ span.link:hover {
 
 .img {
   height: 45px !important;
-}
-
-.active_btn {
-  margin-left: 10px !important;
-  border-radius: 25px !important;
-  padding: 7px 20px !important;
-  background: none !important;
-  margin-left: 10px !important;
-  color: var(--orange) !important;
-  text-decoration: none !important;
-  border: 1px solid var(--orange) !important;
-  transition: 0.3s all ease-in-out;
-}
-
-.active_btn:hover {
-  background: none !important;
-  color: var(--dark) !important;
-  border: 1px solid var(--dark) !important;
-  transition: 0.3s all ease-in-out;
-}
-
-.btn {
-  margin-left: 10px !important;
-  border-radius: 25px !important;
-  padding: 7px 20px !important;
-  background: var(--orange) !important;
-  border: 1px solid var(--orange) !important;
-  text-decoration: none !important;
-  transition: 0.3s all ease-in-out;
-}
-
-.btn:hover {
-  background: var(--dark) !important;
-  border: 1px solid var(--dark) !important;
-  transition: 0.3s all ease-in-out;
-}
-
-.btn:focus,
-.active_btn:focus {
-  box-shadow: none !important;
-  border: 1px solid var(--orange) !important;
-}
-
-.btn__grp {
-  border: 1px solid var(--orange) !important;
-}
-
-.delete {
-  color: var(--danger);
-  font-size: 22px;
-  transition: 0.3s all ease-in-out;
-}
-.delete:hover {
-  color: var(--dark);
-  font-size: 22px;
-  cursor: pointer;
-  transition: 0.3s all ease-in-out;
-}
-.btn_modal:hover {
-  cursor: pointer !important;
 }

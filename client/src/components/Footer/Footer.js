@@ -33,14 +33,14 @@ const Footer = () => {
         </span>
       </div>
       <hr className="bg-light" />
-      <div
+      {/* <div
         className={`d-flex justify-content-around flex-column flex-md-row align-items-center pt-4 ${styles.list}`}
       >
         <Link to="/contact">CONTACT US</Link>
         <Link to="/payment-methods">PAYMENT METHODS</Link>
         <Link to="/policy">REFUND POLICY</Link>
         <Link to="/shipping">SHIPPING INFO</Link>
-      </div>
+      </div> */}
 
       <div className="text-center text-white pt-4">
         <span className="lead">

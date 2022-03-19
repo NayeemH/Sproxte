@@ -1,5 +1,6 @@
 import {
   GET_COMPLETED_ORDERS,
+  GET_CONTACT_LIST,
   GET_RUNNING_ORDERS,
   ORDER_SUCCESS,
   SET_KEY,
@@ -12,6 +13,7 @@ const initialValue = {
   id: "",
   running_orders: null,
   completed_orders: null,
+  contact: null,
   loading: true,
 };
 
@@ -46,6 +48,12 @@ const paymentReducer = (state = initialValue, action) => {
       return {
         ...state,
         completed_orders: payload,
+        loading: false,
+      };
+    case GET_CONTACT_LIST:
+      return {
+        ...state,
+        contact: payload,
         loading: false,
       };
     default:

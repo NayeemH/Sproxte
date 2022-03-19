@@ -8,59 +8,61 @@ import { IMAGE_PATH } from "../../constants/URL";
 import statusList from "../../config/StatusList";
 import { changeProjectStatus } from "../../actions/Payment.acton";
 
-const OrderDetails = ({ projects, id, data, changeProjectStatus }) => {
+const OrderDetails = ({ projects, id, data, changeProjectStatus, role }) => {
   const [status, setStatus] = useState("");
   return (
     <Container className={styles.wrapper}>
-      <div className="d-flex flex-column flex-md-row justify-content-between align-items-center">
-        <div
-          className={`${styles.active_btn}`}
-          style={{
-            textTransform: "capitalize",
-          }}
-        >
-          Current Status:{" "}
-          <span
-            className="fw-bold"
+      {role && (role === "admin" || role === "iep") && (
+        <div className="d-flex flex-column flex-md-row justify-content-between align-items-center">
+          <div
+            className={`${styles.active_btn}`}
             style={{
               textTransform: "capitalize",
             }}
           >
-            {data.status}
-          </span>
-        </div>
-        <div className="d-flex">
-          <Dropdown>
-            <Dropdown.Toggle
-              variant="success"
-              id="dropdown-basic"
-              className={`${styles.active_btn} mt-3 mt-md-0`}
+            Current Status:{" "}
+            <span
+              className="fw-bold"
+              style={{
+                textTransform: "capitalize",
+              }}
             >
-              {status === "" ? "Select Status" : status}
-            </Dropdown.Toggle>
+              {data.status}
+            </span>
+          </div>
+          <div className="d-flex">
+            <Dropdown>
+              <Dropdown.Toggle
+                variant="success"
+                id="dropdown-basic"
+                className={`${styles.active_btn} mt-3 mt-md-0`}
+              >
+                {status === "" ? "Select Status" : status}
+              </Dropdown.Toggle>
 
-            <Dropdown.Menu>
-              {statusList.map((item) => (
-                <Dropdown.Item
-                  key={item.id}
-                  onClick={() => setStatus(item.name)}
-                  style={{ textTransform: "capitalize" }}
-                >
-                  {item.name}
-                </Dropdown.Item>
-              ))}
-            </Dropdown.Menu>
-          </Dropdown>
-          {status === "" ? null : (
-            <Button
-              className={styles.btn}
-              onClick={() => changeProjectStatus(status, id) && setStatus("")}
-            >
-              Save
-            </Button>
-          )}
+              <Dropdown.Menu>
+                {statusList.map((item) => (
+                  <Dropdown.Item
+                    key={item.id}
+                    onClick={() => setStatus(item.name)}
+                    style={{ textTransform: "capitalize" }}
+                  >
+                    {item.name}
+                  </Dropdown.Item>
+                ))}
+              </Dropdown.Menu>
+            </Dropdown>
+            {status === "" ? null : (
+              <Button
+                className={styles.btn}
+                onClick={() => changeProjectStatus(status, id) && setStatus("")}
+              >
+                Save
+              </Button>
+            )}
+          </div>
         </div>
-      </div>
+      )}
 
       <Row>
         {projects.products &&
@@ -91,6 +93,7 @@ const OrderDetails = ({ projects, id, data, changeProjectStatus }) => {
 
 const mapStateToProps = (state) => ({
   projects: state.project.selected_project,
+  role: state.auth.user.userType,
 });
 
 export default connect(mapStateToProps, {
