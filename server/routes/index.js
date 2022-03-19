@@ -17,6 +17,7 @@ const search = require('./search');
 const order = require('./order');
 const payment = require('./payment');
 const notification = require('./notification');
+const contactUs = require('./ContactUs');
 
 // User Register and login function 
 router.use('/auth', user);
@@ -59,6 +60,9 @@ router.use('/profile', isAuth, profile);
 
 // Notification
 router.use('/notification', isAuth, notification);
+
+// Contact us
+router.use('/contact', contactUs);
 
 
 

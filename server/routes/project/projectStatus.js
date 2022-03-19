@@ -13,8 +13,9 @@ router.patch('/:id', async (req, res, next) => {
 
 
         if(userType === 'admin' || userType === 'iep') {
-
-            const project = await Project.findOneAndUpdate({_id: id}, {$set: {status}});
+            let active = true;
+            if(status === 'delivered') active = false;
+            const project = await Project.findOneAndUpdate({_id: id}, {$set: {status, active}});
             await Order.findOneAndUpdate({projectId: id}, {$set: {deleveryStatus: status}});
 
             // Send notification
