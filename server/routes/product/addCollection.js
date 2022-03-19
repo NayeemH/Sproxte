@@ -43,7 +43,7 @@ router.post('/:id', fileFetch.single('image'), async (req, res, next) => {
 
         userIds.push(product.userId.toString());
         
-        await sendNotification('Uploaded new preview file for you', users, product.projectId, product._id);
+        await sendNotification('Uploaded new preview file for you', userIds, product.projectId, product._id);
         
         res.json({
             message: 'Collection is added successfully',

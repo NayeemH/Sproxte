@@ -23,8 +23,8 @@ router.patch('/:id', async (req, res, next) => {
             const userIds = users.map(({_id}) => _id.toString());
 
             userIds.push(project.userId.toString());
-            
-            await sendNotification('Project status changed', users, project._id);
+
+            await sendNotification('Project status changed', userIds, project._id);
         }
         else {
             throw Error('You are not authorized');

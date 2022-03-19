@@ -33,7 +33,7 @@ router.patch('/:id', async (req, res, next) => {
 
         userIds.push(product.userId.toString());
         
-        await sendNotification('New feedback is updated', users, product.projectId, product._id);
+        await sendNotification('New feedback is updated', userIds, product.projectId, product._id);
         
 
         res.json({
