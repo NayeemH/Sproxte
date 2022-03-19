@@ -30,7 +30,7 @@ const UploadStepForm = ({ uploadStep }) => {
       let check = await uploadStep(values, selectedFile, stepId, projectId);
       if (check === true) {
         setIsLoading(false);
-        navigate(`/project/${projectId}`);
+        navigate(`/dashboard/${projectId}/${stepId}`);
       }
       setIsLoading(false);
     } else {
@@ -70,19 +70,15 @@ const UploadStepForm = ({ uploadStep }) => {
   let initVals = {
     title: "",
     image: "",
-    type: "static",
-    description: "",
   };
 
   const SignupSchema = Yup.object().shape({
     title: Yup.string().required("Title is required!"),
     image: Yup.string().nullable(),
-    type: Yup.string().required("Type is required!"),
-    description: Yup.string().required("Description is required!"),
   });
   return (
     <div className={styles.wrapper}>
-      <Card bg="dark" text="light" className={styles.crd}>
+      <Card bg="white" text="dark" className={`${styles.crd} shadow`}>
         <Card.Header className="d-flex justify-content-center align-items-center">
           <span className={styles.heading}>Upload Image</span>
         </Card.Header>
@@ -113,47 +109,7 @@ const UploadStepForm = ({ uploadStep }) => {
                     isInvalid={errors.title && touched.title}
                   />
                 </InputGroup>
-                <InputGroup className="mb-3 d-flex flex-column">
-                  <div className="d-flex justify-content-between align-items-center pb-2">
-                    <label htmlFor="description" className="d-block">
-                      Description
-                    </label>
-                    {errors.description && touched.description ? (
-                      <small className="text-danger pt-2">
-                        {errors.description}
-                      </small>
-                    ) : null}
-                  </div>
-                  <Field
-                    as={BootstrapForm.Control}
-                    placeholder="Type project description"
-                    name="description"
-                    isValid={!errors.description && touched.description}
-                    type="text"
-                    className={`${styles.input} w-100`}
-                    isInvalid={errors.description && touched.description}
-                  />
-                </InputGroup>
-                <InputGroup className="mb-3 d-flex flex-column">
-                  <div className="d-flex justify-content-between align-items-center">
-                    <label htmlFor="type" className="d-block">
-                      Image Type
-                    </label>
-                    {errors.type && touched.type ? (
-                      <small className="text-danger">{errors.type}</small>
-                    ) : null}
-                  </div>
 
-                  <Field
-                    as={BootstrapForm.Select}
-                    placeholder="Select Type of Image"
-                    name="type"
-                    className={` form-control w-100`}
-                  >
-                    <option value="static">Static</option>
-                    <option value="3d">360</option>
-                  </Field>
-                </InputGroup>
                 <div className="">
                   <div className={styles.preview}>
                     {selectedFile ? (
@@ -168,13 +124,13 @@ const UploadStepForm = ({ uploadStep }) => {
                       <></>
                     )}
                   </div>
-                  <div className="d-flex justify-content-between align-items-center">
+                  <div className="d-flex justify-content-between align-items-center pt-3">
                     {" "}
                     <label htmlFor="image" className="d-block">
                       Image
                     </label>
                     <Button
-                      variant="outline-light"
+                      variant="outline-dark"
                       onClick={() => fileRef.current.click()}
                     >
                       <span className="d-block mr-4">
@@ -197,7 +153,7 @@ const UploadStepForm = ({ uploadStep }) => {
                   <Button
                     variant="primary"
                     type="submit"
-                    className={styles.btn}
+                    className="btn_primary"
                     disabled={isLoading}
                   >
                     {isLoading ? "Loading..." : "Upload Image"}
@@ -206,7 +162,7 @@ const UploadStepForm = ({ uploadStep }) => {
                     variant="primary"
                     type="reset"
                     onClick={resetlHandeler}
-                    className={`${styles.btn_cancel} mx-3`}
+                    className={`btn_primary mx-3`}
                   >
                     Cancel
                   </Button>

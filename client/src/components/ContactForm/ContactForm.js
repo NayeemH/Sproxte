@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Field, Formik, Form } from "formik";
 import {
   Button,
@@ -8,12 +8,23 @@ import {
 } from "react-bootstrap";
 import * as Yup from "yup";
 import styles from "./ContactForm.module.scss";
+import { contactFormSubmit } from "../../actions/Payment.acton";
+import { connect } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
-const ContactForm = () => {
+const ContactForm = ({ contactFormSubmit }) => {
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
   const onSubmitHandeler = async (values) => {
+    setLoading(true);
     // TODO ::: create account action
-    let check = true;
-    console.log(values);
+    let check = await contactFormSubmit(values);
+    if (check) {
+      setLoading(false);
+      navigate("/");
+    } else {
+      setLoading(false);
+    }
   };
   let initVals = {
     username: "",
@@ -22,7 +33,7 @@ const ContactForm = () => {
   };
 
   const SignupSchema = Yup.object().shape({
-    username: Yup.string().required("Username is required!"),
+    username: Yup.string().required("Name is required!"),
     email: Yup.string()
       .matches(
         /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
@@ -113,8 +124,9 @@ const ContactForm = () => {
                     variant="primary"
                     type="submit"
                     className={styles.btn}
+                    disabled={loading}
                   >
-                    Send Message
+                    {loading ? "Loading..." : "Send Message"}
                   </Button>
                 </div>
               </Form>
@@ -126,4 +138,4 @@ const ContactForm = () => {
   );
 };
 
-export default ContactForm;
+export default connect(null, { contactFormSubmit })(ContactForm);

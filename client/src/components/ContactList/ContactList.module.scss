@@ -1,0 +1,88 @@
+.line {
+  min-height: 50px !important;
+  height: 100%;
+  width: 4px !important;
+  border-radius: 3px !important;
+  background: linear-gradient(55deg, #ffe502 0%, #ffa602 100%) !important;
+}
+
+.small {
+  font-size: 14px !important;
+}
+
+.lnk {
+  text-decoration: none !important;
+  color: var(--dark) !important;
+  transition: 0.3s all ease-in-out;
+}
+
+.lnk:hover {
+  color: var(--orange) !important;
+  transition: 0.3s all ease-in-out;
+}
+
+.link {
+  text-decoration: none;
+  width: 45px !important;
+  height: 45px !important;
+  border-radius: 50% !important;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid var(--orange);
+  cursor: pointer;
+  color: var(--dark) !important;
+  transition: 0.3s all ease-in-out;
+  margin: 0 2px !important;
+}
+
+.link.link_arrow {
+  border: 1px solid var(--light) !important;
+}
+.link.link_arrow.disabled {
+  border: 1px solid var(--light) !important;
+}
+
+.link.disabled {
+  cursor: none !important;
+  color: var(--grey) !important;
+  border-color: var(--dark) !important;
+  transition: 0.3s all ease-in-out;
+}
+.link.active {
+  cursor: none !important;
+  color: var(--dark) !important;
+  background: var(--orange) !important;
+  border-color: var(--orange) !important;
+  transition: 0.3s all ease-in-out;
+}
+
+.link:hover {
+  color: var(--orange) !important;
+  transition: 0.3s all ease-in-out;
+}
+
+span.link:hover {
+  color: var(--grey) !important;
+  transition: 0.3s all ease-in-out;
+}
+
+.link.disabled:hover {
+  cursor: default !important;
+  color: var(--grey) !important;
+  transition: 0.3s all ease-in-out;
+}
+
+.img_wrapper {
+  width: 45px !important;
+  height: 45px !important;
+  border-radius: 50% !important;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.img {
+  height: 45px !important;
+}

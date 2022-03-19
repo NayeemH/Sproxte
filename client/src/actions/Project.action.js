@@ -5,6 +5,8 @@ import {
   ADD_COLLECTION_ERROR,
   ADD_COLLECTION_SUCCESS,
   ADD_FAVORITE_PROJECT,
+  APPROVED_PROJECT_LOAD,
+  APPROVED_PROJECT_LOAD_ERROR,
   COLLECTION_INDEX,
   COLLECTION_NEXT,
   COLLECTION_PREV,
@@ -68,8 +70,7 @@ export const getProjectDetails = (id) => async (dispatch) => {
 // SEND INVITATION LINK TO PROJECT
 export const sendInvitation = (values) => async (dispatch) => {
   let formData = {
-    projectId: values.project,
-    userType: values.role,
+    name: values.name,
     email: values.email,
   };
 
@@ -82,7 +83,7 @@ export const sendInvitation = (values) => async (dispatch) => {
   try {
     // TODO ::: API CALL
     const res = await axios.post(
-      `${BASE_URL}/api/admin/sendLoginMail`,
+      `${BASE_URL}/api/v1/admin/createIEP`,
       JSON.stringify(formData),
       config
     );
@@ -91,13 +92,14 @@ export const sendInvitation = (values) => async (dispatch) => {
       dispatch({
         type: PROJECT_INVITATION_SUCCESS,
       });
-      toast.success("Invitation sent successfully");
+      toast.success("IEP added successfully");
+      return res.data.password;
     }
   } catch (err) {
     dispatch({
       type: PROJECT_INVITATION_ERROR,
     });
-    err.response.data.msg.map((msg) => toast.error(msg));
+    return false;
   }
 };
 
@@ -504,7 +506,7 @@ export const fetchProjects = (page) => async (dispatch) => {
   try {
     // TODO ::: API CALL
     const res = await axios.get(
-      `${BASE_URL}/api/v1/project/active?page=${page}&limit=2`,
+      `${BASE_URL}/api/v1/project/active?page=${page}&limit=12`,
       config
     );
     if (res.status === 200) {
@@ -516,6 +518,33 @@ export const fetchProjects = (page) => async (dispatch) => {
   } catch (err) {
     dispatch({
       type: FETCH_DASHBOARD_PROJECT_ERROR,
+    });
+  }
+};
+
+// FETCH PROJECTS FOR DASHBOARD
+export const fetchCompletedProjects = (page) => async (dispatch) => {
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+    },
+    withCredentials: true,
+  };
+  try {
+    // TODO ::: API CALL
+    const res = await axios.get(
+      `${BASE_URL}/api/v1/project/completed?page=${page}&limit=12`,
+      config
+    );
+    if (res.status === 200) {
+      dispatch({
+        type: APPROVED_PROJECT_LOAD,
+        payload: res.data.projects,
+      });
+    }
+  } catch (err) {
+    dispatch({
+      type: APPROVED_PROJECT_LOAD_ERROR,
     });
   }
 };
@@ -625,8 +654,6 @@ export const uploadStep = (values, file, id, projectId) => async (dispatch) => {
   let formData = new FormData();
 
   formData.append("title", values.title);
-  formData.append("description", values.description);
-  formData.append("imageType", values.type);
   formData.append("image", file);
 
   const config = {
@@ -638,7 +665,7 @@ export const uploadStep = (values, file, id, projectId) => async (dispatch) => {
   try {
     // TODO ::: API CALL
     const res = await axios.post(
-      `${BASE_URL}/api/project/collection/${id}`,
+      `${BASE_URL}/api/v1/product/collection/${id}`,
       formData,
       config
     );
@@ -655,7 +682,7 @@ export const uploadStep = (values, file, id, projectId) => async (dispatch) => {
     dispatch({
       type: ADD_COLLECTION_ERROR,
     });
-    err.response.data.msg.map((msg) => toast.error(msg));
+    console.log(err);
     return false;
   }
 
@@ -691,19 +718,20 @@ export const approveStep = (id, projectId) => async (dispatch) => {
   };
   try {
     // TODO ::: API CALL
-    await axios.post(`${BASE_URL}/api/project/stepApprove/${id}`, {}, config);
+    await axios.patch(`${BASE_URL}/api/v1/product/approve/${id}`, {}, config);
     // console.log(res);
     dispatch({
       type: STEP_APPROVED,
     });
     dispatch(getProjectDetails(projectId));
+    dispatch(getProductDetails(id));
     toast.success("Step Approved successfully");
     return true;
   } catch (err) {
     dispatch({
       type: STEP_APPROVE_ERROR,
     });
-    err.response.data.msg.map((msg) => toast.error(msg));
+    console.log(err);
     return false;
   }
 };

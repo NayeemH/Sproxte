@@ -1,6 +1,17 @@
 import axios from "axios";
 import { toast } from "react-toastify";
+import { CLIENT_LIST_LOAD, DEVELOPER_LIST_LOAD } from "../constants/Type";
 import {
+  CHANGE_STATUS,
+  CHANGE_STATUS_ERROR,
+  CONTACT_SUBMIT,
+  CONTACT_SUBMIT_ERROR,
+  GET_COMPLETED_ORDERS,
+  GET_COMPLETED_ORDERS_ERROR,
+  GET_CONTACT_LIST,
+  GET_REPORT_DATA,
+  GET_RUNNING_ORDERS,
+  GET_RUNNING_ORDERS_ERROR,
   ORDER_ERROR,
   ORDER_SUCCESS,
   PAYMENT_ERROR,
@@ -8,6 +19,7 @@ import {
   SET_TOKEN,
 } from "../constants/TypeLanding";
 import { BASE_URL } from "../constants/URL";
+import { getProjectDetails } from "./Project.action";
 
 export const setPaymentKey = () => async (dispatch) => {
   try {
@@ -131,6 +143,197 @@ export const createOrder = (address, phone, cart) => async (dispatch) => {
   } catch (err) {
     dispatch({ type: ORDER_ERROR });
     console.log(err);
+    return false;
+  }
+};
+
+//GET RUNNING ORDERS
+export const getRunningOrders = (page) => async (dispatch) => {
+  try {
+    const res = await axios.get(
+      `${BASE_URL}/api/v1/order/active?page=${page}&limit=12`
+    );
+    //console.log(res);
+
+    dispatch({
+      type: GET_RUNNING_ORDERS,
+      payload: res.data.orders,
+    });
+    //console.log(res);
+  } catch (err) {
+    dispatch({
+      type: GET_RUNNING_ORDERS_ERROR,
+    });
+    console.log(err);
+  }
+};
+
+//GET COMPLETED ORDERS
+export const getCompletedOrders = (page) => async (dispatch) => {
+  try {
+    const res = await axios.get(
+      `${BASE_URL}/api/v1/order/completed?page=${page}&limit=12`
+    );
+    //console.log(res);
+
+    dispatch({
+      type: GET_COMPLETED_ORDERS,
+      payload: res.data.orders,
+    });
+    //console.log(res);
+  } catch (err) {
+    dispatch({
+      type: GET_COMPLETED_ORDERS_ERROR,
+    });
+    console.log(err);
+  }
+};
+
+// CHANGE STATUS
+export const changeProjectStatus = (status, id) => async (dispatch) => {
+  let formData = {
+    status: status,
+  };
+
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+    },
+    withCredentials: true,
+  };
+  try {
+    // TODO ::: API CALL
+    const res = await axios.patch(
+      `${BASE_URL}/api/v1/project/status/${id}`,
+      JSON.stringify(formData),
+      config
+    );
+    // console.log(res);
+    if (res.status === 200) {
+      dispatch({
+        type: CHANGE_STATUS,
+      });
+      toast.success("Status changed successfully");
+      dispatch(getProjectDetails(id));
+    }
+  } catch (err) {
+    dispatch({
+      type: CHANGE_STATUS_ERROR,
+    });
+  }
+};
+
+//GET USERS
+export const getUserList = (page) => async (dispatch) => {
+  try {
+    const config = {
+      withCredentials: true,
+    };
+    const res = await axios.get(
+      `${BASE_URL}/api/v1/admin/user?page=${page}&limit=12`,
+      config
+    );
+    console.log(res);
+
+    dispatch({
+      type: CLIENT_LIST_LOAD,
+      payload: res.data.users,
+    });
+    //console.log(res);
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+//GET IEP
+export const getIepList = (page) => async (dispatch) => {
+  try {
+    const config = {
+      withCredentials: true,
+    };
+    const res = await axios.get(
+      `${BASE_URL}/api/v1/admin/iep?page=${page}&limit=12`,
+      config
+    );
+    console.log(res);
+
+    dispatch({
+      type: DEVELOPER_LIST_LOAD,
+      payload: res.data.users,
+    });
+    //console.log(res);
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+//GET CONTACT LIST
+export const getContactList = (page) => async (dispatch) => {
+  try {
+    const res = await axios.get(
+      `${BASE_URL}/api/v1/contact/?page=${page}&limit=10`
+    );
+    //console.log(res);
+
+    dispatch({
+      type: GET_CONTACT_LIST,
+      payload: res.data.contact,
+    });
+    //console.log(res);
+  } catch (err) {
+    console.log(err);
+  }
+};
+//GET REPORT DATA
+export const getReportData = () => async (dispatch) => {
+  try {
+    const res = await axios.get(`${BASE_URL}/api/v1/admin/dashboard`);
+    //console.log(res);
+
+    dispatch({
+      type: GET_REPORT_DATA,
+      payload: res.data.data,
+    });
+    //console.log(res);
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+// CONTACT SUBMITTION
+export const contactFormSubmit = (values) => async (dispatch) => {
+  let formData = {
+    name: values.username,
+    email: values.email,
+    message: values.message,
+  };
+
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+    },
+    withCredentials: true,
+  };
+  try {
+    // TODO ::: API CALL
+    const res = await axios.post(
+      `${BASE_URL}/api/v1/contact/`,
+      JSON.stringify(formData),
+      config
+    );
+    // console.log(res);
+    if (res.status === 200) {
+      dispatch({
+        type: CONTACT_SUBMIT,
+      });
+      toast.success("Form submitted successfully");
+      return true;
+    }
+  } catch (err) {
+    dispatch({
+      type: CONTACT_SUBMIT_ERROR,
+    });
+
     return false;
   }
 };

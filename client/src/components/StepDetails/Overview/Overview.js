@@ -2,11 +2,7 @@ import React, { useState } from "react";
 import { Button, Col, Form, Modal } from "react-bootstrap";
 import { connect } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import {
-  approveStep,
-  editReview,
-  postReview,
-} from "../../../actions/Project.action";
+import { editReview, postReview } from "../../../actions/Project.action";
 import { IMAGE_PATH } from "../../../constants/URL";
 import { FaTimes } from "react-icons/fa";
 import { MdModeEdit } from "react-icons/md";
@@ -23,7 +19,6 @@ const Overview = ({
   collection,
   selectedStep,
   selectedProject,
-  final,
   isModalOpen,
   feedbackActive,
   setFeedbackActive,
@@ -40,7 +35,6 @@ const Overview = ({
   hoverFB,
   setHoverFB,
   currentIndex,
-  removeHotSpot,
 }) => {
   const navigate = useNavigate();
   const [message, setMessage] = useState("");
@@ -227,7 +221,7 @@ const Overview = ({
           </div>
         </Modal.Body>
       </Modal>
-      {(role === "admin" || role === "manager" || role === "developer") &&
+      {(role === "admin" || role === "iep") &&
         selectedStep.finalImage === null && (
           <Button onClick={handleClick} className={styles.btn}>
             Upload Task Image
@@ -239,69 +233,70 @@ const Overview = ({
             {currentIndex + 1}. {collection.title}
           </h5>
           {/* <p className={styles.desc}>{collection.description}</p> */}
-          {final && (
-            <>
-              {selectedStep.status === "pending" && feedbackActive ? (
+
+          <>
+            {(selectedStep.status === "pending" ||
+              selectedStep.status === "working") &&
+              feedbackActive && (
                 <div className="">
                   <span className="fw-bold d-block text-dark">
                     Click on the image to add feedback
                   </span>
                 </div>
-              ) : (
-                (!selectedStep.status || selectedStep.status === "pending") && (
-                  <Button
-                    onClick={() => handleClickFeedback()}
-                    className={`btn_primary`}
-                  >
-                    <AiOutlinePlus className=" fs-6" /> New Feedback
-                  </Button>
-                )
               )}
+            {(selectedStep.status === "pending" ||
+              selectedStep.status === "working") && (
+              <Button
+                onClick={() => handleClickFeedback()}
+                className={`btn_primary`}
+              >
+                <AiOutlinePlus className=" fs-6" /> New Feedback
+              </Button>
+            )}
 
-              {points !== null &&
-                collection._id === points.stepId &&
-                showForm === true && (
-                  <div className={styles.form}>
-                    <Form onSubmit={(e) => modalHandeler(e)}>
-                      <Form.Group controlId="exampleForm.ControlTextarea1">
-                        <Form.Control
-                          as="textarea"
-                          rows="3"
-                          placeholder="Add your feedback"
-                          className={styles.textarea}
-                          value={message}
-                          onChange={(e) => setMessage(e.target.value)}
-                        />
-                        <div className="pt-2">
+            {points !== null &&
+              collection._id === points.stepId &&
+              showForm === true && (
+                <div className={styles.form}>
+                  <Form onSubmit={(e) => modalHandeler(e)}>
+                    <Form.Group controlId="exampleForm.ControlTextarea1">
+                      <Form.Control
+                        as="textarea"
+                        rows="3"
+                        placeholder="Add your feedback"
+                        className={styles.textarea}
+                        value={message}
+                        onChange={(e) => setMessage(e.target.value)}
+                      />
+                      <div className="pt-2">
+                        <Button
+                          type="submit"
+                          disabled={messageLoading}
+                          variant="primary"
+                          className={`w-100 mb-2 btn_primary`}
+                        >
+                          {messageLoading ? "Loading..." : "Submit"}
+                        </Button>
+                        {!messageLoading && (
                           <Button
-                            type="submit"
-                            disabled={messageLoading}
+                            type="reset"
+                            onClick={cancelHandeler}
                             variant="primary"
                             className={`w-100 mb-2 btn_primary`}
                           >
-                            {messageLoading ? "Loading..." : "Submit"}
+                            Cancel
                           </Button>
-                          {!messageLoading && (
-                            <Button
-                              type="reset"
-                              onClick={cancelHandeler}
-                              variant="primary"
-                              className={`w-100 mb-2 btn_primary`}
-                            >
-                              Cancel
-                            </Button>
-                          )}
-                        </div>
-                      </Form.Group>
-                    </Form>
-                  </div>
-                )}
-            </>
-          )}
+                        )}
+                      </div>
+                    </Form.Group>
+                  </Form>
+                </div>
+              )}
+          </>
 
           {collection.feedbacks.length > 0 && (
             <div className={styles.fb_wrapper}>
-              <h5>Feedbacks</h5>
+              <h5 className="text-dark">Feedbacks</h5>
               {collection.feedbacks.map((item, i) => (
                 <div
                   key={i}
@@ -336,20 +331,22 @@ const Overview = ({
                       </Moment>
                     </span>
                   </div>
-                  <div className={styles.actions}>
-                    <span
-                      className={styles.delete}
-                      onClick={() => deleteFeedbackHandeler(item._id)}
-                    >
-                      <FaTimes />
-                    </span>
-                    <span
-                      className={styles.edit}
-                      onClick={() => toogleEditModalVisibility(item)}
-                    >
-                      <MdModeEdit />
-                    </span>
-                  </div>
+                  {selectedStep.status !== "approved" && (
+                    <div className={styles.actions}>
+                      <span
+                        className={styles.delete}
+                        onClick={() => deleteFeedbackHandeler(item._id)}
+                      >
+                        <FaTimes />
+                      </span>
+                      <span
+                        className={styles.edit}
+                        onClick={() => toogleEditModalVisibility(item)}
+                      >
+                        <MdModeEdit />
+                      </span>
+                    </div>
+                  )}
                 </div>
               ))}
             </div>
@@ -370,7 +367,6 @@ const mapStateToProps = (state) => ({
 });
 
 export default connect(mapStateToProps, {
-  approveStep,
   postReview,
   deleteComment,
   toogleEditModalVisibility,

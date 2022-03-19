@@ -42,6 +42,12 @@ import FileUploadPageReady from "./views/FileUploadPageReady/FileUploadPageReady
 import StepDetailsPage from "./views/StepDetailsPage/StepDetailsPage";
 import ProjectDetailsPage from "./views/ProjectDetailsPage/ProjectDetailsPage";
 import NotificationPage from "./views/NotificationPage/NotificationPage";
+import UploadStepImagePage from "./views/UploadStepImagePage/UploadStepImagePage";
+import OrdersListPage from "./views/OrdersListPage/OrdersListPage";
+import CompletedOrdersListPage from "./views/CompletedOrdersListPage/CompletedOrdersListPage";
+import UserIepPage from "./views/UserIepPage/UserIepPage";
+import ContactListPage from "./views/ContactListPage/ContactListPage";
+import ReportsPage from "./views/ReportsPage/ReportsPage";
 
 function App({ getRefreshToken }) {
   useEffect(() => {
@@ -73,16 +79,28 @@ function App({ getRefreshToken }) {
 
           <Route path="/*" element={<PrivateOutlet />}>
             <>
+              <Route path="users" element={<UserIepPage />} />
+              <Route path="users/iep" element={<UserIepPage iep />} />
               <Route path="dashboard" element={<DashboardPage />} />
+              <Route
+                path="dashboard/completed"
+                element={<DashboardPage completed={true} />}
+              />
               <Route
                 path="dashboard/:projectId/:stepId"
                 element={<StepDetailsPage />}
               />
               <Route
+                path="dashboard/:projectId/:stepId/upload"
+                element={<UploadStepImagePage />}
+              />
+              <Route
                 path="dashboard/order/:id"
                 element={<ProjectDetailsPage />}
               />
+              <Route path="report" element={<ReportsPage />} />
               <Route path="add-iep" element={<AddUserPage />} />
+              <Route path="contact-list" element={<ContactListPage />} />
               <Route path="add-template" element={<AddTypePage />} />
               <Route path="add-category" element={<AddCategoryPage />} />
               <Route path="products" element={<ProductListPage />} />
@@ -91,6 +109,11 @@ function App({ getRefreshToken }) {
               <Route path="category/edit/:id" element={<EditCategoryPage />} />
               <Route path="product/edit/:id" element={<EditProductPage />} />
               <Route path="templates" element={<TypeListPage />} />
+              <Route path="orders" element={<OrdersListPage />} />
+              <Route
+                path="compeleted-orders"
+                element={<CompletedOrdersListPage />}
+              />
               <Route path="category" element={<CategoryListPage />} />
               <Route path="settings" element={<SettingsPage />} />
               <Route path="notification" element={<NotificationPage />} />

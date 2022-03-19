@@ -3,6 +3,7 @@
   justify-content: center;
   align-items: center;
   height: calc(100vh - 150px);
+  position: relative;
 }
 
 .heading {
@@ -16,6 +17,8 @@
 
 .crd {
   width: 30rem;
+  border-radius: 15px !important;
+  overflow: hidden !important;
   background: var(--white) !important;
   border: 1px solid var(--white) !important;
 }

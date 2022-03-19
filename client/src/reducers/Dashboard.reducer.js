@@ -8,14 +8,16 @@ import {
   LOGOUT_SUCCESS,
   LOGOUT_FAIL,
 } from "../constants/Type";
+import { DELETE_USER, GET_REPORT_DATA } from "../constants/TypeLanding";
 
 const initialState = {
   projectListGrid: "grid",
   sidebar_visible: false,
   loading: true,
   role: "",
-  list: [],
-  clients: [],
+  list: null,
+  clients: null,
+  report: null,
 };
 
 const dashboardReducer = (state = initialState, action) => {
@@ -43,14 +45,20 @@ const dashboardReducer = (state = initialState, action) => {
     case DEVELOPER_LIST_LOAD:
       return {
         ...state,
-        list: [...payload],
+        list: payload,
         loading: false,
       };
+    case GET_REPORT_DATA:
+      return {
+        ...state,
+        report: payload,
+        loading: false,
+      };
+
     case CLIENT_LIST_LOAD:
       return {
         ...state,
-        clients: [...payload],
-        list: [...payload],
+        clients: payload,
         loading: false,
       };
     case LOGOUT_SUCCESS:

@@ -7,12 +7,14 @@ import {
   ACCESS_TOKEN_ERROR,
   AUTH_USER_LOAD,
 } from "../constants/Type";
+import { GET_NOTIFICATIONS } from "../constants/TypeLanding";
 
 const initialState = {
   token: "",
   isAuthenticated: false,
   user: null,
   loading: true,
+  notifications: null,
 };
 
 const authReducer = (state = initialState, action) => {
@@ -54,6 +56,12 @@ const authReducer = (state = initialState, action) => {
       return {
         ...state,
         user: action.payload,
+        loading: false,
+      };
+    case GET_NOTIFICATIONS:
+      return {
+        ...state,
+        notifications: action.payload,
         loading: false,
       };
     default:

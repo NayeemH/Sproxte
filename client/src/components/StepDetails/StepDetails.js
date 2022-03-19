@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Button, Card, Col, Row, Spinner } from "react-bootstrap";
 import { connect } from "react-redux";
-import { useParams } from "react-router-dom";
-import { getStepDetails } from "../../actions/Project.action";
+import { Link, useParams } from "react-router-dom";
+import { approveStep, getStepDetails } from "../../actions/Project.action";
 import colors from "../../config/Colors";
 import { IMAGE_PATH } from "../../constants/URL";
 import Overview from "./Overview/Overview";
@@ -16,6 +16,7 @@ const StepDetails = ({
   loading,
   selectedCollectionIndex,
   role,
+  approveStep,
 }) => {
   const { stepId, projectId } = useParams();
 
@@ -39,16 +40,32 @@ const StepDetails = ({
         </div>
       ) : (
         <Row>
-          <Col xs={12}>
-            <Button
-              variant="primary"
-              type="reset"
-              onClick={() => console.log("Approve")}
-              className={`${styles.btn} mx-md-3 mx-0`}
-            >
-              Approve
-            </Button>
-          </Col>
+          {step.status !== "delivered" ? (
+            <Col xs={12} className={`d-flex align-items-center pb-3`}>
+              {step.status !== "approved" ? (
+                <>
+                  <Button
+                    variant="primary"
+                    type="reset"
+                    onClick={() => approveStep(stepId, projectId)}
+                    className={`${styles.btn} mx-md-3 mx-0`}
+                  >
+                    Approve
+                  </Button>
+
+                  {role === "admin" || role === "iep" ? (
+                    <Link
+                      to={`/dashboard/${projectId}/${stepId}/upload`}
+                      variant="primary"
+                      className={`${styles.btn} text-decoration-none `}
+                    >
+                      Upload New Image
+                    </Link>
+                  ) : null}
+                </>
+              ) : null}
+            </Col>
+          ) : null}
           <Col md={role === "admin" || role === "iep" ? 8 : 12}>
             <Row>
               {selectedCollectionIndex >= 0 && (
@@ -94,8 +111,14 @@ const StepDetails = ({
                 <h4>Order Details</h4>
                 <img
                   src={`${IMAGE_PATH}small/${step.colorImage}`}
-                  className="w-100"
+                  className={`${styles.images} w-100`}
                   alt=""
+                  onClick={() =>
+                    saveAs(
+                      `${IMAGE_PATH}small/${step.colorImage}`,
+                      `${step.name} - Template`
+                    )
+                  }
                 />
                 <hr />
                 <Row className="">
@@ -160,6 +183,12 @@ const StepDetails = ({
                         <img
                           src={`${IMAGE_PATH}small/${step.layoutImage}`}
                           className={`${styles.images} w-100`}
+                          onClick={() =>
+                            saveAs(
+                              `${IMAGE_PATH}small/${step.layoutImage}`,
+                              `${step.name} - Layout`
+                            )
+                          }
                         />
                       </Col>
                       {step.primaryText && (
@@ -253,4 +282,6 @@ const mapStateToProps = (state) => ({
   loading: state.project.loading,
 });
 
-export default connect(mapStateToProps, { getStepDetails })(StepDetails);
+export default connect(mapStateToProps, { getStepDetails, approveStep })(
+  StepDetails
+);

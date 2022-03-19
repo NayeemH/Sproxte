@@ -21,8 +21,10 @@ import {
   SET_ROLE,
   SIDEBAR_TOGGLE,
 } from "../constants/Type";
+import { DELETE_USER, DELETE_USER_ERROR } from "../constants/TypeLanding";
 import { BASE_URL, PROTOCOL } from "../constants/URL";
 import setAuthToken from "../utils/setAuthToken";
+import { getIepList } from "./Payment.acton";
 
 // PROJECT DISPLAY STYLE ACTION
 export const toogleDashboardProjectStyle = (type) => (dispatch) => {
@@ -277,9 +279,6 @@ export const getManagerList = () => async (dispatch) => {
 // FETCH PROJECTS FOR DASHBOARD
 export const fetchApprovedProject = () => async (dispatch) => {
   const config = {
-    headers: {
-      "Content-Type": "application/json",
-    },
     withCredentials: true,
   };
   try {
@@ -295,5 +294,34 @@ export const fetchApprovedProject = () => async (dispatch) => {
     dispatch({
       type: APPROVED_PROJECT_LOAD_ERROR,
     });
+  }
+};
+
+// DELETE USER
+export const deleteUser = (id) => async (dispatch) => {
+  const config = {
+    withCredentials: true,
+  };
+
+  try {
+    // TODO ::: API CALL
+    const res = await axios.delete(
+      `${BASE_URL}/api/v1/admin/user/${id}`,
+      config
+    );
+
+    toast.success("User deleted successfully");
+    dispatch({
+      type: DELETE_USER,
+    });
+    dispatch(getClientList(1));
+    dispatch(getIepList(1));
+    return true;
+  } catch (err) {
+    dispatch({
+      type: DELETE_USER_ERROR,
+    });
+    console.log(err);
+    return false;
   }
 };

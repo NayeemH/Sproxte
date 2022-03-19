@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
 import { Button, Col, Container, Row } from "react-bootstrap";
 import ProductCard from "../Shared/ProductCard/ProductCard";
-import demoImg from "../../assets/templates/long.png";
 import styles from "./Dashboard.module.scss";
 import { fetchProjects } from "../../actions/Project.action";
 import { connect } from "react-redux";
@@ -57,14 +56,15 @@ const Dashboard = ({ dashboard, projects, fetchProjects }) => {
           >
             Active Orders
           </Button>
-          <Button
+          <Link
+            to="/dashboard/completed"
             className={`${
               !dashboard ? styles.active_btn : styles.btn
             } mt-3 mt-md-0`}
             onClick={() => console.log("completed")}
           >
             Completed Orders
-          </Button>
+          </Link>
         </div>
       </div>
       <Row>
