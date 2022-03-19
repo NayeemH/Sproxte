@@ -1,24 +1,27 @@
-import React, { useEffect } from "react";
-import { Button, Col, Container, Row } from "react-bootstrap";
+import React, { useEffect, useState } from "react";
+import { Button, Col, Container, Dropdown, Row } from "react-bootstrap";
 import ProductCard from "../Shared/ProductCard/ProductCard";
 import styles from "./Dashboard.module.scss";
 import { fetchProjects } from "../../actions/Project.action";
 import { connect } from "react-redux";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { IMAGE_PATH } from "../../constants/URL";
 import { AiOutlineLeft, AiOutlineRight } from "react-icons/ai";
+import statusList from "../../config/StatusList";
 const queryString = require("query-string");
 
 const Dashboard = ({ dashboard, projects, fetchProjects }) => {
   const location = useLocation();
+  const navigate = useNavigate();
   const parsed = queryString.parse(location.search);
+  const status = parsed.status;
 
   let page = 1;
   useEffect(() => {
     if (parsed.page) {
       page = parsed.page;
     }
-    fetchProjects(page);
+    fetchProjects(page, status);
   }, [parsed.page]);
 
   const getPages = (totalPage) => {
@@ -26,7 +29,9 @@ const Dashboard = ({ dashboard, projects, fetchProjects }) => {
     for (let i = 1; i <= totalPage; i++) {
       pages.push(
         <Link
-          to={`/dashboard?page=${parseInt(i)}`}
+          to={`/dashboard?${
+            status !== "" && `status=${status}&`
+          }page=${parseInt(i)}`}
           key={i}
           className={`${styles.link} ${
             (!parsed.page && i == 1) || parsed.page == i
@@ -48,6 +53,40 @@ const Dashboard = ({ dashboard, projects, fetchProjects }) => {
     <Container className={styles.wrapper}>
       <div className="d-flex justify-content-between align-items-center flex-md-row flex-column">
         <h3 className="pb-3">Running Orders</h3>
+
+        <div className="d-flex flex-column flex-md-row justify-content-between align-items-center">
+          <div className="d-flex">
+            <Dropdown>
+              <Dropdown.Toggle
+                variant="success"
+                id="dropdown-basic"
+                className={`${styles.active_btn} mt-3 mt-md-0`}
+              >
+                Select Status
+              </Dropdown.Toggle>
+
+              <Dropdown.Menu>
+                {statusList.map((item) => (
+                  <Dropdown.Item
+                    key={item.id}
+                    onClick={() =>
+                      navigate(
+                        `/dashboard?${
+                          status !== "" && `status=${item.name}&`
+                        }page=${
+                          parseInt(parsed.page) ? parseInt(parsed.page) : 1
+                        }`
+                      )
+                    }
+                    style={{ textTransform: "capitalize" }}
+                  >
+                    {item.name}
+                  </Dropdown.Item>
+                ))}
+              </Dropdown.Menu>
+            </Dropdown>
+          </div>
+        </div>
 
         <div className="d-flex flex-column flex-md-row">
           <Button
@@ -88,7 +127,9 @@ const Dashboard = ({ dashboard, projects, fetchProjects }) => {
             <div className="d-flex justify-content-end align-items-center">
               {parsed.page > 1 ? (
                 <Link
-                  to={`/dashboard?page=${parseInt(parsed.page) - 1}`}
+                  to={`/dashboard?${status !== "" && `status=${status}&`}page=${
+                    parseInt(parsed.page) - 1
+                  }`}
                   className={`${styles.link} ${
                     parsed.page === 1 ? styles.disabled : ""
                   } ${styles.link_arrow}`}
@@ -109,7 +150,9 @@ const Dashboard = ({ dashboard, projects, fetchProjects }) => {
               {projects.pageCount > 0 ? getPages(projects.pageCount) : null}
               {page < projects.pageCount ? (
                 <Link
-                  to={`/dashboard?page=${parseInt(parsed.page) + 1}`}
+                  to={`/dashboard?${status !== "" && `status=${status}&`}page=${
+                    parseInt(parsed.page) + 1
+                  }`}
                   className={`${styles.link} ${styles.link_arrow} ${
                     styles.link_arrow
                   } ${

@@ -42,13 +42,19 @@ const CompletedOrderList = ({ item, getCompletedOrders }) => {
   };
   return (
     <Container>
-      {!item || !item.pageCount ? (
+      {item == -null ? (
         <div
           className="d-flex justify-content-center align-items-center crd"
           style={{ minHeight: "100vh" }}
         >
           <Spinner variant="dark" animation="grow" />
         </div>
+      ) : item && item.itemCount === 0 ? (
+        <Card className="crd">
+          <Card.Body>
+            <h4 className="fw-normal text-center">No Completed Orders</h4>
+          </Card.Body>
+        </Card>
       ) : (
         <>
           <Card className="crd p-md-4 p-2">

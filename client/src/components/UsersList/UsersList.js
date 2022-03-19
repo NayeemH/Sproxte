@@ -83,13 +83,19 @@ const UsersList = ({ item, getUserList, dashboard, deleteUser }) => {
           </div>
         </ModalCard>
       ) : null}
-      {!item || !item.pageCount ? (
+      {item === null ? (
         <div
           className="d-flex justify-content-center align-items-center crd"
           style={{ minHeight: "100vh" }}
         >
           <Spinner variant="dark" animation="grow" />
         </div>
+      ) : item && item.itemCount === 0 ? (
+        <Card className="crd">
+          <Card.Body>
+            <h4 className="fw-normal text-center">No User</h4>
+          </Card.Body>
+        </Card>
       ) : (
         <>
           <div className="d-flex justify-content-end align-items-center flex-md-row flex-column pb-3">
