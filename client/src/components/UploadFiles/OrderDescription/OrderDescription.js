@@ -18,8 +18,8 @@ const OrderDescription = ({ sizes, addToCart, product, color }) => {
   const [selectedLayout, setSelectedLayout] = useState();
   const [mainText, setMainText] = useState("");
   const [secondaryText, setSecondaryText] = useState("");
-  const [mainTextColor, setMainTextColor] = useState("#d80009");
-  const [secondaryTextColor, setSecondaryTextColor] = useState("#d80009");
+  const [mainTextColor, setMainTextColor] = useState("Red");
+  const [secondaryTextColor, setSecondaryTextColor] = useState("Red");
   const [selectedFileBack, setSelectedFile2] = useState();
   const fileRef = useRef();
   const navigate = useNavigate();

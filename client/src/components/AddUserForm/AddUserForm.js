@@ -109,7 +109,7 @@ const AddUserForm = ({ sendInvitation }) => {
                   </div>
                   <Field
                     as={BootstrapForm.Control}
-                    placeholder="Type name address"
+                    placeholder="Type name "
                     name="name"
                     isValid={!errors.name && touched.name}
                     type="text"
