@@ -1,14 +1,13 @@
 version: '3.1'
 
 services:
-  # nginx: 
-  #   container_name: nginx
-  #   restart: always
-  #   build:
-  #     context: ./client
-  #     target: ${NODE_ENV}
-  #   ports:
-  #     - 8080:80
+  nginx: 
+    container_name: nginx
+    restart: always
+    build:
+      context: ./client
+    ports:
+      - 80:80
 
 
   node: 
