@@ -17,7 +17,7 @@ ENV NODE_ENV=production
 COPY . .
 RUN npm i 
 #& npm run generateKey && npm run setup
-CMD ["npm run generateKey && npm run setup", "node", "server/index.js" ]
+CMD ["sh", "-c", "npm run generateKey && npm run setup && node server/index.js" ]
 
 
 FROM base as development
@@ -25,4 +25,4 @@ ENV NODE_ENV=development
 COPY . .
 RUN npm i -g nodemon && npm i 
 #&& npm run generateKey && npm run setup
-CMD ["npm run generateKey && npm run setup","nodemon", "server/index.js"]
+CMD ["sh", "-c", "npm run generateKey && npm run setup && nodemon server/index.js"]
