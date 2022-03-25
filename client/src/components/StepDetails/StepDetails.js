@@ -8,7 +8,9 @@ import { IMAGE_PATH } from "../../constants/URL";
 import Overview from "./Overview/Overview";
 import Preview from "./Preview/Preview";
 import { saveAs } from "file-saver";
+import { CopyToClipboard } from "react-copy-to-clipboard";
 import styles from "./StepDetails.module.scss";
+import { toast } from "react-toastify";
 
 const StepDetails = ({
   step,
@@ -53,6 +55,21 @@ const StepDetails = ({
                     Approve
                   </Button>
 
+                  {selectedCollectionIndex >= 0 && (
+                    <CopyToClipboard
+                      text={`${window.location.origin}/share/${step.collections[selectedCollectionIndex].image}`}
+                      onCopy={() => toast.success("Link copied to clipboard.")}
+                    >
+                      <Button
+                        variant="primary"
+                        type="reset"
+                        className={`${styles.btn} mx-md-3 mx-0`}
+                      >
+                        Share
+                      </Button>
+                    </CopyToClipboard>
+                  )}
+
                   {role === "admin" || role === "iep" ? (
                     <Link
                       to={`/dashboard/${projectId}/${stepId}/upload`}
@@ -67,7 +84,7 @@ const StepDetails = ({
             </Col>
           ) : null}
           <Col md={role === "admin" || role === "iep" ? 8 : 12}>
-            <Row>
+            <Row className="pb-4">
               {selectedCollectionIndex >= 0 && (
                 <Preview
                   data={step.collections[selectedCollectionIndex]}
@@ -105,170 +122,179 @@ const StepDetails = ({
               {step.collections.length === 0 && <Overview />}
             </Row>
           </Col>
-          <Col md={4}>
-            <Card className={`${styles.crd} shadow mb-4`}>
-              <Card.Body>
-                <h4>Order Details</h4>
-                <img
-                  src={`${IMAGE_PATH}small/${step.colorImage}`}
-                  className={`${styles.images} w-100`}
-                  alt=""
-                  onClick={() =>
-                    saveAs(
-                      `${IMAGE_PATH}small/${step.colorImage}`,
-                      `${step.name} - Template`
-                    )
-                  }
-                />
-                <hr />
-                <Row className="">
-                  <Col xs={6}>
-                    <span className="d-block fs-5">
-                      <span className="fw-bold">Size :</span> {step.size}
-                    </span>
-                  </Col>
-                  <Col xs={6}>
-                    <span className="d-block fs-5">
-                      <span className="fw-bold">Price :</span> {step.price}
-                    </span>
-                  </Col>
-                  <Col xs={6}>
-                    <span className="d-block fs-5">
-                      <span className="fw-bold">Discount :</span>{" "}
-                      {step.discount}
-                    </span>
-                  </Col>
-                  <Col xs={6}>
-                    <span className="d-block fs-5">
-                      <span className="fw-bold">Quantity :</span> {step.count}
-                    </span>
-                  </Col>
-                  <Col xs={12}>
-                    <span className="d-block fs-5">
-                      <span className="fw-bold">Description :</span>{" "}
-                      {step.description}
-                    </span>
-                  </Col>
-                  <Col xs={12}>
-                    <span className="d-block fs-5">
-                      <span className="fw-bold">Images :</span>{" "}
-                    </span>
-                  </Col>
-
-                  {step.frontImages &&
-                    step.frontImages.map((img) => (
+          {role === "admin" || role === "iep" ? (
+            <>
+              <Col md={4}>
+                <Card className={`${styles.crd} shadow mb-4`}>
+                  <Card.Body>
+                    <h4>Order Details</h4>
+                    <img
+                      src={`${IMAGE_PATH}small/${step.colorImage}`}
+                      className={`${styles.images} w-100`}
+                      alt=""
+                      onClick={() =>
+                        saveAs(
+                          `${IMAGE_PATH}small/${step.colorImage}`,
+                          `${step.name} - Template`
+                        )
+                      }
+                    />
+                    <hr />
+                    <Row className="">
                       <Col xs={6}>
-                        <img
-                          onClick={() =>
-                            saveAs(
-                              `${IMAGE_PATH}small/${img}`,
-                              `${step.name} ${img}`
-                            )
-                          }
-                          src={`${IMAGE_PATH}small/${img}`}
-                          className={`${styles.images} w-100`}
-                        />
-                      </Col>
-                    ))}
-                  {step.layoutImage && (
-                    <>
-                      <Col xs={12}>
-                        <hr />
                         <span className="d-block fs-5">
-                          <span className="fw-bold">Selected Layout:</span>{" "}
+                          <span className="fw-bold">Size :</span> {step.size}
+                        </span>
+                      </Col>
+                      <Col xs={6}>
+                        <span className="d-block fs-5">
+                          <span className="fw-bold">Price :</span> {step.price}
+                        </span>
+                      </Col>
+                      <Col xs={6}>
+                        <span className="d-block fs-5">
+                          <span className="fw-bold">Discount :</span>{" "}
+                          {step.discount}
+                        </span>
+                      </Col>
+                      <Col xs={6}>
+                        <span className="d-block fs-5">
+                          <span className="fw-bold">Quantity :</span>{" "}
+                          {step.count}
+                        </span>
+                      </Col>
+                      <Col xs={12}>
+                        <span className="d-block fs-5">
+                          <span className="fw-bold">Description :</span>{" "}
+                          {step.description}
+                        </span>
+                      </Col>
+                      <Col xs={12}>
+                        <span className="d-block fs-5">
+                          <span className="fw-bold">Images :</span>{" "}
                         </span>
                       </Col>
 
-                      <Col xs={12}>
-                        <img
-                          src={`${IMAGE_PATH}small/${step.layoutImage}`}
-                          className={`${styles.images} w-100`}
-                          onClick={() =>
-                            saveAs(
-                              `${IMAGE_PATH}small/${step.layoutImage}`,
-                              `${step.name} - Layout`
-                            )
-                          }
-                        />
-                      </Col>
-                      {step.primaryText && (
-                        <Col xs={12}>
-                          <span className="d-block fs-5">
-                            <span className="fw-bold">Primary Text: </span>
-                            {step.primaryText}
-                          </span>
-                        </Col>
-                      )}
-                      {step.primaryColor && (
-                        <Col xs={12}>
-                          <span className="d-flex fs-5 align-items-center">
-                            <span className="fw-bold">Primary Color: </span>
-                            {step.primaryColor} (
-                            {
-                              colors.filter(
-                                (item) =>
-                                  step.primaryColor === item.name ||
-                                  step.primaryColor === item.hex
-                              )[0]?.hex
-                            }
-                            )
-                            <div
-                              className={styles.color}
-                              style={{
-                                background: `${
+                      {step.frontImages &&
+                        step.frontImages.map((img) => (
+                          <Col xs={6}>
+                            <img
+                              onClick={() =>
+                                saveAs(
+                                  `${IMAGE_PATH}small/${img}`,
+                                  `${step.name} ${img}`
+                                )
+                              }
+                              src={`${IMAGE_PATH}small/${img}`}
+                              className={`${styles.images} w-100`}
+                            />
+                          </Col>
+                        ))}
+                      {step.layoutImage && (
+                        <>
+                          <Col xs={12}>
+                            <hr />
+                            <span className="d-block fs-5">
+                              <span className="fw-bold">Selected Layout:</span>{" "}
+                            </span>
+                          </Col>
+
+                          <Col xs={12}>
+                            <img
+                              src={`${IMAGE_PATH}small/${step.layoutImage}`}
+                              className={`${styles.images} w-100`}
+                              onClick={() =>
+                                saveAs(
+                                  `${IMAGE_PATH}small/${step.layoutImage}`,
+                                  `${step.name} - Layout`
+                                )
+                              }
+                            />
+                          </Col>
+                          {step.primaryText && (
+                            <Col xs={12}>
+                              <span className="d-block fs-5">
+                                <span className="fw-bold">Primary Text: </span>
+                                {step.primaryText}
+                              </span>
+                            </Col>
+                          )}
+                          {step.primaryColor && (
+                            <Col xs={12}>
+                              <span className="d-flex fs-5 align-items-center">
+                                <span className="fw-bold">Primary Color: </span>
+                                {step.primaryColor} (
+                                {
                                   colors.filter(
                                     (item) =>
                                       step.primaryColor === item.name ||
                                       step.primaryColor === item.hex
                                   )[0]?.hex
-                                }`,
-                              }}
-                            ></div>
-                          </span>
-                        </Col>
-                      )}
-                      {step.secondaryText && (
-                        <Col xs={12}>
-                          <span className="d-block fs-5">
-                            <span className="fw-bold">Secondary Text: </span>
-                            {step.secondaryText}
-                          </span>
-                        </Col>
-                      )}
-                      {step.secondaryColor && (
-                        <Col xs={12}>
-                          <span className="d-flex align-items-center fs-5">
-                            <span className="fw-bold">Secondary Color: </span>
-                            {step.secondaryColor} (
-                            {
-                              colors.filter(
-                                (item) =>
-                                  step.secondaryColor === item.name ||
-                                  step.secondaryColor === item.hex
-                              )[0]?.hex
-                            }
-                            )
-                            <div
-                              className={styles.color}
-                              style={{
-                                background: `${
+                                }
+                                )
+                                <div
+                                  className={styles.color}
+                                  style={{
+                                    background: `${
+                                      colors.filter(
+                                        (item) =>
+                                          step.primaryColor === item.name ||
+                                          step.primaryColor === item.hex
+                                      )[0]?.hex
+                                    }`,
+                                  }}
+                                ></div>
+                              </span>
+                            </Col>
+                          )}
+                          {step.secondaryText && (
+                            <Col xs={12}>
+                              <span className="d-block fs-5">
+                                <span className="fw-bold">
+                                  Secondary Text:{" "}
+                                </span>
+                                {step.secondaryText}
+                              </span>
+                            </Col>
+                          )}
+                          {step.secondaryColor && (
+                            <Col xs={12}>
+                              <span className="d-flex align-items-center fs-5">
+                                <span className="fw-bold">
+                                  Secondary Color:{" "}
+                                </span>
+                                {step.secondaryColor} (
+                                {
                                   colors.filter(
                                     (item) =>
                                       step.secondaryColor === item.name ||
                                       step.secondaryColor === item.hex
                                   )[0]?.hex
-                                }`,
-                              }}
-                            ></div>
-                          </span>
-                        </Col>
+                                }
+                                )
+                                <div
+                                  className={styles.color}
+                                  style={{
+                                    background: `${
+                                      colors.filter(
+                                        (item) =>
+                                          step.secondaryColor === item.name ||
+                                          step.secondaryColor === item.hex
+                                      )[0]?.hex
+                                    }`,
+                                  }}
+                                ></div>
+                              </span>
+                            </Col>
+                          )}
+                        </>
                       )}
-                    </>
-                  )}
-                </Row>
-              </Card.Body>
-            </Card>
-          </Col>
+                    </Row>
+                  </Card.Body>
+                </Card>
+              </Col>
+            </>
+          ) : null}
         </Row>
       )}
     </div>

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Button, Card, Col, Container, Row, Spinner } from "react-bootstrap";
 import { connect } from "react-redux";
 import styles from "./IepList.module.scss";
@@ -6,10 +6,15 @@ import { Link, useLocation } from "react-router-dom";
 import { AiOutlineLeft, AiOutlineRight } from "react-icons/ai";
 import { getIepList } from "../../actions/Payment.acton";
 import { IMAGE_PATH } from "../../constants/URL";
+import { deleteUser } from "../../actions/Dashboard.action";
+import { BsTrash } from "react-icons/bs";
+import ModalCard from "../Shared/ModalCard/ModalCard";
+import { toast } from "react-toastify";
 const queryString = require("query-string");
 
-const IepList = ({ item, getIepList, dashboard }) => {
+const IepList = ({ item, getIepList, dashboard, deleteUser }) => {
   const location = useLocation();
+  const [deleteModal, setDeleteModal] = useState(null);
   const parsed = queryString.parse(location.search);
   let page = parsed.page ? parseInt(parsed.page) : 1;
   useEffect(() => {
@@ -38,15 +43,57 @@ const IepList = ({ item, getIepList, dashboard }) => {
 
     return pages;
   };
+  const deleteHandeler = async () => {
+    let check = await deleteUser(deleteModal);
+    if (check) {
+      setDeleteModal(null);
+    } else {
+      toast.error("Something went wrong");
+    }
+  };
   return (
     <Container>
-      {!item || !item.pageCount ? (
+      {deleteModal !== null ? (
+        <ModalCard
+          title={
+            <>
+              You are about to <br /> delete user.
+            </>
+          }
+        >
+          <div
+            className="d-flex justify-content-center align-items-center pb-4"
+            style={{ zIndex: 999999 }}
+          >
+            <Button
+              className={`${styles.btn_modal} btn_primary mx-2 `}
+              onClick={deleteHandeler}
+            >
+              Delete
+            </Button>
+            <Button
+              variant="primary"
+              className={`${styles.btn_modal} btn_primary mx-2 `}
+              onClick={() => setDeleteModal(null)}
+            >
+              Cancel
+            </Button>
+          </div>
+        </ModalCard>
+      ) : null}
+      {item === null ? (
         <div
           className="d-flex justify-content-center align-items-center crd"
           style={{ minHeight: "100vh" }}
         >
           <Spinner variant="dark" animation="grow" />
         </div>
+      ) : item && item.itemCount === 0 ? (
+        <Card className="crd">
+          <Card.Body>
+            <h4 className="fw-normal text-center">No IEP</h4>
+          </Card.Body>
+        </Card>
       ) : (
         <>
           <div className="d-flex justify-content-end align-items-center flex-md-row flex-column pb-3">
@@ -95,7 +142,7 @@ const IepList = ({ item, getIepList, dashboard }) => {
                       </Row>
                     </Col>
                     <Col
-                      xs={9}
+                      xs={8}
                       className="d-flex justify-content-center-center flex-column"
                     >
                       <div className={`d-block fw-bold ${styles.lnk}`}>
@@ -107,6 +154,17 @@ const IepList = ({ item, getIepList, dashboard }) => {
                       <span className="d-block fw-light text-secondary">
                         Address: {notification.address}
                       </span>
+                    </Col>
+                    <Col
+                      xs={1}
+                      className="d-flex justify-content-end align-items-center"
+                    >
+                      <div
+                        className={`d-block fw-bold ${styles.delete}`}
+                        onClick={() => setDeleteModal(notification._id)}
+                      >
+                        <BsTrash />
+                      </div>
                     </Col>
                   </Row>
                 ))}
@@ -175,4 +233,4 @@ const IepList = ({ item, getIepList, dashboard }) => {
 const mapStateToProps = (state) => ({
   item: state.dashboard.list,
 });
-export default connect(mapStateToProps, { getIepList })(IepList);
+export default connect(mapStateToProps, { getIepList, deleteUser })(IepList);

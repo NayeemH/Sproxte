@@ -115,7 +115,7 @@ const Layout = ({ logout, children, role, title }) => {
                     <span className={styles.icon}>
                       <MdDownloadDone />
                     </span>
-                    <span className={styles.nav__item_text}>Invite IEP</span>
+                    <span className={styles.nav__item_text}>Add IEP</span>
                   </NavLink>
                 </div>
                 <div className={styles.nav}>
@@ -128,16 +128,17 @@ const Layout = ({ logout, children, role, title }) => {
                     </span>
                   </NavLink>
                 </div>
+                <div className={styles.nav}>
+                  <NavLink to="/orders" className={styles.nav__item}>
+                    <span className={styles.icon}>
+                      <BsArrowLeftRight />
+                    </span>
+                    <span className={styles.nav__item_text}>Orders</span>
+                  </NavLink>
+                </div>
               </>
             )}
-            <div className={styles.nav}>
-              <NavLink to="/orders" className={styles.nav__item}>
-                <span className={styles.icon}>
-                  <BsArrowLeftRight />
-                </span>
-                <span className={styles.nav__item_text}>Orders</span>
-              </NavLink>
-            </div>
+
             <div className={styles.nav}>
               <NavLink to="/notification" className={styles.nav__item}>
                 <span className={styles.icon}>
