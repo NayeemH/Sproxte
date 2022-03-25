@@ -44,7 +44,7 @@ app.use(helmet());
 
 // Static files
 app.use(express.static(path.resolve("data")));
-//app.use(express.static(path.resolve("client/build")));
+app.use(express.static(path.resolve("client/build")));
 
 // Main Routes
 app.use("/api/v1", routes);
