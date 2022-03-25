@@ -83,6 +83,21 @@ const UsersList = ({ item, getUserList, dashboard, deleteUser }) => {
           </div>
         </ModalCard>
       ) : null}
+      <div className="d-flex justify-content-end align-items-center flex-md-row flex-column pb-3">
+        <div className="d-flex flex-column flex-md-row">
+          <Button className={dashboard ? styles.active_btn : styles.btn}>
+            User List
+          </Button>
+          <Link
+            to="/users/iep"
+            className={`${
+              !dashboard ? styles.active_btn : styles.btn
+            } mt-3 mt-md-0`}
+          >
+            IEP List
+          </Link>
+        </div>
+      </div>
       {item === null ? (
         <div
           className="d-flex justify-content-center align-items-center crd"
@@ -98,21 +113,6 @@ const UsersList = ({ item, getUserList, dashboard, deleteUser }) => {
         </Card>
       ) : (
         <>
-          <div className="d-flex justify-content-end align-items-center flex-md-row flex-column pb-3">
-            <div className="d-flex flex-column flex-md-row">
-              <Button className={dashboard ? styles.active_btn : styles.btn}>
-                User List
-              </Button>
-              <Link
-                to="/users/iep"
-                className={`${
-                  !dashboard ? styles.active_btn : styles.btn
-                } mt-3 mt-md-0`}
-              >
-                IEP List
-              </Link>
-            </div>
-          </div>
           <Card className="crd p-md-4 p-2">
             <Card.Body>
               {item &&
