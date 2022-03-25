@@ -6,6 +6,7 @@ import TemplateSelect from "../TemplateSelect/TemplateSelect";
 import { connect } from "react-redux";
 import { getLandingList } from "../../actions/Landing.action";
 import { IMAGE_PATH } from "../../constants/URL";
+import { Link } from "react-router-dom";
 
 const HeroLanding = ({ list, getLandingList }) => {
   useEffect(() => {
@@ -28,7 +29,12 @@ const HeroLanding = ({ list, getLandingList }) => {
               typesetting industry.
               <br /> Lorem Ipsum has been the industry's standard.
             </span>
-            <Button variant="primary" className={`mt-3 ${styles.btn}`}>
+            <Button
+              as={Link}
+              to="/signup"
+              variant="primary"
+              className={`mt-3 ${styles.btn} text-decoration-none`}
+            >
               Register Now
             </Button>
           </Col>
