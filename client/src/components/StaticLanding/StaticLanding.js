@@ -66,7 +66,7 @@ const StaticLanding = ({ category }) => {
               <img
                 src={`${IMAGE_PATH}small/${item.svgImage}`}
                 alt=""
-                className="img fluid p-2"
+                className="img-fluid p-2"
               />
             </div>
             <span className="d-block text-center fs-6 text-secondary pt-3">
