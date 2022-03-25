@@ -28,10 +28,12 @@ const LoginForm = ({ loginUserAccount, isAuthenticated }) => {
     setSubmitting(true);
     // TODO ::: create account action
     let check = await loginUserAccount(values);
-    if (check) {
-      console.log("SubmittEd");
+    if (check === true) {
+      navigate("/dashboard");
+      setSubmitting(false);
+    } else {
+      setSubmitting(false);
     }
-    setSubmitting(false);
   };
   let initVals = {
     email: "",
