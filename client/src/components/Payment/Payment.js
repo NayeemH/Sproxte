@@ -5,7 +5,7 @@ import { loadStripe } from "@stripe/stripe-js";
 import styles from "./Payment.module.scss";
 import { connect } from "react-redux";
 import CheckoutForm from "./CheckoutForm/CheckoutForm";
-import { setPaymentToken } from "../../actions/Payment.acton";
+import { setPaymentKey, setPaymentToken } from "../../actions/Payment.acton";
 import { BASE_URL } from "../../constants/URL";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
@@ -15,6 +15,9 @@ const Payment = ({ id, auth }) => {
   const [clientSecret, setClientSecret] = useState(null);
   const navigate = useNavigate();
   useEffect(() => {
+    if (!id) {
+      setPaymentKey();
+    }
     const fetchToken = async () => {
       try {
         const resKey = await axios.get(
