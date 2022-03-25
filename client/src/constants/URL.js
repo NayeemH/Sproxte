@@ -1,4 +1,4 @@
-export const BASE_URL = "http://66.29.156.103:5000";
-//export const BASE_URL = "http://meetnayeem.com:5001";
+//export const BASE_URL = "https://sportsveins.com";
+export const BASE_URL = "http://localhost:5000";
 
 export const IMAGE_PATH = `${BASE_URL}/image/`;

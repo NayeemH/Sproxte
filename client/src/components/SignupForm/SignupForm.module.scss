@@ -63,3 +63,10 @@
   padding: 7px 15px !important;
   border-radius: 15px !important;
 }
+
+@media screen and (max-width: 768px) {
+  .crd {
+    width: 90% !important;
+    margin: 0 auto !important;
+  }
+}
