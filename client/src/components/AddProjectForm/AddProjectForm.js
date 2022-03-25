@@ -131,7 +131,7 @@ const AddProjectForm = ({ category, createProject, getTypeList }) => {
     name: "",
     price: 0,
     quantity: 0,
-    productType: "",
+    // productType: "",
     size: "",
     image: "",
     description: "",
@@ -145,7 +145,7 @@ const AddProjectForm = ({ category, createProject, getTypeList }) => {
       "Product price is required!"
     ),
     size: Yup.string().required("Product size is required!"),
-    productType: Yup.string().required("Product template is required!"),
+    // productType: Yup.string().required("Product template is required!"),
     image: Yup.string().nullable(),
     description: Yup.string().required("Description is required!"),
   });
@@ -184,7 +184,7 @@ const AddProjectForm = ({ category, createProject, getTypeList }) => {
                 </InputGroup>
 
                 <Row>
-                  <Col md={6}>
+                  <Col md={12}>
                     <InputGroup className="mb-3 d-flex flex-column">
                       <div className="d-flex justify-content-between align-items-center pb-2">
                         <label htmlFor="description" className="d-block">
@@ -207,7 +207,7 @@ const AddProjectForm = ({ category, createProject, getTypeList }) => {
                       />
                     </InputGroup>
                   </Col>
-                  <Col md={6}>
+                  {/* <Col md={6}>
                     <InputGroup className="mb-3 d-flex flex-column">
                       <div className="d-flex justify-content-between align-items-center pb-2">
                         <label htmlFor="productType" className="d-block">
@@ -256,7 +256,7 @@ const AddProjectForm = ({ category, createProject, getTypeList }) => {
                         </div>
                       </div>
                     </InputGroup>
-                  </Col>
+                  </Col> */}
                   {/* <Col md={6}>
                     <InputGroup className=" d-flex flex-column">
                       <div className="d-flex justify-content-between align-items-center pb-2">
