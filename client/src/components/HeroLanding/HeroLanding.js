@@ -24,7 +24,7 @@ const HeroLanding = ({ list, getLandingList }) => {
               Work that we produce for our clients is always unique and unique
               to our clients.
             </h1>
-            <span className="d-block lead pr-md-5 pt-3">
+            <span className="d-block lead pr-md-5 pt-3 pb-3">
               Lorem Ipsum is simply dummy text of <br /> the printing and
               typesetting industry.
               <br /> Lorem Ipsum has been the industry's standard.
@@ -33,7 +33,7 @@ const HeroLanding = ({ list, getLandingList }) => {
               as={Link}
               to="/signup"
               variant="primary"
-              className={`mt-3 ${styles.btn} text-decoration-none`}
+              className={` ${styles.btn} text-decoration-none d-flex justify-content-center align-items-center`}
             >
               Register Now
             </Button>
