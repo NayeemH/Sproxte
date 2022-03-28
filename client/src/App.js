@@ -48,6 +48,7 @@ import UserIepPage from "./views/UserIepPage/UserIepPage";
 import ContactListPage from "./views/ContactListPage/ContactListPage";
 import ReportsPage from "./views/ReportsPage/ReportsPage";
 import SharePage from "./views/SharePage/SharePage";
+import Paymentpage from "./views/Paymentpage/Paymentpage";
 
 function App({ getRefreshToken }) {
   useEffect(() => {
@@ -73,6 +74,7 @@ function App({ getRefreshToken }) {
           <Route path="/share/:image" element={<SharePage />} />
           <Route path="/contact" element={<ContactPage />} />
           <Route path="/payment-methods" element={<PaymentMethodsPage />} />
+          <Route path="/payment/:id" element={<Paymentpage />} />
           <Route path="/policy" element={<RefundPolicyPage />} />
           <Route path="/template/:id" element={<FileUploadPage />} />
           <Route path="/product/:id" element={<FileUploadPageReady />} />

@@ -138,7 +138,7 @@ export const createOrder = (address, phone, cart) => async (dispatch) => {
     if (check === cart.length) {
       toast.success("Order created successfully");
       dispatch({ type: ORDER_SUCCESS, payload: res.data.orderId });
-      return true;
+      return res.data.orderId;
     }
   } catch (err) {
     dispatch({ type: ORDER_ERROR });

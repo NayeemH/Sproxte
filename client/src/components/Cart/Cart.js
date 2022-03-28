@@ -51,9 +51,9 @@ const Cart = ({
       return;
     } else {
       let check = await createOrder(address, phone, cart);
-      if (check === true) {
-        navigate("/payment");
+      if (check !== false) {
         setLoading(false);
+        navigate(`/payment/${check}`);
       } else {
         setLoading(false);
       }

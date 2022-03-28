@@ -7,7 +7,6 @@ import Nav from "../../components/Nav/Nav";
 const LoginPage = () => {
   return (
     <div>
-      <LandingSidebar />
       <Nav />
       <LoginForm />
       <Footer />
