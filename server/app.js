@@ -3,7 +3,7 @@ const express = require("express");
 const cors = require("cors");
 const morgan = require("morgan");
 const compression = require("compression");
-const helmet = require("helmet");
+//const helmet = require("helmet");
 const cookieParser = require("cookie-parser");
 
 // Middlewares
@@ -40,7 +40,7 @@ app.use(express.urlencoded({ extended: false }));
 // Setup Middleware
 app.use(morgan("dev"));
 app.use(compression());
-app.use(helmet());
+//app.use(helmet());
 
 // Static files
 app.use(express.static(path.resolve("data")));
