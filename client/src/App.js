@@ -49,6 +49,7 @@ import ContactListPage from "./views/ContactListPage/ContactListPage";
 import ReportsPage from "./views/ReportsPage/ReportsPage";
 import SharePage from "./views/SharePage/SharePage";
 import Paymentpage from "./views/Paymentpage/Paymentpage";
+import PolicyPage from "./views/PolicyPage/PolicyPage";
 
 function App({ getRefreshToken }) {
   useEffect(() => {
@@ -63,6 +64,8 @@ function App({ getRefreshToken }) {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<LandingPage />} />
+          <Route path="/refund-policy" element={<RefundPolicyPage />} />
+          <Route path="/policy" element={<PolicyPage />} />
           <Route path="/discover" element={<DiscoverPage />} />
           <Route path="/discover/feature" element={<FeatureListPage />} />
           <Route path="/discover/popular" element={<PopularListPage />} />

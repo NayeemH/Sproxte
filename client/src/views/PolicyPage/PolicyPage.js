@@ -1,16 +1,16 @@
 import React from "react";
 import Footer from "../../components/Footer/Footer";
 import Nav from "../../components/Nav/Nav";
-import RefundPolicy from "../../components/RefundPolicy/RefundPolicy";
+import { Policy } from "../../components/Policy";
 
-const RefundPolicyPage = () => {
+const PolicyPage = () => {
   return (
     <div>
       <Nav />
-      <RefundPolicy />
+      <Policy />
       <Footer />
     </div>
   );
 };
 
-export default RefundPolicyPage;
+export default PolicyPage;
