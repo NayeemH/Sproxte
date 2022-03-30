@@ -8,7 +8,7 @@ import { getLandingList } from "../../actions/Landing.action";
 import { IMAGE_PATH } from "../../constants/URL";
 import { Link } from "react-router-dom";
 
-const HeroLanding = ({ list, getLandingList }) => {
+const HeroLanding = ({ list, getLandingList, auth }) => {
   useEffect(() => {
     if (list.length === 0) {
       getLandingList();
@@ -31,11 +31,11 @@ const HeroLanding = ({ list, getLandingList }) => {
             </span>
             <Button
               as={Link}
-              to="/signup"
+              to={auth ? "/dashboard" : "/signup"}
               variant="primary"
               className={` ${styles.btn} text-decoration-none d-flex justify-content-center align-items-center`}
             >
-              Register Now
+              {auth ? "Dashboard" : "Register Now"}
             </Button>
           </Col>
         </Row>
@@ -69,6 +69,7 @@ const HeroLanding = ({ list, getLandingList }) => {
 
 const mapStateToProps = (state) => ({
   list: state.landing.landing_list,
+  auth: state.auth.isAuthenticated,
 });
 
 export default connect(mapStateToProps, { getLandingList })(HeroLanding);
