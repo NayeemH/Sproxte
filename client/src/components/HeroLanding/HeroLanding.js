@@ -19,7 +19,7 @@ const HeroLanding = ({ list, getLandingList, auth }) => {
       <Container fluid>
         <Row className={styles.wrapper} data-aos="fade-down">
           <Col md={6} xs={12} className="py-md-5 py-3 px-md-3">
-            <h1 className={styles.heading}>Sproxte</h1>
+            <h1 className={styles.heading}>SPORTS VEINS</h1>
             <h1 className={`fs-1 fw-bolder ${styles.sub}`}>
               Work that we produce for our clients is always unique and unique
               to our clients.

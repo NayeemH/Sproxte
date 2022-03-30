@@ -31,7 +31,7 @@ const Nav = ({
           className={`${styles.title} gradient_title`}
           onClick={() => navigate("/")}
         >
-          SPROXTE
+          SPORTS VEINS
         </span>
       </div>
       <div className="">

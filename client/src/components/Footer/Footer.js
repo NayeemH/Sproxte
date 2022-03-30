@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import LogoSq from "../../assets/logoSq.png";
+import LogoSq from "../../assets/logoLight.png";
 import { BsFacebook } from "react-icons/bs";
 import styles from "./Footer.module.scss";
 import { FaLinkedinIn } from "react-icons/fa";
@@ -11,7 +11,7 @@ const Footer = () => {
     <div className={styles.wrapper}>
       <div className="d-flex justify-content-around align-items-center flex-column pb-4 px-md-5 px-0">
         <img src={LogoSq} alt="" className={styles.logo} />
-        <h2 className="text-center text-light">Sproxte</h2>
+        <h2 className="text-center text-light">SPORTS VEINS</h2>
         <div className="d-flex justify-content-center align-items-center py-3">
           <a href="#" className={styles.icon}>
             <BsFacebook />
