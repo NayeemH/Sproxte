@@ -22,12 +22,12 @@ const EditProductPage = ({ getProductDetails, data, types, getTypeList }) => {
     <div className={`bg_dark `} style={{ minHeight: "100vh" }}>
       <Layout>
         {/* <h4 className="px-5">{data && data.name}</h4> */}
-        {data !== {} && types && types.length === 0 ? (
+        {!data && types && types.length === 0 ? (
           <div
             className=" d-flex justify-content-center align-items-center"
             style={{ minHeight: "calc(100vh - 150px)", zIndex: 999 }}
           >
-            <Spinner animation="border" variant="light" />
+            <Spinner animation="border" variant="dark" />
           </div>
         ) : (
           <EditProductFinal data={data} />

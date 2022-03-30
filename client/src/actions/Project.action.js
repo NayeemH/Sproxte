@@ -247,9 +247,9 @@ export const editProduct =
     formData.append("price", values.price);
     formData.append("quantity", values.quantity);
     formData.append("description", values.description);
-    if (values.featured === true) {
-      formData.append("featured", values.featured);
-    }
+
+    formData.append("featured", values.featured);
+
     values.size
       .trim()
       .split(",")
