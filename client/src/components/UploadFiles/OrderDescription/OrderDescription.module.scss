@@ -105,3 +105,13 @@
   border: 1px solid var(--orange) !important;
   transition: 0.3s all ease-in-out;
 }
+
+.font :global(.dropdown-button){
+  background: var(--light) !important;
+  box-shadow: none !important;
+}
+.font :global(#font-picker){
+  background: var(--light) !important;
+  box-shadow: none !important;
+  width: 100%;
+}

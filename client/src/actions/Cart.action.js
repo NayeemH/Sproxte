@@ -66,7 +66,8 @@ export const addToCart =
     quantity,
     product,
     color,
-    type
+    type,
+    font
   ) =>
   (dispatch) => {
     toast.success("Added to cart");
@@ -87,6 +88,7 @@ export const addToCart =
         product,
         color,
         type,
+        font,
       },
     });
   };

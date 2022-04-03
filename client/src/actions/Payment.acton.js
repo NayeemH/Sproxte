@@ -104,6 +104,7 @@ export const createOrder = (address, phone, cart) => async (dispatch) => {
           frmData.append("primaryColor", item.mainTextColor);
           frmData.append("secondaryText", item.secondaryText);
           frmData.append("secondaryColor", item.secondaryTextColor);
+          frmData.append("font", item.font);
         }
 
         if (item.images) {
@@ -136,7 +137,7 @@ export const createOrder = (address, phone, cart) => async (dispatch) => {
     }
 
     if (check === cart.length) {
-      toast.success("Order created successfully");
+      // toast.success("Order created successfully");
       dispatch({ type: ORDER_SUCCESS, payload: res.data.orderId });
       return res.data.orderId;
     }
