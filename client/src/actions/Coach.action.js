@@ -1,11 +1,11 @@
 import axios from "axios";
 import { toast } from "react-toastify";
-import { CLIENT_MODE, COACH_MODE, COACH_MODE_ERROR } from "../constants/Type";
+import { COACH_MODE, COACH_MODE_ERROR } from "../constants/Type";
 import { BASE_URL } from "../constants/URL";
 import setAuthToken from "../utils/setAuthToken";
 import { getAuthUser } from "./Auth.action";
 
-export const switchMode = (mode) => async (dispatch) => {
+export const switchMode = () => async (dispatch) => {
   try {
     const refreshRes = await axios.post(
       `${BASE_URL}/api/v1/auth/switch/coach`,
@@ -19,15 +19,16 @@ export const switchMode = (mode) => async (dispatch) => {
     );
     dispatch({
       type: COACH_MODE,
-      payload: { token: refreshRes.data.accessToken, role: mode },
+      payload: { token: refreshRes.data.accessToken },
     });
-    setAuthToken(refreshRes.data.accessToken);
-    if (mode !== "coach") {
-      dispatch(getAuthUser());
-    }
     toast.success("Switched mode successfully");
+    setAuthToken(refreshRes.data.accessToken);
+
+    dispatch(getAuthUser());
+
     return true;
   } catch (error) {
+    console.log(error);
     dispatch({
       type: COACH_MODE_ERROR,
     });

@@ -20,7 +20,7 @@ const LoginForm = ({ loginUserAccount, isAuthenticated }) => {
 
   useEffect(() => {
     if (isAuthenticated) {
-      navigate("/discover");
+      navigate("/dashboard");
     }
   }, [isAuthenticated]);
 
@@ -29,8 +29,10 @@ const LoginForm = ({ loginUserAccount, isAuthenticated }) => {
     // TODO ::: create account action
     let check = await loginUserAccount(values);
     if (check === true) {
-      navigate("/dashboard");
-      setSubmitting(false);
+      setTimeout(() => {
+        navigate("/dashboard");
+        setSubmitting(false);
+      }, 500);
     } else {
       setSubmitting(false);
     }

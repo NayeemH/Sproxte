@@ -10,6 +10,7 @@ import {
   CLIENT_MODE,
 } from "../constants/Type";
 import { GET_NOTIFICATIONS } from "../constants/TypeLanding";
+import { decodeToken } from "react-jwt";
 
 const initialState = {
   token: "",
@@ -55,9 +56,11 @@ const authReducer = (state = initialState, action) => {
         loading: false,
       };
     case AUTH_USER_LOAD:
+      const myDecodedToken = decodeToken(state.token);
+      //console.log(myDecodedToken);
       return {
         ...state,
-        user: action.payload,
+        user: { ...action.payload, userType: myDecodedToken.userType },
         loading: false,
       };
     case GET_NOTIFICATIONS:
@@ -67,22 +70,18 @@ const authReducer = (state = initialState, action) => {
         loading: false,
       };
     case COACH_MODE:
-      return {
-        ...state,
-        token: action.payload,
-        loading: false,
-        user: { ...state.user, userType: "coach" },
-      };
-    case CLIENT_MODE:
+      const tmpToken = decodeToken(action.payload.token);
+      console.log(tmpToken);
       return {
         ...state,
         token: action.payload.token,
         loading: false,
         user: {
           ...state.user,
-          userType: action.payload.role,
+          userType: tmpToken.userType,
         },
       };
+
     default:
       return state;
   }
