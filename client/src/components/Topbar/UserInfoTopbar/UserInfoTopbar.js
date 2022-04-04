@@ -33,7 +33,11 @@ const UserInfoTopbar = ({
   };
 
   const switchCoachMode = async () => {
-    switchMode();
+    if (user.userType === "coach") {
+      switchMode("client");
+    } else {
+      switchMode("coach");
+    }
   };
 
   useEffect(() => {

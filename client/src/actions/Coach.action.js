@@ -5,10 +5,10 @@ import { BASE_URL } from "../constants/URL";
 import setAuthToken from "../utils/setAuthToken";
 import { getAuthUser } from "./Auth.action";
 
-export const switchMode = () => async (dispatch) => {
+export const switchMode = (mode) => async (dispatch) => {
   try {
     const refreshRes = await axios.post(
-      `${BASE_URL}/api/v1/auth/switch/coach`,
+      `${BASE_URL}/api/v1/auth/switch/${mode}`,
       {},
       {
         headers: {
