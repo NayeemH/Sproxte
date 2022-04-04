@@ -22,7 +22,9 @@ export const switchMode = (mode) => async (dispatch) => {
       payload: { token: refreshRes.data.accessToken, role: mode },
     });
     setAuthToken(refreshRes.data.accessToken);
-    dispatch(getAuthUser());
+    if (mode !== "coach") {
+      dispatch(getAuthUser());
+    }
     toast.success("Switched mode successfully");
     return true;
   } catch (error) {
