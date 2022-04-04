@@ -72,16 +72,19 @@ const UserInfoTopbar = ({
         <Dropdown.Item
           className={styles.dropdown_item}
           href="#"
-          onClick={clickHandler}
+          onClick={switchCoachMode}
         >
           <CgArrowsExchangeAlt />{" "}
-          <span className="d-block ms-2">Coach Mode</span>
+          <span className="d-block ms-2">
+            {" "}
+            {user && user.userType === "client" ? "Coach" : "Client"} Mode
+          </span>
         </Dropdown.Item>
         <Dropdown.Divider className={styles.divider} />
         <Dropdown.Item
           className={styles.dropdown_item}
           href="#"
-          onClick={switchCoachMode}
+          onClick={clickHandler}
         >
           <FaRegUserCircle /> <span className="d-block ms-2">Profile</span>
         </Dropdown.Item>

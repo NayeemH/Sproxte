@@ -6,6 +6,8 @@ import {
   ACCESS_TOKEN_SUCCESS,
   ACCESS_TOKEN_ERROR,
   AUTH_USER_LOAD,
+  COACH_MODE,
+  CLIENT_MODE,
 } from "../constants/Type";
 import { GET_NOTIFICATIONS } from "../constants/TypeLanding";
 
@@ -63,6 +65,23 @@ const authReducer = (state = initialState, action) => {
         ...state,
         notifications: action.payload,
         loading: false,
+      };
+    case COACH_MODE:
+      return {
+        ...state,
+        token: action.payload,
+        loading: false,
+        user: { ...state.user, userType: "coach" },
+      };
+    case CLIENT_MODE:
+      return {
+        ...state,
+        token: action.payload.token,
+        loading: false,
+        user: {
+          ...state.user,
+          userType: action.payload.role,
+        },
       };
     default:
       return state;
