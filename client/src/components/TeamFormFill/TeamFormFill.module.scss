@@ -1,0 +1,27 @@
+
+.plus {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--dark);
+    background: var(--light);
+    font-size: 20px;
+    padding: 3px 15px;
+    transition: 0.3s all ease-in-out;
+  }
+  
+  .plus:hover {
+    cursor: pointer;
+    color: var(--orange);
+    transition: 0.3s all ease-in-out;
+  }
+  
+  .del {
+    transition: 0.3s all ease-in-out;
+  }
+  
+  .del:hover {
+    cursor: pointer;
+    color: var(--dark) !important;
+  }
+  
