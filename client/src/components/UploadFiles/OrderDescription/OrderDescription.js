@@ -310,7 +310,9 @@ const OrderDescription = ({ sizes, addToCart, product, color, user }) => {
       )}
       <div className="py-4 d-flex align-items-center">
         <span className="fs-5 fw-bold me-3">
-          {user.userType === "client" ? "Quantity" : "Team Member Count"}
+          {user && user.userType !== "client"
+            ? "Team Member Count"
+            : "Quantity"}
         </span>
         <input
           type="number"
