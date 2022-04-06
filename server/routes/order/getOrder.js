@@ -39,7 +39,7 @@ router.get('/:type', async (req, res, next) => {
             }
             else return next();
         }
-        else if(userType === 'client' || userType === 'coach') {
+        else if(userType === 'client' || userType === 'coach' || userType === 'gurdian') {
             if(type === 'active') {
                 totalCount = await Order.find({deleveryStatus: {$ne: 'delivered'}, userId, paymentStatus: 'paid'}).countDocuments();
 
@@ -63,7 +63,6 @@ router.get('/:type', async (req, res, next) => {
             else return next();
         }
 
-        // No payment list for gurdian
 
         
         res.json({

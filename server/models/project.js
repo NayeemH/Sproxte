@@ -23,6 +23,14 @@ const projectSchema = Schema({
         type: String,
         required: true
     },
+    type: {
+        type: String,
+        default: 'normal'
+    },
+    count: {
+        type: Number,
+        default: 0
+    },
     status: {
         type: String,   // pending, accepted, shipping, delevered
         default: 'pending'

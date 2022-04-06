@@ -15,6 +15,10 @@ router.put('/:id', fileFetch.fields([{name: 'frontImages', maxCount: 10}, {name:
         else if(type === 'custom') {
             await addCustomTemplate(req);
         }
+        else if(type === 'team') {
+            // This is same for team same as custom order
+            await addCustomTemplate(req)
+        }
         else {
             return res.status(400).json({
                 message: "Invalid order type"
@@ -77,6 +81,13 @@ const addCustomTemplate = async (req) => {
         font
     } = req.body;
 
+    if(type === 'team') {
+        const order = await Order.findOne({_id: id, userId});
+        if(order.orders.length === 1) {
+            throw Error('Can not add more than one team order');
+        }
+    }
+    
     let frontImages, backImages;
     if(req.files && req.files.frontImages) {
         frontImages = await Promise.all(

@@ -61,7 +61,7 @@ const paymentHandle = async (object) => {
     const customOrders = order.orders.filter(order => order.type === 'custom');
 
     // Filter teams
-
+    const teamOrders = order.orders.filter(order => order.type === 'team');
 
     // Get data of the templates
     const templates = await Promise.all(
@@ -73,9 +73,14 @@ const paymentHandle = async (object) => {
         customOrders.map(order => ProductType.findOne({_id: order.productTypeId}))
     );
 
+    // Get data of the teams
+    const teams = await Promise.all(
+        teamOrders.map(order => ProductType.findOne({_id: order.productTypeId}))
+    );
+
 
     // Get project name and image
-    let projectName, projectImage;
+    let projectName, projectImage, type, count;
     if(templateOrders.length) {
         projectName = templates[0].name;
         projectImage = templates[0].pngImageFront;
@@ -84,6 +89,12 @@ const paymentHandle = async (object) => {
         projectName = customs[0].name;
         projectImage = customs[0].pngImageFront;
     }
+    else if(teamOrders.length) {
+        projectName = teams[0].name;
+        projectImage = teams[0].pngImageFront;
+        type = teams[0].type;
+        count = teams[0].count;
+    }
 
     // Create the project
     const project = await new Project({
@@ -91,7 +102,9 @@ const paymentHandle = async (object) => {
         orderId,
         name: projectName,
         image: projectImage,
-        price: order.price
+        price: order.price,
+        type,
+        count
     }).save();
 
 
@@ -136,6 +149,30 @@ const paymentHandle = async (object) => {
             backImages: order.backImages,
             font: order.font
         }).save()),
+        ...teamOrders.map((order, i) => new Product({
+            userId,
+            projectId: project._id,
+            typeId: order.templateId,
+            type: order.type,
+            name: teams[i].name,
+            image: {
+                front: teams[i].pngImageFront,
+                back: teams[i].pngImageBack,
+            },
+            colorImage: order.color && teams[i].imageData.filter(({color}) => color === order.color)[0].image,
+            price: teams[i].price,
+            discount: teams[i].discount,
+            count: order.count,
+            size: order.size,
+            description: order.description,
+            layoutImage: order.layoutId && teams[i].layouts.filter(({_id}) => _id.toString() === order.layoutId.toString())[0].image,
+            primaryText: order.primaryText,
+            primaryColor: order.primaryColor,
+            secondaryText: order.secondaryText,
+            secondaryColor: order.secondaryColor,
+            frontImages: order.frontImages,
+            backImages: order.backImages
+        }).save())
     ]);
 
     // Create Collections

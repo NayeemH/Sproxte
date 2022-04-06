@@ -38,7 +38,7 @@ router.get('/:type', async (req, res, next) => {
                 .skip(skip)
                 .limit(limit);
         }
-        else if(userType === 'client' || userType === 'coach') {
+        else if(userType === 'client' || userType === 'coach' || userType === 'guardian') {
              // Setup filder
              const filder = {
                 active,
@@ -53,9 +53,6 @@ router.get('/:type', async (req, res, next) => {
                 .sort({_id: -1})
                 .skip(skip)
                 .limit(limit);
-        }
-        else if(userType === 'guardian') {
-            // TODO: fetch for guardian 
         }
 
         
