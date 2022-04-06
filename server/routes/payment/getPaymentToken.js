@@ -14,7 +14,7 @@ router.post('/:id', async (req, res, next) => {
         if(!order) throw Error('Order not found');
 
         
-        if(order.price < 1) throw Error('No need to payment');
+        if(order.price < 0.5) throw Error('No need to payment');
 
         const clientSecret = await stripe.paymentIntents.create({
             amount: Math.round(order.price * 100),

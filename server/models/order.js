@@ -19,6 +19,34 @@ const orderSchema = Schema({
         type: String,
         required: true
     },
+    email: {
+        type: String,
+        required: true
+    },
+    city: {
+        type: String,
+        required: true
+    },
+    country: {
+        type: String,
+        required: true
+    },
+    state: {
+        type: String,
+        required: true
+    },
+    zip: {
+        type: Number,
+        required: true
+    },
+    firstName: {
+        type: String,
+        required: true
+    },
+    lastName: {
+        type: String,
+        required: true
+    },
     deleveryStatus: {
         type: String,   // pending, accepted, shipping, delivered
         default: 'pending'

@@ -5,12 +5,29 @@ const Order = require('../../models/order');
 router.post('/', async (req, res, next) => {
     try {
         const {userId} = req.user;
-        const {address, phone} = req.body;
+        const {
+            address, 
+            phone, 
+            email,
+            firstName,
+            lastName,
+            city,
+            country,
+            state,
+            zip
+        } = req.body;
 
         const order = await new Order({
             userId,
-            address,
-            phone
+            address, 
+            phone, 
+            email,
+            firstName,
+            lastName,
+            city,
+            country,
+            state,
+            zip
         }).save();
 
 
