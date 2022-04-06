@@ -8,7 +8,9 @@ import { IMAGE_PATH } from "../../constants/URL";
 import Overview from "./Overview/Overview";
 import Preview from "./Preview/Preview";
 import { saveAs } from "file-saver";
+import { CopyToClipboard } from "react-copy-to-clipboard";
 import styles from "./StepDetails.module.scss";
+import { toast } from "react-toastify";
 
 const StepDetails = ({
   step,
@@ -52,6 +54,21 @@ const StepDetails = ({
                   >
                     Approve
                   </Button>
+
+                  {selectedCollectionIndex >= 0 && (
+                    <CopyToClipboard
+                      text={`${window.location.origin}/share/${step.collections[selectedCollectionIndex].image}`}
+                      onCopy={() => toast.success("Link copied to clipboard.")}
+                    >
+                      <Button
+                        variant="primary"
+                        type="reset"
+                        className={`${styles.btn} mx-md-3 mx-0`}
+                      >
+                        Share
+                      </Button>
+                    </CopyToClipboard>
+                  )}
 
                   {role === "admin" || role === "iep" ? (
                     <Link

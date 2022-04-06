@@ -37,7 +37,6 @@ import PopularListPage from "./views/PopularListPage/PopularListPage";
 import FeatureListPage from "./views/FeatureListPage/FeatureListPage";
 import AllListPage from "./views/AllListPage/AllListPage";
 import ProductsByCategoryPage from "./views/ProductsByCategoryPage/ProductsByCategoryPage";
-import PaymentPage from "./views/PaymentPage/PaymentPage";
 import FileUploadPageReady from "./views/FileUploadPageReady/FileUploadPageReady";
 import StepDetailsPage from "./views/StepDetailsPage/StepDetailsPage";
 import ProjectDetailsPage from "./views/ProjectDetailsPage/ProjectDetailsPage";
@@ -48,6 +47,9 @@ import CompletedOrdersListPage from "./views/CompletedOrdersListPage/CompletedOr
 import UserIepPage from "./views/UserIepPage/UserIepPage";
 import ContactListPage from "./views/ContactListPage/ContactListPage";
 import ReportsPage from "./views/ReportsPage/ReportsPage";
+import SharePage from "./views/SharePage/SharePage";
+import Paymentpage from "./views/Paymentpage/Paymentpage";
+import PolicyPage from "./views/PolicyPage/PolicyPage";
 
 function App({ getRefreshToken }) {
   useEffect(() => {
@@ -62,6 +64,8 @@ function App({ getRefreshToken }) {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<LandingPage />} />
+          <Route path="/refund-policy" element={<RefundPolicyPage />} />
+          <Route path="/policy" element={<PolicyPage />} />
           <Route path="/discover" element={<DiscoverPage />} />
           <Route path="/discover/feature" element={<FeatureListPage />} />
           <Route path="/discover/popular" element={<PopularListPage />} />
@@ -70,9 +74,10 @@ function App({ getRefreshToken }) {
           <Route path="/signup" element={<SignupPage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/cart" element={<CartPage />} />
-          <Route path="/payment" element={<PaymentPage />} />
+          <Route path="/share/:image" element={<SharePage />} />
           <Route path="/contact" element={<ContactPage />} />
           <Route path="/payment-methods" element={<PaymentMethodsPage />} />
+          <Route path="/payment/:id" element={<Paymentpage />} />
           <Route path="/policy" element={<RefundPolicyPage />} />
           <Route path="/template/:id" element={<FileUploadPage />} />
           <Route path="/product/:id" element={<FileUploadPageReady />} />

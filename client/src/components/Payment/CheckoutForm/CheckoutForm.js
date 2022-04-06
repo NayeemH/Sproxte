@@ -52,7 +52,11 @@ export default function CheckoutForm() {
         className={styles.btn}
       >
         <span id="button-text">
-          {isLoading ? <Spinner variant="dark" /> : "Pay now"}
+          {isLoading || !stripe || !elements ? (
+            <Spinner variant="dark" />
+          ) : (
+            "Pay now"
+          )}
         </span>
       </button>
     </form>

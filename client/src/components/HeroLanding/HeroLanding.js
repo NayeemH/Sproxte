@@ -6,8 +6,9 @@ import TemplateSelect from "../TemplateSelect/TemplateSelect";
 import { connect } from "react-redux";
 import { getLandingList } from "../../actions/Landing.action";
 import { IMAGE_PATH } from "../../constants/URL";
+import { Link } from "react-router-dom";
 
-const HeroLanding = ({ list, getLandingList }) => {
+const HeroLanding = ({ list, getLandingList, auth }) => {
   useEffect(() => {
     if (list.length === 0) {
       getLandingList();
@@ -18,18 +19,23 @@ const HeroLanding = ({ list, getLandingList }) => {
       <Container fluid>
         <Row className={styles.wrapper} data-aos="fade-down">
           <Col md={6} xs={12} className="py-md-5 py-3 px-md-3">
-            <h1 className={styles.heading}>Sproxte</h1>
+            <h1 className={styles.heading}>SPORTS VEINS</h1>
             <h1 className={`fs-1 fw-bolder ${styles.sub}`}>
               Work that we produce for our clients is always unique and unique
               to our clients.
             </h1>
-            <span className="d-block lead pr-md-5 pt-3">
+            <span className="d-block lead pr-md-5 pt-3 pb-3">
               Lorem Ipsum is simply dummy text of <br /> the printing and
               typesetting industry.
               <br /> Lorem Ipsum has been the industry's standard.
             </span>
-            <Button variant="primary" className={`mt-3 ${styles.btn}`}>
-              Register Now
+            <Button
+              as={Link}
+              to={auth ? "/dashboard" : "/signup"}
+              variant="primary"
+              className={` ${styles.btn} text-decoration-none d-flex justify-content-center align-items-center`}
+            >
+              {auth ? "Dashboard" : "Register Now"}
             </Button>
           </Col>
         </Row>
@@ -63,6 +69,7 @@ const HeroLanding = ({ list, getLandingList }) => {
 
 const mapStateToProps = (state) => ({
   list: state.landing.landing_list,
+  auth: state.auth.isAuthenticated,
 });
 
 export default connect(mapStateToProps, { getLandingList })(HeroLanding);

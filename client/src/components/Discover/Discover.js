@@ -7,6 +7,7 @@ import ProductCard from "../Shared/ProductCard/ProductCard";
 import styles from "./Discover.module.scss";
 import { getDiscover } from "../../actions/Landing.action";
 import { IMAGE_PATH } from "../../constants/URL";
+import { VscSearchStop } from "react-icons/vsc";
 
 const Discover = ({ getDiscover, list }) => {
   useEffect(() => {
@@ -91,6 +92,22 @@ const Discover = ({ getDiscover, list }) => {
             ))}
         </Row>
       )}
+      {list.recent &&
+        list.recent.length === 0 &&
+        list.popular &&
+        list.popular.length === 0 &&
+        list.feature &&
+        list.feature.length === 0 && (
+          <>
+            <span
+              className="d-block text-center pt-5 pb-3"
+              style={{ fontSize: 36 }}
+            >
+              <VscSearchStop />
+            </span>
+            <h3 className="text-center ">No Product Found</h3>
+          </>
+        )}
     </div>
   );
 };

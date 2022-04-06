@@ -6,10 +6,11 @@ import { ImUpload } from "react-icons/im";
 import { toast } from "react-toastify";
 import styles from "./OrderDescription.module.scss";
 import colors from "../../../config/Colors";
-import { IMAGE_PATH } from "../../../constants/URL";
+import { FONT_KEY, IMAGE_PATH } from "../../../constants/URL";
 import { useNavigate } from "react-router-dom";
+import FontPicker from "font-picker-react";
 
-const OrderDescription = ({ sizes, addToCart, product, color }) => {
+const OrderDescription = ({ sizes, addToCart, product, color, user }) => {
   const [selectedFile, setSelectedFile] = useState();
   const [preview, setPreview] = useState();
   const [size, setSize] = useState();
@@ -21,6 +22,7 @@ const OrderDescription = ({ sizes, addToCart, product, color }) => {
   const [mainTextColor, setMainTextColor] = useState("Red");
   const [secondaryTextColor, setSecondaryTextColor] = useState("Red");
   const [selectedFileBack, setSelectedFile2] = useState();
+  const [activeFontFamily, setActiveFontFamily] = useState("Open Sans");
   const fileRef = useRef();
   const navigate = useNavigate();
 
@@ -64,7 +66,8 @@ const OrderDescription = ({ sizes, addToCart, product, color }) => {
           quantity,
           product,
           color,
-          "custom"
+          "custom",
+          activeFontFamily
         );
         resetlHandeler();
         setDescription("");
@@ -254,6 +257,16 @@ const OrderDescription = ({ sizes, addToCart, product, color }) => {
         <Card className={`${styles.crd} shadow mt-4`}>
           <Card.Body className="d-flex justify-content-between flex-column">
             <span className="d-block fs-4">Layout Options</span>
+            <div
+              className={`d-flex justify-content-between flex-column pt-3 ${styles.font}`}
+            >
+              <span className="d-block pb-2">Font Family </span>
+              <FontPicker
+                apiKey={FONT_KEY}
+                activeFontFamily={activeFontFamily}
+                onChange={(nextFont) => setActiveFontFamily(nextFont.family)}
+              />
+            </div>
             <span className="d-block pt-3">Main Text</span>
             <input
               type="text"
@@ -296,7 +309,11 @@ const OrderDescription = ({ sizes, addToCart, product, color }) => {
         </Card>
       )}
       <div className="py-4 d-flex align-items-center">
-        <span className="fs-5 fw-bold me-3">Quantity</span>
+        <span className="fs-5 fw-bold me-3">
+          {user && user.userType !== "client"
+            ? "Team Member Count"
+            : "Quantity"}
+        </span>
         <input
           type="number"
           value={quantity}
@@ -312,4 +329,10 @@ const OrderDescription = ({ sizes, addToCart, product, color }) => {
   );
 };
 
-export default connect(null, { setSize, addToCart })(OrderDescription);
+const mapStateToProps = (state) => ({
+  user: state.auth.user,
+});
+
+export default connect(mapStateToProps, { setSize, addToCart })(
+  OrderDescription
+);

@@ -15,8 +15,8 @@ connection()
 .then(async () => {
     try {
         // Drop the database
-        await db.dropDatabase();
-        console.log('\x1b[31m%s\x1b[0m', `Database is droped`);
+        // await db.dropDatabase();
+        // console.log('\x1b[31m%s\x1b[0m', `Database is droped`);
 
         // Create Admin
         const user = new User({

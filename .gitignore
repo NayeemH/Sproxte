@@ -5,3 +5,4 @@ id_ec_priv.pem
 id_ec_pub.pem
 
 docker_data
+mongodbData

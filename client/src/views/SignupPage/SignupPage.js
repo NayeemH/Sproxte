@@ -1,5 +1,4 @@
 import React from "react";
-import BottomNav from "../../components/BottomNav/BottomNav";
 import Footer from "../../components/Footer/Footer";
 import LandingSidebar from "../../components/LandingSidebar/LandingSidebar";
 import Nav from "../../components/Nav/Nav";
@@ -11,7 +10,6 @@ const SignupPage = () => {
       <LandingSidebar />
       <Nav />
       <SignupForm />
-      <BottomNav />
       <Footer />
     </div>
   );

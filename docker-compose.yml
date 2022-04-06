@@ -1,28 +1,45 @@
 version: '3.1'
 
 services:
+  # nginx: 
+  #   container_name: nginx
+  #   build:
+  #     context: ./client
+  #   ports:
+  #     - 80:80
+  #     - 443:443
+
+  #   restart: always
+
+  node: 
+    container_name: node
+    restart: always
+    build: 
+      context: .
+      target: ${NODE_ENV}
+      args:
+        PORT: ${PORT}
+    
+    ports:
+      - 5000:${PORT}
+    volumes:
+      - ./nodeData:/usr/src/app/data/
+    environment:
+      NODE_ENV: ${NODE_ENV}
+    depends_on:
+      - mongo
+
 
   mongo:
     container_name: mongo
     image: mongo
     restart: always
     volumes: 
-      - ./docker_data/db_data:/data/db
+      - ./mongodbData:/data/db
     environment:
       MONGO_INITDB_ROOT_USERNAME: ${MONGODB_USERNAME}
       MONGO_INITDB_ROOT_PASSWORD: ${MONGODB_PASSWORD}
+      MONGO_INITDB_DATABASE: ${DATABASE_NAME}
     ports:
       - 27016:27017
 
-  mongo-express:
-    container_name: mongo-express
-    image: mongo-express
-    depends_on: 
-      - mongo
-    restart: always
-    ports:
-      - 8081:8081
-    environment:
-      ME_CONFIG_MONGODB_ADMINUSERNAME: ${MONGODB_USERNAME}
-      ME_CONFIG_MONGODB_ADMINPASSWORD:  ${MONGODB_PASSWORD}
-      ME_CONFIG_MONGODB_URL: mongodb://root:example@mongo:27017/

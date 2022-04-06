@@ -1,7 +1,7 @@
 import React from "react";
 import { Col, Container, Row } from "react-bootstrap";
 import styles from "./Layout.module.scss";
-import logo from "../../../assets/logoSq.png";
+import logo from "../../../assets/logoLg.png";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import { VscHome, VscTypeHierarchySub } from "react-icons/vsc";
 import { TiCogOutline } from "react-icons/ti";
@@ -41,7 +41,9 @@ const Layout = ({ logout, children, role, title }) => {
                 className="d-flex align-items-center py-3 text-decoration-none text-dark"
               >
                 <img src={logo} alt="" className={styles.logo} />
-                <span className="d-block fs-2 fw-bolder pb-2">Sproxte</span>
+                {/* <span className="d-block fs-5 fw-bolder pb-2">
+                  SPORTS VEINS
+                </span> */}
               </Link>
               <div
                 className={`${styles.ham}  ms-auto`}

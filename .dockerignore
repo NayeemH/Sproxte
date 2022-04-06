@@ -1,0 +1,9 @@
+data
+node_modules
+.dockerignore
+.env.sample
+docker-compose.yml
+dockerfile
+id_ec*
+README.md
+test.rest

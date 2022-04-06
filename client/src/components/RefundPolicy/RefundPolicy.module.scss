@@ -1,6 +1,19 @@
 .wrapper {
-  background: rgb(9, 9, 9) !important;
+  background: var(--light);
   min-height: calc(100vh - 228px);
   padding: 2rem 0;
-  color: var(--white) !important;
+  color: var(--dark) !important;
+}
+
+.link {
+  color: var(--orange) !important;
+  font-weight: bold;
+  text-decoration: none !important;
+  transition: all 0.3s ease;
+}
+
+.link:hover {
+  color: var(--dark) !important;
+  text-decoration: none !important;
+  transition: all 0.3s ease;
 }

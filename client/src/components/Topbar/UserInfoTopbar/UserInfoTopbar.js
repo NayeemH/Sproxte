@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { getAuthUser } from "../../../actions/Auth.action";
+import { switchMode } from "../../../actions/Coach.action";
 import { IMAGE_PATH } from "../../../constants/URL";
 import { useNavigate } from "react-router-dom";
 import { DropdownButton, Dropdown } from "react-bootstrap";
@@ -9,11 +10,13 @@ import { logout } from "../../../actions/Dashboard.action";
 import { FiLogOut } from "react-icons/fi";
 import { FaRegUserCircle } from "react-icons/fa";
 import { MdOutlineSpaceDashboard } from "react-icons/md";
+import { CgArrowsExchangeAlt } from "react-icons/cg";
 
 const UserInfoTopbar = ({
   user,
   logout,
   getAuthUser,
+  switchMode,
   name = false,
   filter = false,
 }) => {
@@ -26,6 +29,14 @@ const UserInfoTopbar = ({
     let check = await logout();
     if (check === true) {
       navigate("/");
+    }
+  };
+
+  const switchCoachMode = async () => {
+    if (user.userType === "coach") {
+      switchMode("client");
+    } else {
+      switchMode("coach");
     }
   };
 
@@ -56,6 +67,19 @@ const UserInfoTopbar = ({
           <MdOutlineSpaceDashboard />{" "}
           <span className="d-block ms-2">Dashboard</span>
         </Dropdown.Item>
+
+        <Dropdown.Divider className={styles.divider} />
+        <Dropdown.Item
+          className={styles.dropdown_item}
+          href="#"
+          onClick={switchCoachMode}
+        >
+          <CgArrowsExchangeAlt />{" "}
+          <span className="d-block ms-2">
+            {" "}
+            {user && user.userType === "client" ? "Coach" : "Client"} Mode
+          </span>
+        </Dropdown.Item>
         <Dropdown.Divider className={styles.divider} />
         <Dropdown.Item
           className={styles.dropdown_item}
@@ -65,6 +89,7 @@ const UserInfoTopbar = ({
           <FaRegUserCircle /> <span className="d-block ms-2">Profile</span>
         </Dropdown.Item>
         <Dropdown.Divider className={styles.divider} />
+
         <Dropdown.Item
           href="#"
           className={styles.dropdown_item}
@@ -82,6 +107,6 @@ const mapStateToProps = (state) => ({
   user: state.auth.user,
 });
 
-export default connect(mapStateToProps, { logout, getAuthUser })(
+export default connect(mapStateToProps, { logout, getAuthUser, switchMode })(
   UserInfoTopbar
 );

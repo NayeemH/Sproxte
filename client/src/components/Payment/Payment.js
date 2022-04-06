@@ -8,12 +8,15 @@ import CheckoutForm from "./CheckoutForm/CheckoutForm";
 import { setPaymentToken } from "../../actions/Payment.acton";
 import { BASE_URL } from "../../constants/URL";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
-const Payment = ({ id, auth }) => {
+const Payment = ({ auth }) => {
   const [stripePromise, setStripePromise] = useState(null);
   const [clientSecret, setClientSecret] = useState(null);
   const navigate = useNavigate();
+
+  const { id } = useParams();
+
   useEffect(() => {
     const fetchToken = async () => {
       try {
@@ -25,20 +28,18 @@ const Payment = ({ id, auth }) => {
           {},
           { withCredentials: true }
         );
-        setClientSecret(res.data.clientSecret);
         if (resKey.data.paymentKey) {
           setStripePromise(loadStripe(resKey.data.paymentKey));
         }
-        if (!auth) {
-          navigate("/login");
-        }
+        setClientSecret(res.data.clientSecret);
       } catch (error) {
         console.log(error);
-        if (!auth) {
-          navigate("/login");
-        }
       }
     };
+    if (!auth) {
+      navigate("/login");
+      return;
+    }
     if (id) {
       fetchToken();
     }

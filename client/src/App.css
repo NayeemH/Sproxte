@@ -78,3 +78,7 @@ body {
   background: linear-gradient(90deg, #fae41a 0%, #fcaf22 100%) !important;
   transition: 0.3s all ease-in-out;
 }
+
+.text-justify {
+  text-align: justify !important;
+}

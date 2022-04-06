@@ -77,7 +77,8 @@ const addCustomTemplate = async (req) => {
         primaryText, 
         primaryColor, 
         secondaryText, 
-        secondaryColor
+        secondaryColor,
+        font
     } = req.body;
 
     if(type === 'team') {
@@ -127,7 +128,8 @@ const addCustomTemplate = async (req) => {
                 secondaryText, 
                 secondaryColor,
                 frontImages, 
-                backImages
+                backImages,
+                font
             }},
             $inc: {price: netPrice}
         }

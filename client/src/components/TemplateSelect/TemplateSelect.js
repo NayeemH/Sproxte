@@ -23,7 +23,7 @@ const TemplateSelect = ({
     if (category === {}) {
       setSelectedTemplate(list[0]);
     }
-  }, [list, category]);
+  }, []);
   const navigate = useNavigate();
   return (
     <Container fluid className={styles.wrapper}>
