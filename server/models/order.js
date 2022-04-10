@@ -47,6 +47,10 @@ const orderSchema = Schema({
         type: String,
         required: true
     },
+    // For team info
+    teamInfo: {
+        type: Object
+    },
     deleveryStatus: {
         type: String,   // pending, accepted, shipping, delivered
         default: 'pending'

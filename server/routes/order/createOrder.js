@@ -14,7 +14,8 @@ router.post('/', async (req, res, next) => {
             city,
             country,
             state,
-            zip
+            zip,
+            teamInfo
         } = req.body;
 
         const order = await new Order({
@@ -27,7 +28,8 @@ router.post('/', async (req, res, next) => {
             city,
             country,
             state,
-            zip
+            zip,
+            teamInfo
         }).save();
 
 

@@ -27,6 +27,9 @@ const projectSchema = Schema({
         type: String,
         default: 'normal'
     },
+    gurdianIds: {
+        type: [Schema.Types.ObjectId]
+    },
     count: {
         type: Number,
         default: 0
