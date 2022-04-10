@@ -71,6 +71,14 @@ const Layout = ({ logout, children, role, title }) => {
                   </NavLink>
                 </div>
                 <div className={styles.nav}>
+                  <NavLink to="/google" className={styles.nav__item}>
+                    <span className={styles.icon}>
+                      <ImStatsBars />
+                    </span>
+                    <span className={styles.nav__item_text}>G Report</span>
+                  </NavLink>
+                </div>
+                <div className={styles.nav}>
                   <NavLink to="/users" className={styles.nav__item}>
                     <span className={styles.icon}>
                       <FiUsers />

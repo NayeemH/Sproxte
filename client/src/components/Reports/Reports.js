@@ -8,6 +8,7 @@ import Chart from "react-apexcharts";
 import { BsCart4, BsCurrencyDollar } from "react-icons/bs";
 import { RiPaintFill } from "react-icons/ri";
 import { IoMdDoneAll } from "react-icons/io";
+import GReport from "./GReport/GReport";
 
 const Reports = ({ getReportData, data }) => {
   useEffect(() => {
@@ -330,6 +331,9 @@ const Reports = ({ getReportData, data }) => {
                   />
                 </Card.Body>
               </Card>
+            </Col>
+            <Col md={12} className="my-2">
+              <GReport />
             </Col>
           </Row>
         </Container>
