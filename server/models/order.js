@@ -48,8 +48,17 @@ const orderSchema = Schema({
         required: true
     },
     // For team info
-    teamInfo: {
-        type: Object
+    logo: {
+        type: String
+    },
+    teamName: {
+        type: String
+    },
+    location: {
+        type: String
+    },
+    color: {
+        type: String
     },
     deleveryStatus: {
         type: String,   // pending, accepted, shipping, delivered

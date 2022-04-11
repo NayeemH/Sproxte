@@ -1,8 +1,9 @@
 const router = require('express').Router();
 const Order = require('../../models/order');
+const {saveImage, fileFetch} = require('../../lib/imageConverter');
 
 
-router.post('/', async (req, res, next) => {
+router.post('/', fileFetch.single('logo'), async (req, res, next) => {
     try {
         const {userId} = req.user;
         const {
@@ -15,8 +16,16 @@ router.post('/', async (req, res, next) => {
             country,
             state,
             zip,
-            teamInfo
+            teamName,
+            location,
+            color
         } = req.body;
+        
+        let image;
+
+        if(req.file) {
+            image = await saveImage(req.file);
+        }
 
         const order = await new Order({
             userId,
@@ -29,7 +38,10 @@ router.post('/', async (req, res, next) => {
             country,
             state,
             zip,
-            teamInfo
+            teamName,
+            location,
+            color,
+            logo: image
         }).save();
 
 

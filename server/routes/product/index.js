@@ -7,6 +7,8 @@ const addFeedback = require('./addFeedback');
 const approveProduct = require('./approveProduct');
 const deleteFeedback = require('./deleteFeedback');
 const updateFeedback = require('./updateFeedback');
+const addGurdianImage = require('./addGurdianImage');
+
 
 // Routes
 router.use('/', getOne);
@@ -15,6 +17,7 @@ router.use('/feedback', addFeedback);
 router.use('/approve', approveProduct);
 router.use('/feedback', deleteFeedback);
 router.use('/feedback', updateFeedback);
+router.use('/addGurdianImage', addGurdianImage);
 
 
 module.exports = router;
