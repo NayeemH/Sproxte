@@ -8,15 +8,14 @@ import {
   SessionsByHourChart,
   PageViewsPerPathChart,
 } from "react-analytics-charts";
-import {} from "react-analytics-charts";
 const GReport = () => {
   return (
     <div>
       <AnalyticsDashboard
         authOptions={{ clientId: clientID }}
         chartsAppearFirst={true}
-        // viewId="ga:309832080"
-        // hideViewSelector={true}
+        viewId="ga:309832080"
+        hideViewSelector={true}
         renderCharts={(gapi, viewId) => {
           const chartStyles = {
             margin: "15px",

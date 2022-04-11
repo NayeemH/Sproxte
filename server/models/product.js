@@ -72,6 +72,9 @@ const productSchema = Schema({
     },
     backImages: {
         type: Array,
+    },
+    gurdianEmail: {
+        type: String
     }
 }, {timestamps: true});
 

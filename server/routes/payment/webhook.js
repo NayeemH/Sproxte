@@ -104,7 +104,11 @@ const paymentHandle = async (object) => {
         image: projectImage,
         price: order.price,
         type,
-        count
+        count,
+        logo: order.logo,
+        teamName: order.teamName,
+        location: order.location,
+        color: order.color
     }).save();
 
 

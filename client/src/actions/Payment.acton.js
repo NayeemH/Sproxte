@@ -59,23 +59,34 @@ export const setPaymentToken = (id) => async (dispatch) => {
   }
 };
 // CREATE ORDER
-export const createOrder = (address, phone, cart) => async (dispatch) => {
+export const createOrder = (values, cart, logo) => async (dispatch) => {
   try {
-    const formData = {
-      address,
-      phone,
-    };
+    console.log(values);
+    const formData = new FormData();
+    formData.append("address", values.address);
+    formData.append("phone", values.phone);
+    formData.append("email", values.email);
+    formData.append("firstName", values.firstName);
+    formData.append("lastName", values.lastName);
+    formData.append("city", values.city);
+    formData.append("state", values.state);
+    formData.append("zip", values.zip);
+    formData.append("country", values.country);
+
+    if (logo) {
+      formData.append("logo", logo);
+      formData.append("teamName", values.teamName);
+      formData.append("location", values.location);
+      formData.append("color", values.color);
+    }
+
     const config = {
       headers: {
-        "Content-Type": "application/json",
+        "Content-Type": "multipart/form-data",
       },
       withCredentials: true,
     };
-    const res = await axios.post(
-      `${BASE_URL}/api/v1/order`,
-      JSON.stringify(formData),
-      config
-    );
+    const res = await axios.post(`${BASE_URL}/api/v1/order`, formData, config);
     let check = 0;
     if (res.data.orderId) {
       for (let i = 0; i < cart.length; i++) {

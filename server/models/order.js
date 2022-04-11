@@ -47,6 +47,19 @@ const orderSchema = Schema({
         type: String,
         required: true
     },
+    // For team info
+    logo: {
+        type: String
+    },
+    teamName: {
+        type: String
+    },
+    location: {
+        type: String
+    },
+    color: {
+        type: String
+    },
     deleveryStatus: {
         type: String,   // pending, accepted, shipping, delivered
         default: 'pending'

@@ -27,9 +27,25 @@ const projectSchema = Schema({
         type: String,
         default: 'normal'
     },
+    gurdianIds: {
+        type: [Schema.Types.ObjectId]
+    },
     count: {
         type: Number,
         default: 0
+    },
+    // For team info
+    logo: {
+        type: String
+    },
+    teamName: {
+        type: String
+    },
+    location: {
+        type: String
+    },
+    color: {
+        type: String
     },
     status: {
         type: String,   // pending, accepted, shipping, delevered

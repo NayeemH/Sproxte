@@ -42,7 +42,7 @@ router.get('/:type', async (req, res, next) => {
              // Setup filder
              const filder = {
                 active,
-                userId
+                $or: [{userId}, {gurdianIds: userId}]
             };
             if(status) filder.status = status;
 
