@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Formik, Field, Form } from "formik";
 import * as Yup from "yup";
 import { InputGroup, Form as BootstrapForm, Button } from "react-bootstrap";
@@ -8,10 +8,25 @@ import styles from "./Cart.module.scss";
 import { connect } from "react-redux";
 import colors from "../../config/Colors";
 import { toast } from "react-toastify";
+import { getCountryList, getStateList } from "../../actions/Order.action";
+import { Select } from "@mantine/core";
 
-const CardForm = ({ cart, createOrder, user }) => {
+const CardForm = ({
+  cart,
+  createOrder,
+  user,
+  country,
+  states,
+  getCountryList,
+  getStateList,
+}) => {
   const [loading, setLoading] = useState(false);
   const [logo, setLogo] = useState(undefined);
+  useEffect(() => {
+    if (!country) {
+      getCountryList();
+    }
+  }, []);
 
   const navigate = useNavigate();
 
@@ -115,7 +130,7 @@ const CardForm = ({ cart, createOrder, user }) => {
         enableReinitialize
         onSubmit={(values) => onSubmitHandeler(values)}
       >
-        {({ errors, touched }) => (
+        {({ errors, touched, values, setFieldValue }) => (
           <Form>
             <InputGroup className="mb-3 d-flex flex-column">
               <div className="d-flex justify-content-between align-items-center pb-2">
@@ -231,25 +246,40 @@ const CardForm = ({ cart, createOrder, user }) => {
                 isInvalid={errors.city && touched.city}
               />
             </InputGroup>
-            <InputGroup className="mb-3 d-flex flex-column">
-              <div className="d-flex justify-content-between align-items-center pb-2">
-                <label htmlFor="state" className="d-block">
-                  State
-                </label>
-                {errors.state && touched.state ? (
-                  <small className="text-danger pt-2">{errors.state}</small>
-                ) : null}
-              </div>
-              <Field
-                as={BootstrapForm.Control}
-                placeholder="Type state name"
-                name="state"
-                isValid={!errors.state && touched.state}
-                type="text"
-                className={`${styles.input} w-100`}
-                isInvalid={errors.state && touched.state}
-              />
-            </InputGroup>
+            {country && (
+              <>
+                <span className="d-block text-start pb-2">Country</span>
+                <Select
+                  searchable
+                  placeholder="Select Country"
+                  required
+                  value={values.country}
+                  onChange={(e) => {
+                    getStateList(e);
+                    setFieldValue("country", e);
+                    setFieldValue("state", "");
+                  }}
+                  data={country}
+                />
+              </>
+            )}
+            {states && values.country && (
+              <>
+                <span className="d-block text-start pb-2 pt-3">State</span>
+                <Select
+                  searchable
+                  placeholder="Select State"
+                  required
+                  value={values.state}
+                  onChange={(e) => {
+                    setFieldValue("state", e);
+                  }}
+                  data={states}
+                  className="mb-3"
+                />
+              </>
+            )}
+
             <InputGroup className="mb-3 d-flex flex-column">
               <div className="d-flex justify-content-between align-items-center pb-2">
                 <label htmlFor="zip" className="d-block">
@@ -269,25 +299,7 @@ const CardForm = ({ cart, createOrder, user }) => {
                 isInvalid={errors.zip && touched.zip}
               />
             </InputGroup>
-            <InputGroup className="mb-3 d-flex flex-column">
-              <div className="d-flex justify-content-between align-items-center pb-2">
-                <label htmlFor="country" className="d-block">
-                  Country
-                </label>
-                {errors.country && touched.country ? (
-                  <small className="text-danger pt-2">{errors.country}</small>
-                ) : null}
-              </div>
-              <Field
-                as={BootstrapForm.Control}
-                placeholder="Type country name"
-                name="country"
-                isValid={!errors.country && touched.country}
-                type="text"
-                className={`${styles.input} w-100`}
-                isInvalid={errors.country && touched.country}
-              />
-            </InputGroup>
+
             {user && user.userType === "coach" ? (
               <>
                 <InputGroup className="mb-3 d-flex flex-column">
@@ -404,6 +416,12 @@ const CardForm = ({ cart, createOrder, user }) => {
 
 const mapStateToProps = (state) => ({
   user: state.auth.user,
+  country: state.order.country,
+  states: state.order.states,
 });
 
-export default connect(mapStateToProps, { createOrder })(CardForm);
+export default connect(mapStateToProps, {
+  createOrder,
+  getCountryList,
+  getStateList,
+})(CardForm);

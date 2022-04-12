@@ -72,3 +72,9 @@ export const CREATE_TYPE_ERROR = "CREATE_TYPE_ERROR";
 export const COACH_MODE = "COACH_MODE";
 export const COACH_MODE_ERROR = "COACH_MODE_ERROR";
 export const CLIENT_MODE = "CLIENT_MODE";
+
+//ORDER REDUCER
+export const SET_ORDER = "SET_ORDER";
+export const SET_COUNTRY = "SET_COUNTRY";
+export const SET_STATES = "SET_STATES";
+export const SET_PRICE = "SET_PRICE";
