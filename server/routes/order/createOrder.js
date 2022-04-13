@@ -7,6 +7,7 @@ router.post('/', fileFetch.single('logo'), async (req, res, next) => {
     try {
         const {userId} = req.user;
         const {
+            type,
             address, 
             phone, 
             email,
@@ -28,6 +29,7 @@ router.post('/', fileFetch.single('logo'), async (req, res, next) => {
         }
 
         const order = await new Order({
+            type,
             userId,
             address, 
             phone, 

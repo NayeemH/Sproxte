@@ -11,6 +11,10 @@ const orderSchema = Schema({
     projectId: {
         type: Schema.Types.ObjectId
     },
+    type: {
+        type: String,
+        default: 'normal'
+    },
     address: {
         type: String,
         required: true,
