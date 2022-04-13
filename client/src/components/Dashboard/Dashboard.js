@@ -121,18 +121,41 @@ const Dashboard = ({ dashboard, projects, fetchProjects }) => {
       </div>
       <Row>
         {projects.items &&
-          projects.items.map((project) => (
-            <Col key={project._id} md={3} className="p-3">
-              <ProductCard
-                title={project.name}
-                img={`${IMAGE_PATH}small/${project.image}`}
-                description={project.createdAt}
-                dashboard={`dashboard/order/${project._id}`}
-                template
-                status={project.status}
-              />
-            </Col>
-          ))}
+          projects.items
+            .filter((item) => item.type === "normal")
+            .map((project) => (
+              <Col key={project._id} md={3} className="p-3">
+                <ProductCard
+                  title={project.name}
+                  img={`${IMAGE_PATH}small/${project.image}`}
+                  description={project.createdAt}
+                  dashboard={`dashboard/order/${project._id}`}
+                  template
+                  status={project.status}
+                />
+              </Col>
+            ))}
+      </Row>
+      <Row>
+        <Col md={12}>
+          <hr />
+          <h3>Guardian Orders</h3>
+        </Col>
+        {projects.items &&
+          projects.items
+            .filter((item) => item.type === "coach")
+            .map((project) => (
+              <Col key={project._id} md={3} className="p-3">
+                <ProductCard
+                  title={project.name}
+                  img={`${IMAGE_PATH}small/${project.image}`}
+                  description={project.createdAt}
+                  dashboard={`dashboard/order/${project._id}`}
+                  template
+                  status={project.status}
+                />
+              </Col>
+            ))}
       </Row>
       <Row>
         <Col className={`d-flex justify-content-end align-items-center py-4`}>
