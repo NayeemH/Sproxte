@@ -64,10 +64,15 @@ const OrderDetails = ({ projects, id, data, changeProjectStatus, role }) => {
         </div>
       )}
 
+      <Row className="">
+        <Col>
+          <Button className="btn_primary">View Order Information</Button>
+        </Col>
+      </Row>
       <Row>
         {projects.products &&
-          projects.products.map((project) => (
-            <Col key={project._id} md={3} className="p-3">
+          projects.products.map((project, i) => (
+            <Col key={i} md={3} className="p-3">
               <ProductCard
                 title={project.name}
                 img={`${IMAGE_PATH}small/${
