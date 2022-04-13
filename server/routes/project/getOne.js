@@ -26,11 +26,12 @@ router.get('/:id', async (req, res, next) => {
             if(!products.length) throw Error('You are not authorized in this product or not exist');
         }
 
-        
+        const projectData = project.toJSON();
+        projectData.products = products;
+
         res.json({
             message: `Product for ${userType}`,
-            status: project.status,
-            products
+            project: projectData
         });
     }
     catch(err) {
