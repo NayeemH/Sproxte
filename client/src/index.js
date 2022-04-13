@@ -7,11 +7,17 @@ import { Provider } from "react-redux";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import { MantineProvider } from "@mantine/core";
+import { ModalsProvider } from "@mantine/modals";
 
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
-      <App />
+      <MantineProvider>
+        <ModalsProvider>
+          <App />
+        </ModalsProvider>
+      </MantineProvider>
     </Provider>
   </React.StrictMode>,
   document.getElementById("root")
