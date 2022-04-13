@@ -16,7 +16,7 @@ const OrderDetails = ({ projects, id, data, changeProjectStatus, role }) => {
   const modals = useModals();
 
   const viewHandeler = () =>
-    modals.openConfirmModal({
+    modals.openModal({
       title: "Order Details",
       centered: true,
       children: (
@@ -32,10 +32,7 @@ const OrderDetails = ({ projects, id, data, changeProjectStatus, role }) => {
           </div>
         </>
       ),
-      labels: { cancel: "No don't delete it" },
-      confirmProps: { color: "red" },
-      onCancel: () => {},
-      onConfirm: () => {},
+      labels: { confirm: "Cancel" },
     });
   return (
     <Container className={styles.wrapper}>
