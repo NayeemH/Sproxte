@@ -3,8 +3,6 @@ const User = require('../../models/user');
 const Product = require('../../models/product');
 const {fileFetch, saveImage} = require('../../lib/imageConverter');
 const sendNotification = require('../../lib/sendNotification');
-const path = require('path');
-const fs = require('fs/promises');
 
 
 router.post('/:id', fileFetch.single('image'), async (req, res, next) => {
@@ -13,7 +11,7 @@ router.post('/:id', fileFetch.single('image'), async (req, res, next) => {
         const {userType, userId} = req.user;
 
         let product;
-        if(userType === 'admin' || userType === 'coach' || userType === 'gurdian') {
+        if(userType === 'admin' || userType === 'coach') {
             const image = await saveImage(req.file);
 
             product = await Product.findOneAndUpdate({_id: id}, {$push: {frontImages: image}});
@@ -28,7 +26,9 @@ router.post('/:id', fileFetch.single('image'), async (req, res, next) => {
         const userIds = users.map(({_id}) => _id.toString());
 
         userIds.push(product.userId.toString());
-        userIds.push(userId);
+        if(product.gurdianId) {
+            userIds.push(product.gurdianId.toString());
+        }
         
         await sendNotification('Gurdian add a image', userIds, product.projectId, product._id);
         
