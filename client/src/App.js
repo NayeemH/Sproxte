@@ -51,6 +51,7 @@ import SharePage from "./views/SharePage/SharePage";
 import Paymentpage from "./views/Paymentpage/Paymentpage";
 import PolicyPage from "./views/PolicyPage/PolicyPage";
 import GReport from "./components/Reports/GReport/GReport";
+import PaymentCompelete from "./views/PaymentCompelete/PaymentCompelete";
 
 function App({ getRefreshToken }) {
   useEffect(() => {
@@ -65,7 +66,7 @@ function App({ getRefreshToken }) {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<LandingPage />} />
-          <Route path="/payment-success/:id" element={<LandingPage />} />
+          <Route path="/payment-success/:id" element={<PaymentCompelete />} />
           <Route path="/refund-policy" element={<RefundPolicyPage />} />
           <Route path="/policy" element={<PolicyPage />} />
           <Route path="/discover" element={<DiscoverPage />} />

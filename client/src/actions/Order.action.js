@@ -47,13 +47,13 @@ export const getStateList = (country) => async (dispatch) => {
   }
 };
 
-const getPaymentDetails = (id) => async (dispatch) => {
+export const getPaymentDetails = (id) => async (dispatch) => {
   try {
     const res = await axios.get(`${BASE_URL}/api/v1/order/${id}`);
     // console.log(res);
     dispatch({
       type: GET_SELECTED_ORDER,
-      payload: { ...res.data },
+      payload: { ...res.data.order },
     });
   } catch (err) {
     console.log(err);
