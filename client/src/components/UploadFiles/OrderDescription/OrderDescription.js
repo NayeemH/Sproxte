@@ -9,8 +9,10 @@ import colors from "../../../config/Colors";
 import { FONT_KEY, IMAGE_PATH } from "../../../constants/URL";
 import { useNavigate } from "react-router-dom";
 import FontPicker from "font-picker-react";
+import { useModals } from "@mantine/modals";
+import { Text } from "@mantine/core";
 
-const OrderDescription = ({ sizes, addToCart, product, color, user }) => {
+const OrderDescription = ({ sizes, addToCart, product, color, user, cart }) => {
   const [selectedFile, setSelectedFile] = useState();
   const [preview, setPreview] = useState();
   const [size, setSize] = useState();
@@ -25,6 +27,8 @@ const OrderDescription = ({ sizes, addToCart, product, color, user }) => {
   const [activeFontFamily, setActiveFontFamily] = useState("Open Sans");
   const fileRef = useRef();
   const navigate = useNavigate();
+
+  const modals = useModals();
 
   useEffect(() => {
     if (
@@ -41,6 +45,23 @@ const OrderDescription = ({ sizes, addToCart, product, color, user }) => {
 
   //Submit handeler
   const submitHandeler = () => {
+    if (user.userType === "coach" && cart.length > 0) {
+      modals.openConfirmModal({
+        title: "You can not order more than one product as a coach at a time",
+        centered: true,
+        children: (
+          <Text size="md">
+            You can not order more than one product as a coach at a time. Please
+            complete the payment for the previous cart order and try again.
+          </Text>
+        ),
+        labels: { confirm: "Go to Cart Page", cancel: "Cancel" },
+        confirmProps: { color: "red" },
+        onCancel: () => {},
+        onConfirm: () => navigate("/cart"),
+      });
+      return;
+    }
     if (!selectedFile) {
       toast.error("Please select a file");
     } else {
@@ -331,6 +352,7 @@ const OrderDescription = ({ sizes, addToCart, product, color, user }) => {
 
 const mapStateToProps = (state) => ({
   user: state.auth.user,
+  cart: state.cart.cart,
 });
 
 export default connect(mapStateToProps, { setSize, addToCart })(

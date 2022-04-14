@@ -79,3 +79,4 @@ export const SET_COUNTRY = "SET_COUNTRY";
 export const SET_STATES = "SET_STATES";
 export const SET_PRICE = "SET_PRICE";
 export const GET_SELECTED_ORDER = "GET_SELECTED_ORDER";
+export const CART_RESET = "CART_RESET";
