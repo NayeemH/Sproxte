@@ -76,7 +76,7 @@ router.post('/:id', fileFetch.single('image'), async (req, res, next) => {
                 secondaryColor: product.secondaryColor,
                 frontImages: [image],   // Store the gurdian image
                 backImages: product.backImages,
-                gurdianEmail: email     // Store the gurdian email
+                gurdianId: email     // Store the gurdian email
             }).save();
 
             const collections = await Collection.find({productId: product._id}, {image: 1});
@@ -88,7 +88,7 @@ router.post('/:id', fileFetch.single('image'), async (req, res, next) => {
                 image: collections[collections.length - 1].image
             }).save();
 
-            await Project.findOneAndUpdate({_id: id}, {$push: {gurdianEmail: user._id}, $inc: {count: -1}});
+            await Project.findOneAndUpdate({_id: id}, {$push: {gurdianId: user._id}, $inc: {count: -1}});
             
             // Send notification
             const users = await User.find({$or: [{userType: 'admin'}, {userType: 'iep'}]}, {_id: 1});
