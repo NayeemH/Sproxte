@@ -36,8 +36,8 @@ const CategoryList = ({ deleteCategory }) => {
               <tr>
                 <th>ID</th>
                 <th>Name</th>
-                <th>Template</th>
-                <th>Thumbnile</th>
+                <th>Mockup</th>
+                <th>Thumbnail</th>
                 <th>Actions</th>
               </tr>
             </thead>

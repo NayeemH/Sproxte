@@ -50,6 +50,7 @@ import ReportsPage from "./views/ReportsPage/ReportsPage";
 import SharePage from "./views/SharePage/SharePage";
 import Paymentpage from "./views/Paymentpage/Paymentpage";
 import PolicyPage from "./views/PolicyPage/PolicyPage";
+import GReport from "./components/Reports/GReport/GReport";
 
 function App({ getRefreshToken }) {
   useEffect(() => {
@@ -87,6 +88,7 @@ function App({ getRefreshToken }) {
               <Route path="users" element={<UserIepPage />} />
               <Route path="users/iep" element={<UserIepPage iep />} />
               <Route path="dashboard" element={<DashboardPage />} />
+              <Route path="google" element={<GReport />} />
               <Route
                 path="dashboard/completed"
                 element={<DashboardPage completed={true} />}

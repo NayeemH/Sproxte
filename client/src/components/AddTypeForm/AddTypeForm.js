@@ -279,7 +279,7 @@ const AddTypeForm = ({ createProductType, getCategoryList, category }) => {
                     <InputGroup className="mb-3 d-flex flex-column">
                       <div className="d-flex justify-content-between align-items-center pb-2">
                         <label htmlFor="discount" className="d-block">
-                          Product discount
+                          Product discount (%)
                         </label>
                       </div>
                       <Field

@@ -139,7 +139,7 @@ const AddCategoryForm = ({ createProductCategory }) => {
                   <InputGroup className="pt-3">
                     <div className="pb-2">
                       <label htmlFor="temp2" className="d-block ">
-                        Thumbnile Image (SVG/PNG)
+                        Thumbnail Image (PNG)
                       </label>
                     </div>
 
