@@ -9,6 +9,12 @@ import statusList from "../../config/StatusList";
 import { changeProjectStatus } from "../../actions/Payment.acton";
 import { useModals } from "@mantine/modals";
 import { MdDateRange } from "react-icons/md";
+import Moment from "react-moment";
+import { BiColorFill } from "react-icons/bi";
+import { GoLocation } from "react-icons/go";
+import { AiOutlineTeam } from "react-icons/ai";
+import { FaIcons } from "react-icons/fa";
+import { saveAs } from "file-saver";
 
 const OrderDetails = ({ projects, id, data, changeProjectStatus, role }) => {
   const [status, setStatus] = useState("");
@@ -17,7 +23,7 @@ const OrderDetails = ({ projects, id, data, changeProjectStatus, role }) => {
 
   const viewHandeler = () =>
     modals.openModal({
-      title: "Order Details",
+      title: "Order Information",
       centered: true,
       children: (
         <>
@@ -28,7 +34,66 @@ const OrderDetails = ({ projects, id, data, changeProjectStatus, role }) => {
               </span>
               <span className="d-block fw-bold ms-1">Date</span>
             </div>
-            <span className="d-block">8 April 2022</span>
+            <span className="d-block">
+              <Moment format="DD MMMM YYYY">
+                {data.createdAt && data.createdAt}
+              </Moment>
+            </span>
+          </div>
+          <div className="d-flex justify-content-between align-items-center border-bottom py-2">
+            <div className="d-flex align-items-center justify-content-center">
+              <span className="d-block pb-1 text_primary">
+                <AiOutlineTeam />
+              </span>
+              <span className="d-block fw-bold ms-1">Team Name</span>
+            </div>
+            <span className="d-block">{data.teamName && data.teamName}</span>
+          </div>
+          <div className="d-flex justify-content-between align-items-center border-bottom py-2">
+            <div className="d-flex align-items-center justify-content-center">
+              <span className="d-block pb-1 text_primary">
+                <GoLocation />
+              </span>
+              <span className="d-block fw-bold ms-1">Location</span>
+            </div>
+            <span className="d-block">{data.location && data.location}</span>
+          </div>
+          <div className="d-flex justify-content-between align-items-center border-bottom py-2">
+            <div className="d-flex align-items-center justify-content-center">
+              <span className="d-block pb-1 text_primary">
+                <BiColorFill />
+              </span>
+              <span className="d-block fw-bold ms-1">Color</span>
+            </div>
+            <span className="d-block">{data.color && data.color}</span>
+          </div>
+          <div className="d-flex justify-content-between align-items-center py-2 ">
+            <div className="d-flex align-items-center justify-content-center">
+              <span className="d-block pb-1 text_primary">
+                <FaIcons />
+              </span>
+              <span className="d-block fw-bold ms-1">Team Logo</span>
+            </div>
+            {data.logo && (
+              <Button
+                className="btn_primary"
+                onClick={() =>
+                  saveAs(
+                    `${IMAGE_PATH}small/${data.logo}`,
+                    `${data.teamName} Logo`
+                  )
+                }
+              >
+                Download
+              </Button>
+            )}
+          </div>
+          <div className="text-center">
+            <img
+              src={` ${IMAGE_PATH}small/${data.logo}`}
+              alt=""
+              style={{ maxWidth: 40, maxHeight: 40 }}
+            />
           </div>
         </>
       ),
@@ -88,13 +153,15 @@ const OrderDetails = ({ projects, id, data, changeProjectStatus, role }) => {
         </div>
       )}
 
-      <Row className="">
-        <Col>
-          <Button className="btn_primary" onClick={() => viewHandeler()}>
-            View Order Information
-          </Button>
-        </Col>
-      </Row>
+      {data.type && data.type === "team" && (
+        <Row className="">
+          <Col>
+            <Button className="btn_primary" onClick={() => viewHandeler()}>
+              View Order Information
+            </Button>
+          </Col>
+        </Row>
+      )}
       <Row>
         {projects.products &&
           projects.products.map((project, i) => (

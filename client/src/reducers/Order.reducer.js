@@ -1,4 +1,5 @@
 import {
+  GET_SELECTED_ORDER,
   SET_COUNTRY,
   SET_ORDER,
   SET_PRICE,
@@ -10,6 +11,7 @@ const initialValues = {
   states: null,
   order: null,
   price: null,
+  selected_order: null,
   loading: true,
 };
 
@@ -25,6 +27,8 @@ const OrderReducer = (state = initialValues, action) => {
       return { ...state, price: payload, loading: false };
     case SET_ORDER:
       return { ...state, order: payload, loading: false };
+    case GET_SELECTED_ORDER:
+      return { ...state, selected_order: payload, loading: false };
     default:
       return state;
   }

@@ -78,6 +78,7 @@ export const createOrder = (values, cart, logo) => async (dispatch) => {
       formData.append("teamName", values.teamName);
       formData.append("location", values.location);
       formData.append("color", values.color);
+      formData.append("type", "team");
     }
 
     const config = {

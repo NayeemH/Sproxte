@@ -65,6 +65,7 @@ function App({ getRefreshToken }) {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<LandingPage />} />
+          <Route path="/payment-success/:id" element={<LandingPage />} />
           <Route path="/refund-policy" element={<RefundPolicyPage />} />
           <Route path="/policy" element={<PolicyPage />} />
           <Route path="/discover" element={<DiscoverPage />} />
