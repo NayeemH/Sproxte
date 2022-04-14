@@ -27,7 +27,7 @@ router.get('/:type', async (req, res, next) => {
             // Setup filder
             const filder = {
                 active,
-                type: 'normal'
+                type: 'team'
             };
             if(status) filder.status = status;
 
@@ -43,7 +43,7 @@ router.get('/:type', async (req, res, next) => {
              // Setup filder
              const filder = {
                 active,
-                type: 'normal',
+                type: 'team',
                 $or: [{userId}, {gurdianIds: userId}]
             };
             if(status) filder.status = status;
