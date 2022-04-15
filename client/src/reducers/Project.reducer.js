@@ -12,17 +12,23 @@ import {
   DELETE_COMMENT_SUCCESS,
   EDIT_FEEDBACK_MODAL_TOGGLE,
   FETCH_DASHBOARD_PROJECT,
+  FETCH_DASHBOARD_TEAM_PROJECT,
+  FETCH_DASHBOARD_TEAM_PROJECT_ERROR,
   GET_INVITED_PROJECT_DETAILS,
   GET_PROJECT_DETAILS,
   GET_STEP,
   GET_STEP_ERROR,
   PROJECT_CREATE_ERROR,
   REMOVE_FAVORITE_PROJECT,
+  TEAM_APPROVED_PROJECT_LOAD,
+  TEAM_APPROVED_PROJECT_LOAD_ERROR,
 } from "../constants/Type";
 
 const initialState = {
   projects: [],
+  team_projects: [],
   approved_projects: [],
+  team_approved_projects: [],
   fav_projects: localStorage.getItem("fav_projects")
     ? localStorage.getItem("fav_projects").split(",")
     : [],
@@ -69,12 +75,25 @@ const projectReducer = (state = initialState, action) => {
         loading: false,
         projects: payload,
       };
+    case FETCH_DASHBOARD_TEAM_PROJECT:
+      return {
+        ...state,
+        loading: false,
+        team_projects: payload,
+      };
     case APPROVED_PROJECT_LOAD:
       return {
         ...state,
         loading: false,
         approved_projects: payload,
       };
+    case TEAM_APPROVED_PROJECT_LOAD:
+      return {
+        ...state,
+        loading: false,
+        approved_projects: payload,
+      };
+
     case ADD_FAVORITE_PROJECT:
     case REMOVE_FAVORITE_PROJECT:
       return {
@@ -139,6 +158,8 @@ const projectReducer = (state = initialState, action) => {
     case GET_STEP_ERROR:
     case PROJECT_CREATE_ERROR:
     case APPROVED_PROJECT_LOAD_ERROR:
+    case TEAM_APPROVED_PROJECT_LOAD_ERROR:
+    case FETCH_DASHBOARD_TEAM_PROJECT_ERROR:
       return {
         ...state,
         loading: false,

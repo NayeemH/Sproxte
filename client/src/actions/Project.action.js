@@ -16,6 +16,8 @@ import {
   EDIT_FEEDBACK_SUCCESS,
   FETCH_DASHBOARD_PROJECT,
   FETCH_DASHBOARD_PROJECT_ERROR,
+  FETCH_DASHBOARD_TEAM_PROJECT,
+  FETCH_DASHBOARD_TEAM_PROJECT_ERROR,
   GET_INVITED_PROJECT_DETAILS,
   GET_PROJECT_DETAILS,
   GET_STEP,
@@ -526,6 +528,35 @@ export const fetchProjects = (page, status) => async (dispatch) => {
   }
 };
 
+// FETCH TEAM PROJECTS FOR DASHBOARD
+export const fetchTeamProjects = (page, status) => async (dispatch) => {
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+    },
+    withCredentials: true,
+  };
+  try {
+    // TODO ::: API CALL
+    const res = await axios.get(
+      `${BASE_URL}/api/v1/project/team/active?page=${page}&limit=12${
+        status !== -1 ? `&status=${status}` : ""
+      }`,
+      config
+    );
+    if (res.status === 200) {
+      dispatch({
+        type: FETCH_DASHBOARD_TEAM_PROJECT,
+        payload: res.data.projects,
+      });
+    }
+  } catch (err) {
+    dispatch({
+      type: FETCH_DASHBOARD_TEAM_PROJECT_ERROR,
+    });
+  }
+};
+
 // FETCH PROJECTS FOR DASHBOARD
 export const fetchCompletedProjects = (page) => async (dispatch) => {
   const config = {
@@ -538,6 +569,33 @@ export const fetchCompletedProjects = (page) => async (dispatch) => {
     // TODO ::: API CALL
     const res = await axios.get(
       `${BASE_URL}/api/v1/project/completed?page=${page}&limit=12`,
+      config
+    );
+    if (res.status === 200) {
+      dispatch({
+        type: APPROVED_PROJECT_LOAD,
+        payload: res.data.projects,
+      });
+    }
+  } catch (err) {
+    dispatch({
+      type: APPROVED_PROJECT_LOAD_ERROR,
+    });
+  }
+};
+
+// FETCH TEAM PROJECTS FOR DASHBOARD
+export const fetchTeamCompletedProjects = (page) => async (dispatch) => {
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+    },
+    withCredentials: true,
+  };
+  try {
+    // TODO ::: API CALL
+    const res = await axios.get(
+      `${BASE_URL}/api/v1/project/team/completed?page=${page}&limit=12`,
       config
     );
     if (res.status === 200) {

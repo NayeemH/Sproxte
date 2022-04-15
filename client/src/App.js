@@ -52,6 +52,7 @@ import Paymentpage from "./views/Paymentpage/Paymentpage";
 import PolicyPage from "./views/PolicyPage/PolicyPage";
 import GReport from "./components/Reports/GReport/GReport";
 import PaymentCompelete from "./views/PaymentCompelete/PaymentCompelete";
+import DashboardTeamPage from "./views/DashboardTeamPage/DashboardTeamPage";
 
 function App({ getRefreshToken }) {
   useEffect(() => {
@@ -90,10 +91,15 @@ function App({ getRefreshToken }) {
               <Route path="users" element={<UserIepPage />} />
               <Route path="users/iep" element={<UserIepPage iep />} />
               <Route path="dashboard" element={<DashboardPage />} />
+              <Route path="team-dashboard" element={<DashboardTeamPage />} />
               <Route path="google" element={<GReport />} />
               <Route
                 path="dashboard/completed"
                 element={<DashboardPage completed={true} />}
+              />
+              <Route
+                path="team-dashboard/completed"
+                element={<DashboardTeamPage completed={true} />}
               />
               <Route
                 path="dashboard/:projectId/:stepId"

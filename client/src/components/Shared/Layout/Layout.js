@@ -5,7 +5,8 @@ import logo from "../../../assets/logoLg.png";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import { VscHome, VscTypeHierarchySub } from "react-icons/vsc";
 import { TiCogOutline } from "react-icons/ti";
-import { BsArrowLeftRight, BsMinecartLoaded } from "react-icons/bs";
+import { BsArrowLeftRight } from "react-icons/bs";
+import { MdPeopleAlt } from "react-icons/md";
 import { IoMdNotificationsOutline } from "react-icons/io";
 import { logout } from "../../../actions/Dashboard.action";
 import { connect } from "react-redux";
@@ -58,6 +59,14 @@ const Layout = ({ logout, children, role, title }) => {
                   <VscHome />
                 </span>
                 <span className={styles.nav__item_text}>Dashboard</span>
+              </NavLink>
+            </div>
+            <div className={styles.nav}>
+              <NavLink to="/team-dashboard" className={styles.nav__item}>
+                <span className={styles.icon}>
+                  <MdPeopleAlt />
+                </span>
+                <span className={styles.nav__item_text}>Team Dashboard</span>
               </NavLink>
             </div>
             {role === "admin" && (
