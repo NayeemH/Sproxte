@@ -9,7 +9,8 @@ import { connect } from "react-redux";
 import colors from "../../config/Colors";
 import { toast } from "react-toastify";
 import { getCountryList, getStateList } from "../../actions/Order.action";
-import { Select } from "@mantine/core";
+import { Select, Text } from "@mantine/core";
+import { useModals } from "@mantine/modals";
 
 const CardForm = ({
   cart,
@@ -22,11 +23,28 @@ const CardForm = ({
 }) => {
   const [loading, setLoading] = useState(false);
   const [logo, setLogo] = useState(undefined);
+  const modals = useModals();
   useEffect(() => {
     if (!country) {
       getCountryList();
     }
   }, []);
+
+  const onClickHandeler = (values) => {
+    modals.openConfirmModal({
+      title: "You Pay Before Approving The Design",
+      centered: true,
+      children: (
+        <Text size="md">
+          <b>Note:</b> You pay before approving the design.
+        </Text>
+      ),
+      labels: { confirm: "Checkout", cancel: "Cancel" },
+      confirmProps: { color: "red" },
+      onCancel: () => {},
+      onConfirm: () => onSubmitHandeler(values),
+    });
+  };
 
   const navigate = useNavigate();
 
@@ -128,7 +146,7 @@ const CardForm = ({
         initialValues={initialValues}
         validationSchema={SignupSchema}
         enableReinitialize
-        onSubmit={(values) => onSubmitHandeler(values)}
+        onSubmit={(values) => onClickHandeler(values)}
       >
         {({ errors, touched, values, setFieldValue }) => (
           <Form>

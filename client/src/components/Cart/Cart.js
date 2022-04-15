@@ -7,13 +7,7 @@ import { createOrder, setPaymentKey } from "../../actions/Payment.acton";
 import CardForm from "./CardForm";
 import styles from "./Cart.module.scss";
 
-const Cart = ({
-  cart,
-  removeFromCart,
-  setPaymentKey,
-
-  user,
-}) => {
+const Cart = ({ cart, removeFromCart, setPaymentKey, user }) => {
   useEffect(() => {
     setPaymentKey();
   }, []);
