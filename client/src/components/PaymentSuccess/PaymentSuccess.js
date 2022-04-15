@@ -14,7 +14,7 @@ const PaymentSuccess = ({ data, country }) => {
     <div className={styles.wrapper}>
       <Card className={`crd shadow`} style={{ maxWidth: "30rem" }}>
         <Card.Header>
-          <Card.Title className="gradient_title">Order Summary</Card.Title>
+          <Card.Title className="text-dark fw-bold">Order Summary</Card.Title>
         </Card.Header>
         <Card.Body className="crd border-none">
           <div className="d-flex justify-content-between align-items-center border-bottom py-2">
