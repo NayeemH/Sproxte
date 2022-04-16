@@ -48,10 +48,10 @@ router.get('/:type', async (req, res, next) => {
             };
             if(status) filder.status = status;
 
-            totalCount = await Project.find(status).countDocuments();
+            totalCount = await Project.find(filder).countDocuments();
 
             projects = await Project
-                .find(status, {__v: 0, userId: 0, active: 0})
+                .find(filder, {__v: 0, userId: 0, active: 0})
                 .sort({_id: -1})
                 .skip(skip)
                 .limit(limit);
@@ -59,7 +59,7 @@ router.get('/:type', async (req, res, next) => {
 
         
         res.json({
-            message: `${type} project for ${userType}`,
+            message: `${type} team project for ${userType}`,
             projects: {
                 pageCount: Math.ceil(totalCount / limit),
                 itemCount: totalCount,
