@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Button, Card, Col, Row, Spinner } from "react-bootstrap";
+import { Button, Card, Col, Form, Row, Spinner } from "react-bootstrap";
 import { connect } from "react-redux";
 import { Link, useParams } from "react-router-dom";
 import { approveStep, getStepDetails } from "../../actions/Project.action";
@@ -11,6 +11,9 @@ import { saveAs } from "file-saver";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import styles from "./StepDetails.module.scss";
 import { toast } from "react-toastify";
+import demoImg from "../../assets/logo.PNG";
+import { useModals } from "@mantine/modals";
+import { Text } from "@mantine/core";
 
 const StepDetails = ({
   step,
@@ -26,6 +29,67 @@ const StepDetails = ({
   const [showForm, setShowForm] = useState(false);
   const [points, setPoints] = useState(null);
   const [hoverFB, setHoverFB] = useState("");
+  const modals = useModals();
+
+  const rejectSubmitHandeler = (e) => {
+    e.preventDefault();
+    let msg = e.target.elements[0].value;
+    let image = e.target.elements[1]?.files[0];
+    if (!msg) {
+      toast.error("Please enter a message");
+      return;
+    }
+    if (image && image.size > 2000000) {
+      toast.error("Image size should be less than 2MB");
+      return;
+    }
+
+    toast.success("Feedback submitted successfully");
+  };
+
+  const rejectHandeler = () => {
+    modals.openModal({
+      title: "Are you sure you want to reject this design?",
+      centered: true,
+      closeOnClickOutside: false,
+      children: (
+        <div style={{ zIndex: 99999 }}>
+          <Text size="md">
+            Please provide why you are rejecting this design and optionally you
+            can upload image for further reference.
+          </Text>
+          <Form className="py-3" onSubmit={rejectSubmitHandeler}>
+            <Form.Group controlId="exampleForm.ControlTextarea1">
+              <Form.Label className="fw-bold">
+                Why you are rejecting this design?
+              </Form.Label>
+              <Form.Control
+                required
+                as="textarea"
+                rows="3"
+                placeholder="Please provide why you are rejecting this design briefly"
+              />
+            </Form.Group>
+            <Form.Group controlId="exampleForm.ControlTextarea1">
+              <Form.Label className="fw-bold pt-3 mb-0">
+                Upload image for further reference
+              </Form.Label>
+              <small className="d-block pb-2">
+                This upload image is optional.
+              </small>
+              <Form.Control type="file" />
+            </Form.Group>
+            <Button className="btn_primary mt-3" type="submit">
+              Reject
+            </Button>
+          </Form>
+        </div>
+      ),
+      labels: { cancel: "Cancel" },
+      onCancel: () => {},
+    });
+    return;
+  };
 
   useEffect(() => {
     getStepDetails(stepId);
@@ -53,6 +117,13 @@ const StepDetails = ({
                     className={`${styles.btn} mx-md-3 mx-0`}
                   >
                     Approve
+                  </Button>
+                  <Button
+                    variant="primary"
+                    onClick={() => rejectHandeler()}
+                    className={`${styles.btn} mx-md-3 mx-0`}
+                  >
+                    Reject
                   </Button>
 
                   {selectedCollectionIndex >= 0 && (
@@ -121,6 +192,61 @@ const StepDetails = ({
               )}
               {step.collections.length === 0 && <Overview />}
             </Row>
+            <Row className="text-dark">
+              <Col md={12}>
+                <hr />
+                <h2>Uploads</h2>
+              </Col>
+              <Col md={12}>
+                <div className="crd crd-body p-3 my-3">
+                  <Row>
+                    <Col>
+                      <span className="d-block fs-5">Upload message</span>
+                      <span className="d-block fs-6 text-secondary">
+                        9:30 on 24 September 2022
+                      </span>
+                    </Col>
+                    <Col className="text-end">
+                      <img
+                        src={demoImg}
+                        alt=""
+                        style={{ height: 50, cursor: "pointer" }}
+                        onClick={() =>
+                          saveAs(
+                            `${IMAGE_PATH}small/${step.layoutImage}`,
+                            `${step.name} - Upload [1]`
+                          )
+                        }
+                      />
+                    </Col>
+                  </Row>
+                </div>
+                {/* BELOW DIV IS FOR DEMO DATA */}
+                <div className="crd crd-body p-3 my-3">
+                  <Row>
+                    <Col>
+                      <span className="d-block fs-5">Upload message</span>
+                      <span className="d-block fs-6 text-secondary">
+                        9:30 on 24 September 2022
+                      </span>
+                    </Col>
+                    <Col className="text-end">
+                      <img
+                        src={demoImg}
+                        alt=""
+                        style={{ height: 50, cursor: "pointer" }}
+                        onClick={() =>
+                          saveAs(
+                            `${IMAGE_PATH}small/${step.layoutImage}`,
+                            `${step.name} - Upload [1]`
+                          )
+                        }
+                      />
+                    </Col>
+                  </Row>
+                </div>
+              </Col>
+            </Row>
           </Col>
           {role === "admin" || role === "iep" ? (
             <>
@@ -148,13 +274,13 @@ const StepDetails = ({
                       </Col>
                       <Col xs={6}>
                         <span className="d-block fs-5">
-                          <span className="fw-bold">Price :</span> {step.price}
+                          <span className="fw-bold">Price :</span> ${step.price}
                         </span>
                       </Col>
                       <Col xs={6}>
                         <span className="d-block fs-5">
                           <span className="fw-bold">Discount :</span>{" "}
-                          {step.discount}
+                          {step.discount}%
                         </span>
                       </Col>
                       <Col xs={6}>

@@ -41,7 +41,7 @@ const UploadFiles = ({ product }) => {
                 discount={product.discount}
               />
             )}
-            {product.imageData && product.imageData.length > 0 && (
+            {/* {product.imageData && product.imageData.length > 0 && (
               <>
                 <h5 className="mt-5">Select Color</h5>
                 <small>Image will change based on the color.</small>
@@ -58,7 +58,7 @@ const UploadFiles = ({ product }) => {
                   ))}
                 </div>
               </>
-            )}
+            )} */}
           </Col>
           <Col md={7} className="py-md-5 py-3">
             <OrderDescription

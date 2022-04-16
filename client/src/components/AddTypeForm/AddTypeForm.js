@@ -75,13 +75,13 @@ const AddTypeForm = ({ createProductType, getCategoryList, category }) => {
   const onSubmitHandeler = async (values) => {
     if (selectedFile) {
       setIsLoading(true);
-      variant.forEach((item) => {
-        if (!item.image || item.color === "") {
-          toast.error("Please select image for all color");
-          setIsLoading(false);
-          return;
-        }
-      });
+      // variant.forEach((item) => {
+      //   if (!item.image || item.color === "") {
+      //     toast.error("Please select image for all color");
+      //     setIsLoading(false);
+      //     return;
+      //   }
+      // });
       let check = await createProductType(
         values,
         selectedFile,
@@ -319,16 +319,12 @@ const AddTypeForm = ({ createProductType, getCategoryList, category }) => {
                   />
                   <small>Please insert comma separated sizes.</small>
                 </InputGroup>
-
+                {/* <>
                 {variant.map((item, i) => (
                   <Row className="pb-3">
                     <Col xs={5}>
                       <InputGroup className=" d-flex flex-column">
-                        {/* <div className="d-flex justify-content-between align-items-center pb-2">
-                          <label htmlFor="quantity" className="d-block">
-                            Color
-                          </label>
-                        </div> */}
+                        
                         <BootstrapForm.Control
                           placeholder="Type Color name or HEX code"
                           type="text"
@@ -423,7 +419,7 @@ const AddTypeForm = ({ createProductType, getCategoryList, category }) => {
                       )}
                     </Col>
                   </Row>
-                ))}
+                ))}</> 
                 <Row className="pb-4">
                   <Col xs={12}>
                     <span
@@ -441,12 +437,12 @@ const AddTypeForm = ({ createProductType, getCategoryList, category }) => {
                       <AiOutlinePlus /> Add Type
                     </span>
                   </Col>
-                </Row>
+                </Row>*/}
                 <div className="">
                   <InputGroup className="">
                     <div className="pb-2">
                       <label htmlFor="temp" className="d-block ">
-                        Mockup Template Front Image
+                        Mockup Template Image
                       </label>
                     </div>
 
@@ -461,25 +457,6 @@ const AddTypeForm = ({ createProductType, getCategoryList, category }) => {
                       />
                     </div>
                   </InputGroup>
-                  {/* 
-                  <InputGroup className="pt-3">
-                    <div className="pb-2">
-                      <label htmlFor="temp2" className="d-block ">
-                        Mockup Template Back Image (optional)
-                      </label>
-                    </div>
-
-                    <div className="w-100">
-                      <input
-                        ref={fileRef2}
-                        type="file"
-                        name="image2"
-                        className="form-control w-100"
-                        onChange={onSelectFile2}
-                        id="temp2"
-                      />
-                    </div>
-                  </InputGroup> */}
                 </div>
 
                 <div className="pt-3">

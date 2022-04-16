@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { connect, useDispatch, useSelector } from "react-redux";
+import { connect } from "react-redux";
 import { useParams } from "react-router-dom";
 import { getProjectDetails } from "../../actions/Project.action";
 import OrderDetails from "../../components/OrderDetails/OrderDetails";

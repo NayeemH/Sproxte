@@ -86,15 +86,17 @@ const PaymentSuccess = ({ data, country }) => {
             </div>
             <span className="d-block">{data.zip}</span>
           </div>
-          <div className="d-flex justify-content-between align-items-center border-bottom py-2">
-            <div className="d-flex align-items-center justify-content-center">
-              <span className="d-block pb-1 text_primary">
-                <BiCurrentLocation />
-              </span>
-              <span className="d-block fw-bold ms-1">Location</span>
+          {data.location && (
+            <div className="d-flex justify-content-between align-items-center border-bottom py-2">
+              <div className="d-flex align-items-center justify-content-center">
+                <span className="d-block pb-1 text_primary">
+                  <BiCurrentLocation />
+                </span>
+                <span className="d-block fw-bold ms-1">Location</span>
+              </div>
+              <span className="d-block">{data.location}</span>
             </div>
-            <span className="d-block">{data.location}</span>
-          </div>
+          )}
           <div className="d-flex justify-content-between align-items-center pb-2 pt-4">
             <div className="d-flex align-items-center justify-content-center">
               <span className="d-block pb-1 text_primary">

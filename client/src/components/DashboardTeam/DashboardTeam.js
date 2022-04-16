@@ -52,7 +52,7 @@ const DashboardTeam = ({ dashboard, projects, fetchTeamProjects }) => {
   return (
     <Container className={styles.wrapper}>
       <div className="d-flex justify-content-between align-items-center flex-md-row flex-column">
-        <h3 className="pb-3">Running Orders</h3>
+        <h3 className="pb-3">Team Orders</h3>
 
         <div className="d-flex flex-column flex-md-row justify-content-between align-items-center">
           <div className="d-flex">
@@ -119,30 +119,9 @@ const DashboardTeam = ({ dashboard, projects, fetchTeamProjects }) => {
           </Link>
         </div>
       </div>
-      <Row>
-        {projects.items &&
-          projects.items
-            .filter((item) => item.type === "normal")
-            .map((project) => (
-              <Col key={project._id} md={3} className="p-3">
-                <ProductCard
-                  title={project.name}
-                  img={`${IMAGE_PATH}small/${project.image}`}
-                  description={project.createdAt}
-                  dashboard={`dashboard/order/${project._id}`}
-                  template
-                  status={project.status}
-                />
-              </Col>
-            ))}
-      </Row>
       {projects.items &&
         projects.items.filter((item) => item.type === "team").length > 0 && (
           <Row>
-            <Col md={12}>
-              <hr />
-              <h3>Team Orders</h3>
-            </Col>
             {projects.items &&
               projects.items
                 .filter((item) => item.type === "team")

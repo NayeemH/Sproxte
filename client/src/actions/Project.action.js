@@ -385,12 +385,15 @@ export const createProductType =
       }
     }
 
-    if (varient.length > 0) {
-      for (let i = 0; i < varient.length; i++) {
-        formData.append(`colors`, `#${varient[i].color.split("#")[1]}`);
-        formData.append(`images`, varient[i].image);
-      }
-    }
+    // if (varient.length > 0) {
+    //   for (let i = 0; i < varient.length; i++) {
+    //     formData.append(`colors`, `#${varient[i].color.split("#")[1]}`);
+    //     formData.append(`images`, varient[i].image);
+    //   }
+    // }
+
+    formData.append(`colors`, `#000000`);
+    formData.append(`images`, file);
 
     values.size
       .trim()
