@@ -76,7 +76,7 @@ router.post('/:id', fileFetch.single('image'), async (req, res, next) => {
                 secondaryColor: product.secondaryColor,
                 frontImages: [image],   // Store the gurdian image
                 backImages: product.backImages,
-                gurdianId: email     // Store the gurdian email
+                gurdianNotifications: []     // Store the gurdian email
             }).save();
 
             const collections = await Collection.find({productId: product._id}, {image: 1});

@@ -15,7 +15,8 @@ router.get('/:id', async (req, res, next) => {
             product = await Product.findOne(
                 {_id: id}, 
                 {__v: 0}
-            );
+            )
+            .populate('gurdianNotifications', 'message image createdAt updatedAt');
 
             collections = await Collection
                 .find({productId: product._id}, {__v: 0})
@@ -25,7 +26,8 @@ router.get('/:id', async (req, res, next) => {
             product = await Product.findOne(
                 {_id: id, userId}, 
                 {__v: 0}
-            );
+            )
+            .populate('gurdianNotifications', 'message image createdAt updatedAt');
 
             if(!product) throw Error('You are not authorized in this product or not exist');
 
