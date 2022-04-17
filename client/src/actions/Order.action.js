@@ -1,5 +1,11 @@
 import axios from "axios";
-import { GET_SELECTED_ORDER, SET_COUNTRY, SET_STATES } from "../constants/Type";
+import {
+  GET_SELECTED_ORDER,
+  ORDER_REJECT,
+  ORDER_REJECT_ERROR,
+  SET_COUNTRY,
+  SET_STATES,
+} from "../constants/Type";
 import { BASE_URL, countryKey } from "../constants/URL";
 
 export const getCountryList = () => async (dispatch) => {
@@ -57,5 +63,37 @@ export const getPaymentDetails = (id) => async (dispatch) => {
     });
   } catch (err) {
     console.log(err);
+  }
+};
+
+export const rejectOrder = (values, image, id) => async (dispatch) => {
+  try {
+    const formData = new FormData();
+    formData.append("message", values.message);
+    if (image) {
+      formData.append("image", image);
+    }
+
+    const config = {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+      withCredentials: true,
+    };
+
+    const res = await axios.post(
+      `${BASE_URL}/api/v1/product/gurdianReject/${id}`,
+      formData,
+      config
+    );
+    // console.log(res);
+    dispatch({
+      type: ORDER_REJECT,
+    });
+  } catch (err) {
+    console.log(err);
+    dispatch({
+      type: ORDER_REJECT_ERROR,
+    });
   }
 };
