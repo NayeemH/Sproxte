@@ -73,8 +73,9 @@ const productSchema = Schema({
     backImages: {
         type: Array,
     },
-    gurdianId: {
-        type: String
+    gurdianNotifications: {
+        type: [Schema.Types.ObjectId],
+        ref: 'gurdianNotification'
     }
 }, {timestamps: true});
 
