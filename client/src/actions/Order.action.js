@@ -1,4 +1,5 @@
 import axios from "axios";
+import { toast } from "react-toastify";
 import {
   GET_SELECTED_ORDER,
   ORDER_REJECT,
@@ -7,6 +8,7 @@ import {
   SET_STATES,
 } from "../constants/Type";
 import { BASE_URL, countryKey } from "../constants/URL";
+import { getStepDetails } from "./Project.action";
 
 export const getCountryList = () => async (dispatch) => {
   try {
@@ -66,10 +68,10 @@ export const getPaymentDetails = (id) => async (dispatch) => {
   }
 };
 
-export const rejectOrder = (values, image, id) => async (dispatch) => {
+export const rejectOrder = (message, image, id) => async (dispatch) => {
   try {
     const formData = new FormData();
-    formData.append("message", values.message);
+    formData.append("message", message);
     if (image) {
       formData.append("image", image);
     }
@@ -90,10 +92,16 @@ export const rejectOrder = (values, image, id) => async (dispatch) => {
     dispatch({
       type: ORDER_REJECT,
     });
+
+    toast.success("Order Rejected Successfully");
+    dispatch(getStepDetails(id));
+    return true;
   } catch (err) {
     console.log(err);
     dispatch({
       type: ORDER_REJECT_ERROR,
     });
+
+    return false;
   }
 };

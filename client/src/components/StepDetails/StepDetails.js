@@ -14,6 +14,8 @@ import { toast } from "react-toastify";
 import demoImg from "../../assets/logo.PNG";
 import { useModals } from "@mantine/modals";
 import { Text } from "@mantine/core";
+import { rejectOrder } from "../../actions/Order.action";
+import Moment from "react-moment";
 
 const StepDetails = ({
   step,
@@ -22,6 +24,7 @@ const StepDetails = ({
   selectedCollectionIndex,
   role,
   approveStep,
+  rejectOrder,
 }) => {
   const { stepId, projectId } = useParams();
 
@@ -31,7 +34,7 @@ const StepDetails = ({
   const [hoverFB, setHoverFB] = useState("");
   const modals = useModals();
 
-  const rejectSubmitHandeler = (e) => {
+  const rejectSubmitHandeler = async (e) => {
     e.preventDefault();
     let msg = e.target.elements[0].value;
     let image = e.target.elements[1]?.files[0];
@@ -43,8 +46,11 @@ const StepDetails = ({
       toast.error("Image size should be less than 2MB");
       return;
     }
+    let checkReject = await rejectOrder(msg, image, stepId);
 
-    toast.success("Feedback submitted successfully");
+    if (checkReject) {
+      modals.closeAll();
+    }
   };
 
   const rejectHandeler = () => {
@@ -198,53 +204,35 @@ const StepDetails = ({
                 <h2>Uploads</h2>
               </Col>
               <Col md={12}>
-                <div className="crd crd-body p-3 my-3">
-                  <Row>
-                    <Col>
-                      <span className="d-block fs-5">Upload message</span>
-                      <span className="d-block fs-6 text-secondary">
-                        9:30 on 24 September 2022
-                      </span>
-                    </Col>
-                    <Col className="text-end">
-                      <img
-                        src={demoImg}
-                        alt=""
-                        style={{ height: 50, cursor: "pointer" }}
-                        onClick={() =>
-                          saveAs(
-                            `${IMAGE_PATH}small/${step.layoutImage}`,
-                            `${step.name} - Upload [1]`
-                          )
-                        }
-                      />
-                    </Col>
-                  </Row>
-                </div>
-                {/* BELOW DIV IS FOR DEMO DATA */}
-                <div className="crd crd-body p-3 my-3">
-                  <Row>
-                    <Col>
-                      <span className="d-block fs-5">Upload message</span>
-                      <span className="d-block fs-6 text-secondary">
-                        9:30 on 24 September 2022
-                      </span>
-                    </Col>
-                    <Col className="text-end">
-                      <img
-                        src={demoImg}
-                        alt=""
-                        style={{ height: 50, cursor: "pointer" }}
-                        onClick={() =>
-                          saveAs(
-                            `${IMAGE_PATH}small/${step.layoutImage}`,
-                            `${step.name} - Upload [1]`
-                          )
-                        }
-                      />
-                    </Col>
-                  </Row>
-                </div>
+                {step &&
+                  step.gurdianNotifications &&
+                  step.gurdianNotifications.map((item) => (
+                    <div className="crd crd-body p-3 my-3">
+                      <Row>
+                        <Col>
+                          <span className="d-block fs-5">{item.message}</span>
+                          <span className="d-block fs-6 text-secondary">
+                            <Moment format="hh:mm on DD MMMM YYYY ">
+                              {item.createdAt}
+                            </Moment>
+                          </span>
+                        </Col>
+                        <Col className="text-end">
+                          <img
+                            src={`${IMAGE_PATH}small/${item.image}`}
+                            alt=""
+                            style={{ height: 50, cursor: "pointer" }}
+                            onClick={() =>
+                              saveAs(
+                                `${IMAGE_PATH}small/${item.image}`,
+                                `${step.name} - Upload [1]`
+                              )
+                            }
+                          />
+                        </Col>
+                      </Row>
+                    </div>
+                  ))}
               </Col>
             </Row>
           </Col>
@@ -434,6 +422,8 @@ const mapStateToProps = (state) => ({
   loading: state.project.loading,
 });
 
-export default connect(mapStateToProps, { getStepDetails, approveStep })(
-  StepDetails
-);
+export default connect(mapStateToProps, {
+  getStepDetails,
+  approveStep,
+  rejectOrder,
+})(StepDetails);
