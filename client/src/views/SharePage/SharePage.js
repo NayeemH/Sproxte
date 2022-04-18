@@ -17,7 +17,10 @@ const SharePage = ({ product, getTemplateShare }) => {
     <div>
       <LandingSidebar />
       <Nav />
-      <ReadyUpload product={{ pngImageFront: product.image, ...product }} />
+      <ReadyUpload
+        type="link"
+        product={{ pngImageFront: product.image, ...product }}
+      />
       <Footer />
     </div>
   );

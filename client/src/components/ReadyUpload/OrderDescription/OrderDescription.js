@@ -9,7 +9,14 @@ import { useModals } from "@mantine/modals";
 import { switchMode } from "../../../actions/Coach.action";
 import { Text } from "@mantine/core";
 
-const OrderDescription = ({ sizes, addToCart, product, role, switchMode }) => {
+const OrderDescription = ({
+  sizes,
+  addToCart,
+  product,
+  role,
+  switchMode,
+  type,
+}) => {
   const [selectedFile, setSelectedFile] = useState();
   const [preview, setPreview] = useState();
   const [size, setSize] = useState();
@@ -75,7 +82,7 @@ const OrderDescription = ({ sizes, addToCart, product, role, switchMode }) => {
         quantity,
         product,
         undefined,
-        "template"
+        type && type === "link" ? "link" : "template"
       );
       resetlHandeler();
       setDescription("");

@@ -179,10 +179,20 @@ const OrderDetails = ({ projects, id, data, changeProjectStatus, role }) => {
                 dashboard={`dashboard/${
                   project.type === "template" ? "product" : `${id}`
                 }/${project._id}`}
-                status={project.type === "template" ? "ready made" : "template"}
+                status={
+                  project.type === "template"
+                    ? "ready made"
+                    : project.type === "link"
+                    ? "Ready Made"
+                    : "template"
+                }
                 bottom={project.status}
                 tags={[`x${project.count}`, `$${project.price}`]}
-                hidden={project.type === "template" ? true : false}
+                hidden={
+                  project.type === "template" || project.type === "link"
+                    ? true
+                    : false
+                }
               />
             </Col>
           ))}
