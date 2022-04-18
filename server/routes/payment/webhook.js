@@ -158,7 +158,7 @@ const paymentHandle = async (object) => {
         ...customOrders.map((order, i) => new Product({
             userId,
             projectId: project._id,
-            typeId: order.templateId,
+            typeId: order.productTypeId,
             type: order.type,
             name: customs[i].name,
             image: {
@@ -184,7 +184,7 @@ const paymentHandle = async (object) => {
         ...teamOrders.map((order, i) => new Product({
             userId,
             projectId: project._id,
-            typeId: order.templateId,
+            typeId: order.productTypeId,
             type: order.type,
             name: teams[i].name,
             image: {
