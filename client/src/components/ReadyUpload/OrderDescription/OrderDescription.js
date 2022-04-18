@@ -40,7 +40,7 @@ const OrderDescription = ({ sizes, addToCart, product, role, switchMode }) => {
 
   //Submit handeler
   const submitHandeler = () => {
-    if (role === "coach") {
+    if (role && role === "coach") {
       modals.openConfirmModal({
         title: "Switch to client mode",
         centered: true,
@@ -154,7 +154,7 @@ const OrderDescription = ({ sizes, addToCart, product, role, switchMode }) => {
 };
 
 const mapStateToProps = (state) => ({
-  role: state.auth.user.userType,
+  role: state.auth.user?.userType,
 });
 
 export default connect(mapStateToProps, { setSize, addToCart, switchMode })(

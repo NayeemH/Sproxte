@@ -20,6 +20,7 @@ const ReadyUpload = ({ product }) => {
             />
           </Col>
           <Col md={7} className="py-md-5 py-3">
+            <h4>Sold {product.sellCount}</h4>
             <OrderDescription sizes={product.sizes} product={product} />
           </Col>
         </Row>

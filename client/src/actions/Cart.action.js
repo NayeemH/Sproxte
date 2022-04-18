@@ -42,6 +42,21 @@ export const getTemplate = (id) => async (dispatch) => {
   }
 };
 
+// GET TEMPLATE
+export const getTemplateShare = (id) => async (dispatch) => {
+  try {
+    const res = await axios.get(`${BASE_URL}/api/v1/share/${id}`);
+    // console.log(res);
+    dispatch({
+      type: GET_TEMPLATE_DETAILS,
+      payload: { ...res.data },
+    });
+  } catch (err) {
+    dispatch({ type: TEMPLATE_ERROR });
+    console.log(err);
+  }
+};
+
 // SET SIZE
 export const setSize = (size) => (dispatch) => {
   console.log(types);
