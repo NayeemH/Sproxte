@@ -18,6 +18,9 @@ const order = require('./order');
 const payment = require('./payment');
 const notification = require('./notification');
 const contactUs = require('./ContactUs');
+const share = require('./share');
+
+
 
 // User Register and login function 
 router.use('/auth', user);
@@ -64,6 +67,8 @@ router.use('/notification', isAuth, notification);
 // Contact us
 router.use('/contact', contactUs);
 
+// Share
+router.use('/share', share);
 
 
 module.exports = router;

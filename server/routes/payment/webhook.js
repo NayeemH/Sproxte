@@ -63,19 +63,27 @@ const paymentHandle = async (object) => {
     // Filter teams
     const teamOrders = order.orders.filter(order => order.type === 'team');
 
+    // Filter links
+    const linkOrders = order.orders.filter(order => order.type === 'link');
+
     // Get data of the templates
     const templates = await Promise.all(
-        templateOrders.map(order => Template.findOne({_id: order.templateId}))
+        templateOrders.map(order => Template.findOneAndUpdate({_id: order.templateId}, {$inc: {sellCount: 1}}))
     );
 
     // Get data of the customs
     const customs = await Promise.all(
-        customOrders.map(order => ProductType.findOne({_id: order.productTypeId}))
+        customOrders.map(order => ProductType.findOneAndUpdate({_id: order.productTypeId}, {$inc: {sellCount: 1}}))
     );
 
     // Get data of the teams
     const teams = await Promise.all(
-        teamOrders.map(order => ProductType.findOne({_id: order.productTypeId}))
+        teamOrders.map(order => ProductType.findOneAndUpdate({_id: order.productTypeId}, {$inc: {sellCount: 1}}))
+    );
+
+    // Get data of the links
+    const links = await Promise.all(
+        linkOrders.map(order => Product.findOneAndUpdate({_id: order.productId}, {$inc: {sellCount: 1}}))
     );
 
 
@@ -84,6 +92,10 @@ const paymentHandle = async (object) => {
     if(templateOrders.length) {
         projectName = templates[0].name;
         projectImage = templates[0].pngImageFront;
+    }
+    else if(linkOrders.length) {
+        projectName = links[0].name;
+        projectImage = links[0].image.front;
     }
     else if(customOrders.length) {
         projectName = customs[0].name;
@@ -125,6 +137,18 @@ const paymentHandle = async (object) => {
             },
             price: templates[i].price,
             discount: templates[i].discount,
+            count: order.count,
+            size: order.size
+        }).save()),
+        ...linkOrders.map((order, i) => new Product({
+            userId,
+            projectId: project._id,
+            typeId: order.productId,
+            type: order.type,
+            name: links[i].name,
+            image: links[i].image,
+            price: links[i].price,
+            discount: links[i].discount,
             count: order.count,
             size: order.size
         }).save()),
@@ -183,7 +207,7 @@ const paymentHandle = async (object) => {
 
     await Promise.all(
         products.map(async product => {
-            if(product.type === 'template') return;
+            if(product.type === 'template' || product.type === 'link') return;
 
             const buffers = await Promise.all([
                 fs.readFile(path.resolve(`data/image/small/${product.colorImage}`)),
