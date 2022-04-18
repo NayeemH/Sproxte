@@ -104,7 +104,7 @@ const paymentHandle = async (object) => {
     else if(teamOrders.length) {
         projectName = teams[0].name;
         projectImage = teams[0].pngImageFront;
-        type = teams[0].type;
+        type = teamOrders[0].type;
         count = teams[0].count;
     }
 
