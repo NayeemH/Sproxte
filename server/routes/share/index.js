@@ -12,8 +12,8 @@ router.get('/:link', async (req, res, next) => {
             {_id: link}, 
             {name: 1, price: 1, discount: 1, sellCount: 1, typeId: 1}
         );
-        
-        const productType = await ProductType.findOne({_id: typeId}, {size: 1});
+
+        const productType = await ProductType.findOne({_id: product.typeId}, {size: 1});
 
         if(!product) throw Error('Product Not found');
         
