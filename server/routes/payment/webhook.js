@@ -92,14 +92,17 @@ const paymentHandle = async (object) => {
     if(templateOrders.length) {
         projectName = templates[0].name;
         projectImage = templates[0].pngImageFront;
+        count = parseInt(teamOrders[0].count);
     }
     else if(linkOrders.length) {
         projectName = links[0].name;
         projectImage = links[0].image.front;
+        count = parseInt(teamOrders[0].count);
     }
     else if(customOrders.length) {
         projectName = customs[0].name;
         projectImage = customs[0].pngImageFront;
+        count = parseInt(teamOrders[0].count);
     }
     else if(teamOrders.length) {
         projectName = teams[0].name;
