@@ -93,13 +93,20 @@ export const createOrder = (values, cart, logo) => async (dispatch) => {
       for (let i = 0; i < cart.length; i++) {
         let frmData = new FormData();
         let item = cart[i];
+        if (logo) {
+          frmData.append("type", "team");
+        } else {
+          frmData.append("type", item.type);
+        }
 
-        frmData.append("type", item.type);
         if (item.type === "custom") {
           frmData.append("productTypeId", item.product._id);
         }
         if (item.type === "template") {
           frmData.append("templateId", item.product._id);
+        }
+        if (item.type === "link") {
+          frmData.append("productId", item.product._id);
         }
         frmData.append("count", item.quantity);
         if (item.description) {

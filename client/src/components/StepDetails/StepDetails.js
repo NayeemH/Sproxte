@@ -13,7 +13,7 @@ import styles from "./StepDetails.module.scss";
 import { toast } from "react-toastify";
 import demoImg from "../../assets/logo.PNG";
 import { useModals } from "@mantine/modals";
-import { Text } from "@mantine/core";
+import { Text, TextInput } from "@mantine/core";
 import { rejectOrder } from "../../actions/Order.action";
 import Moment from "react-moment";
 
@@ -97,6 +97,21 @@ const StepDetails = ({
     return;
   };
 
+  const showLink = (link) => {
+    modals.openModal({
+      title: "Share link",
+      centered: true,
+      closeOnClickOutside: false,
+      children: (
+        <div style={{ zIndex: 99999 }} className="pb-4">
+          <TextInput readOnly label="URL" value={link} />
+        </div>
+      ),
+      labels: { cancel: "Cancel" },
+      onCancel: () => {},
+    });
+  };
+
   useEffect(() => {
     getStepDetails(stepId);
   }, [stepId]);
@@ -134,8 +149,11 @@ const StepDetails = ({
 
                   {selectedCollectionIndex >= 0 && (
                     <CopyToClipboard
-                      text={`${window.location.origin}/share/${step.collections[selectedCollectionIndex].image}`}
-                      onCopy={() => toast.success("Link copied to clipboard.")}
+                      text={`${window.location.origin}/share/${step._id}`}
+                      onCopy={() =>
+                        toast.success("Link copied to clipboard.") &&
+                        showLink(`${window.location.origin}/share/${step._id}`)
+                      }
                     >
                       <Button
                         variant="primary"
