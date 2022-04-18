@@ -105,7 +105,7 @@ const paymentHandle = async (object) => {
         projectName = teams[0].name;
         projectImage = teams[0].pngImageFront;
         type = 'team';
-        count = teamOrders[0].count;
+        count = parseInt(teamOrders[0].count) - 1;
     }
 
     // Create the project
