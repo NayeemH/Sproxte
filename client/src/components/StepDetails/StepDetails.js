@@ -212,6 +212,7 @@ const StepDetails = ({
                   setPoints={setPoints}
                   hoverFB={hoverFB}
                   setHoverFB={setHoverFB}
+                  sellCount={step.sellCount}
                 />
               )}
               {step.collections.length === 0 && <Overview />}

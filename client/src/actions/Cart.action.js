@@ -46,10 +46,10 @@ export const getTemplate = (id) => async (dispatch) => {
 export const getTemplateShare = (id) => async (dispatch) => {
   try {
     const res = await axios.get(`${BASE_URL}/api/v1/share/${id}`);
-    // console.log(res);
+    console.log(res);
     dispatch({
       type: GET_TEMPLATE_DETAILS,
-      payload: { ...res.data },
+      payload: res.data.data,
     });
   } catch (err) {
     dispatch({ type: TEMPLATE_ERROR });

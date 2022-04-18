@@ -8,7 +8,7 @@ import Nav from "../../components/Nav/Nav";
 import { ReadyUpload } from "../../components/ReadyUpload";
 import styles from "./SharePage.module.scss";
 
-const SharePage = ({ product }) => {
+const SharePage = ({ product, getTemplateShare }) => {
   const { id } = useParams();
   useEffect(() => {
     getTemplateShare(id);
@@ -17,7 +17,7 @@ const SharePage = ({ product }) => {
     <div>
       <LandingSidebar />
       <Nav />
-      <ReadyUpload product={product} />
+      <ReadyUpload product={{ pngImageFront: product.image, ...product }} />
       <Footer />
     </div>
   );
