@@ -1,6 +1,7 @@
 const router = require('express').Router();
 const Product = require('../../models/product');
 const Collection = require('../../models/collection');
+const ProductType = require('../../models/productType');
 
 
 router.get('/:link', async (req, res, next) => {
@@ -9,12 +10,17 @@ router.get('/:link', async (req, res, next) => {
 
         const product = await Product.findOne(
             {_id: link}, 
-            {name: 1, price: 1, discount: 1, sellCount: 1}
+            {name: 1, price: 1, discount: 1, sellCount: 1, typeId: 1}
         );
+        
+        const productType = await ProductType.findOne({_id: typeId}, {size: 1});
 
         if(!product) throw Error('Product Not found');
         
         const productData = product.toJSON();
+        productData.type = 'link';
+        productData.size = productType.size;
+        
 
         const collections = await Collection.find({productId: product._id}, {image: 1});
 

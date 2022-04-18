@@ -80,6 +80,9 @@ const productSchema = Schema({
     sellCount: {
         type: Number,
         default: 0
+    },
+    orderColor: {
+        type: String
     }
 }, {timestamps: true});
 
