@@ -76,6 +76,10 @@ const productSchema = Schema({
     gurdianNotifications: {
         type: [Schema.Types.ObjectId],
         ref: 'gurdianNotification'
+    },
+    sellCount: {
+        type: Number,
+        default: 0
     }
 }, {timestamps: true});
 
