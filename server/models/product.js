@@ -83,6 +83,9 @@ const productSchema = Schema({
     },
     orderColor: {
         type: String
+    },
+    productFont: {
+        type: String
     }
 }, {timestamps: true});
 
