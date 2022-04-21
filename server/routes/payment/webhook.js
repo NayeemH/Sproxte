@@ -88,7 +88,7 @@ const paymentHandle = async (object) => {
 
 
     // Get project name and image
-    let projectName, projectImage, type, count;
+    let projectName, projectImage, type, count, sizes;
     if(templateOrders.length) {
         projectName = templates[0].name;
         projectImage = templates[0].pngImageFront;
@@ -108,6 +108,7 @@ const paymentHandle = async (object) => {
         projectName = teams[0].name;
         projectImage = teams[0].pngImageFront;
         type = 'team';
+        sizes = teams[0].sizes;
         count = parseInt(teamOrders[0].count) - 1;
     }
 
@@ -120,6 +121,7 @@ const paymentHandle = async (object) => {
         price: order.price,
         type,
         count,
+        sizes,
         logo: order.logo,
         teamName: order.teamName,
         location: order.location,
