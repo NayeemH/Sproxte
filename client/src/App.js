@@ -106,6 +106,10 @@ function App({ getRefreshToken }) {
                 element={<StepDetailsPage />}
               />
               <Route
+                path="team-dashboard/:projectId/:stepId"
+                element={<StepDetailsPage />}
+              />
+              <Route
                 path="dashboard/:projectId/:stepId/upload"
                 element={<UploadStepImagePage />}
               />
@@ -119,7 +123,7 @@ function App({ getRefreshToken }) {
               />
               <Route
                 path="team-dashboard/order/:id"
-                element={<ProjectDetailsPage />}
+                element={<ProjectDetailsPage team={true} />}
               />
               <Route path="report" element={<ReportsPage />} />
               <Route path="add-iep" element={<AddUserPage />} />

@@ -5,7 +5,7 @@ import { getProjectDetails } from "../../actions/Project.action";
 import OrderDetails from "../../components/OrderDetails/OrderDetails";
 import Layout from "../../components/Shared/Layout/Layout";
 
-const ProjectDetailsPage = ({ getProjectDetails, project }) => {
+const ProjectDetailsPage = ({ getProjectDetails, project, team }) => {
   const { id } = useParams();
 
   useEffect(() => {
@@ -17,7 +17,7 @@ const ProjectDetailsPage = ({ getProjectDetails, project }) => {
       style={{ minHeight: "100vh", position: "relative" }}
     >
       <Layout title="Order Details">
-        <OrderDetails data={project} id={id} />
+        <OrderDetails data={project} id={id} team={team} />
       </Layout>
     </div>
   );

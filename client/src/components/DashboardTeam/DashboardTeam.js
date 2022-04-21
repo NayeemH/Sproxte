@@ -131,7 +131,7 @@ const DashboardTeam = ({ dashboard, projects, fetchTeamProjects }) => {
                       title={project.name}
                       img={`${IMAGE_PATH}small/${project.image}`}
                       description={project.createdAt}
-                      dashboard={`dashboard/order/${project._id}`}
+                      dashboard={`team-dashboard/order/${project._id}`}
                       template
                       status={project.status}
                     />

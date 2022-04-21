@@ -17,7 +17,14 @@ import { FaIcons } from "react-icons/fa";
 import { saveAs } from "file-saver";
 import AddPlayerInfo from "../AddPlayerInfo/AddPlayerInfo";
 
-const OrderDetails = ({ projects, id, data, changeProjectStatus, role }) => {
+const OrderDetails = ({
+  projects,
+  id,
+  data,
+  changeProjectStatus,
+  role,
+  team,
+}) => {
   const [status, setStatus] = useState("");
 
   const modals = useModals();
@@ -191,7 +198,7 @@ const OrderDetails = ({ projects, id, data, changeProjectStatus, role }) => {
                     : project.image.front
                 }`}
                 description={project.createdAt}
-                dashboard={`dashboard/${
+                dashboard={`${team === true ? "team-" : ""}dashboard/${
                   project.type === "template" ? "product" : `${id}`
                 }/${project._id}`}
                 status={
