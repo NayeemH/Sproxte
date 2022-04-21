@@ -110,7 +110,7 @@ const OrderDetails = ({ projects, id, data, changeProjectStatus, role }) => {
       centered: true,
       children: (
         <>
-          <AddPlayerInfo project={projects} />
+          <AddPlayerInfo project={projects} modals={modals} />
         </>
       ),
     });

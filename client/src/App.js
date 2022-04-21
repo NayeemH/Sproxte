@@ -113,6 +113,14 @@ function App({ getRefreshToken }) {
                 path="dashboard/order/:id"
                 element={<ProjectDetailsPage />}
               />
+              <Route
+                path="team-dashboard/:projectId/:stepId/upload"
+                element={<UploadStepImagePage />}
+              />
+              <Route
+                path="team-dashboard/order/:id"
+                element={<ProjectDetailsPage />}
+              />
               <Route path="report" element={<ReportsPage />} />
               <Route path="add-iep" element={<AddUserPage />} />
               <Route path="contact-list" element={<ContactListPage />} />
