@@ -54,6 +54,9 @@ const projectSchema = Schema({
     price: {
         type: Number,
         default: 0
+    },
+    sizes: {
+        type: Array
     }
 }, {timestamps: true});
 
