@@ -51,6 +51,20 @@ const ProjectDetails = ({ project }) => {
       err.response.data.msg.map((msg) => toast.error(msg));
     }
   };
+
+  const clickHandeler = () => {
+    modals.openModal({
+      title: "Add Player Information",
+      closeOnClickOutside: false,
+      centered: true,
+      children: (
+        <>
+          <AddPlayerInfo />
+        </>
+      ),
+    });
+  };
+
   return (
     <div className={styles.wrapper}>
       <div className="d-flex flex-md-row flex-column align-items-center">

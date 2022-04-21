@@ -5,6 +5,8 @@ import {
   ADD_COLLECTION_ERROR,
   ADD_COLLECTION_SUCCESS,
   ADD_FAVORITE_PROJECT,
+  ADD_PLAYER,
+  ADD_PLAYER_ERROR,
   APPROVED_PROJECT_LOAD,
   APPROVED_PROJECT_LOAD_ERROR,
   COLLECTION_INDEX,
@@ -873,3 +875,48 @@ export const editReview =
       return false;
     }
   };
+
+// ADD PLAYER
+export const addPlayer = (values, file, id) => async (dispatch) => {
+  let formData = new FormData();
+
+  formData.append("name", values.name);
+  formData.append("email", values.email);
+  formData.append("size", values.size);
+
+  if (file) {
+    formData.append("image", file);
+  }
+
+  const config = {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+    withCredentials: true,
+  };
+  try {
+    // TODO ::: API CALL
+    const res = await axios.post(
+      `${BASE_URL}/api/v1/project/addPlayer/${id}`,
+      formData,
+      config
+    );
+    // console.log(res);
+    if (res.status === 200) {
+      dispatch({
+        type: ADD_PLAYER,
+      });
+      dispatch(getProductDetails(id));
+      toast.success("Player Information Added successfully");
+      return true;
+    }
+  } catch (err) {
+    dispatch({
+      type: ADD_PLAYER_ERROR,
+    });
+    toast.error(err.response.data.msg);
+    return false;
+  }
+
+  return false;
+};

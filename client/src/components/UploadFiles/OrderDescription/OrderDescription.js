@@ -24,6 +24,7 @@ const OrderDescription = ({ sizes, addToCart, product, color, user, cart }) => {
   const [mainTextColor, setMainTextColor] = useState("Red");
   const [secondaryTextColor, setSecondaryTextColor] = useState("Red");
   const [selectedFileBack, setSelectedFile2] = useState();
+  const [orderFontFamily, setOrderFontFamily] = useState("Open Sans");
   const [activeFontFamily, setActiveFontFamily] = useState("Open Sans");
   const fileRef = useRef();
   const navigate = useNavigate();
@@ -88,7 +89,8 @@ const OrderDescription = ({ sizes, addToCart, product, color, user, cart }) => {
           product,
           color,
           "custom",
-          activeFontFamily
+          activeFontFamily,
+          orderFontFamily
         );
         resetlHandeler();
         setDescription("");
@@ -240,6 +242,20 @@ const OrderDescription = ({ sizes, addToCart, product, color, user, cart }) => {
             onChange={(e) => setDescription(e.target.value)}
             className={`${styles.textarea} form-control mb-3`}
           ></textarea>
+        </Card.Body>
+      </Card>
+      <Card className={`${styles.crd} shadow mt-4`}>
+        <Card.Body className="d-flex justify-content-between flex-column">
+          <div
+            className={`d-flex justify-content-between flex-column pt-3 ${styles.font}`}
+          >
+            <span className="d-block pb-2">Font </span>
+            <FontPicker
+              apiKey={FONT_KEY}
+              activeFontFamily={orderFontFamily}
+              onChange={(nextFont) => setOrderFontFamily(nextFont.family)}
+            />
+          </div>
         </Card.Body>
       </Card>
       {product && product.layouts && product.layouts.length > 0 && (

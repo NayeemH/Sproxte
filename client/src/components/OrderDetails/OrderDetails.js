@@ -15,6 +15,7 @@ import { GoLocation } from "react-icons/go";
 import { AiOutlineTeam } from "react-icons/ai";
 import { FaIcons } from "react-icons/fa";
 import { saveAs } from "file-saver";
+import AddPlayerInfo from "../AddPlayerInfo/AddPlayerInfo";
 
 const OrderDetails = ({ projects, id, data, changeProjectStatus, role }) => {
   const [status, setStatus] = useState("");
@@ -101,6 +102,20 @@ const OrderDetails = ({ projects, id, data, changeProjectStatus, role }) => {
       ),
       labels: { confirm: "Cancel" },
     });
+
+  const clickHandeler = () => {
+    modals.openModal({
+      title: "Add Player Information",
+      closeOnClickOutside: false,
+      centered: true,
+      children: (
+        <>
+          <AddPlayerInfo project={projects} />
+        </>
+      ),
+    });
+  };
+
   return (
     <Container className={styles.wrapper}>
       {role && (role === "admin" || role === "iep") && (
@@ -197,6 +212,18 @@ const OrderDetails = ({ projects, id, data, changeProjectStatus, role }) => {
             </Col>
           ))}
       </Row>
+
+      {projects && projects.count && projects.count > 0 ? (
+        <Row>
+          <Col className={`text-center pt-4`}>
+            <Button onClick={clickHandeler} className="btn_primary">
+              Add Player Information
+            </Button>
+          </Col>
+        </Row>
+      ) : (
+        <></>
+      )}
     </Container>
   );
 };

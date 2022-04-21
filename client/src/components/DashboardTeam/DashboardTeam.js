@@ -139,6 +139,7 @@ const DashboardTeam = ({ dashboard, projects, fetchTeamProjects }) => {
                 ))}
           </Row>
         )}
+
       <Row>
         <Col className={`d-flex justify-content-end align-items-center py-4`}>
           {page !== -1 && (
