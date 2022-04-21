@@ -61,14 +61,18 @@ const Layout = ({ logout, children, role, title }) => {
                 <span className={styles.nav__item_text}>Dashboard</span>
               </NavLink>
             </div>
-            <div className={styles.nav}>
-              <NavLink to="/team-dashboard" className={styles.nav__item}>
-                <span className={styles.icon}>
-                  <MdPeopleAlt />
-                </span>
-                <span className={styles.nav__item_text}>Team Dashboard</span>
-              </NavLink>
-            </div>
+            {role === "admin" || role === "iep" || role === "coach" ? (
+              <div className={styles.nav}>
+                <NavLink to="/team-dashboard" className={styles.nav__item}>
+                  <span className={styles.icon}>
+                    <MdPeopleAlt />
+                  </span>
+                  <span className={styles.nav__item_text}>Team Dashboard</span>
+                </NavLink>
+              </div>
+            ) : (
+              <></>
+            )}
             {role === "admin" && (
               <>
                 <div className={styles.nav}>
@@ -79,14 +83,7 @@ const Layout = ({ logout, children, role, title }) => {
                     <span className={styles.nav__item_text}>Report</span>
                   </NavLink>
                 </div>
-                <div className={styles.nav}>
-                  <NavLink to="/google" className={styles.nav__item}>
-                    <span className={styles.icon}>
-                      <ImStatsBars />
-                    </span>
-                    <span className={styles.nav__item_text}>G Report</span>
-                  </NavLink>
-                </div>
+
                 <div className={styles.nav}>
                   <NavLink to="/users" className={styles.nav__item}>
                     <span className={styles.icon}>

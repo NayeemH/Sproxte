@@ -192,11 +192,7 @@ const OrderDetails = ({
             <Col key={i} md={3} className="p-3">
               <ProductCard
                 title={project.name}
-                img={`${IMAGE_PATH}small/${
-                  project.type === "custom"
-                    ? project.colorImage
-                    : project.image.front
-                }`}
+                img={`${IMAGE_PATH}small/${project.colorImage}`}
                 description={project.createdAt}
                 dashboard={`${team === true ? "team-" : ""}dashboard/${
                   project.type === "template" ? "product" : `${id}`

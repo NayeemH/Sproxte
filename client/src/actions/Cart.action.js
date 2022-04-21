@@ -83,11 +83,11 @@ export const addToCart =
     color,
     type,
     font,
-    productFont
+    productFont,
+    orderColor
   ) =>
   (dispatch) => {
     toast.success("Added to cart");
-    console.log(image);
     dispatch({
       type: CART_ADD_ITEM,
       payload: {
@@ -106,6 +106,7 @@ export const addToCart =
         type,
         font,
         productFont,
+        orderColor,
       },
     });
   };

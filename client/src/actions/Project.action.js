@@ -906,7 +906,7 @@ export const addPlayer = (values, file, id) => async (dispatch) => {
       dispatch({
         type: ADD_PLAYER,
       });
-      dispatch(getProductDetails(id));
+      dispatch(getProjectDetails(id));
       toast.success("Player Information Added successfully");
       return true;
     }

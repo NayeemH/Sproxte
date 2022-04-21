@@ -114,12 +114,7 @@ const AddPlayerInfo = ({ modals, project, addPlayer }) => {
               className={`${styles.input} w-100 mb-3`}
               required
               error={errors.size && touched.size ? errors.size : null}
-              data={[
-                { value: "react", label: "React" },
-                { value: "ng", label: "Angular" },
-                { value: "svelte", label: "Svelte" },
-                { value: "vue", label: "Vue" },
-              ]}
+              data={project?.sizes}
             />
 
             <div className="">

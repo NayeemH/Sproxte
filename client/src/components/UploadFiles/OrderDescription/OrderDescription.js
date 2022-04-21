@@ -10,7 +10,7 @@ import { FONT_KEY, IMAGE_PATH } from "../../../constants/URL";
 import { useNavigate } from "react-router-dom";
 import FontPicker from "font-picker-react";
 import { useModals } from "@mantine/modals";
-import { Text } from "@mantine/core";
+import { MultiSelect, Text } from "@mantine/core";
 
 const OrderDescription = ({ sizes, addToCart, product, color, user, cart }) => {
   const [selectedFile, setSelectedFile] = useState();
@@ -26,6 +26,7 @@ const OrderDescription = ({ sizes, addToCart, product, color, user, cart }) => {
   const [selectedFileBack, setSelectedFile2] = useState();
   const [orderFontFamily, setOrderFontFamily] = useState("Open Sans");
   const [activeFontFamily, setActiveFontFamily] = useState("Open Sans");
+  const [orderColor, setOrderColor] = useState(null);
   const fileRef = useRef();
   const navigate = useNavigate();
 
@@ -90,7 +91,8 @@ const OrderDescription = ({ sizes, addToCart, product, color, user, cart }) => {
           color,
           "custom",
           activeFontFamily,
-          orderFontFamily
+          orderFontFamily,
+          orderColor.join(",")
         );
         resetlHandeler();
         setDescription("");
@@ -244,6 +246,35 @@ const OrderDescription = ({ sizes, addToCart, product, color, user, cart }) => {
           ></textarea>
         </Card.Body>
       </Card>
+
+      {/* COLOR */}
+      <Card className={`${styles.crd} shadow mt-4`}>
+        <Card.Body className="d-flex justify-content-between flex-column">
+          <div
+            className={`d-flex justify-content-between flex-column pb-3 ${styles.font}`}
+          >
+            <span className="d-block fs-4">Colors</span>
+            <MultiSelect
+              data={colors.map((c) => {
+                return {
+                  label: c.name,
+                  value: c.hex,
+                };
+              })}
+              placeholder="Pick all colors that you like"
+              value={orderColor?.map((c) => c)}
+              onChange={(e) => {
+                setOrderColor(e);
+              }}
+              clearButtonLabel="Clear selection"
+              clearable
+              required
+            />
+          </div>
+        </Card.Body>
+      </Card>
+
+      {/* FONT */}
       <Card className={`${styles.crd} shadow mt-4`}>
         <Card.Body className="d-flex justify-content-between flex-column">
           <div

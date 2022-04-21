@@ -147,6 +147,18 @@ const StepDetails = ({
                     Reject
                   </Button>
 
+                  {role === "admin" || role === "iep" ? (
+                    <Link
+                      to={`/dashboard/${projectId}/${stepId}/upload`}
+                      variant="primary"
+                      className={`${styles.btn} text-decoration-none `}
+                    >
+                      Upload New Image
+                    </Link>
+                  ) : null}
+                </>
+              ) : (
+                <>
                   {selectedCollectionIndex >= 0 && (
                     <CopyToClipboard
                       text={`${window.location.origin}/share/${step._id}`}
@@ -164,18 +176,8 @@ const StepDetails = ({
                       </Button>
                     </CopyToClipboard>
                   )}
-
-                  {role === "admin" || role === "iep" ? (
-                    <Link
-                      to={`/dashboard/${projectId}/${stepId}/upload`}
-                      variant="primary"
-                      className={`${styles.btn} text-decoration-none `}
-                    >
-                      Upload New Image
-                    </Link>
-                  ) : null}
                 </>
-              ) : null}
+              )}
             </Col>
           ) : null}
           <Col md={role === "admin" || role === "iep" ? 8 : 12}>
@@ -217,43 +219,49 @@ const StepDetails = ({
               )}
               {step.collections.length === 0 && <Overview />}
             </Row>
-            <Row className="text-dark">
-              <Col md={12}>
-                <hr />
-                <h2>Uploads</h2>
-              </Col>
-              <Col md={12}>
-                {step &&
-                  step.gurdianNotifications &&
-                  step.gurdianNotifications.map((item) => (
-                    <div className="crd crd-body p-3 my-3">
-                      <Row>
-                        <Col>
-                          <span className="d-block fs-5">{item.message}</span>
-                          <span className="d-block fs-6 text-secondary">
-                            <Moment format="hh:mm on DD MMMM YYYY ">
-                              {item.createdAt}
-                            </Moment>
-                          </span>
-                        </Col>
-                        <Col className="text-end">
-                          <img
-                            src={`${IMAGE_PATH}small/${item.image}`}
-                            alt=""
-                            style={{ height: 50, cursor: "pointer" }}
-                            onClick={() =>
-                              saveAs(
-                                `${IMAGE_PATH}small/${item.image}`,
-                                `${step.name} - Upload [1]`
-                              )
-                            }
-                          />
-                        </Col>
-                      </Row>
-                    </div>
-                  ))}
-              </Col>
-            </Row>
+            {step &&
+            step.gurdianNotifications &&
+            step.gurdianNotifications.length > 0 ? (
+              <Row className="text-dark">
+                <Col md={12}>
+                  <hr />
+                  <h2>Uploads</h2>
+                </Col>
+                <Col md={12}>
+                  {step &&
+                    step.gurdianNotifications &&
+                    step.gurdianNotifications.map((item) => (
+                      <div className="crd crd-body p-3 my-3">
+                        <Row>
+                          <Col>
+                            <span className="d-block fs-5">{item.message}</span>
+                            <span className="d-block fs-6 text-secondary">
+                              <Moment format="hh:mm on DD MMMM YYYY ">
+                                {item.createdAt}
+                              </Moment>
+                            </span>
+                          </Col>
+                          <Col className="text-end">
+                            <img
+                              src={`${IMAGE_PATH}small/${item.image}`}
+                              alt=""
+                              style={{ height: 50, cursor: "pointer" }}
+                              onClick={() =>
+                                saveAs(
+                                  `${IMAGE_PATH}small/${item.image}`,
+                                  `${step.name} - Upload [1]`
+                                )
+                              }
+                            />
+                          </Col>
+                        </Row>
+                      </div>
+                    ))}
+                </Col>
+              </Row>
+            ) : (
+              <></>
+            )}
           </Col>
           {role === "admin" || role === "iep" ? (
             <>
@@ -302,6 +310,53 @@ const StepDetails = ({
                           {step.description}
                         </span>
                       </Col>
+                      {step.orderColor && (
+                        <Col xs={12} className="py-3">
+                          <span className="fs-5 align-items-center">
+                            <span className="fw-bold d-block">
+                              Order Colors:{" "}
+                            </span>
+                            <div className="">
+                              {step.orderColor.split(",").map((orderClr, i) => (
+                                <div className="d-flex align-items-center w-100 fs-6">
+                                  <span className="fw-bold">
+                                    {i + 1}.{" "}
+                                    {
+                                      colors.filter(
+                                        (item) =>
+                                          orderClr === item.name ||
+                                          orderClr === item.hex
+                                      )[0]?.name
+                                    }
+                                  </span>{" "}
+                                  (
+                                  {
+                                    colors.filter(
+                                      (item) =>
+                                        orderClr === item.name ||
+                                        orderClr === item.hex
+                                    )[0]?.hex
+                                  }
+                                  )
+                                  <div
+                                    className={styles.color}
+                                    style={{
+                                      background: `${
+                                        colors.filter(
+                                          (item) =>
+                                            orderClr === item.name ||
+                                            orderClr === item.hex
+                                        )[0]?.hex
+                                      }`,
+                                    }}
+                                  ></div>
+                                </div>
+                              ))}
+                            </div>
+                          </span>
+                        </Col>
+                      )}
+
                       <Col xs={12}>
                         <span className="d-block fs-5">
                           <span className="fw-bold">Images :</span>{" "}
