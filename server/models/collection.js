@@ -35,6 +35,10 @@ const collectionSchema = Schema({
         type: String,
         required: true,
     },
+    isIEP: {
+        type: Boolean,
+        default: false
+    },
     feedbacks: {
         type: [feedbackSchema],
     }
