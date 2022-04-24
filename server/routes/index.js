@@ -72,7 +72,7 @@ router.use('/contact', contactUs);
 router.use('/share', share);
 
 // IEP
-router.use('/iep/', isAuth, iep);
+router.use('/iep', isAuth, iep);
 
 
 module.exports = router;

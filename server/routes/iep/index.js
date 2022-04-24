@@ -44,7 +44,7 @@ router.get('/:id', async (req, res, next) => {
             ]);
         }
         else {
-            throw Error('You are not authorized');
+            throw Error(`You are not authorized ${userType}`);
         }
 
 
