@@ -19,6 +19,7 @@ const payment = require('./payment');
 const notification = require('./notification');
 const contactUs = require('./ContactUs');
 const share = require('./share');
+const iep = require('./iep');
 
 
 
@@ -69,6 +70,9 @@ router.use('/contact', contactUs);
 
 // Share
 router.use('/share', share);
+
+// IEP
+router.use('/iep', isAuth, iep);
 
 
 module.exports = router;

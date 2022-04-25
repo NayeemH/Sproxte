@@ -28,7 +28,8 @@ router.post('/:id', fileFetch.single('image'), async (req, res, next) => {
                 userId,
                 productId: id,
                 title,
-                image: mergeImage
+                image: mergeImage,
+                isIEP: userType === 'iep' ? true : false
             }).save();
 
             await Product.findOneAndUpdate({_id: id}, {$set: {status: 'working'}});
