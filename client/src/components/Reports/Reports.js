@@ -15,6 +15,21 @@ const Reports = ({ getReportData, data }) => {
     getReportData();
   }, []);
 
+  const months = [
+    "Jan",
+    "Feb",
+    "Mar",
+    "Apr",
+    "May",
+    "June",
+    "July",
+    "Aug",
+    "Sept",
+    "Oct",
+    "Nov",
+    "Dec",
+  ];
+
   let totalIncome = 0;
   let totalCompletedOrders = 0;
   let totalRunningOrders = 0;
@@ -38,25 +53,18 @@ const Reports = ({ getReportData, data }) => {
     },
   };
 
-  let monthArray = [];
+  let monthArrayCollection = [];
   let collectionsData = [];
   if (data !== null && data.collections && data.collections.length > 0) {
     data.collections.forEach((element) => {
-      let month = `${moment(element.createdAt).format("MMMM")} ${moment(
-        element.createdAt
-      ).format("YYYY")}`;
-      if (!monthArray.includes(month)) {
-        monthArray.push(month);
-        collectionsData.push(0);
-      }
-      collectionsData[monthArray.indexOf(month)] =
-        collectionsData[monthArray.indexOf(month)] + 1;
+      collectionsData.push(parseInt(element.count));
+      monthArrayCollection.push(`${months[element.month - 1]} ${element.year}`);
     });
   }
 
   let monthArrayCurrentProjects = [];
   let collectionsDataCurrentProjects = [];
-  if (data !== null && data.collections && data.collections.length > 0) {
+  if (data !== null && data.projects && data.projects.length > 0) {
     data.projects
       .filter((item) => item.status.toLowerCase() !== "delivered")
       .forEach((element) => {
@@ -78,7 +86,7 @@ const Reports = ({ getReportData, data }) => {
   }
   let monthArrayCompletedProjects = [];
   let collectionsDataCompletedProjects = [];
-  if (data !== null && data.collections && data.collections.length > 0) {
+  if (data !== null && data.projects && data.projects.length > 0) {
     data.projects
       .filter((item) => item.status.toLowerCase() === "delivered")
       .forEach((element) => {
@@ -103,7 +111,7 @@ const Reports = ({ getReportData, data }) => {
 
   let monthArrayProjects = [];
   let collectionsDataProjects = [];
-  if (data !== null && data.collections && data.collections.length > 0) {
+  if (data !== null && data.projects && data.projects.length > 0) {
     data.projects.forEach((element) => {
       let month = `${moment(element.createdAt).format("MMMM")} ${moment(
         element.createdAt
@@ -241,13 +249,13 @@ const Reports = ({ getReportData, data }) => {
                       ...options,
 
                       xaxis: {
-                        categories: ["Jan 2020", "Feb 2020", ...monthArray],
+                        categories: [...monthArrayCollection],
                       },
                     }}
                     series={[
                       {
                         name: "Image Processed",
-                        data: [35, 24, ...collectionsData],
+                        data: [...collectionsData],
                       },
                     ]}
                     type="line"

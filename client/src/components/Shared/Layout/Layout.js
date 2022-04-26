@@ -15,10 +15,10 @@ import { FiLogOut, FiUsers } from "react-icons/fi";
 import { GoThreeBars } from "react-icons/go";
 import { MdDownloadDone } from "react-icons/md";
 import { BiLayer, BiLayerPlus } from "react-icons/bi";
-import { HiOutlineMail } from "react-icons/hi";
+import { HiOutlineMail, HiDocumentReport } from "react-icons/hi";
 import { ImStatsBars } from "react-icons/im";
 
-const Layout = ({ logout, children, role, title }) => {
+const Layout = ({ logout, children, role, title, user }) => {
   const navigate = useNavigate();
   const [show, setShow] = React.useState(false);
 
@@ -68,6 +68,21 @@ const Layout = ({ logout, children, role, title }) => {
                     <MdPeopleAlt />
                   </span>
                   <span className={styles.nav__item_text}>Team Dashboard</span>
+                </NavLink>
+              </div>
+            ) : (
+              <></>
+            )}
+            {role === "iep" ? (
+              <div className={styles.nav}>
+                <NavLink
+                  to={`/invoice/${user._id}`}
+                  className={styles.nav__item}
+                >
+                  <span className={styles.icon}>
+                    <HiDocumentReport />
+                  </span>
+                  <span className={styles.nav__item_text}>Invoice</span>
                 </NavLink>
               </div>
             ) : (
@@ -209,6 +224,7 @@ const Layout = ({ logout, children, role, title }) => {
 };
 const mapStateToProps = (state) => ({
   role: state.auth.user.userType,
+  user: state.auth.user,
 });
 
 export default connect(mapStateToProps, { logout })(Layout);

@@ -259,7 +259,6 @@ export const getUserList = (page) => async (dispatch) => {
       `${BASE_URL}/api/v1/admin/user?page=${page}&limit=12`,
       config
     );
-    console.log(res);
 
     dispatch({
       type: CLIENT_LIST_LOAD,
@@ -281,7 +280,6 @@ export const getIepList = (page) => async (dispatch) => {
       `${BASE_URL}/api/v1/admin/iep?page=${page}&limit=12`,
       config
     );
-    console.log(res);
 
     dispatch({
       type: DEVELOPER_LIST_LOAD,

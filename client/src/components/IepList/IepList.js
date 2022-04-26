@@ -2,17 +2,19 @@ import React, { useEffect, useState } from "react";
 import { Button, Card, Col, Container, Row, Spinner } from "react-bootstrap";
 import { connect } from "react-redux";
 import styles from "./IepList.module.scss";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { AiOutlineLeft, AiOutlineRight } from "react-icons/ai";
 import { getIepList } from "../../actions/Payment.acton";
 import { IMAGE_PATH } from "../../constants/URL";
 import { deleteUser } from "../../actions/Dashboard.action";
 import { BsTrash } from "react-icons/bs";
+import { FaFileInvoiceDollar } from "react-icons/fa";
 import ModalCard from "../Shared/ModalCard/ModalCard";
 import { toast } from "react-toastify";
 const queryString = require("query-string");
 
 const IepList = ({ item, getIepList, dashboard, deleteUser }) => {
+  const navigate = useNavigate();
   const location = useLocation();
   const [deleteModal, setDeleteModal] = useState(null);
   const parsed = queryString.parse(location.search);
@@ -118,7 +120,10 @@ const IepList = ({ item, getIepList, dashboard, deleteUser }) => {
               {item &&
                 item.items &&
                 item.items.map((notification) => (
-                  <Row className="mb-3 border-bottom pb-3">
+                  <Row
+                    className="mb-3 border-bottom pb-3"
+                    key={notification._id}
+                  >
                     <Col xs={2}>
                       <Row>
                         <Col
@@ -159,6 +164,12 @@ const IepList = ({ item, getIepList, dashboard, deleteUser }) => {
                       xs={1}
                       className="d-flex justify-content-end align-items-center"
                     >
+                      <div
+                        className={`d-block fw-bold me-3 ${styles.delete}`}
+                        onClick={() => navigate(`/invoice/${notification._id}`)}
+                      >
+                        <FaFileInvoiceDollar />
+                      </div>
                       <div
                         className={`d-block fw-bold ${styles.delete}`}
                         onClick={() => setDeleteModal(notification._id)}

@@ -7,8 +7,9 @@ import {
   SIDEBAR_TOGGLE,
   LOGOUT_SUCCESS,
   LOGOUT_FAIL,
+  GET_IEP_INVOICE_DATA,
 } from "../constants/Type";
-import { DELETE_USER, GET_REPORT_DATA } from "../constants/TypeLanding";
+import { GET_REPORT_DATA } from "../constants/TypeLanding";
 
 const initialState = {
   projectListGrid: "grid",
@@ -18,6 +19,8 @@ const initialState = {
   list: null,
   clients: null,
   report: null,
+  iep_invoice: null,
+  loading: true,
 };
 
 const dashboardReducer = (state = initialState, action) => {
@@ -52,6 +55,12 @@ const dashboardReducer = (state = initialState, action) => {
       return {
         ...state,
         report: payload,
+        loading: false,
+      };
+    case GET_IEP_INVOICE_DATA:
+      return {
+        ...state,
+        iep_invoice: payload,
         loading: false,
       };
 

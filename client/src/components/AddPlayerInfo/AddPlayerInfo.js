@@ -36,7 +36,7 @@ const AddPlayerInfo = ({ modals, project, addPlayer }) => {
     setSelectedFile(e.target.files[0]);
   };
 
-  //RESET IMAGE
+  //RESET IMAGE AND MODAL CLOSE
   const resetlHandeler = () => {
     setSelectedFile(undefined);
     modals.closeAll();

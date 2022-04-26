@@ -1,7 +1,11 @@
 import axios from "axios";
 import { BASE_URL } from "../constants/URL";
 import { toast } from "react-toastify";
-import { PROFILE_UPDATE, PROFILE_UPDATE_ERROR } from "../constants/Type";
+import {
+  GET_IEP_INVOICE_DATA,
+  PROFILE_UPDATE,
+  PROFILE_UPDATE_ERROR,
+} from "../constants/Type";
 import { getAuthUser } from "./Auth.action";
 
 // UPDATE PROFILE ACTION
@@ -82,3 +86,19 @@ export const updatePasswordProfile =
 
     return false;
   };
+
+//GET IEP DATA
+export const getIEPData = (id) => async (dispatch) => {
+  try {
+    const res = await axios.get(`${BASE_URL}/api/v1/iep/${id}`);
+    // console.log(res);
+
+    dispatch({
+      type: GET_IEP_INVOICE_DATA,
+      payload: res.data,
+    });
+  } catch (err) {
+    console.log(err);
+    toast.error("Something went wrong");
+  }
+};
