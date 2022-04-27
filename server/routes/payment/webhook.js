@@ -88,7 +88,7 @@ const paymentHandle = async (object) => {
 
 
     // Get project name and image
-    let projectName, projectImage, type, count, sizes;
+    let projectName, projectImage, type, count, sizes, playerAddPrice;
     if(templateOrders.length) {
         projectName = templates[0].name;
         projectImage = templates[0].pngImageFront;
@@ -110,6 +110,7 @@ const paymentHandle = async (object) => {
         type = 'team';
         sizes = teams[0].sizes;
         count = parseInt(teamOrders[0].count) - 1;
+        playerAddPrice = teams[i].playerAddPrice;
     }
 
     // Create the project
@@ -125,7 +126,8 @@ const paymentHandle = async (object) => {
         logo: order.logo,
         teamName: order.teamName,
         location: order.location,
-        color: order.color
+        color: order.color,
+        playerAddPrice
     }).save();
 
 

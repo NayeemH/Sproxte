@@ -42,8 +42,7 @@ const productSchema = Schema({
         default: 0
     },
     discount: {
-        type: Number,
-        default: 0
+        type: Object
     },
     count: {
         type: Number,
