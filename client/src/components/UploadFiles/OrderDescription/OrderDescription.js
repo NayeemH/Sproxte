@@ -255,14 +255,15 @@ const OrderDescription = ({ sizes, addToCart, product, color, user, cart }) => {
           >
             <span className="d-block fs-4">Colors</span>
             <MultiSelect
-              data={colors.map((c) => {
+              data={colors.map((c, i) => {
                 return {
+                  key: i,
                   label: c.name,
                   value: c.hex,
                 };
               })}
               placeholder="Pick all colors that you like"
-              value={orderColor?.map((c) => c)}
+              defaultValue={orderColor?.map((c) => c)}
               onChange={(e) => {
                 setOrderColor(e);
               }}

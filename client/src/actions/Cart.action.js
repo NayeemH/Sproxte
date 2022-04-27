@@ -88,6 +88,29 @@ export const addToCart =
   ) =>
   (dispatch) => {
     toast.success("Added to cart");
+    let newDiscount = 0;
+    if (product.discount.range && product.discount.range.length > 0) {
+      product.discount.range.forEach((item, i) => {
+        if (
+          i < product.discount.range.length - 1 &&
+          item <= quantity &&
+          quantity <= product.discount.range[i + 1]
+        ) {
+          newDiscount = product.discount.discount[i + 1];
+        }
+        if (i == 0 && quantity <= product.discount.range[i]) {
+          newDiscount = product.discount.discount[i];
+        } else if (
+          quantity > product.discount.range[product.discount.range.length - 1]
+        ) {
+          newDiscount =
+            product.discount.discount[product.discount.range.length];
+        }
+      });
+    } else {
+      newDiscount = product.discount.discount[0];
+    }
+
     dispatch({
       type: CART_ADD_ITEM,
       payload: {
@@ -101,7 +124,7 @@ export const addToCart =
         secondaryTextColor,
         selectedLayout,
         quantity,
-        product,
+        product: { ...product, discount: newDiscount },
         color,
         type,
         font,

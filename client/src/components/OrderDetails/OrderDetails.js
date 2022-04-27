@@ -36,12 +36,9 @@ const OrderDetails = ({
   team,
 }) => {
   const [status, setStatus] = useState("");
-  const [newCount, setNewCount] = useState(1);
-  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   const modals = useModals();
-  const modalsReq = useModals();
 
   const viewHandeler = () =>
     modals.openModal({
@@ -124,9 +121,11 @@ const OrderDetails = ({
       labels: { confirm: "Cancel" },
     });
 
-  const handelAddPlayerSubmit = async (e) => {
+  const handelAddPlayerSubmit = (e) => {
     e.preventDefault();
-    navigate(`/pament-player/${id}/${newCount}`);
+    let count = e.target.elements[0].value;
+    modals.closeAll();
+    navigate(`/pament-player/${id}/${count}`);
   };
 
   const clickHandeler = () => {
@@ -141,8 +140,35 @@ const OrderDetails = ({
       ),
     });
   };
+
+  const newHandeler = () => {
+    modals.openModal({
+      title: "How many players do you want to add?",
+      closeOnClickOutside: false,
+
+      centered: true,
+      children: (
+        <>
+          <form onSubmit={handelAddPlayerSubmit}>
+            <FormGroup className="mb-3">
+              <Form.Label>Number of players</Form.Label>
+              <input
+                type="number"
+                placeholder="Enter number of players"
+                className="form-control"
+              />
+            </FormGroup>
+            <Button type="submit" className="btn_primary">
+              Submit
+            </Button>
+          </form>
+        </>
+      ),
+    });
+  };
+
   const clickHandelerReq = () => {
-    modalsReq.openConfirmModal({
+    modals.openConfirmModal({
       title: "Add Player Request",
       closeOnClickOutside: false,
       closeOnConfirm: false,
@@ -161,35 +187,10 @@ const OrderDetails = ({
       },
       confirmProps: { color: "red" },
       onCancel: () => {},
-      onConfirm: () =>
-        modals.openModal({
-          title: "How many players do you want to add?",
-          closeOnClickOutside: false,
-          centered: true,
-          children: (
-            <>
-              <Form onSubmit={handelAddPlayerSubmit}>
-                <FormGroup className="mb-3">
-                  <Form.Label>Number of players</Form.Label>
-                  <Form.Control
-                    type="number"
-                    placeholder="Enter number of players"
-                    value={newCount}
-                    min={1}
-                    onChange={(e) => setNewCount(e.target.value)}
-                  />
-                </FormGroup>
-                <Button
-                  type="submit"
-                  disabled={loading}
-                  className="btn_primary"
-                >
-                  {loading ? "Loading..." : "Submit"}
-                </Button>
-              </Form>
-            </>
-          ),
-        }),
+      onConfirm: () => {
+        modals.closeAll();
+        newHandeler();
+      },
     });
   };
 
@@ -259,7 +260,7 @@ const OrderDetails = ({
       <Row>
         {projects.products &&
           projects.products.map((project, i) => (
-            <Col key={i} md={3} className="p-3">
+            <Col key={project._id} md={3} className="p-3">
               <ProductCard
                 title={project.name}
                 img={`${IMAGE_PATH}small/${project.colorImage}`}

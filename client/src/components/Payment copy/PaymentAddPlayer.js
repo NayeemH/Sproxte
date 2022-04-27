@@ -26,7 +26,10 @@ const PaymentAddPlayer = ({ auth }) => {
         const res = await axios.post(
           `${BASE_URL}/api/v1/payment/addPlayerPaymentToken/${id}`,
           JSON.stringify({ count }),
-          { withCredentials: true }
+          {
+            withCredentials: true,
+            headers: { "Content-Type": "application/json" },
+          }
         );
         if (resKey.data.paymentKey) {
           setStripePromise(loadStripe(resKey.data.paymentKey));

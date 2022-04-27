@@ -91,7 +91,7 @@ function App({ getRefreshToken }) {
             <>
               <Route path="payment/:id" element={<Paymentpage />} />
               <Route
-                path="payment/:id/:count"
+                path="pament-player/:id/:count"
                 element={<PaymentpagePlayer />}
               />
               <Route path="users" element={<UserIepPage />} />

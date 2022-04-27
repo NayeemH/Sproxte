@@ -64,7 +64,7 @@ const DiscoverList = ({ list, title, page, name }) => {
           </Col>
           {list.items &&
             list.items.map((item) => (
-              <Col md={4} className="p-2">
+              <Col md={4} key={item._id} className="p-2">
                 <ProductCard
                   template
                   price={item.price}
