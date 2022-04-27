@@ -42,7 +42,7 @@ const productSchema = Schema({
         default: 0
     },
     discount: {
-        type: Object
+        type: Schema.Types.Mixed
     },
     count: {
         type: Number,
