@@ -2,7 +2,6 @@ import React from "react";
 import Dashboard from "../../components/Dashboard/Dashboard";
 import DashboardCompleted from "../../components/DashboardCompleted/DashboardCompleted";
 import Layout from "../../components/Shared/Layout/Layout";
-import TeamFormFill from "../../components/TeamFormFill/TeamFormFill";
 
 const DashboardPage = ({ completed }) => {
   return (
@@ -12,7 +11,6 @@ const DashboardPage = ({ completed }) => {
     >
       <Layout>
         {!completed ? <Dashboard /> : <DashboardCompleted dashboard />}
-        <TeamFormFill />
       </Layout>
     </div>
   );

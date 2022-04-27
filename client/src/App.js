@@ -54,6 +54,7 @@ import GReport from "./components/Reports/GReport/GReport";
 import PaymentCompelete from "./views/PaymentCompelete/PaymentCompelete";
 import DashboardTeamPage from "./views/DashboardTeamPage/DashboardTeamPage";
 import InvoicePage from "./views/InvoicePage/InvoicePage";
+import PaymentpagePlayer from "./views/PaymentpagePlayer/PaymentpagePlayer";
 
 function App({ getRefreshToken }) {
   useEffect(() => {
@@ -82,13 +83,17 @@ function App({ getRefreshToken }) {
           <Route path="/share/:id" element={<SharePage />} />
           <Route path="/contact" element={<ContactPage />} />
           <Route path="/payment-methods" element={<PaymentMethodsPage />} />
-          <Route path="/payment/:id" element={<Paymentpage />} />
           <Route path="/policy" element={<RefundPolicyPage />} />
           <Route path="/template/:id" element={<FileUploadPage />} />
           <Route path="/product/:id" element={<FileUploadPageReady />} />
 
           <Route path="/*" element={<PrivateOutlet />}>
             <>
+              <Route path="payment/:id" element={<Paymentpage />} />
+              <Route
+                path="payment/:id/:count"
+                element={<PaymentpagePlayer />}
+              />
               <Route path="users" element={<UserIepPage />} />
               <Route path="users/iep" element={<UserIepPage iep />} />
               <Route path="dashboard" element={<DashboardPage />} />

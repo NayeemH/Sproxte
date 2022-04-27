@@ -378,8 +378,8 @@ export const createProductType =
     };
     if (discountList) {
       discountList.map((d, i) => {
-        discountData.range.push(d.range);
-        discountData.discount.push(d.discount);
+        discountData.range.push(parseInt(d.range));
+        discountData.discount.push(parseInt(d.discount));
       });
     }
 

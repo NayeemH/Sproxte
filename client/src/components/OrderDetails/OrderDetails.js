@@ -1,5 +1,14 @@
 import React, { useState } from "react";
-import { Button, Card, Col, Container, Dropdown, Row } from "react-bootstrap";
+import {
+  Button,
+  Card,
+  Col,
+  Container,
+  Dropdown,
+  Form,
+  FormGroup,
+  Row,
+} from "react-bootstrap";
 import ProductCard from "../Shared/ProductCard/ProductCard";
 import styles from "./OrderDetails.module.scss";
 import { getProjectDetails } from "../../actions/Project.action";
@@ -16,6 +25,7 @@ import { AiOutlineTeam } from "react-icons/ai";
 import { FaIcons } from "react-icons/fa";
 import { saveAs } from "file-saver";
 import AddPlayerInfo from "../AddPlayerInfo/AddPlayerInfo";
+import { useNavigate } from "react-router-dom";
 
 const OrderDetails = ({
   projects,
@@ -26,8 +36,12 @@ const OrderDetails = ({
   team,
 }) => {
   const [status, setStatus] = useState("");
+  const [newCount, setNewCount] = useState(1);
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
   const modals = useModals();
+  const modalsReq = useModals();
 
   const viewHandeler = () =>
     modals.openModal({
@@ -110,6 +124,11 @@ const OrderDetails = ({
       labels: { confirm: "Cancel" },
     });
 
+  const handelAddPlayerSubmit = async (e) => {
+    e.preventDefault();
+    navigate(`/pament-player/${id}/${newCount}`);
+  };
+
   const clickHandeler = () => {
     modals.openModal({
       title: "Add Player Information",
@@ -120,6 +139,57 @@ const OrderDetails = ({
           <AddPlayerInfo project={projects} modals={modals} />
         </>
       ),
+    });
+  };
+  const clickHandelerReq = () => {
+    modalsReq.openConfirmModal({
+      title: "Add Player Request",
+      closeOnClickOutside: false,
+      closeOnConfirm: false,
+      centered: true,
+      children: (
+        <>
+          <span className="d-block">
+            You will need to pay product price plus additional charges to add
+            new player.
+          </span>
+        </>
+      ),
+      labels: {
+        confirm: `Add Player`,
+        cancel: "Cancel",
+      },
+      confirmProps: { color: "red" },
+      onCancel: () => {},
+      onConfirm: () =>
+        modals.openModal({
+          title: "How many players do you want to add?",
+          closeOnClickOutside: false,
+          centered: true,
+          children: (
+            <>
+              <Form onSubmit={handelAddPlayerSubmit}>
+                <FormGroup className="mb-3">
+                  <Form.Label>Number of players</Form.Label>
+                  <Form.Control
+                    type="number"
+                    placeholder="Enter number of players"
+                    value={newCount}
+                    min={1}
+                    onChange={(e) => setNewCount(e.target.value)}
+                  />
+                </FormGroup>
+                <Button
+                  type="submit"
+                  disabled={loading}
+                  className="btn_primary"
+                >
+                  {loading ? "Loading..." : "Submit"}
+                </Button>
+              </Form>
+            </>
+          ),
+        }),
     });
   };
 
@@ -225,7 +295,13 @@ const OrderDetails = ({
           </Col>
         </Row>
       ) : (
-        <></>
+        <Row>
+          <Col className={`text-center pt-4`}>
+            <Button onClick={clickHandelerReq} className="btn_primary">
+              Add Player Request
+            </Button>
+          </Col>
+        </Row>
       )}
     </Container>
   );

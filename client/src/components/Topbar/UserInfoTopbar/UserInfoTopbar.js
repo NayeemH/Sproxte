@@ -51,7 +51,12 @@ const UserInfoTopbar = ({
           }`}
         </Text>
       ),
-      labels: { confirm: "Checkout", cancel: "Cancel" },
+      labels: {
+        confirm: `Switch to ${
+          user.userType === "coach" ? "client" : "coach"
+        } mode`,
+        cancel: "Cancel",
+      },
       confirmProps: { color: "red" },
       onCancel: () => {},
       onConfirm: () => switchModeAction(),

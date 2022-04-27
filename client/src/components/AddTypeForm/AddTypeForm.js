@@ -86,8 +86,9 @@ const AddTypeForm = ({ createProductType, getCategoryList, category }) => {
           toast.error("Please enter range");
           checkDis = true;
         }
-        if (i > 0) {
+        if (i > 0 && i < discountList.length) {
           if (item.range <= discountList[i - 1].range) {
+            console.log(item.range, discountList[i - 1].range);
             toast.error("Range should be in increasing order");
             checkDis = true;
           }

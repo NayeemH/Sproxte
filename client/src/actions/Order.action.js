@@ -1,6 +1,8 @@
 import axios from "axios";
 import { toast } from "react-toastify";
 import {
+  ADD_PLAYER_REQUEST,
+  ADD_PLAYER_REQUEST_ERROR,
   GET_SELECTED_ORDER,
   ORDER_REJECT,
   ORDER_REJECT_ERROR,
@@ -100,6 +102,40 @@ export const rejectOrder = (message, image, id) => async (dispatch) => {
     console.log(err);
     dispatch({
       type: ORDER_REJECT_ERROR,
+    });
+
+    return false;
+  }
+};
+
+// AVOID::::::::::::::::::::::::::::::::::::::::::::::::::::
+export const addPlayerReq = (count, id) => async (dispatch) => {
+  try {
+    const formdata = {
+      count: count,
+    };
+
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+      },
+      withCredentials: true,
+    };
+
+    const res = await axios.post(
+      `${BASE_URL}/api/v1/payment/addPlayerPaymentToken/${id}`,
+      JSON.stringify(formdata),
+      config
+    );
+    // console.log(res);
+    dispatch({
+      type: ADD_PLAYER_REQUEST,
+    });
+    return true;
+  } catch (err) {
+    console.log(err);
+    dispatch({
+      type: ADD_PLAYER_REQUEST_ERROR,
     });
 
     return false;
