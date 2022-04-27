@@ -1,5 +1,6 @@
 const router = require('express').Router();
 const Collection = require('../../models/collection');
+const User = require('../../models/user');
 const {ObjectId} =  require('mongoose').Types;
 
 
@@ -9,7 +10,7 @@ router.get('/:id', async (req, res, next) => {
         const {id} = req.params;
 
 
-        let collections;
+        let collections, user;
         if(userType === 'admin' || userType === 'iep') {
             collections = await Collection.aggregate([
                 {
@@ -42,6 +43,8 @@ router.get('/:id', async (req, res, next) => {
                     }
                 }
             ]);
+
+            user = await User.findOne({_id: id}, {password: 0, userType: 0, verified: 0, sessions: 0, orderHistory: 0, saveDesign: 0});
         }
         else {
             throw Error(`You are not authorized ${userType}`);
@@ -51,7 +54,8 @@ router.get('/:id', async (req, res, next) => {
         res.json({
             message: `IEP collection create info`,
             data: {
-                collections
+                collections,
+                user
             }
         });
     }
