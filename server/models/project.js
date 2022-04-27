@@ -55,6 +55,10 @@ const projectSchema = Schema({
         type: Number,
         default: 0
     },
+    playerAddPrice: {
+        type: Number,
+        default: 0
+    },
     sizes: {
         type: Array
     }

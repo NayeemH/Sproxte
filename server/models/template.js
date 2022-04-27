@@ -31,8 +31,7 @@ const templateSchema = Schema({
         required: true,
     },
     discount: {
-        type: Number,
-        default: 0
+        type: Object
     },
     description: {
         type: String,

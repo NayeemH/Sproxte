@@ -30,9 +30,14 @@ router.post('/', async (req, res, next) => {
 
         // Create project and product if payment is successfull
         if(eventType === 'payment_intent.succeeded') {
-            
-            await paymentHandle(data.object);
+            const {type} = data.object.metadata;
 
+            if(type === 'newPlayerAdd') {
+                await addPlayerHandle(data.object);
+            }
+            else {
+                await paymentHandle(data.object);
+            }
         }
         else {
             console.log(`Unhandled event type ${eventType}`);
@@ -45,6 +50,36 @@ router.post('/', async (req, res, next) => {
         next(err);
     }
 });
+
+
+const addPlayerHandle = async (object) => {
+    const {
+        userId, 
+        projectId, 
+        price,
+        count
+    } = object.metadata;
+
+    const project = await Project.findOneAndUpdate(
+        {_id: projectId},
+        {$inc: {count, price}}
+    );
+
+    await Order.findOneAndUpdate(
+        {_id: project.orderId},
+        {$inc: {price}}
+    );
+
+
+    // Send notification
+    const users = await User.find({$or: [{userType: 'admin'}, {userType: 'iep'}]}, {_id: 1});
+    const userIds = users.map(({_id}) => _id.toString());
+
+    userIds.push(userId);
+
+    await sendNotification('Player count is increased', userIds, project._id);
+
+}
 
 
 // Handle payment
@@ -88,7 +123,7 @@ const paymentHandle = async (object) => {
 
 
     // Get project name and image
-    let projectName, projectImage, type, count, sizes;
+    let projectName, projectImage, type, count, sizes, playerAddPrice;
     if(templateOrders.length) {
         projectName = templates[0].name;
         projectImage = templates[0].pngImageFront;
@@ -110,6 +145,7 @@ const paymentHandle = async (object) => {
         type = 'team';
         sizes = teams[0].sizes;
         count = parseInt(teamOrders[0].count) - 1;
+        playerAddPrice = teams[i].playerAddPrice;
     }
 
     // Create the project
@@ -125,7 +161,8 @@ const paymentHandle = async (object) => {
         logo: order.logo,
         teamName: order.teamName,
         location: order.location,
-        color: order.color
+        color: order.color,
+        playerAddPrice
     }).save();
 
 

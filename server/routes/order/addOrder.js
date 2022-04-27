@@ -117,7 +117,14 @@ const addCustomTemplate = async (req) => {
     
     const { price, discount } = productType;
 
-    const netPrice = Math.round(price * count * (1 - discount / 100));
+    let i;
+    for(i = 0; i < discount.range.length; i++) 
+        if(count <= discount.range[i]) 
+            break;
+
+    const calDiscount = discount.discount[i];
+
+    const netPrice = Math.round(price * count * (1 - calDiscount / 100));
 
     await Order.findOneAndUpdate(
         {_id: id, userId}, 
@@ -160,7 +167,15 @@ const addLinkTemplate = async (req) => {
 
     const { price, discount } = product;
 
-    const netPrice = Math.round(price * count * (1 - discount / 100));
+    let i;
+    for(i = 0; i < discount.range.length; i++) 
+        if(count <= discount.range[i]) 
+            break;
+
+    const calDiscount = discount.discount[i];
+
+
+    const netPrice = Math.round(price * count * (1 - calDiscount / 100));
 
     await Order.findOneAndUpdate(
         {_id: id, userId}, 

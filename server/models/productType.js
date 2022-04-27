@@ -40,6 +40,9 @@ const productTypeSchema = Schema({
         default: 0
     },
     discount: {
+        type: Object
+    },
+    playerAddPrice: {
         type: Number,
         default: 0
     },
