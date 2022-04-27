@@ -368,14 +368,28 @@ export const deleteProduct = (id) => async (dispatch) => {
 
 // CREATE PRODUCT TYPE
 export const createProductType =
-  (values, file, previewFile, layouts, varient) => async (dispatch) => {
+  (values, file, previewFile, layouts, discountList) => async (dispatch) => {
     let formData = new FormData();
     //console.log(layouts);
+
+    const discountData = {
+      range: [],
+      discount: [],
+    };
+    if (discountList) {
+      discountList.map((d, i) => {
+        discountData.range.push(d.range);
+        discountData.discount.push(d.discount);
+      });
+    }
+
+    discountData.discount.push(values.discount);
 
     formData.append("name", values.name);
     formData.append("categoryType", values.categoryType);
     formData.append("price", values.price);
-    formData.append("discount", values.discount);
+    formData.append("discount", JSON.stringify(discountData));
+    formData.append("playerAddPrice", values.playerAddPrice);
     formData.append("pngImageFront", file);
 
     if (previewFile) {

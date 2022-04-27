@@ -4,7 +4,6 @@ import {
   Form as BootstrapForm,
   InputGroup,
   Button,
-  Container,
   Row,
   Col,
 } from "react-bootstrap";
@@ -18,7 +17,6 @@ import { useNavigate } from "react-router-dom";
 import { getCategoryList } from "../../actions/Category.action";
 import { AiOutlinePlus } from "react-icons/ai";
 import { BiTrash } from "react-icons/bi";
-import colors from "../../config/Colors";
 
 const AddTypeForm = ({ createProductType, getCategoryList, category }) => {
   //STATES
@@ -28,8 +26,7 @@ const AddTypeForm = ({ createProductType, getCategoryList, category }) => {
   const [focus, setFocus] = useState(false);
   const [catInput, setCatInput] = useState("");
   const [selectedFile3, setSelectedFile3] = useState();
-  const [variant, setVariant] = useState([{ color: "", image: "" }]);
-  const [colorInput, setColorInput] = useState("");
+  const [discountList, setDiscountList] = useState([]);
   const [focus2, setFocus2] = useState(undefined);
 
   const onSelectFile3 = (e) => {
@@ -62,32 +59,44 @@ const AddTypeForm = ({ createProductType, getCategoryList, category }) => {
       setFocus(false);
     }, 200);
   };
-  const blurHandeler2 = (i) => {
-    setTimeout(() => {
-      if (focus2 === i) setFocus2(undefined);
-    }, 200);
-  };
+
   const navigate = useNavigate();
 
   const fileRef = useRef();
-  const fileRef2 = useRef();
 
   const onSubmitHandeler = async (values) => {
     if (selectedFile) {
       setIsLoading(true);
-      // variant.forEach((item) => {
-      //   if (!item.image || item.color === "") {
-      //     toast.error("Please select image for all color");
-      //     setIsLoading(false);
-      //     return;
-      //   }
-      // });
+      let checkDis = false;
+
+      discountList.forEach((item) => {
+        if (
+          item.discount === undefined ||
+          item.discount === null ||
+          item.discount === ""
+        ) {
+          toast.error("Please enter discount");
+          checkDis = true;
+        }
+        if (
+          item.range === undefined ||
+          item.range === null ||
+          item.range === ""
+        ) {
+          toast.error("Please enter range");
+          checkDis = true;
+        }
+      });
+      if (!checkDis) {
+        return false;
+      }
+
       let check = await createProductType(
         values,
         selectedFile,
         selectedFile2,
         selectedFile3,
-        variant
+        discountList
       );
       if (check) {
         setIsLoading(false);
@@ -120,27 +129,27 @@ const AddTypeForm = ({ createProductType, getCategoryList, category }) => {
     setSelectedFile(e.target.files[0]);
   };
 
-  //ONSELECT FILE HANDELER
-  const onSelectFileColor = (e, i) => {
-    if (!e.target.files || e.target.files.length === 0) {
-      setVariant(
-        variant.map((item, index) =>
-          index === i ? { ...item, image: undefined } : item
-        )
-      );
-      return;
-    }
-    if (e.target.files[0].size > 2000000) {
-      toast.error("File size is too big");
-      return;
-    }
-    setVariant(
-      variant.map((item, index) =>
-        index === i ? { ...item, image: e.target.files[0] } : item
-      )
-    );
-    console.log(variant);
-  };
+  // //ONSELECT FILE HANDELER
+  // const onSelectFileColor = (e, i) => {
+  //   if (!e.target.files || e.target.files.length === 0) {
+  //     setVariant(
+  //       variant.map((item, index) =>
+  //         index === i ? { ...item, image: undefined } : item
+  //       )
+  //     );
+  //     return;
+  //   }
+  //   if (e.target.files[0].size > 2000000) {
+  //     toast.error("File size is too big");
+  //     return;
+  //   }
+  //   setVariant(
+  //     variant.map((item, index) =>
+  //       index === i ? { ...item, image: e.target.files[0] } : item
+  //     )
+  //   );
+  //   console.log(variant);
+  // };
 
   //ONSELECT FILE HANDELER 2
   const onSelectFile2 = (e) => {
@@ -162,6 +171,7 @@ const AddTypeForm = ({ createProductType, getCategoryList, category }) => {
     categoryType: "",
     price: 0,
     discount: 0,
+    playerAddPrice: 0,
   };
 
   const SignupSchema = Yup.object().shape({
@@ -170,6 +180,9 @@ const AddTypeForm = ({ createProductType, getCategoryList, category }) => {
     size: Yup.string().required("Size is required!"),
     categoryType: Yup.string().required("Valid Category name is required!"),
     price: Yup.number().min(0).required("Price is required!"),
+    playerAddPrice: Yup.number()
+      .min(0)
+      .required("Player add price is required!"),
     discount: Yup.number().min(0).max(100).required("Discount is required!"),
   });
   return (
@@ -273,77 +286,90 @@ const AddTypeForm = ({ createProductType, getCategoryList, category }) => {
                           {errors.price}
                         </small>
                       ) : null}
+                      <small>in USD</small>
                     </InputGroup>
                   </Col>
                   <Col md={6}>
                     <InputGroup className="mb-3 d-flex flex-column">
                       <div className="d-flex justify-content-between align-items-center pb-2">
-                        <label htmlFor="discount" className="d-block">
-                          Product discount (%)
+                        <label htmlFor="size" className="d-block">
+                          Sizes
                         </label>
+                        {errors.size && touched.size ? (
+                          <small className="text-danger pt-2">
+                            {errors.size}
+                          </small>
+                        ) : null}
                       </div>
                       <Field
                         as={BootstrapForm.Control}
-                        placeholder="Type product discount"
-                        name="discount"
-                        isValid={!errors.discount && touched.discount}
-                        type="number"
+                        placeholder="Template sizes"
+                        name="size"
+                        isValid={!errors.size && touched.size}
+                        type="text"
                         className={`${styles.input} w-100`}
-                        isInvalid={errors.discount && touched.discount}
+                        isInvalid={errors.size && touched.size}
                       />
-                      {errors.discount && touched.discount ? (
-                        <small className="text-danger pt-2">
-                          {errors.discount}
-                        </small>
-                      ) : null}
+                      <small>Please insert comma separated sizes.</small>
                     </InputGroup>
                   </Col>
                 </Row>
                 <InputGroup className="mb-3 d-flex flex-column">
                   <div className="d-flex justify-content-between align-items-center pb-2">
-                    <label htmlFor="size" className="d-block">
-                      Sizes
+                    <label htmlFor="playerAddPrice" className="d-block">
+                      Extra Fee for adding new player
                     </label>
-                    {errors.size && touched.size ? (
-                      <small className="text-danger pt-2">{errors.size}</small>
-                    ) : null}
                   </div>
                   <Field
                     as={BootstrapForm.Control}
-                    placeholder="Template sizes"
-                    name="size"
-                    isValid={!errors.size && touched.size}
-                    type="text"
+                    placeholder="Type product playerAddPrice"
+                    name="playerAddPrice"
+                    isValid={!errors.playerAddPrice && touched.playerAddPrice}
+                    type="number"
                     className={`${styles.input} w-100`}
-                    isInvalid={errors.size && touched.size}
+                    isInvalid={errors.playerAddPrice && touched.playerAddPrice}
                   />
-                  <small>Please insert comma separated sizes.</small>
+                  {errors.playerAddPrice && touched.playerAddPrice ? (
+                    <small className="text-danger pt-2">
+                      {errors.playerAddPrice}
+                    </small>
+                  ) : null}
+                  <small>
+                    This fee applicable for adding new player after coach has
+                    orderd.
+                  </small>
                 </InputGroup>
-                {/* <>
-                {variant.map((item, i) => (
-                  <Row className="pb-3">
-                    <Col xs={5}>
-                      <InputGroup className=" d-flex flex-column">
-                        
-                        <BootstrapForm.Control
-                          placeholder="Type Color name or HEX code"
-                          type="text"
-                          value={item.color}
-                          onChange={(e) =>
-                            setVariant([
-                              ...variant.map((itemRaw, p) =>
-                                p === i
-                                  ? { ...itemRaw, color: e.target.value }
-                                  : itemRaw
-                              ),
-                            ])
-                          }
-                          onFocus={() => setFocus2(i)}
-                          onBlur={() => blurHandeler2(i)}
-                          autoComplete="off"
-                          className={`${styles.input} w-100`}
-                        />
-                        <div
+                <hr />
+                <>
+                  {discountList.length > 0 ? (
+                    <span className="d-block h5">
+                      Discount List with different ranges in increasing order.
+                    </span>
+                  ) : (
+                    <></>
+                  )}
+                  {discountList.map((item, i) => (
+                    <Row className="pb-2">
+                      <Col xs={5}>
+                        <InputGroup className=" d-flex flex-column">
+                          <BootstrapForm.Control
+                            placeholder="Type Range End"
+                            type="number"
+                            value={discountList[i].range}
+                            onChange={(e) =>
+                              setDiscountList(
+                                discountList.map((item, j) =>
+                                  j === i
+                                    ? { ...item, range: e.target.value }
+                                    : item
+                                )
+                              )
+                            }
+                            autoComplete="off"
+                            className={`${styles.input} w-100`}
+                          />
+                          <small>Count Range End</small>
+                          {/* <div
                           className={styles.auth__list}
                           style={{ display: focus2 === i ? "block" : "none" }}
                         >
@@ -390,54 +416,89 @@ const AddTypeForm = ({ createProductType, getCategoryList, category }) => {
                                   {item.name} ({item.hex})
                                 </div>
                               ))}
-                          </div>
-                        </div>
-                      </InputGroup>
-                    </Col>
-                    <Col xs={6}>
-                      <input
-                        type="file"
-                        name="image"
-                        className="form-control w-100"
-                        onChange={(e) => onSelectFileColor(e, i)}
-                        id=""
-                      />
-                    </Col>
-                    <Col
-                      xs={1}
-                      className="d-flex justufy-content-end align-items-center"
-                    >
-                      {i !== 0 && (
+                          </div> 
+                        </div>*/}
+                        </InputGroup>
+                      </Col>
+                      <Col xs={6}>
+                        <input
+                          type="number"
+                          placeholder="Type Price for this Range"
+                          className="form-control w-100"
+                          value={discountList[i].discount}
+                          onChange={(e) =>
+                            setDiscountList(
+                              discountList.map((item, j) =>
+                                j === i
+                                  ? { ...item, discount: e.target.value }
+                                  : item
+                              )
+                            )
+                          }
+                          id=""
+                        />
+                        <small>Price in USD</small>
+                      </Col>
+                      <Col
+                        xs={1}
+                        className="d-flex justufy-content-end align-items-center"
+                      >
                         <span
                           className={`${styles.del} text-danger`}
                           onClick={() =>
-                            setVariant([...variant.filter((it, j) => j !== i)])
+                            setDiscountList([
+                              ...discountList.filter((it, j) => j !== i),
+                            ])
                           }
                         >
                           <BiTrash />
                         </span>
-                      )}
-                    </Col>
-                  </Row>
-                ))}</> 
-                <Row className="pb-4">
+                      </Col>
+                    </Row>
+                  ))}
+                </>
+                <Row className="">
                   <Col xs={12}>
                     <span
                       className={`${styles.plus} shadow`}
                       onClick={() =>
-                        setVariant([
-                          ...variant,
+                        setDiscountList([
+                          ...discountList,
                           {
-                            color: "",
-                            image: undefined,
+                            discount: 0,
+                            range: 0,
                           },
                         ])
                       }
                     >
-                      <AiOutlinePlus /> Add Type
+                      <AiOutlinePlus /> Add Discount Range
                     </span>
                   </Col>
-                </Row>*/}
+                  <Col md={12}>
+                    <InputGroup className="mb-3 mt-4 d-flex flex-column">
+                      <div className="d-flex justify-content-between align-items-center pb-2">
+                        <label htmlFor="discount" className="d-block">
+                          Default Product Discount (%)
+                        </label>
+                      </div>
+                      <Field
+                        as={BootstrapForm.Control}
+                        placeholder="Type product discount"
+                        name="discount"
+                        isValid={!errors.discount && touched.discount}
+                        type="number"
+                        className={`${styles.input} w-100`}
+                        isInvalid={errors.discount && touched.discount}
+                      />
+                      {errors.discount && touched.discount ? (
+                        <small className="text-danger pt-2">
+                          {errors.discount}
+                        </small>
+                      ) : null}
+                    </InputGroup>
+                  </Col>
+                </Row>
+                <hr />
                 <div className="">
                   <InputGroup className="">
                     <div className="pb-2">
