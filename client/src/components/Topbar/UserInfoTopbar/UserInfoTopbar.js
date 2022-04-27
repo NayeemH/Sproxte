@@ -11,6 +11,8 @@ import { FiLogOut } from "react-icons/fi";
 import { FaRegUserCircle } from "react-icons/fa";
 import { MdOutlineSpaceDashboard } from "react-icons/md";
 import { CgArrowsExchangeAlt } from "react-icons/cg";
+import { useModals } from "@mantine/modals";
+import { Text } from "@mantine/core";
 
 const UserInfoTopbar = ({
   user,
@@ -21,6 +23,7 @@ const UserInfoTopbar = ({
   filter = false,
 }) => {
   const navigate = useNavigate();
+  const modals = useModals();
   const clickHandler = () => {
     navigate("/settings");
   };
@@ -33,6 +36,29 @@ const UserInfoTopbar = ({
   };
 
   const switchCoachMode = async () => {
+    modals.openConfirmModal({
+      title: `You are about to switch to ${
+        user.userType === "coach" ? "client" : "coach"
+      } mode.`,
+      centered: true,
+      children: (
+        <Text size="md">
+          <b>Note:</b>{" "}
+          {`${
+            user.userType === "coach"
+              ? "In client mode you can order custom and readymade products."
+              : "In coach mode you can order only custom products for your whole team."
+          }`}
+        </Text>
+      ),
+      labels: { confirm: "Checkout", cancel: "Cancel" },
+      confirmProps: { color: "red" },
+      onCancel: () => {},
+      onConfirm: () => switchModeAction(),
+    });
+  };
+
+  const switchModeAction = () => {
     if (user.userType === "coach") {
       switchMode("client");
     } else {
@@ -69,18 +95,24 @@ const UserInfoTopbar = ({
         </Dropdown.Item>
 
         <Dropdown.Divider className={styles.divider} />
-        <Dropdown.Item
-          className={styles.dropdown_item}
-          href="#"
-          onClick={switchCoachMode}
-        >
-          <CgArrowsExchangeAlt />{" "}
-          <span className="d-block ms-2">
-            {" "}
-            {user && user.userType === "client" ? "Coach" : "Client"} Mode
-          </span>
-        </Dropdown.Item>
-        <Dropdown.Divider className={styles.divider} />
+        {user && user.userType !== "admin" ? (
+          <>
+            <Dropdown.Item
+              className={styles.dropdown_item}
+              href="#"
+              onClick={switchCoachMode}
+            >
+              <CgArrowsExchangeAlt />{" "}
+              <span className="d-block ms-2">
+                {" "}
+                {user && user.userType === "client" ? "Coach" : "Client"} Mode
+              </span>
+            </Dropdown.Item>
+            <Dropdown.Divider className={styles.divider} />
+          </>
+        ) : (
+          <></>
+        )}
         <Dropdown.Item
           className={styles.dropdown_item}
           href="#"

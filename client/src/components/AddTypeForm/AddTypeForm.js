@@ -69,7 +69,7 @@ const AddTypeForm = ({ createProductType, getCategoryList, category }) => {
       setIsLoading(true);
       let checkDis = false;
 
-      discountList.forEach((item) => {
+      discountList.forEach((item, i) => {
         if (
           item.discount === undefined ||
           item.discount === null ||
@@ -86,8 +86,16 @@ const AddTypeForm = ({ createProductType, getCategoryList, category }) => {
           toast.error("Please enter range");
           checkDis = true;
         }
+        if (i > 0) {
+          if (item.range <= discountList[i - 1].range) {
+            toast.error("Range should be in increasing order");
+            checkDis = true;
+          }
+        }
       });
-      if (!checkDis) {
+      console.log(checkDis);
+      if (checkDis === true) {
+        setIsLoading(false);
         return false;
       }
 
@@ -423,7 +431,7 @@ const AddTypeForm = ({ createProductType, getCategoryList, category }) => {
                       <Col xs={6}>
                         <input
                           type="number"
-                          placeholder="Type Price for this Range"
+                          placeholder="Type Discount for this Range (%)"
                           className="form-control w-100"
                           value={discountList[i].discount}
                           onChange={(e) =>
@@ -437,7 +445,7 @@ const AddTypeForm = ({ createProductType, getCategoryList, category }) => {
                           }
                           id=""
                         />
-                        <small>Price in USD</small>
+                        <small>Discount in %</small>
                       </Col>
                       <Col
                         xs={1}
