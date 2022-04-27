@@ -145,7 +145,7 @@ const paymentHandle = async (object) => {
         type = 'team';
         sizes = teams[0].sizes;
         count = parseInt(teamOrders[0].count) - 1;
-        playerAddPrice = teams[i].playerAddPrice;
+        playerAddPrice = teams[0].playerAddPrice;
     }
 
     // Create the project
