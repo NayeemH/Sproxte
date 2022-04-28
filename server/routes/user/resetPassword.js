@@ -18,7 +18,7 @@ router.post('/', async (req, res, next) => {
         let token = await Token.findOne({ userId: user._id});
         if (!token) {
             token = await new Token({
-                userId: user.userId,
+                userId: user._id,
                 token: crypto.randomBytes(32).toString("hex"),
             }).save();
         }
