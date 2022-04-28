@@ -38,9 +38,7 @@ export const getRefreshToken = () => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: ACCESS_TOKEN_ERROR,
-      payload: error.response.data.msg[0],
     });
-    toast.error(error.response.data.message);
     return false;
   }
 };
@@ -58,9 +56,7 @@ export const getAuthUser = () => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: AUTH_USER_LOAD_ERROR,
-      payload: error.response.data.msg[0],
     });
-    toast.error(error.response.data.message);
   }
 };
 
@@ -102,19 +98,19 @@ export const resetPasswordSendEmail = (values) => async (dispatch) => {
   }
 };
 //RESET PASSWORD SEND EMAIL ACTION
-export const resetPassword = (values, id) => async (dispatch) => {
+export const resetPasswordLanding = (values, id) => async (dispatch) => {
   try {
+    console.log("INNNN||||||||||||||");
     const formData = {
       password: values.password,
     };
     const res = await axios.post(
-      `${BASE_URL}/api/v1/activate/${id}`,
+      `${BASE_URL}/api/v1/activate/resetPassword/${id}`,
       JSON.stringify(formData),
       {
         headers: {
           "Content-Type": "application/json",
         },
-        withCredentials: true,
       }
     );
 

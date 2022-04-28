@@ -25,7 +25,7 @@ export default function CheckoutForm({ id }) {
       elements,
       confirmParams: {
         // Make sure to change this to your payment completion page
-        return_url: `${window.location.origin}/payment-success/${id}`,
+        return_url: `${window.location.origin}?payment=success`,
       },
     });
 

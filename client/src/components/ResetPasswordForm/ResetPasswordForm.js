@@ -10,15 +10,24 @@ import * as Yup from "yup";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import styles from "./ResetPasswordForm.module.scss";
 import { connect } from "react-redux";
-import { useNavigate } from "react-router-dom";
-import { resetPassword } from "../../actions/Auth.action";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { resetPasswordLanding } from "../../actions/Auth.action";
+const queryString = require("query-string");
 
-const ResetPasswordForm = ({ resetPassword, isAuthenticated }) => {
+const ResetPasswordForm = ({ resetPasswordLanding, isAuthenticated }) => {
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
   const [isPasswordVisible2, setIsPasswordVisible2] = useState(false);
   const [submitting, setSubmitting] = useState(false);
+  const { id } = useParams();
+
+  const location = useLocation();
+  const parsed = queryString.parse(location.search);
 
   const navigate = useNavigate();
+
+  if (!parsed.email) {
+    navigate("/login");
+  }
 
   useEffect(() => {
     if (isAuthenticated) {
@@ -28,7 +37,7 @@ const ResetPasswordForm = ({ resetPassword, isAuthenticated }) => {
 
   const onSubmitHandeler = async (values) => {
     setSubmitting(true);
-    let check = await resetPassword(values);
+    let check = await resetPasswordLanding(values, id);
     if (check) {
       setTimeout(() => {
         navigate("/login");
@@ -40,7 +49,7 @@ const ResetPasswordForm = ({ resetPassword, isAuthenticated }) => {
     setSubmitting(false);
   };
   let initVals = {
-    email: "",
+    email: parsed.email,
     password: "",
     password2: "",
   };
@@ -48,10 +57,7 @@ const ResetPasswordForm = ({ resetPassword, isAuthenticated }) => {
   const SignupSchema = Yup.object().shape({
     password: Yup.string()
       .required("Password is required!")
-      .matches(
-        /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{6,})/,
-        "Password not strong enough!"
-      )
+
       .min(6, "Password is too short!"),
     password2: Yup.string()
       .oneOf([Yup.ref("password"), null], "Passwords do not match!")
@@ -84,6 +90,7 @@ const ResetPasswordForm = ({ resetPassword, isAuthenticated }) => {
                   </div>
                   <Field
                     as={BootstrapForm.Control}
+                    disabled
                     placeholder="Type your email"
                     name="email"
                     isValid={!errors.email && touched.email}
@@ -180,4 +187,6 @@ const mapStateToProps = (state) => ({
   isAuthenticated: state.auth.isAuthenticated,
 });
 
-export default connect(mapStateToProps, { resetPassword })(ResetPasswordForm);
+export default connect(mapStateToProps, { resetPasswordLanding })(
+  ResetPasswordForm
+);
