@@ -2,7 +2,6 @@ import { connect } from "react-redux";
 import React, { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { getProduct } from "../../actions/Cart.action";
-import BottomNav from "../../components/BottomNav/BottomNav";
 import Footer from "../../components/Footer/Footer";
 import LandingSidebar from "../../components/LandingSidebar/LandingSidebar";
 import Nav from "../../components/Nav/Nav";

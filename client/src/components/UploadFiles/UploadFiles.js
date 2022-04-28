@@ -49,7 +49,7 @@ const UploadFiles = ({ product }) => {
                   id={product._id}
                   template
                   price={product.price}
-                  discount={product.discount}
+                  discount={product.discount?.discount[0]}
                 />
               )}
 
