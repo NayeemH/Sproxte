@@ -94,7 +94,6 @@ const AddTypeForm = ({ createProductType, getCategoryList, category }) => {
           }
         }
       });
-      console.log(checkDis);
       if (checkDis === true) {
         setIsLoading(false);
         return false;

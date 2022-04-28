@@ -384,12 +384,12 @@ export const createProductType =
     }
 
     discountData.discount.push(values.discount);
+    formData.append("playerAddPrice", values.playerAddPrice);
 
     formData.append("name", values.name);
     formData.append("categoryType", values.categoryType);
     formData.append("price", values.price);
     formData.append("discount", JSON.stringify(discountData));
-    formData.append("playerAddPrice", values.playerAddPrice);
     formData.append("pngImageFront", file);
 
     if (previewFile) {
@@ -452,32 +452,36 @@ export const createProductType =
 
 // EDIT PRODUCT TYPE
 export const editProductType =
-  (values, id, file, previewFile, layouts, varient) => async (dispatch) => {
+  (values, id, file, previewFile, layouts, discountList) =>
+  async (dispatch) => {
     let formData = new FormData();
 
     formData.append("name", values.name);
     // formData.append("categoryType", values.categoryType);
     formData.append("price", values.price);
-    formData.append("discount", values.discount);
+
     formData.append("pngImageFront", file);
 
-    // if (previewFile) {
-    //   formData.append("pngImageBack", previewFile);
-    // }
+    const discountData = {
+      range: [],
+      discount: [],
+    };
+    if (discountList) {
+      discountList.map((d, i) => {
+        discountData.range.push(parseInt(d.range));
+        discountData.discount.push(parseInt(d.discount));
+      });
+    }
+
+    discountData.discount.push(values.discount);
+    formData.append("playerAddPrice", values.playerAddPrice);
+    formData.append("discount", JSON.stringify(discountData));
     if (layouts) {
       for (let i = 0; i < layouts.length; i++) {
         formData.append(`layouts`, layouts[i]);
       }
     }
 
-    if (varient.length > 0) {
-      for (let i = 0; i < varient.length; i++) {
-        if (varient[i].color && varient[i].image) {
-          formData.append(`colors`, `#${varient[i].color.split("#")[1]}`);
-          formData.append(`images`, varient[i].image);
-        }
-      }
-    }
     values.size
       .trim()
       .split(",")
