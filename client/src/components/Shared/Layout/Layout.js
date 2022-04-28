@@ -159,15 +159,20 @@ const Layout = ({ logout, children, role, title, user }) => {
                     </span>
                   </NavLink>
                 </div>
-                <div className={styles.nav}>
-                  <NavLink to="/orders" className={styles.nav__item}>
-                    <span className={styles.icon}>
-                      <BsArrowLeftRight />
-                    </span>
-                    <span className={styles.nav__item_text}>Orders</span>
-                  </NavLink>
-                </div>
               </>
+            )}
+
+            {role !== "iep" ? (
+              <div className={styles.nav}>
+                <NavLink to="/orders" className={styles.nav__item}>
+                  <span className={styles.icon}>
+                    <BsArrowLeftRight />
+                  </span>
+                  <span className={styles.nav__item_text}>Orders</span>
+                </NavLink>
+              </div>
+            ) : (
+              <></>
             )}
 
             <div className={styles.nav}>

@@ -130,6 +130,7 @@ const AddProjectForm = ({ category, createProject, getTypeList }) => {
   let initVals = {
     name: "",
     price: 0,
+    discount: 0,
     quantity: 0,
     // productType: "",
     size: "",
@@ -144,6 +145,10 @@ const AddProjectForm = ({ category, createProject, getTypeList }) => {
     price: Yup.number("Insert valid price", "Insert valid price").required(
       "Product price is required!"
     ),
+    price: Yup.number("Insert valid price", "Insert valid price")
+      .min(0)
+      .max(100)
+      .required("Product price is required!"),
     size: Yup.string().required("Product size is required!"),
     // productType: Yup.string().required("Product template is required!"),
     image: Yup.string().nullable(),
@@ -207,124 +212,8 @@ const AddProjectForm = ({ category, createProject, getTypeList }) => {
                       />
                     </InputGroup>
                   </Col>
-                  {/* <Col md={6}>
-                    <InputGroup className="mb-3 d-flex flex-column">
-                      <div className="d-flex justify-content-between align-items-center pb-2">
-                        <label htmlFor="productType" className="d-block">
-                          Template
-                        </label>
-                        {errors.productType && touched.productType ? (
-                          <small className="text-danger pt-2">
-                            {errors.productType}
-                          </small>
-                        ) : null}
-                      </div>
-                      <BootstrapForm.Control
-                        placeholder="Type product template name"
-                        value={typeInput}
-                        isValid={!errors.productType && touched.productType}
-                        type="text"
-                        onChange={(e) => setTypeInput(e.target.value)}
-                        className={`${styles.input} w-100`}
-                        isInvalid={errors.productType && touched.productType}
-                        onFocus={() => setFocus2(true)}
-                        onBlur={blurHandeler2}
-                      />
-                      <div
-                        className={styles.auth__list}
-                        style={{ display: focus2 ? "block" : "none" }}
-                      >
-                        <div className="list-group">
-                          {category
-                            .filter((item) => {
-                              return item.name
-                                .toLowerCase()
-                                .includes(typeInput.toLowerCase());
-                            })
-                            .map((item, i) => (
-                              <div
-                                className={`list-group-item ${styles.item} d-flex`}
-                                key={i}
-                                onClick={() => {
-                                  setFieldValue("productType", item._id);
-                                  setTypeInput(item.name);
-                                }}
-                              >
-                                {item.name}
-                              </div>
-                            ))}
-                        </div>
-                      </div>
-                    </InputGroup>
-                  </Col> */}
-                  {/* <Col md={6}>
-                    <InputGroup className=" d-flex flex-column">
-                      <div className="d-flex justify-content-between align-items-center pb-2">
-                        <label htmlFor="quantity" className="d-block">
-                          Colors
-                        </label>
-                      </div>
-                      <BootstrapForm.Control
-                        placeholder="Type Color name or HEX code"
-                        type="text"
-                        value={colorInput}
-                        onChange={(e) => setColorInput(e.target.value)}
-                        onFocus={() => setFocus(true)}
-                        onBlur={blurHandeler}
-                        autoComplete="off"
-                        className={`${styles.input} w-100`}
-                      />
-                      <div
-                        className={styles.auth__list}
-                        style={{ display: focus ? "block" : "none" }}
-                      >
-                        <div className="list-group">
-                          {colors
-                            .filter((item) => {
-                              return item.name
-                                .toLowerCase()
-                                .includes(colorInput.toLowerCase());
-                            })
-                            .map((item, i) => (
-                              <div
-                                className={`list-group-item ${styles.item} d-flex`}
-                                key={i}
-                                onClick={() => {
-                                  //console.log("click");
 
-                                  let check = selectedColor.filter(
-                                    (clr) => clr.hex === item.hex
-                                  );
-                                  if (check.length === 0) {
-                                    setSelectedColor([...selectedColor, item]);
-                                  } else {
-                                    toast.error("Color already selected");
-                                  }
-                                  setColorInput("");
-                                }}
-                              >
-                                <div
-                                  className={`${styles.color} me-2`}
-                                  style={{ background: `${item.hex}` }}
-                                ></div>{" "}
-                                {item.name} ({item.hex})
-                              </div>
-                            ))}
-                        </div>
-                      </div>
-                    </InputGroup>
-                    <Row className="py-2 pb-4">
-                      {selectedColor.map((item, i) => (
-                        <Col xs={1} key={i}>
-                          <div
-                            className={styles.color}
-                            style={{ background: `${item.hex}` }}
-                          ></div>
-                        </Col>
-                      ))}
-                    </Row>
-                  </Col> */}
-                  <Col md={12}>
+                  <Col md={6}>
                     <InputGroup className="mb-3 d-flex flex-column">
                       <div className="d-flex justify-content-between align-items-center pb-2">
                         <label htmlFor="size" className="d-block">
@@ -346,6 +235,29 @@ const AddProjectForm = ({ category, createProject, getTypeList }) => {
                         isInvalid={errors.size && touched.size}
                       />
                       <small>Example: L,XL,XXL,M</small>
+                    </InputGroup>
+                  </Col>
+                  <Col md={6}>
+                    <InputGroup className="mb-3 d-flex flex-column">
+                      <div className="d-flex justify-content-between align-items-center pb-2">
+                        <label htmlFor="discount" className="d-block">
+                          Discount (%)
+                        </label>
+                        {errors.discount && touched.discount ? (
+                          <small className="text-danger pt-2">
+                            {errors.discount}
+                          </small>
+                        ) : null}
+                      </div>
+                      <Field
+                        as={BootstrapForm.Control}
+                        placeholder="Type product discount in %"
+                        name="discount"
+                        isValid={!errors.discount && touched.discount}
+                        type="number"
+                        className={`${styles.input} w-100`}
+                        isInvalid={errors.discount && touched.discount}
+                      />
                     </InputGroup>
                   </Col>
                 </Row>
