@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Col, Container, Row } from "react-bootstrap";
+import { Card, Col, Container, Row } from "react-bootstrap";
 import { IMAGE_PATH } from "../../constants/URL";
 import ProductCard from "../Shared/ProductCard/ProductCard";
 import OrderDescription from "./OrderDescription/OrderDescription";
@@ -17,6 +17,7 @@ const UploadFiles = ({ product }) => {
       setSelectedColor(product.imageData[0].color);
     }
   }, [product]);
+
   return (
     <div className={styles.wrapper}>
       <Container>
@@ -41,24 +42,90 @@ const UploadFiles = ({ product }) => {
                 discount={product.discount}
               />
             )}
-            {/* {product.imageData && product.imageData.length > 0 && (
-              <>
-                <h5 className="mt-5">Select Color</h5>
-                <small>Image will change based on the color.</small>
-                <div className={styles.colors}>
-                  {product.imageData.map((image, index) => (
-                    <div
-                      key={index}
-                      onClick={() => setSelectedColor(image.color)}
-                      className={`${styles.clr} ${
-                        selectedColor === image.color ? styles.active : ""
-                      } shadow `}
-                      style={{ background: `${image.color}` }}
-                    ></div>
-                  ))}
+
+            <Card className="crd mt-4 shadow">
+              <Card.Body>
+                <span className="d-block fs-4">Discount Ranges</span>
+                <div className="pt-3">
+                  <div
+                    className="d-flex 
+                  justify-content-between align-items-center"
+                  >
+                    <span className="d-block fw-bold">Range</span>
+                    <span className="d-block fw-bold">Discount</span>
+                  </div>
+                  <hr />
+                  {product && product.discount && product.discount.range ? (
+                    product.discount.range.map((dis, i) => (
+                      <div key={i}>
+                        <div
+                          className="d-flex 
+                  justify-content-between align-items-center"
+                        >
+                          <span className="d-block fw-bold">
+                            {i === 0 ? 1 : product.discount.range[i - 1] + 1} -{" "}
+                            {dis}
+                          </span>
+                          <span className="d-block fw-bold">
+                            {product.discount.discount[i]}%
+                          </span>
+                        </div>
+                        <hr />
+                      </div>
+                    ))
+                  ) : (
+                    <></>
+                  )}
+                  {product &&
+                  product.discount &&
+                  product.discount.range &&
+                  product.discount.range.length > 0 ? (
+                    <>
+                      <div
+                        className="d-flex 
+                  justify-content-between align-items-center"
+                      >
+                        <span className="d-block fw-bold">
+                          {
+                            product.discount.range[
+                              product.discount.range.length - 1
+                            ]
+                          }
+                          +
+                        </span>
+                        <span className="d-block fw-bold">
+                          {
+                            product.discount.discount[
+                              product.discount.discount.length - 1
+                            ]
+                          }
+                          %
+                        </span>
+                      </div>
+                      <hr />
+                    </>
+                  ) : (
+                    <>
+                      <div
+                        className="d-flex 
+                  justify-content-between align-items-center"
+                      >
+                        <span className="d-block fw-bold">For all count</span>
+                        <span className="d-block fw-bold">
+                          {
+                            product.discount.discount[
+                              product.discount.discount.length - 1
+                            ]
+                          }
+                          %
+                        </span>
+                      </div>
+                      <hr />
+                    </>
+                  )}
                 </div>
-              </>
-            )} */}
+              </Card.Body>
+            </Card>
           </Col>
           <Col md={7} className="py-md-5 py-3">
             <OrderDescription
