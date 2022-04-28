@@ -24,7 +24,7 @@ router.patch('/:id', fileFetch.fields([{name: 'pngImageFront', maxCount: 1}, {na
         }
         
         if(discount) {
-            updatedItems.discount = discount;
+            updatedItems.discount = JSON.parse(discount);
         }
 
         if(categoryType) {
