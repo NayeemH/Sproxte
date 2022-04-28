@@ -186,6 +186,9 @@ export const createProject =
     if (values.productType) {
       formData.append("productType", values.productType);
     }
+    if (values.discount) {
+      formData.append("discount", values.discount);
+    }
     formData.append("description", values.description);
     if (values.featured === true) {
       formData.append("featured", values.featured);
@@ -251,6 +254,9 @@ export const editProduct =
     formData.append("price", values.price);
     formData.append("quantity", values.quantity);
     formData.append("description", values.description);
+    if (values.discount) {
+      formData.append("discount", values.discount);
+    }
 
     formData.append("featured", values.featured);
 
