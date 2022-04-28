@@ -8,62 +8,61 @@ import {
 } from "react-bootstrap";
 import * as Yup from "yup";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
-import styles from "./LoginForm.module.scss";
-import { loginUserAccount } from "../../actions/Landing.action";
+import styles from "./ResetPasswordForm.module.scss";
 import { connect } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { resetPassword } from "../../actions/Auth.action";
 
-const LoginForm = ({ loginUserAccount, isAuthenticated }) => {
+const ResetPasswordForm = ({ resetPassword, isAuthenticated }) => {
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
+  const [isPasswordVisible2, setIsPasswordVisible2] = useState(false);
   const [submitting, setSubmitting] = useState(false);
+
   const navigate = useNavigate();
 
   useEffect(() => {
     if (isAuthenticated) {
-      navigate("/dashboard");
+      navigate("/");
     }
   }, [isAuthenticated]);
 
   const onSubmitHandeler = async (values) => {
     setSubmitting(true);
-    // TODO ::: create account action
-    let check = await loginUserAccount(values);
-    if (check === true) {
+    let check = await resetPassword(values);
+    if (check) {
       setTimeout(() => {
-        navigate("/dashboard");
+        navigate("/login");
         setSubmitting(false);
       }, 500);
     } else {
       setSubmitting(false);
     }
+    setSubmitting(false);
   };
   let initVals = {
     email: "",
-    type: "indevidual",
     password: "",
+    password2: "",
   };
 
   const SignupSchema = Yup.object().shape({
-    email: Yup.string()
-      .matches(
-        /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
-        "Enter a valid email!"
-      )
-      .required("Email is required!"),
     password: Yup.string()
       .required("Password is required!")
-      // .matches(
-      //   /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{6,})/,
-      //   "Password not strong enough!"
-      // )
+      .matches(
+        /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{6,})/,
+        "Password not strong enough!"
+      )
       .min(6, "Password is too short!"),
+    password2: Yup.string()
+      .oneOf([Yup.ref("password"), null], "Passwords do not match!")
+      .required("Retype Password is required!"),
   });
   return (
     <div className={styles.wrapper}>
       <Card className={`${styles.crd} shadow `}>
         <Card.Header className="d-flex justify-content-center align-items-center bg-dark">
           <span className={`${styles.heading} fw-bold gradient_title`}>
-            Login
+            Password Change
           </span>
         </Card.Header>
         <Card.Body>
@@ -94,7 +93,7 @@ const LoginForm = ({ loginUserAccount, isAuthenticated }) => {
                   />
                 </InputGroup>
 
-                <InputGroup className="mb-1 d-flex flex-column">
+                <InputGroup className="mb-3 d-flex flex-column">
                   <div className="d-flex justify-content-between align-items-center">
                     <label htmlFor="password" className="d-block">
                       Password
@@ -126,18 +125,37 @@ const LoginForm = ({ loginUserAccount, isAuthenticated }) => {
                     />
                   )}
                 </InputGroup>
-                <div className="d-flex justify-content-between align-items-center mb-3">
-                  <Link to="/reset-password" className={styles.forget}>
-                    Forget your password?
-                  </Link>
-                </div>
-
-                <span className="d-block text-end">
-                  Don't have an account?{" "}
-                  <Link to="/signup" className={styles.link__page}>
-                    Create New Account
-                  </Link>
-                </span>
+                <InputGroup className="mb-3 d-flex flex-column">
+                  <div className="d-flex justify-content-between align-items-center">
+                    <label htmlFor="password2" className="d-block">
+                      Re-type Password
+                    </label>
+                    {errors.password2 && touched.password2 ? (
+                      <small className="text-danger">{errors.password2}</small>
+                    ) : null}
+                  </div>
+                  <Field
+                    as={BootstrapForm.Control}
+                    placeholder="Re-type to confirm password"
+                    name="password2"
+                    isValid={!errors.password2 && touched.password2}
+                    type={isPasswordVisible2 ? "text" : "password"}
+                    className={`${styles.input} w-100 icon-hidden`}
+                    isInvalid={errors.password2 && touched.password2}
+                    style={{ position: "relative" }}
+                  />
+                  {!isPasswordVisible2 ? (
+                    <AiOutlineEye
+                      className={styles.eyeIcon}
+                      onClick={() => setIsPasswordVisible2(!isPasswordVisible2)}
+                    />
+                  ) : (
+                    <AiOutlineEyeInvisible
+                      className={styles.eyeIcon}
+                      onClick={() => setIsPasswordVisible2(!isPasswordVisible2)}
+                    />
+                  )}
+                </InputGroup>
 
                 <div className="pt-3">
                   <Button
@@ -146,7 +164,7 @@ const LoginForm = ({ loginUserAccount, isAuthenticated }) => {
                     className={styles.btn}
                     disabled={submitting}
                   >
-                    {submitting ? "Loading..." : "Login"}
+                    {submitting ? "Submitting..." : "Submit"}
                   </Button>
                 </div>
               </Form>
@@ -162,4 +180,4 @@ const mapStateToProps = (state) => ({
   isAuthenticated: state.auth.isAuthenticated,
 });
 
-export default connect(mapStateToProps, { loginUserAccount })(LoginForm);
+export default connect(mapStateToProps, { resetPassword })(ResetPasswordForm);

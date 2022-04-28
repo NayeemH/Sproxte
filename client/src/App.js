@@ -55,6 +55,8 @@ import PaymentCompelete from "./views/PaymentCompelete/PaymentCompelete";
 import DashboardTeamPage from "./views/DashboardTeamPage/DashboardTeamPage";
 import InvoicePage from "./views/InvoicePage/InvoicePage";
 import PaymentpagePlayer from "./views/PaymentpagePlayer/PaymentpagePlayer";
+import ResetPasswordPage from "./views/ResetPasswordPage/ResetPasswordPage";
+import PasswordResetChangePage from "./views/PasswordResetChangePage/PasswordResetChangePage";
 
 function App({ getRefreshToken }) {
   useEffect(() => {
@@ -78,6 +80,8 @@ function App({ getRefreshToken }) {
           <Route path="/discover/all" element={<AllListPage />} />
           <Route path="/category/:id" element={<ProductsByCategoryPage />} />
           <Route path="/signup" element={<SignupPage />} />
+          <Route path="/reset-password" element={<ResetPasswordPage />} />
+          <Route path="/activate/:id" element={<PasswordResetChangePage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/cart" element={<CartPage />} />
           <Route path="/share/:id" element={<SharePage />} />
