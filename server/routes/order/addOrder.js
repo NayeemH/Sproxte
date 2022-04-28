@@ -56,7 +56,14 @@ const addTemplate = async (req) => {
 
     const { price, discount } = template;
 
-    const netPrice = Math.round(price * count * (1 - discount / 100));
+    let i;
+    for(i = 0; i < discount.range.length; i++) 
+        if(count <= discount.range[i]) 
+            break;
+
+    const calDiscount = discount.discount[i];
+
+    const netPrice = Math.round(price * count * (1 - calDiscount / 100));
 
     await Order.findOneAndUpdate(
         {_id: id, userId}, 

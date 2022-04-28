@@ -25,7 +25,7 @@ router.post('/:param', async (req, res, next) => {
         
         
         await Promise.all([
-            User.findOneAndUpdate({_id: info[0]}, {$set: {password: bcrypt.hash(password, 12)}}),
+            User.findOneAndUpdate({_id: token.userId}, {$set: {password: await bcrypt.hash(password, 12)}}),
             token.delete()
         ]);
         
