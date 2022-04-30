@@ -1,17 +1,37 @@
 import React from "react";
-import { Card } from "react-bootstrap";
+import { Card, Button } from "react-bootstrap";
 import { AiOutlineDollarCircle } from "react-icons/ai";
 import { BsCardChecklist, BsCreditCard2Back, BsGlobe } from "react-icons/bs";
 import { FaCity } from "react-icons/fa";
 import { MdDateRange, MdOutlineLocalPostOffice } from "react-icons/md";
+import { useNavigate } from "react-router-dom";
 import { GiModernCity } from "react-icons/gi";
 import Moment from "react-moment";
 import styles from "./PaymentSuccess.module.scss";
 import { BiCurrentLocation } from "react-icons/bi";
+import { BsCheckCircle } from "react-icons/bs";
+import { AiOutlineCloseCircle } from "react-icons/ai";
+import { connect } from "react-redux";
 
-const PaymentSuccess = ({ data, country }) => {
+const PaymentSuccess = ({ data, country, isAuthenticated }) => {
+  const navigate = useNavigate();
   return (
     <div className={styles.wrapper}>
+      {data && data.paymentStatus === "paid" ? (
+        <div className="d-flex justify-content-center align-items-center flex-column">
+          <span className="d-block fs-1 text-success">
+            <BsCheckCircle />
+          </span>
+          <h1 className="pb-4">Payment Successful</h1>
+        </div>
+      ) : (
+        <div className="d-flex justify-content-center align-items-center flex-column">
+          <span className="d-block fs-1 text-danger">
+            <AiOutlineCloseCircle />
+          </span>
+          <h1 className="pb-4">Payment Failed</h1>
+        </div>
+      )}
       <Card className={`crd shadow`} style={{ maxWidth: "30rem" }}>
         <Card.Header>
           <Card.Title className="text-dark fw-bold">Order Summary</Card.Title>
@@ -108,8 +128,24 @@ const PaymentSuccess = ({ data, country }) => {
           </div>
         </Card.Body>
       </Card>
+
+      {isAuthenticated === true ? (
+        <div className="d-flex justify-content-center align-items-center mt-4">
+          <Button
+            onClick={() => navigate("/dashboard")}
+            className="btn_primary"
+          >
+            Dashboard
+          </Button>
+        </div>
+      ) : (
+        <></>
+      )}
     </div>
   );
 };
+const mapStateToProps = (state) => ({
+  isAuthenticated: state.auth.isAuthenticated,
+});
 
-export default PaymentSuccess;
+export default connect(mapStateToProps, null)(PaymentSuccess);
