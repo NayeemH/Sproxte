@@ -67,7 +67,10 @@ const addPlayerHandle = async (object) => {
 
     await Order.findOneAndUpdate(
         {_id: project.orderId},
-        {$inc: {price}}
+        {
+            $inc: {price},
+            $push: {playerAddPrice: {count, price}}
+        }
     );
 
 
