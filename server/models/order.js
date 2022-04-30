@@ -76,6 +76,10 @@ const orderSchema = Schema({
         type: Number,
         default: 0
     },
+    playerAddPrice: {
+        type: Array,
+        default: []
+    },
     orders: {
         type: Array
     },
