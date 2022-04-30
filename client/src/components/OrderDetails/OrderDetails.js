@@ -39,6 +39,7 @@ const OrderDetails = ({
   const navigate = useNavigate();
 
   const modals = useModals();
+  const modal = useModals();
 
   const viewHandeler = () =>
     modals.openModal({
@@ -125,17 +126,22 @@ const OrderDetails = ({
     e.preventDefault();
     let count = e.target.elements[0].value;
     modals.closeAll();
-    navigate(`/pament-player/${id}/${count}`);
+    navigate(`/payment-player/${id}/${count}/${data.playerAddPrice}/10`);
   };
 
   const clickHandeler = () => {
-    modals.openModal({
+    modal.openModal({
       title: "Add Player Information",
       closeOnClickOutside: false,
+      closeOnEscape: false,
       centered: true,
       children: (
         <>
-          <AddPlayerInfo project={projects} modals={modals} />
+          <AddPlayerInfo
+            project={projects}
+            count={projects.count}
+            modals={modal}
+          />
         </>
       ),
     });
@@ -179,6 +185,10 @@ const OrderDetails = ({
             You will need to pay product price plus additional charges to add
             new player.
           </span>
+          <span className="d-block  pt-3">
+            Additional price for each player you add is{" "}
+            <b>${data.playerAddPrice}</b>
+          </span>
         </>
       ),
       labels: {
@@ -197,7 +207,7 @@ const OrderDetails = ({
   return (
     <Container className={styles.wrapper}>
       {role && (role === "admin" || role === "iep") && (
-        <div className="d-flex flex-column flex-md-row justify-content-between align-items-center">
+        <div className="d-flex flex-column flex-md-row justify-content-between align-items-center pb-3">
           <div
             className={`${styles.active_btn}`}
             style={{

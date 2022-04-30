@@ -9,6 +9,8 @@ import {
   GET_COMPLETED_ORDERS,
   GET_COMPLETED_ORDERS_ERROR,
   GET_CONTACT_LIST,
+  GET_PLAYER_REQUEST,
+  GET_PLAYER_REQUEST_ERROR,
   GET_REPORT_DATA,
   GET_RUNNING_ORDERS,
   GET_RUNNING_ORDERS_ERROR,
@@ -189,6 +191,27 @@ export const getRunningOrders = (page) => async (dispatch) => {
   } catch (err) {
     dispatch({
       type: GET_RUNNING_ORDERS_ERROR,
+    });
+    console.log(err);
+  }
+};
+
+//GET RUNNING PLAYER REQ
+export const getPlayerRequest = (page) => async (dispatch) => {
+  try {
+    const res = await axios.get(
+      `${BASE_URL}/api/v1/order/player/active?page=${page}&limit=12`
+    );
+    //console.log(res);
+
+    dispatch({
+      type: GET_PLAYER_REQUEST,
+      payload: res.data.orders,
+    });
+    //console.log(res);
+  } catch (err) {
+    dispatch({
+      type: GET_PLAYER_REQUEST_ERROR,
     });
     console.log(err);
   }

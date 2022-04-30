@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Form as BootstrapForm, InputGroup, Button } from "react-bootstrap";
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
@@ -8,18 +8,34 @@ import styles from "./AddPlayerInfo.module.scss";
 import { addPlayer } from "../../actions/Project.action";
 import { Select } from "@mantine/core";
 
-const AddPlayerInfo = ({ modals, project, addPlayer }) => {
+const AddPlayerInfo = ({ modals, project, count, addPlayer }) => {
   const [selectedFile, setSelectedFile] = useState();
   const [isLoading, setIsLoading] = useState(false);
   const fileRef = useRef();
+  useEffect(() => {
+    if (count <= 0) {
+      modals.closeAll();
+    }
+  }, [count]);
 
-  const onSubmitHandeler = async (values) => {
+  const onSubmitHandeler = async (values, resetForm) => {
     setIsLoading(true);
+    if (count <= 0) {
+      modals.closeAll();
+      toast.success("You have added all players.");
+    }
     let check = await addPlayer(values, selectedFile, project._id);
     if (check) {
       setIsLoading(false);
-      modals.closeAll();
+      setSelectedFile(null);
+      resetForm();
+      fileRef.current.value = "";
+      if (count <= 0) {
+        modals.closeAll();
+        toast.success("You have added all players.");
+      }
     }
+
     setIsLoading(false);
   };
 
@@ -63,7 +79,9 @@ const AddPlayerInfo = ({ modals, project, addPlayer }) => {
       <Formik
         initialValues={initVals}
         validationSchema={SignupSchema}
-        onSubmit={(values) => onSubmitHandeler(values)}
+        onSubmit={(values, { resetForm }) =>
+          onSubmitHandeler(values, resetForm)
+        }
       >
         {({ errors, touched, values, setFieldValue }) => (
           <Form>

@@ -2,21 +2,19 @@ import React, { useEffect } from "react";
 import { Card, Col, Container, Row, Spinner } from "react-bootstrap";
 import Moment from "react-moment";
 import { connect } from "react-redux";
-import styles from "./OrderList.module.scss";
+import styles from "./PlayerRequestList.module.scss";
 import { Link, useLocation } from "react-router-dom";
 import { AiOutlineLeft, AiOutlineRight } from "react-icons/ai";
-import { getRunningOrders } from "../../actions/Payment.acton";
-import { BsArrowRight } from "react-icons/bs";
-import demoImg from "../../assets/logoSq.png";
+import { getPlayerRequest } from "../../actions/Payment.acton";
 import { IMAGE_PATH } from "../../constants/URL";
 const queryString = require("query-string");
 
-const OrderList = ({ item, getRunningOrders }) => {
+const PlayerRequestList = ({ item, getPlayerRequest }) => {
   const location = useLocation();
   const parsed = queryString.parse(location.search);
   let page = parsed.page ? parseInt(parsed.page) : 1;
   useEffect(() => {
-    getRunningOrders(page);
+    getPlayerRequest(page);
   }, [parsed.page]);
 
   const getPages = (totalPage) => {
@@ -24,7 +22,7 @@ const OrderList = ({ item, getRunningOrders }) => {
     for (let i = 1; i <= totalPage; i++) {
       pages.push(
         <Link
-          to={`/orders?page=${parseInt(i)}`}
+          to={`/player-request?page=${parseInt(i)}`}
           key={i}
           className={`${styles.link} ${
             (!parsed.page && i == 1) || parsed.page == i
@@ -147,7 +145,7 @@ const OrderList = ({ item, getRunningOrders }) => {
                 <div className="d-flex justify-content-end align-items-center">
                   {parsed.page > 1 ? (
                     <Link
-                      to={`/orders?page=${page - 1}`}
+                      to={`/player-request?page=${page - 1}`}
                       className={`${styles.link} ${
                         parsed.page === 1 ? styles.disabled : ""
                       } ${styles.link_arrow}`}
@@ -170,7 +168,7 @@ const OrderList = ({ item, getRunningOrders }) => {
                     : null}
                   {item && item.pageCount && page < item.pageCount ? (
                     <Link
-                      to={`/orders?page=${page + 1}`}
+                      to={`/player-request?page=${page + 1}`}
                       className={`${styles.link} ${styles.link_arrow} ${
                         styles.link_arrow
                       } ${
@@ -200,6 +198,8 @@ const OrderList = ({ item, getRunningOrders }) => {
   );
 };
 const mapStateToProps = (state) => ({
-  item: state.payment.running_orders,
+  item: state.order.player_request,
 });
-export default connect(mapStateToProps, { getRunningOrders })(OrderList);
+export default connect(mapStateToProps, { getPlayerRequest })(
+  PlayerRequestList
+);

@@ -17,6 +17,7 @@ import { MdDownloadDone } from "react-icons/md";
 import { BiLayer, BiLayerPlus } from "react-icons/bi";
 import { HiOutlineMail, HiDocumentReport } from "react-icons/hi";
 import { ImStatsBars } from "react-icons/im";
+import { AiOutlineUserAdd } from "react-icons/ai";
 
 const Layout = ({ logout, children, role, title, user }) => {
   const navigate = useNavigate();
@@ -163,14 +164,26 @@ const Layout = ({ logout, children, role, title, user }) => {
             )}
 
             {role !== "iep" ? (
-              <div className={styles.nav}>
-                <NavLink to="/orders" className={styles.nav__item}>
-                  <span className={styles.icon}>
-                    <BsArrowLeftRight />
-                  </span>
-                  <span className={styles.nav__item_text}>Orders</span>
-                </NavLink>
-              </div>
+              <>
+                <div className={styles.nav}>
+                  <NavLink to="/orders" className={styles.nav__item}>
+                    <span className={styles.icon}>
+                      <BsArrowLeftRight />
+                    </span>
+                    <span className={styles.nav__item_text}>Orders</span>
+                  </NavLink>
+                </div>
+                <div className={styles.nav}>
+                  <NavLink to="/player-request" className={styles.nav__item}>
+                    <span className={styles.icon}>
+                      <AiOutlineUserAdd />
+                    </span>
+                    <span className={styles.nav__item_text}>
+                      Player Requests
+                    </span>
+                  </NavLink>
+                </div>
+              </>
             ) : (
               <></>
             )}

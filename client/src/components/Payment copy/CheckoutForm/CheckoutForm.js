@@ -5,7 +5,7 @@ import { toast } from "react-toastify";
 import styles from "./CheckoutForm.module.scss";
 import { Spinner } from "react-bootstrap";
 
-export default function CheckoutForm({ id }) {
+export default function CheckoutForm({ id, count, addition, price }) {
   const stripe = useStripe();
   const elements = useElements();
   const [isLoading, setIsLoading] = useState(false);
@@ -25,7 +25,7 @@ export default function CheckoutForm({ id }) {
       elements,
       confirmParams: {
         // Make sure to change this to your payment completion page
-        return_url: `${window.location.origin}?payment=success`,
+        return_url: `${window.location.origin}/add-player-success/${id}/${count}/${addition}/${price}`,
       },
     });
 

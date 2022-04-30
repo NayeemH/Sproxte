@@ -938,7 +938,15 @@ export const addPlayer = (values, file, id) => async (dispatch) => {
     dispatch({
       type: ADD_PLAYER_ERROR,
     });
-    toast.error(err.response.data.msg);
+    if (
+      err.response.data &&
+      err.response.data.message &&
+      err.response.data.message === "Can not add user"
+    ) {
+      toast.error(
+        "You have added all players. Please create Player Request to add more players"
+      );
+    }
     return false;
   }
 

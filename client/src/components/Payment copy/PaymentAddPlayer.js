@@ -15,7 +15,7 @@ const PaymentAddPlayer = ({ auth }) => {
   const [clientSecret, setClientSecret] = useState(null);
   const navigate = useNavigate();
 
-  const { id, count } = useParams();
+  const { id, count, addition, price } = useParams();
 
   useEffect(() => {
     const fetchToken = async () => {
@@ -50,13 +50,45 @@ const PaymentAddPlayer = ({ auth }) => {
 
   return (
     <div className={styles.wrapper}>
-      <div className="py-4 d-flex justify-content-center align-items-center">
+      <div className="py-4 d-flex flex-column justify-content-center align-items-center">
+        <Card className={`${styles.crd} shadow w-100 mb-4`}>
+          <Card.Body>
+            <div className="d-flex justify-content-between align-items-center">
+              <span className="d-block text-center fs-5">
+                Single Product Price:
+              </span>
+              <span className="d-block fs-5 fw-bold">${price}</span>
+            </div>
+            <div className="d-flex justify-content-between align-items-center">
+              <span className="d-block text-center fs-5">
+                Additional Price:
+              </span>
+              <span className="d-block fs-5 fw-bold">${addition}</span>
+            </div>
+            <div className="d-flex justify-content-between align-items-center">
+              <span className="d-block text-center fs-5">Count:</span>
+              <span className="d-block fs-5 fw-bold">{count}</span>
+            </div>
+            <hr />
+            <div className="d-flex justify-content-between align-items-center">
+              <span className="d-block text-center fs-5">Total Price::</span>
+              <span className="d-block fs-5 fw-bold">
+                ${parseInt(count) * (parseInt(price) + parseInt(addition))}
+              </span>
+            </div>
+          </Card.Body>
+        </Card>
         <Card className={`${styles.crd} shadow w-100`}>
           <Card.Body>
             <h2 className="text-center pb-3">Checkout</h2>
             {clientSecret && (
               <Elements stripe={stripePromise} options={{ clientSecret }}>
-                <CheckoutForm id={id} />
+                <CheckoutForm
+                  id={id}
+                  count={count}
+                  addition={addition}
+                  price={price}
+                />
               </Elements>
             )}
           </Card.Body>

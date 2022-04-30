@@ -57,7 +57,8 @@ import InvoicePage from "./views/InvoicePage/InvoicePage";
 import PaymentpagePlayer from "./views/PaymentpagePlayer/PaymentpagePlayer";
 import ResetPasswordPage from "./views/ResetPasswordPage/ResetPasswordPage";
 import PasswordResetChangePage from "./views/PasswordResetChangePage/PasswordResetChangePage";
-import PaymentCompeleteAddPlayer from "./views/PaymentCompeleteAddPlayer/PaymentCompeleteAddPlayer";
+import PlayerRequestPage from "./views/PlayerRequestPage/PlayerRequestPage";
+import PlayerRequestCompletePage from "./views/PlayerRequestCompletePage/PlayerRequestCompletePage";
 
 function App({ getRefreshToken }) {
   useEffect(() => {
@@ -73,6 +74,10 @@ function App({ getRefreshToken }) {
         <Routes>
           <Route path="/" element={<LandingPage />} />
           <Route path="/payment-success/:id" element={<PaymentCompelete />} />
+          <Route
+            path="add-player-success/:id/:count/:addition/:price"
+            element={<PlayerRequestCompletePage />}
+          />
           <Route path="/refund-policy" element={<RefundPolicyPage />} />
           <Route path="/policy" element={<PolicyPage />} />
           <Route path="/discover" element={<DiscoverPage />} />
@@ -91,10 +96,7 @@ function App({ getRefreshToken }) {
           <Route path="/share/:id" element={<SharePage />} />
           <Route path="/contact" element={<ContactPage />} />
           <Route path="/payment-methods" element={<PaymentMethodsPage />} />
-          <Route
-            path="/payment-player"
-            element={<PaymentCompeleteAddPlayer />}
-          />
+
           <Route path="/policy" element={<RefundPolicyPage />} />
           <Route path="/template/:id" element={<FileUploadPage />} />
           <Route path="/product/:id" element={<FileUploadPageReady />} />
@@ -103,9 +105,10 @@ function App({ getRefreshToken }) {
             <>
               <Route path="payment/:id" element={<Paymentpage />} />
               <Route
-                path="pament-player/:id/:count"
+                path="payment-player/:id/:count/:addition/:price"
                 element={<PaymentpagePlayer />}
               />
+
               <Route path="users" element={<UserIepPage />} />
               <Route path="users/iep" element={<UserIepPage iep />} />
               <Route path="dashboard" element={<DashboardPage />} />
@@ -156,6 +159,7 @@ function App({ getRefreshToken }) {
               <Route path="product/edit/:id" element={<EditProductPage />} />
               <Route path="templates" element={<TypeListPage />} />
               <Route path="orders" element={<OrdersListPage />} />
+              <Route path="player-request" element={<PlayerRequestPage />} />
               <Route
                 path="compeleted-orders"
                 element={<CompletedOrdersListPage />}
