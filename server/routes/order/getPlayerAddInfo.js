@@ -1,10 +1,10 @@
 const router = require('express').Router();
 const pagination = require('../../lib/pagination');
-const Order = require('../../models/order');
+const PlayerAddPrice = require('../../models/playerAddPrice');
 
 
 
-router.get('/:type', async (req, res, next) => {
+router.get('/active', async (req, res, next) => {
     try {
         const {userId, userType} = req.user;
         const {type} = req.params;
@@ -15,62 +15,34 @@ router.get('/:type', async (req, res, next) => {
 
         const {skip, limit} = pagination(req.query);
 
-        let orders;
+        let playerAddPrice;
         if(userType === 'admin' || userType === 'iep') {
-            if(type === 'active') {
-                totalCount = await Order.find({deleveryStatus: {$ne: 'delivered'}, playerAddPrice: { $exists: true, $not: {$size: 0} }, paymentStatus: 'paid'}).countDocuments();
+            totalCount = await PlayerAddPrice.find({}).countDocuments();
 
-                orders = await Order
-                    .find({deleveryStatus: {$ne: 'delivered'}, playerAddPrice: { $exists: true, $not: {$size: 0} }, paymentStatus: 'paid'}, {_id: 1, projectId: 1, userId: 1, playerAddPrice: 1})
-                    .sort({_id: -1})
-                    .skip(skip)
-                    .limit(limit)
-                    .populate('userId', '_id name image');
-            }
-            else if(type === 'completed'){
-                totalCount = await Order.find({deleveryStatus: 'delivered', playerAddPrice: { $exists: true, $not: {$size: 0} }, paymentStatus: 'paid'}).countDocuments();
-
-                orders = await Order
-                    .find({deleveryStatus: 'delivered', playerAddPrice: { $exists: true, $not: {$size: 0} }, paymentStatus: 'paid'}, {_id: 1, projectId: 1, userId: 1, playerAddPrice: 1})
-                    .sort({_id: -1})
-                    .skip(skip)
-                    .limit(limit)
-                    .populate('userId', '_id name image');
-            }
-            else return next();
+            playerAddPrice = await PlayerAddPrice
+                .find({}, {__v: 0})
+                .sort({_id: -1})
+                .skip(skip)
+                .limit(limit)
+                .populate('userId', '_id name image');
         }
         else if(userType === 'client' || userType === 'coach' || userType === 'gurdian') {
-            if(type === 'active') {
-                totalCount = await Order.find({deleveryStatus: {$ne: 'delivered'}, playerAddPrice: { $exists: true, $not: {$size: 0} }, userId, paymentStatus: 'paid'}).countDocuments();
+            totalCount = await PlayerAddPrice.find({userId}).countDocuments();
 
-                orders = await Order
-                    .find({deleveryStatus: {$ne: 'delivered'}, playerAddPrice: { $exists: true, $not: {$size: 0} }, userId, paymentStatus: 'paid'}, {_id: 1, projectId: 1, userId: 1, playerAddPrice: 1})
-                    .sort({_id: -1})
-                    .skip(skip)
-                    .limit(limit)
-                    .populate('userId', '_id name image');
-            }
-            else if(type === 'completed'){
-                totalCount = await Order.find({deleveryStatus: 'delivered', playerAddPrice: { $exists: true, $not: {$size: 0} }, userId, paymentStatus: 'paid'}).countDocuments();
-
-                orders = await Order
-                    .find({deleveryStatus: 'delivered', playerAddPrice: { $exists: true, $not: {$size: 0} }, userId, paymentStatus: 'paid'}, {_id: 1, projectId: 1, userId: 1, playerAddPrice: 1})
-                    .sort({_id: -1})
-                    .skip(skip)
-                    .limit(limit)
-                    .populate('userId', '_id name image');
-            }
-            else return next();
+            playerAddPrice = await PlayerAddPrice
+                .find({userId}, {__v: 0})
+                .sort({_id: -1})
+                .skip(skip)
+                .limit(limit)
+                .populate('userId', '_id name image');
         }
-
-
         
         res.json({
-            message: `${type} Order for ${userType}`,
-            orders: {
+            message: `PlayerAddPrice for ${userType}`,
+            playerAddPrice: {
                 pageCount: Math.ceil(totalCount / limit),
                 itemCount: totalCount,
-                items: orders
+                items: playerAddPrice
             }
         });
     }

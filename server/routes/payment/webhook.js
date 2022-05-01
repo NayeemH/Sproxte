@@ -12,6 +12,7 @@ const Template = require('../../models/template');
 const ProductType = require('../../models/productType');
 const Collection = require('../../models/collection');
 const User = require('../../models/user');
+const PlayerAddPrice = require('../../models/playerAddPrice');
 
 
 
@@ -65,14 +66,21 @@ const addPlayerHandle = async (object) => {
         {$inc: {count, price}}
     );
 
-    await Order.findOneAndUpdate(
+    const order = await Order.findOneAndUpdate(
         {_id: project.orderId},
         {
-            $inc: {price},
-            $push: {playerAddPrice: {count, price}}
+            $inc: {price}
         }
     );
 
+    await new PlayerAddPrice({
+        userId,
+        projectId, 
+        price,
+        count,
+        teamName: order.teamName,
+        location: order.location
+    }).save();
 
     // Send notification
     const users = await User.find({$or: [{userType: 'admin'}, {userType: 'iep'}]}, {_id: 1});
