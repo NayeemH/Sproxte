@@ -50,8 +50,10 @@ router.post('/:id', fileFetch.single('image'), async (req, res, next) => {
                 await sendPassword(name, email, password);
             }
 
-
-            const image = await saveImage(req.file);
+            let image;
+            if(req.file) {
+                image = await saveImage(req.file);
+            }
 
             const newProduct = await new Product({
                 userId,
@@ -74,7 +76,7 @@ router.post('/:id', fileFetch.single('image'), async (req, res, next) => {
                 primaryColor: product.primaryColor,
                 secondaryText: product.secondaryText,
                 secondaryColor: product.secondaryColor,
-                frontImages: [image],   // Store the gurdian image
+                frontImages: image ? [image] : [],   // Store the gurdian image
                 backImages: product.backImages,
                 gurdianNotifications: []     // Store the gurdian email
             }).save();
