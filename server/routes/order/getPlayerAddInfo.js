@@ -18,20 +18,20 @@ router.get('/:type', async (req, res, next) => {
         let orders;
         if(userType === 'admin' || userType === 'iep') {
             if(type === 'active') {
-                totalCount = await Order.find({deleveryStatus: {$ne: 'delivered'}, playerAddPrice: {$ne: []}, paymentStatus: 'paid'}).countDocuments();
+                totalCount = await Order.find({deleveryStatus: {$ne: 'delivered'}, playerAddPrice: { $exists: true, $not: {$size: 0} }, paymentStatus: 'paid'}).countDocuments();
 
                 orders = await Order
-                    .find({deleveryStatus: {$ne: 'delivered'}, playerAddPrice: {$ne: []}, paymentStatus: 'paid'}, {_id: 1, projectId: 1, userId: 1, playerAddPrice: 1})
+                    .find({deleveryStatus: {$ne: 'delivered'}, playerAddPrice: { $exists: true, $not: {$size: 0} }, paymentStatus: 'paid'}, {_id: 1, projectId: 1, userId: 1, playerAddPrice: 1})
                     .sort({_id: -1})
                     .skip(skip)
                     .limit(limit)
                     .populate('userId', '_id name image');
             }
             else if(type === 'completed'){
-                totalCount = await Order.find({deleveryStatus: 'delivered', playerAddPrice: {$ne: []}, paymentStatus: 'paid'}).countDocuments();
+                totalCount = await Order.find({deleveryStatus: 'delivered', playerAddPrice: { $exists: true, $not: {$size: 0} }, paymentStatus: 'paid'}).countDocuments();
 
                 orders = await Order
-                    .find({deleveryStatus: 'delivered', playerAddPrice: {$ne: []}, paymentStatus: 'paid'}, {_id: 1, projectId: 1, userId: 1, playerAddPrice: 1})
+                    .find({deleveryStatus: 'delivered', playerAddPrice: { $exists: true, $not: {$size: 0} }, paymentStatus: 'paid'}, {_id: 1, projectId: 1, userId: 1, playerAddPrice: 1})
                     .sort({_id: -1})
                     .skip(skip)
                     .limit(limit)
@@ -41,20 +41,20 @@ router.get('/:type', async (req, res, next) => {
         }
         else if(userType === 'client' || userType === 'coach' || userType === 'gurdian') {
             if(type === 'active') {
-                totalCount = await Order.find({deleveryStatus: {$ne: 'delivered'}, playerAddPrice: {$ne: []}, userId, paymentStatus: 'paid'}).countDocuments();
+                totalCount = await Order.find({deleveryStatus: {$ne: 'delivered'}, playerAddPrice: { $exists: true, $not: {$size: 0} }, userId, paymentStatus: 'paid'}).countDocuments();
 
                 orders = await Order
-                    .find({deleveryStatus: {$ne: 'delivered'}, playerAddPrice: {$ne: []}, userId, paymentStatus: 'paid'}, {_id: 1, projectId: 1, userId: 1, playerAddPrice: 1})
+                    .find({deleveryStatus: {$ne: 'delivered'}, playerAddPrice: { $exists: true, $not: {$size: 0} }, userId, paymentStatus: 'paid'}, {_id: 1, projectId: 1, userId: 1, playerAddPrice: 1})
                     .sort({_id: -1})
                     .skip(skip)
                     .limit(limit)
                     .populate('userId', '_id name image');
             }
             else if(type === 'completed'){
-                totalCount = await Order.find({deleveryStatus: 'delivered', playerAddPrice: {$ne: []}, userId, paymentStatus: 'paid'}).countDocuments();
+                totalCount = await Order.find({deleveryStatus: 'delivered', playerAddPrice: { $exists: true, $not: {$size: 0} }, userId, paymentStatus: 'paid'}).countDocuments();
 
                 orders = await Order
-                    .find({deleveryStatus: 'delivered', playerAddPrice: {$ne: []}, userId, paymentStatus: 'paid'}, {_id: 1, projectId: 1, userId: 1, playerAddPrice: 1})
+                    .find({deleveryStatus: 'delivered', playerAddPrice: { $exists: true, $not: {$size: 0} }, userId, paymentStatus: 'paid'}, {_id: 1, projectId: 1, userId: 1, playerAddPrice: 1})
                     .sort({_id: -1})
                     .skip(skip)
                     .limit(limit)
