@@ -1,3 +1,4 @@
+import { CART_RESET } from "../constants/Type";
 import {
   CART_ADD_ITEM,
   CART_REMOVE_ITEM,
@@ -33,6 +34,12 @@ const CartReducer = (state = initialState, action) => {
       return {
         ...state,
         selected_cart: { ...state.selected_cart, size: payload },
+      };
+    case CART_RESET:
+      return {
+        ...state,
+        cart: [],
+        selected_cart: {},
       };
     default:
       return state;

@@ -35,6 +35,7 @@ const Overview = ({
   hoverFB,
   setHoverFB,
   currentIndex,
+  sellCount,
 }) => {
   const navigate = useNavigate();
   const [message, setMessage] = useState("");
@@ -229,6 +230,8 @@ const Overview = ({
         )}
       {collection && (
         <>
+          <h5 className="text-dark fw-bold">Sell : {sellCount}</h5>
+          <hr className="bg-dark" />
           <h5 className="text-dark">
             {currentIndex + 1}. {collection.title}
           </h5>

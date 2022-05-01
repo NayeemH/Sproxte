@@ -126,12 +126,12 @@ const OrderList = ({ item, getRunningOrders }) => {
                           >
                             Status : {notification.deleveryStatus}
                           </div>
-                          <Link
+                          {/* <Link
                             to={`/dashboard/order/${notification.projectId}`}
                             className={`${styles.lnk}`}
                           >
                             <BsArrowRight />
-                          </Link>
+                          </Link> */}
                         </Col>
                       </Row>
                     </Col>

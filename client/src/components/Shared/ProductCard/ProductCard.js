@@ -64,7 +64,11 @@ const ProductCard = ({
               )}
               {tags &&
                 tags.length > 0 &&
-                tags.map((tag) => <Badge className={styles.bdg}>{tag} </Badge>)}
+                tags.map((tag, i) => (
+                  <Badge key={i} className={styles.bdg}>
+                    {tag}{" "}
+                  </Badge>
+                ))}
             </Col>
             {!hidden && (
               <Col

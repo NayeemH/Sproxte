@@ -21,8 +21,8 @@ const NotificationList = ({ item, getNotifications }) => {
     for (let i = 1; i <= totalPage; i++) {
       pages.push(
         <Link
-          to={`/notification?page=${parseInt(i)}`}
           key={i}
+          to={`/notification?page=${parseInt(i)}`}
           className={`${styles.link} ${
             (!parsed.page && i == 1) || parsed.page == i
               ? `${styles.disabled} ${styles.active}`
@@ -59,8 +59,8 @@ const NotificationList = ({ item, getNotifications }) => {
             <Card.Body>
               {item &&
                 item.items &&
-                item.items.map((notification) => (
-                  <Row className="mb-3">
+                item.items.map((notification, i) => (
+                  <Row className="mb-3" key={i}>
                     <Col xs={2}>
                       <Row>
                         <Col

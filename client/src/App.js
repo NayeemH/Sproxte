@@ -51,6 +51,14 @@ import SharePage from "./views/SharePage/SharePage";
 import Paymentpage from "./views/Paymentpage/Paymentpage";
 import PolicyPage from "./views/PolicyPage/PolicyPage";
 import GReport from "./components/Reports/GReport/GReport";
+import PaymentCompelete from "./views/PaymentCompelete/PaymentCompelete";
+import DashboardTeamPage from "./views/DashboardTeamPage/DashboardTeamPage";
+import InvoicePage from "./views/InvoicePage/InvoicePage";
+import PaymentpagePlayer from "./views/PaymentpagePlayer/PaymentpagePlayer";
+import ResetPasswordPage from "./views/ResetPasswordPage/ResetPasswordPage";
+import PasswordResetChangePage from "./views/PasswordResetChangePage/PasswordResetChangePage";
+import PlayerRequestPage from "./views/PlayerRequestPage/PlayerRequestPage";
+import PlayerRequestCompletePage from "./views/PlayerRequestCompletePage/PlayerRequestCompletePage";
 
 function App({ getRefreshToken }) {
   useEffect(() => {
@@ -65,6 +73,11 @@ function App({ getRefreshToken }) {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<LandingPage />} />
+          <Route path="/payment-success/:id" element={<PaymentCompelete />} />
+          <Route
+            path="add-player-success/:id/:count/:addition/:price"
+            element={<PlayerRequestCompletePage />}
+          />
           <Route path="/refund-policy" element={<RefundPolicyPage />} />
           <Route path="/policy" element={<PolicyPage />} />
           <Route path="/discover" element={<DiscoverPage />} />
@@ -73,28 +86,48 @@ function App({ getRefreshToken }) {
           <Route path="/discover/all" element={<AllListPage />} />
           <Route path="/category/:id" element={<ProductsByCategoryPage />} />
           <Route path="/signup" element={<SignupPage />} />
+          <Route path="/reset-password" element={<ResetPasswordPage />} />
+          <Route
+            path="/activate/resetPassword/:id"
+            element={<PasswordResetChangePage />}
+          />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/cart" element={<CartPage />} />
-          <Route path="/share/:image" element={<SharePage />} />
+          <Route path="/share/:id" element={<SharePage />} />
           <Route path="/contact" element={<ContactPage />} />
           <Route path="/payment-methods" element={<PaymentMethodsPage />} />
-          <Route path="/payment/:id" element={<Paymentpage />} />
+
           <Route path="/policy" element={<RefundPolicyPage />} />
           <Route path="/template/:id" element={<FileUploadPage />} />
           <Route path="/product/:id" element={<FileUploadPageReady />} />
 
           <Route path="/*" element={<PrivateOutlet />}>
             <>
+              <Route path="payment/:id" element={<Paymentpage />} />
+              <Route
+                path="payment-player/:id/:count/:addition/:price"
+                element={<PaymentpagePlayer />}
+              />
+
               <Route path="users" element={<UserIepPage />} />
               <Route path="users/iep" element={<UserIepPage iep />} />
               <Route path="dashboard" element={<DashboardPage />} />
+              <Route path="team-dashboard" element={<DashboardTeamPage />} />
               <Route path="google" element={<GReport />} />
               <Route
                 path="dashboard/completed"
                 element={<DashboardPage completed={true} />}
               />
               <Route
+                path="team-dashboard/completed"
+                element={<DashboardTeamPage completed={true} />}
+              />
+              <Route
                 path="dashboard/:projectId/:stepId"
+                element={<StepDetailsPage />}
+              />
+              <Route
+                path="team-dashboard/:projectId/:stepId"
                 element={<StepDetailsPage />}
               />
               <Route
@@ -105,6 +138,15 @@ function App({ getRefreshToken }) {
                 path="dashboard/order/:id"
                 element={<ProjectDetailsPage />}
               />
+              <Route
+                path="team-dashboard/:projectId/:stepId/upload"
+                element={<UploadStepImagePage />}
+              />
+              <Route
+                path="team-dashboard/order/:id"
+                element={<ProjectDetailsPage team={true} />}
+              />
+              <Route path="invoice/:id" element={<InvoicePage />} />
               <Route path="report" element={<ReportsPage />} />
               <Route path="add-iep" element={<AddUserPage />} />
               <Route path="contact-list" element={<ContactListPage />} />
@@ -117,6 +159,7 @@ function App({ getRefreshToken }) {
               <Route path="product/edit/:id" element={<EditProductPage />} />
               <Route path="templates" element={<TypeListPage />} />
               <Route path="orders" element={<OrdersListPage />} />
+              <Route path="player-request" element={<PlayerRequestPage />} />
               <Route
                 path="compeleted-orders"
                 element={<CompletedOrdersListPage />}

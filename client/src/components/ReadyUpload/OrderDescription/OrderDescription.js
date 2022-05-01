@@ -1,15 +1,22 @@
-import React, { useEffect, useRef, useState } from "react";
-import { Button, Card, Col, Container, InputGroup, Row } from "react-bootstrap";
+import React, { useEffect, useState } from "react";
+import { Button, Card } from "react-bootstrap";
 import { connect } from "react-redux";
 import { addToCart, setSize } from "../../../actions/Cart.action";
-import { ImUpload } from "react-icons/im";
 import { toast } from "react-toastify";
 import styles from "./OrderDescription.module.scss";
-import colors from "../../../config/Colors";
-import { IMAGE_PATH } from "../../../constants/URL";
 import { useNavigate } from "react-router-dom";
+import { useModals } from "@mantine/modals";
+import { switchMode } from "../../../actions/Coach.action";
+import { Text } from "@mantine/core";
 
-const OrderDescription = ({ sizes, addToCart, product }) => {
+const OrderDescription = ({
+  sizes,
+  addToCart,
+  product,
+  role,
+  switchMode,
+  type,
+}) => {
   const [selectedFile, setSelectedFile] = useState();
   const [preview, setPreview] = useState();
   const [size, setSize] = useState();
@@ -21,8 +28,9 @@ const OrderDescription = ({ sizes, addToCart, product }) => {
   const [mainTextColor, setMainTextColor] = useState(undefined);
   const [secondaryTextColor, setSecondaryTextColor] = useState(undefined);
   const [selectedFileBack, setSelectedFile2] = useState();
-  const fileRef = useRef();
+
   const navigate = useNavigate();
+  const modals = useModals();
 
   useEffect(() => {
     if (
@@ -39,6 +47,23 @@ const OrderDescription = ({ sizes, addToCart, product }) => {
 
   //Submit handeler
   const submitHandeler = () => {
+    if (role && role === "coach") {
+      modals.openConfirmModal({
+        title: "Switch to client mode",
+        centered: true,
+        children: (
+          <Text size="md">
+            You can not order a ready made product as a coach. Please switch to
+            client mode and try again.
+          </Text>
+        ),
+        labels: { confirm: "Switch to Client Mode", cancel: "Cancel" },
+        confirmProps: { color: "red" },
+        onCancel: () => {},
+        onConfirm: () => switchMode("client"),
+      });
+      return;
+    }
     if (quantity < 1) {
       toast.error("Please enter a valid quantity");
     } else if (!size) {
@@ -57,7 +82,7 @@ const OrderDescription = ({ sizes, addToCart, product }) => {
         quantity,
         product,
         undefined,
-        "template"
+        type && type === "link" ? "link" : "template"
       );
       resetlHandeler();
       setDescription("");
@@ -97,87 +122,8 @@ const OrderDescription = ({ sizes, addToCart, product }) => {
     }
   };
 
-  //ONSELECT FILE HANDELER 2
-  const onSelectFile2 = (e) => {
-    if (!e.target.files || e.target.files.length === 0) {
-      setSelectedFile2(undefined);
-      return;
-    }
-    if (e.target.files[0].size > 2000000) {
-      toast.error("File size is too big");
-      return;
-    }
-    setSelectedFile2(e.target.files[0]);
-  };
   return (
     <div className={styles.wrapper}>
-      {/* <Card className={`${styles.crd} shadow`}>
-        <Card.Body>
-          <Row>
-            <Col>
-              <span className="d-block fs-4">Upload Front Images</span>
-
-              <div className="pt-3">
-                <Button
-                  variant="outline-dark"
-                  onClick={() => fileRef.current.click()}
-                >
-                  <span className="d-block mr-4">
-                    <ImUpload />
-                  </span>{" "}
-                  <span className="pl-3 d-block"> Upload Image</span>
-                </Button>
-              </div>
-              <div style={{ display: "none" }}>
-                <input
-                  ref={fileRef}
-                  multiple
-                  type="file"
-                  name="image"
-                  onChange={onSelectFile}
-                />
-              </div>
-            </Col>
-            <Col>
-              <div className={styles.preview}>
-                {selectedFile && selectedFile.length > 0 ? (
-                  <div className="text-center pb-3">
-                    <img src={preview} alt="admin" className="img-fluid" />{" "}
-                    {selectedFile.length > 1 ? (
-                      <span className="d-block pt-2">
-                        + {selectedFile.length - 1} more files selected
-                      </span>
-                    ) : null}
-                  </div>
-                ) : (
-                  <></>
-                )}
-              </div>
-            </Col>
-          </Row>
-          <Row>
-            <Col>
-              <InputGroup className="pt-3">
-                <div className="pb-2">
-                  <label htmlFor="temp2" className="d-block ">
-                    Upload Back Image (optional)
-                  </label>
-                </div>
-
-                <div className="w-100">
-                  <input
-                    type="file"
-                    name="image2"
-                    className="form-control w-100"
-                    onChange={onSelectFile2}
-                    id="temp2"
-                  />
-                </div>
-              </InputGroup>
-            </Col>
-          </Row>
-        </Card.Body>
-      </Card> */}
       <Card className={`${styles.crd_size} shadow`}>
         <Card.Body>
           <span className="d-block fs-4">Select Size</span>
@@ -196,20 +142,6 @@ const OrderDescription = ({ sizes, addToCart, product }) => {
           </div>
         </Card.Body>
       </Card>
-      {/* <Card className={`${styles.crd} shadow`}>
-        <Card.Body className="d-flex justify-content-between flex-column">
-          <span className="d-block fs-4">Order Description</span>
-          <textarea
-            name="desc"
-            id="desc"
-            cols="30"
-            rows="6"
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
-            className={`${styles.textarea} form-control mb-3`}
-          ></textarea>
-        </Card.Body>
-      </Card> */}
 
       <div className="py-4 d-flex align-items-center">
         <span className="fs-5 fw-bold me-3">Quantity</span>
@@ -228,4 +160,10 @@ const OrderDescription = ({ sizes, addToCart, product }) => {
   );
 };
 
-export default connect(null, { setSize, addToCart })(OrderDescription);
+const mapStateToProps = (state) => ({
+  role: state.auth.user?.userType,
+});
+
+export default connect(mapStateToProps, { setSize, addToCart, switchMode })(
+  OrderDescription
+);

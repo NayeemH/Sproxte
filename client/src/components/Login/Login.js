@@ -156,6 +156,11 @@ const Login = ({ login, getOrganization }) => {
                     )}
                   </InputGroup>
                   <div className="d-flex justify-content-between align-items-center">
+                    <Link to="/reset-password" className={styles.link}>
+                      Forget your password?
+                    </Link>
+                  </div>
+                  <div className="d-flex justify-content-between align-items-center">
                     <span style={{ fontSize: 14 }}>
                       <input type="checkbox" /> Remember Me
                     </span>

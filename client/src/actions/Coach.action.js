@@ -1,6 +1,6 @@
 import axios from "axios";
 import { toast } from "react-toastify";
-import { COACH_MODE, COACH_MODE_ERROR } from "../constants/Type";
+import { CART_RESET, COACH_MODE, COACH_MODE_ERROR } from "../constants/Type";
 import { BASE_URL } from "../constants/URL";
 import setAuthToken from "../utils/setAuthToken";
 import { getAuthUser } from "./Auth.action";
@@ -17,6 +17,9 @@ export const switchMode = (mode) => async (dispatch) => {
         withCredentials: true,
       }
     );
+    dispatch({
+      type: CART_RESET,
+    });
     dispatch({
       type: COACH_MODE,
       payload: { token: refreshRes.data.accessToken },

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Button, Card, Col, Row, Spinner } from "react-bootstrap";
+import { Button, Card, Col, Form, Row, Spinner } from "react-bootstrap";
 import { connect } from "react-redux";
 import { Link, useParams } from "react-router-dom";
 import { approveStep, getStepDetails } from "../../actions/Project.action";
@@ -11,6 +11,11 @@ import { saveAs } from "file-saver";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import styles from "./StepDetails.module.scss";
 import { toast } from "react-toastify";
+import demoImg from "../../assets/logo.PNG";
+import { useModals } from "@mantine/modals";
+import { Text, TextInput } from "@mantine/core";
+import { rejectOrder } from "../../actions/Order.action";
+import Moment from "react-moment";
 
 const StepDetails = ({
   step,
@@ -19,6 +24,7 @@ const StepDetails = ({
   selectedCollectionIndex,
   role,
   approveStep,
+  rejectOrder,
 }) => {
   const { stepId, projectId } = useParams();
 
@@ -26,6 +32,85 @@ const StepDetails = ({
   const [showForm, setShowForm] = useState(false);
   const [points, setPoints] = useState(null);
   const [hoverFB, setHoverFB] = useState("");
+  const modals = useModals();
+
+  const rejectSubmitHandeler = async (e) => {
+    e.preventDefault();
+    let msg = e.target.elements[0].value;
+    let image = e.target.elements[1]?.files[0];
+    if (!msg) {
+      toast.error("Please enter a message");
+      return;
+    }
+    if (image && image.size > 2000000) {
+      toast.error("Image size should be less than 2MB");
+      return;
+    }
+    let checkReject = await rejectOrder(msg, image, stepId);
+
+    if (checkReject) {
+      modals.closeAll();
+    }
+  };
+
+  const rejectHandeler = () => {
+    modals.openModal({
+      title: "Are you sure you want to reject this design?",
+      centered: true,
+      closeOnClickOutside: false,
+      children: (
+        <div style={{ zIndex: 99999 }}>
+          <Text size="md">
+            Please provide why you are rejecting this design and optionally you
+            can upload image for further reference.
+          </Text>
+          <Form className="py-3" onSubmit={rejectSubmitHandeler}>
+            <Form.Group controlId="exampleForm.ControlTextarea1">
+              <Form.Label className="fw-bold">
+                Why you are rejecting this design?
+              </Form.Label>
+              <Form.Control
+                required
+                as="textarea"
+                rows="3"
+                placeholder="Please provide why you are rejecting this design briefly"
+              />
+            </Form.Group>
+            <Form.Group controlId="exampleForm.ControlTextarea1">
+              <Form.Label className="fw-bold pt-3 mb-0">
+                Upload image for further reference
+              </Form.Label>
+              <small className="d-block pb-2">
+                This upload image is optional.
+              </small>
+              <Form.Control type="file" />
+            </Form.Group>
+            <Button className="btn_primary mt-3" type="submit">
+              Reject
+            </Button>
+          </Form>
+        </div>
+      ),
+      labels: { cancel: "Cancel" },
+      onCancel: () => {},
+    });
+    return;
+  };
+
+  const showLink = (link) => {
+    modals.openModal({
+      title: "Share link",
+      centered: true,
+      closeOnClickOutside: false,
+      children: (
+        <div style={{ zIndex: 99999 }} className="pb-4">
+          <TextInput readOnly label="URL" value={link} />
+        </div>
+      ),
+      labels: { cancel: "Cancel" },
+      onCancel: () => {},
+    });
+  };
 
   useEffect(() => {
     getStepDetails(stepId);
@@ -54,21 +139,13 @@ const StepDetails = ({
                   >
                     Approve
                   </Button>
-
-                  {selectedCollectionIndex >= 0 && (
-                    <CopyToClipboard
-                      text={`${window.location.origin}/share/${step.collections[selectedCollectionIndex].image}`}
-                      onCopy={() => toast.success("Link copied to clipboard.")}
-                    >
-                      <Button
-                        variant="primary"
-                        type="reset"
-                        className={`${styles.btn} mx-md-3 mx-0`}
-                      >
-                        Share
-                      </Button>
-                    </CopyToClipboard>
-                  )}
+                  <Button
+                    variant="primary"
+                    onClick={() => rejectHandeler()}
+                    className={`${styles.btn} mx-md-3 mx-0`}
+                  >
+                    Reject
+                  </Button>
 
                   {role === "admin" || role === "iep" ? (
                     <Link
@@ -80,7 +157,27 @@ const StepDetails = ({
                     </Link>
                   ) : null}
                 </>
-              ) : null}
+              ) : (
+                <>
+                  {selectedCollectionIndex >= 0 && (
+                    <CopyToClipboard
+                      text={`${window.location.origin}/share/${step._id}`}
+                      onCopy={() =>
+                        toast.success("Link copied to clipboard.") &&
+                        showLink(`${window.location.origin}/share/${step._id}`)
+                      }
+                    >
+                      <Button
+                        variant="primary"
+                        type="reset"
+                        className={`${styles.btn} mx-md-3 mx-0`}
+                      >
+                        Share
+                      </Button>
+                    </CopyToClipboard>
+                  )}
+                </>
+              )}
             </Col>
           ) : null}
           <Col md={role === "admin" || role === "iep" ? 8 : 12}>
@@ -117,10 +214,54 @@ const StepDetails = ({
                   setPoints={setPoints}
                   hoverFB={hoverFB}
                   setHoverFB={setHoverFB}
+                  sellCount={step.sellCount}
                 />
               )}
               {step.collections.length === 0 && <Overview />}
             </Row>
+            {step &&
+            step.gurdianNotifications &&
+            step.gurdianNotifications.length > 0 ? (
+              <Row className="text-dark">
+                <Col md={12}>
+                  <hr />
+                  <h2>Uploads</h2>
+                </Col>
+                <Col md={12}>
+                  {step &&
+                    step.gurdianNotifications &&
+                    step.gurdianNotifications.map((item) => (
+                      <div className="crd crd-body p-3 my-3">
+                        <Row>
+                          <Col>
+                            <span className="d-block fs-5">{item.message}</span>
+                            <span className="d-block fs-6 text-secondary">
+                              <Moment format="hh:mm on DD MMMM YYYY ">
+                                {item.createdAt}
+                              </Moment>
+                            </span>
+                          </Col>
+                          <Col className="text-end">
+                            <img
+                              src={`${IMAGE_PATH}small/${item.image}`}
+                              alt=""
+                              style={{ height: 50, cursor: "pointer" }}
+                              onClick={() =>
+                                saveAs(
+                                  `${IMAGE_PATH}small/${item.image}`,
+                                  `${step.name} - Upload [1]`
+                                )
+                              }
+                            />
+                          </Col>
+                        </Row>
+                      </div>
+                    ))}
+                </Col>
+              </Row>
+            ) : (
+              <></>
+            )}
           </Col>
           {role === "admin" || role === "iep" ? (
             <>
@@ -148,13 +289,13 @@ const StepDetails = ({
                       </Col>
                       <Col xs={6}>
                         <span className="d-block fs-5">
-                          <span className="fw-bold">Price :</span> {step.price}
+                          <span className="fw-bold">Price :</span> ${step.price}
                         </span>
                       </Col>
                       <Col xs={6}>
                         <span className="d-block fs-5">
                           <span className="fw-bold">Discount :</span>{" "}
-                          {step.discount}
+                          {step.discount}%
                         </span>
                       </Col>
                       <Col xs={6}>
@@ -169,6 +310,53 @@ const StepDetails = ({
                           {step.description}
                         </span>
                       </Col>
+                      {step.orderColor && (
+                        <Col xs={12} className="py-3">
+                          <span className="fs-5 align-items-center">
+                            <span className="fw-bold d-block">
+                              Order Colors:{" "}
+                            </span>
+                            <div className="">
+                              {step.orderColor.split(",").map((orderClr, i) => (
+                                <div className="d-flex align-items-center w-100 fs-6">
+                                  <span className="fw-bold">
+                                    {i + 1}.{" "}
+                                    {
+                                      colors.filter(
+                                        (item) =>
+                                          orderClr === item.name ||
+                                          orderClr === item.hex
+                                      )[0]?.name
+                                    }
+                                  </span>{" "}
+                                  (
+                                  {
+                                    colors.filter(
+                                      (item) =>
+                                        orderClr === item.name ||
+                                        orderClr === item.hex
+                                    )[0]?.hex
+                                  }
+                                  )
+                                  <div
+                                    className={styles.color}
+                                    style={{
+                                      background: `${
+                                        colors.filter(
+                                          (item) =>
+                                            orderClr === item.name ||
+                                            orderClr === item.hex
+                                        )[0]?.hex
+                                      }`,
+                                    }}
+                                  ></div>
+                                </div>
+                              ))}
+                            </div>
+                          </span>
+                        </Col>
+                      )}
+
                       <Col xs={12}>
                         <span className="d-block fs-5">
                           <span className="fw-bold">Images :</span>{" "}
@@ -308,6 +496,8 @@ const mapStateToProps = (state) => ({
   loading: state.project.loading,
 });
 
-export default connect(mapStateToProps, { getStepDetails, approveStep })(
-  StepDetails
-);
+export default connect(mapStateToProps, {
+  getStepDetails,
+  approveStep,
+  rejectOrder,
+})(StepDetails);

@@ -5,7 +5,7 @@ import ProductCard from "../Shared/ProductCard/ProductCard";
 import OrderDescription from "./OrderDescription/OrderDescription";
 import styles from "./ReadyUpload.module.scss";
 
-const ReadyUpload = ({ product }) => {
+const ReadyUpload = ({ product, type }) => {
   return (
     <div className={styles.wrapper}>
       <Container>
@@ -20,7 +20,18 @@ const ReadyUpload = ({ product }) => {
             />
           </Col>
           <Col md={7} className="py-md-5 py-3">
-            <OrderDescription sizes={product.sizes} product={product} />
+            <h4>
+              Sold : <span className="fw-normal">{product.sellCount}</span>{" "}
+            </h4>
+            {type ? (
+              <OrderDescription
+                type={type}
+                sizes={product.sizes}
+                product={product}
+              />
+            ) : (
+              <OrderDescription sizes={product.sizes} product={product} />
+            )}
           </Col>
         </Row>
       </Container>

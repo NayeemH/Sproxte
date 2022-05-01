@@ -53,7 +53,7 @@ const Payment = ({ auth }) => {
             <h2 className="text-center pb-3">Checkout</h2>
             {clientSecret && (
               <Elements stripe={stripePromise} options={{ clientSecret }}>
-                <CheckoutForm />
+                <CheckoutForm id={id} />
               </Elements>
             )}
           </Card.Body>

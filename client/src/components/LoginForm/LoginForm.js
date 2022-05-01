@@ -94,7 +94,7 @@ const LoginForm = ({ loginUserAccount, isAuthenticated }) => {
                   />
                 </InputGroup>
 
-                <InputGroup className="mb-3 d-flex flex-column">
+                <InputGroup className="mb-1 d-flex flex-column">
                   <div className="d-flex justify-content-between align-items-center">
                     <label htmlFor="password" className="d-block">
                       Password
@@ -126,6 +126,11 @@ const LoginForm = ({ loginUserAccount, isAuthenticated }) => {
                     />
                   )}
                 </InputGroup>
+                <div className="d-flex justify-content-between align-items-center mb-3">
+                  <Link to="/reset-password" className={styles.forget}>
+                    Forget your password?
+                  </Link>
+                </div>
 
                 <span className="d-block text-end">
                   Don't have an account?{" "}

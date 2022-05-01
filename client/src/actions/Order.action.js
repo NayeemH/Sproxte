@@ -1,6 +1,16 @@
 import axios from "axios";
-import { SET_COUNTRY, SET_STATES } from "../constants/Type";
-import { countryKey } from "../constants/URL";
+import { toast } from "react-toastify";
+import {
+  ADD_PLAYER_REQUEST,
+  ADD_PLAYER_REQUEST_ERROR,
+  GET_SELECTED_ORDER,
+  ORDER_REJECT,
+  ORDER_REJECT_ERROR,
+  SET_COUNTRY,
+  SET_STATES,
+} from "../constants/Type";
+import { BASE_URL, countryKey } from "../constants/URL";
+import { getStepDetails } from "./Project.action";
 
 export const getCountryList = () => async (dispatch) => {
   try {
@@ -44,5 +54,90 @@ export const getStateList = (country) => async (dispatch) => {
     });
   } catch (err) {
     console.log(err);
+  }
+};
+
+export const getPaymentDetails = (id) => async (dispatch) => {
+  try {
+    const res = await axios.get(`${BASE_URL}/api/v1/order/${id}`);
+    // console.log(res);
+    dispatch({
+      type: GET_SELECTED_ORDER,
+      payload: { ...res.data.order },
+    });
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+export const rejectOrder = (message, image, id) => async (dispatch) => {
+  try {
+    const formData = new FormData();
+    formData.append("message", message);
+    if (image) {
+      formData.append("image", image);
+    }
+
+    const config = {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+      withCredentials: true,
+    };
+
+    const res = await axios.post(
+      `${BASE_URL}/api/v1/product/gurdianReject/${id}`,
+      formData,
+      config
+    );
+    // console.log(res);
+    dispatch({
+      type: ORDER_REJECT,
+    });
+
+    toast.success("Order Rejected Successfully");
+    dispatch(getStepDetails(id));
+    return true;
+  } catch (err) {
+    console.log(err);
+    dispatch({
+      type: ORDER_REJECT_ERROR,
+    });
+
+    return false;
+  }
+};
+
+// AVOID::::::::::::::::::::::::::::::::::::::::::::::::::::
+export const addPlayerReq = (count, id) => async (dispatch) => {
+  try {
+    const formdata = {
+      count: count,
+    };
+
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+      },
+      withCredentials: true,
+    };
+
+    const res = await axios.post(
+      `${BASE_URL}/api/v1/payment/addPlayerPaymentToken/${id}`,
+      JSON.stringify(formdata),
+      config
+    );
+    // console.log(res);
+    dispatch({
+      type: ADD_PLAYER_REQUEST,
+    });
+    return true;
+  } catch (err) {
+    console.log(err);
+    dispatch({
+      type: ADD_PLAYER_REQUEST_ERROR,
+    });
+
+    return false;
   }
 };

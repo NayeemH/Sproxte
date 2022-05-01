@@ -118,7 +118,10 @@ const UsersList = ({ item, getUserList, dashboard, deleteUser }) => {
               {item &&
                 item.items &&
                 item.items.map((notification) => (
-                  <Row className="mb-3 border-bottom pb-3">
+                  <Row
+                    className="mb-3 border-bottom pb-3"
+                    key={notification._id}
+                  >
                     <Col xs={2}>
                       <Row>
                         <Col

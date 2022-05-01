@@ -39,6 +39,7 @@ export const createProductCategory =
         dispatch({
           type: CREATE_CATEGORY_SUCCESS,
         });
+        dispatch(getCategoryList());
         toast.success("Category created successfully");
         return true;
       }

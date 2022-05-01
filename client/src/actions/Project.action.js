@@ -5,6 +5,8 @@ import {
   ADD_COLLECTION_ERROR,
   ADD_COLLECTION_SUCCESS,
   ADD_FAVORITE_PROJECT,
+  ADD_PLAYER,
+  ADD_PLAYER_ERROR,
   APPROVED_PROJECT_LOAD,
   APPROVED_PROJECT_LOAD_ERROR,
   COLLECTION_INDEX,
@@ -16,6 +18,8 @@ import {
   EDIT_FEEDBACK_SUCCESS,
   FETCH_DASHBOARD_PROJECT,
   FETCH_DASHBOARD_PROJECT_ERROR,
+  FETCH_DASHBOARD_TEAM_PROJECT,
+  FETCH_DASHBOARD_TEAM_PROJECT_ERROR,
   GET_INVITED_PROJECT_DETAILS,
   GET_PROJECT_DETAILS,
   GET_STEP,
@@ -182,6 +186,9 @@ export const createProject =
     if (values.productType) {
       formData.append("productType", values.productType);
     }
+    if (values.discount) {
+      formData.append("discount", values.discount);
+    }
     formData.append("description", values.description);
     if (values.featured === true) {
       formData.append("featured", values.featured);
@@ -247,6 +254,9 @@ export const editProduct =
     formData.append("price", values.price);
     formData.append("quantity", values.quantity);
     formData.append("description", values.description);
+    if (values.discount) {
+      formData.append("discount", values.discount);
+    }
 
     formData.append("featured", values.featured);
 
@@ -364,14 +374,28 @@ export const deleteProduct = (id) => async (dispatch) => {
 
 // CREATE PRODUCT TYPE
 export const createProductType =
-  (values, file, previewFile, layouts, varient) => async (dispatch) => {
+  (values, file, previewFile, layouts, discountList) => async (dispatch) => {
     let formData = new FormData();
     //console.log(layouts);
+
+    const discountData = {
+      range: [],
+      discount: [],
+    };
+    if (discountList) {
+      discountList.map((d, i) => {
+        discountData.range.push(parseInt(d.range));
+        discountData.discount.push(parseInt(d.discount));
+      });
+    }
+
+    discountData.discount.push(values.discount);
+    formData.append("playerAddPrice", values.playerAddPrice);
 
     formData.append("name", values.name);
     formData.append("categoryType", values.categoryType);
     formData.append("price", values.price);
-    formData.append("discount", values.discount);
+    formData.append("discount", JSON.stringify(discountData));
     formData.append("pngImageFront", file);
 
     if (previewFile) {
@@ -383,12 +407,15 @@ export const createProductType =
       }
     }
 
-    if (varient.length > 0) {
-      for (let i = 0; i < varient.length; i++) {
-        formData.append(`colors`, `#${varient[i].color.split("#")[1]}`);
-        formData.append(`images`, varient[i].image);
-      }
-    }
+    // if (varient.length > 0) {
+    //   for (let i = 0; i < varient.length; i++) {
+    //     formData.append(`colors`, `#${varient[i].color.split("#")[1]}`);
+    //     formData.append(`images`, varient[i].image);
+    //   }
+    // }
+
+    formData.append(`colors`, `#000000`);
+    formData.append(`images`, file);
 
     values.size
       .trim()
@@ -431,32 +458,36 @@ export const createProductType =
 
 // EDIT PRODUCT TYPE
 export const editProductType =
-  (values, id, file, previewFile, layouts, varient) => async (dispatch) => {
+  (values, id, file, previewFile, layouts, discountList) =>
+  async (dispatch) => {
     let formData = new FormData();
 
     formData.append("name", values.name);
     // formData.append("categoryType", values.categoryType);
     formData.append("price", values.price);
-    formData.append("discount", values.discount);
+
     formData.append("pngImageFront", file);
 
-    // if (previewFile) {
-    //   formData.append("pngImageBack", previewFile);
-    // }
+    const discountData = {
+      range: [],
+      discount: [],
+    };
+    if (discountList) {
+      discountList.map((d, i) => {
+        discountData.range.push(parseInt(d.range));
+        discountData.discount.push(parseInt(d.discount));
+      });
+    }
+
+    discountData.discount.push(values.discount);
+    formData.append("playerAddPrice", values.playerAddPrice);
+    formData.append("discount", JSON.stringify(discountData));
     if (layouts) {
       for (let i = 0; i < layouts.length; i++) {
         formData.append(`layouts`, layouts[i]);
       }
     }
 
-    if (varient.length > 0) {
-      for (let i = 0; i < varient.length; i++) {
-        if (varient[i].color && varient[i].image) {
-          formData.append(`colors`, `#${varient[i].color.split("#")[1]}`);
-          formData.append(`images`, varient[i].image);
-        }
-      }
-    }
     values.size
       .trim()
       .split(",")
@@ -526,6 +557,35 @@ export const fetchProjects = (page, status) => async (dispatch) => {
   }
 };
 
+// FETCH TEAM PROJECTS FOR DASHBOARD
+export const fetchTeamProjects = (page, status) => async (dispatch) => {
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+    },
+    withCredentials: true,
+  };
+  try {
+    // TODO ::: API CALL
+    const res = await axios.get(
+      `${BASE_URL}/api/v1/project/team/active?page=${page}&limit=12${
+        status !== -1 ? `&status=${status}` : ""
+      }`,
+      config
+    );
+    if (res.status === 200) {
+      dispatch({
+        type: FETCH_DASHBOARD_TEAM_PROJECT,
+        payload: res.data.projects,
+      });
+    }
+  } catch (err) {
+    dispatch({
+      type: FETCH_DASHBOARD_TEAM_PROJECT_ERROR,
+    });
+  }
+};
+
 // FETCH PROJECTS FOR DASHBOARD
 export const fetchCompletedProjects = (page) => async (dispatch) => {
   const config = {
@@ -538,6 +598,33 @@ export const fetchCompletedProjects = (page) => async (dispatch) => {
     // TODO ::: API CALL
     const res = await axios.get(
       `${BASE_URL}/api/v1/project/completed?page=${page}&limit=12`,
+      config
+    );
+    if (res.status === 200) {
+      dispatch({
+        type: APPROVED_PROJECT_LOAD,
+        payload: res.data.projects,
+      });
+    }
+  } catch (err) {
+    dispatch({
+      type: APPROVED_PROJECT_LOAD_ERROR,
+    });
+  }
+};
+
+// FETCH TEAM PROJECTS FOR DASHBOARD
+export const fetchTeamCompletedProjects = (page) => async (dispatch) => {
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+    },
+    withCredentials: true,
+  };
+  try {
+    // TODO ::: API CALL
+    const res = await axios.get(
+      `${BASE_URL}/api/v1/project/team/completed?page=${page}&limit=12`,
       config
     );
     if (res.status === 200) {
@@ -812,3 +899,56 @@ export const editReview =
       return false;
     }
   };
+
+// ADD PLAYER
+export const addPlayer = (values, file, id) => async (dispatch) => {
+  let formData = new FormData();
+
+  formData.append("name", values.name);
+  formData.append("email", values.email);
+  formData.append("size", values.size);
+
+  if (file) {
+    formData.append("image", file);
+  }
+
+  const config = {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+    withCredentials: true,
+  };
+  try {
+    // TODO ::: API CALL
+    const res = await axios.post(
+      `${BASE_URL}/api/v1/project/addPlayer/${id}`,
+      formData,
+      config
+    );
+    // console.log(res);
+    if (res.status === 200) {
+      dispatch({
+        type: ADD_PLAYER,
+      });
+      dispatch(getProjectDetails(id));
+      toast.success("Player Information Added successfully");
+      return true;
+    }
+  } catch (err) {
+    dispatch({
+      type: ADD_PLAYER_ERROR,
+    });
+    if (
+      err.response.data &&
+      err.response.data.message &&
+      err.response.data.message === "Can not add user"
+    ) {
+      toast.error(
+        "You have added all players. Please create Player Request to add more players"
+      );
+    }
+    return false;
+  }
+
+  return false;
+};

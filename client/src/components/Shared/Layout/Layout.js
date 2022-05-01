@@ -5,7 +5,8 @@ import logo from "../../../assets/logoLg.png";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import { VscHome, VscTypeHierarchySub } from "react-icons/vsc";
 import { TiCogOutline } from "react-icons/ti";
-import { BsArrowLeftRight, BsMinecartLoaded } from "react-icons/bs";
+import { BsArrowLeftRight } from "react-icons/bs";
+import { MdPeopleAlt } from "react-icons/md";
 import { IoMdNotificationsOutline } from "react-icons/io";
 import { logout } from "../../../actions/Dashboard.action";
 import { connect } from "react-redux";
@@ -14,10 +15,11 @@ import { FiLogOut, FiUsers } from "react-icons/fi";
 import { GoThreeBars } from "react-icons/go";
 import { MdDownloadDone } from "react-icons/md";
 import { BiLayer, BiLayerPlus } from "react-icons/bi";
-import { HiOutlineMail } from "react-icons/hi";
+import { HiOutlineMail, HiDocumentReport } from "react-icons/hi";
 import { ImStatsBars } from "react-icons/im";
+import { AiOutlineUserAdd } from "react-icons/ai";
 
-const Layout = ({ logout, children, role, title }) => {
+const Layout = ({ logout, children, role, title, user }) => {
   const navigate = useNavigate();
   const [show, setShow] = React.useState(false);
 
@@ -60,6 +62,33 @@ const Layout = ({ logout, children, role, title }) => {
                 <span className={styles.nav__item_text}>Dashboard</span>
               </NavLink>
             </div>
+            {role === "admin" || role === "iep" || role === "coach" ? (
+              <div className={styles.nav}>
+                <NavLink to="/team-dashboard" className={styles.nav__item}>
+                  <span className={styles.icon}>
+                    <MdPeopleAlt />
+                  </span>
+                  <span className={styles.nav__item_text}>Team Dashboard</span>
+                </NavLink>
+              </div>
+            ) : (
+              <></>
+            )}
+            {role === "iep" ? (
+              <div className={styles.nav}>
+                <NavLink
+                  to={`/invoice/${user._id}`}
+                  className={styles.nav__item}
+                >
+                  <span className={styles.icon}>
+                    <HiDocumentReport />
+                  </span>
+                  <span className={styles.nav__item_text}>Invoice</span>
+                </NavLink>
+              </div>
+            ) : (
+              <></>
+            )}
             {role === "admin" && (
               <>
                 <div className={styles.nav}>
@@ -70,14 +99,7 @@ const Layout = ({ logout, children, role, title }) => {
                     <span className={styles.nav__item_text}>Report</span>
                   </NavLink>
                 </div>
-                <div className={styles.nav}>
-                  <NavLink to="/google" className={styles.nav__item}>
-                    <span className={styles.icon}>
-                      <ImStatsBars />
-                    </span>
-                    <span className={styles.nav__item_text}>G Report</span>
-                  </NavLink>
-                </div>
+
                 <div className={styles.nav}>
                   <NavLink to="/users" className={styles.nav__item}>
                     <span className={styles.icon}>
@@ -138,6 +160,11 @@ const Layout = ({ logout, children, role, title }) => {
                     </span>
                   </NavLink>
                 </div>
+              </>
+            )}
+
+            {role !== "iep" ? (
+              <>
                 <div className={styles.nav}>
                   <NavLink to="/orders" className={styles.nav__item}>
                     <span className={styles.icon}>
@@ -146,7 +173,19 @@ const Layout = ({ logout, children, role, title }) => {
                     <span className={styles.nav__item_text}>Orders</span>
                   </NavLink>
                 </div>
+                <div className={styles.nav}>
+                  <NavLink to="/player-request" className={styles.nav__item}>
+                    <span className={styles.icon}>
+                      <AiOutlineUserAdd />
+                    </span>
+                    <span className={styles.nav__item_text}>
+                      Player Requests
+                    </span>
+                  </NavLink>
+                </div>
               </>
+            ) : (
+              <></>
             )}
 
             <div className={styles.nav}>
@@ -203,6 +242,7 @@ const Layout = ({ logout, children, role, title }) => {
 };
 const mapStateToProps = (state) => ({
   role: state.auth.user.userType,
+  user: state.auth.user,
 });
 
 export default connect(mapStateToProps, { logout })(Layout);

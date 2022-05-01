@@ -9,8 +9,10 @@ import colors from "../../../config/Colors";
 import { FONT_KEY, IMAGE_PATH } from "../../../constants/URL";
 import { useNavigate } from "react-router-dom";
 import FontPicker from "font-picker-react";
+import { useModals } from "@mantine/modals";
+import { MultiSelect, Text } from "@mantine/core";
 
-const OrderDescription = ({ sizes, addToCart, product, color, user }) => {
+const OrderDescription = ({ sizes, addToCart, product, color, user, cart }) => {
   const [selectedFile, setSelectedFile] = useState();
   const [preview, setPreview] = useState();
   const [size, setSize] = useState();
@@ -22,9 +24,13 @@ const OrderDescription = ({ sizes, addToCart, product, color, user }) => {
   const [mainTextColor, setMainTextColor] = useState("Red");
   const [secondaryTextColor, setSecondaryTextColor] = useState("Red");
   const [selectedFileBack, setSelectedFile2] = useState();
+  const [orderFontFamily, setOrderFontFamily] = useState("Open Sans");
   const [activeFontFamily, setActiveFontFamily] = useState("Open Sans");
+  const [orderColor, setOrderColor] = useState(null);
   const fileRef = useRef();
   const navigate = useNavigate();
+
+  const modals = useModals();
 
   useEffect(() => {
     if (
@@ -41,6 +47,23 @@ const OrderDescription = ({ sizes, addToCart, product, color, user }) => {
 
   //Submit handeler
   const submitHandeler = () => {
+    if (user.userType === "coach" && cart.length > 0) {
+      modals.openConfirmModal({
+        title: "You can not order more than one product as a coach at a time",
+        centered: true,
+        children: (
+          <Text size="md">
+            You can not order more than one product as a coach at a time. Please
+            complete the payment for the previous cart order and try again.
+          </Text>
+        ),
+        labels: { confirm: "Go to Cart Page", cancel: "Cancel" },
+        confirmProps: { color: "red" },
+        onCancel: () => {},
+        onConfirm: () => navigate("/cart"),
+      });
+      return;
+    }
     if (!selectedFile) {
       toast.error("Please select a file");
     } else {
@@ -67,7 +90,9 @@ const OrderDescription = ({ sizes, addToCart, product, color, user }) => {
           product,
           color,
           "custom",
-          activeFontFamily
+          activeFontFamily,
+          orderFontFamily,
+          orderColor.join(",")
         );
         resetlHandeler();
         setDescription("");
@@ -221,6 +246,50 @@ const OrderDescription = ({ sizes, addToCart, product, color, user }) => {
           ></textarea>
         </Card.Body>
       </Card>
+
+      {/* COLOR */}
+      <Card className={`${styles.crd} shadow mt-4`}>
+        <Card.Body className="d-flex justify-content-between flex-column">
+          <div
+            className={`d-flex justify-content-between flex-column pb-3 ${styles.font}`}
+          >
+            <span className="d-block fs-4">Colors</span>
+            <MultiSelect
+              data={colors.map((c, i) => {
+                return {
+                  key: i,
+                  label: c.name,
+                  value: c.hex,
+                };
+              })}
+              placeholder="Pick all colors that you like"
+              defaultValue={orderColor?.map((c) => c)}
+              onChange={(e) => {
+                setOrderColor(e);
+              }}
+              clearButtonLabel="Clear selection"
+              clearable
+              required
+            />
+          </div>
+        </Card.Body>
+      </Card>
+
+      {/* FONT */}
+      <Card className={`${styles.crd} shadow mt-4`}>
+        <Card.Body className="d-flex justify-content-between flex-column">
+          <div
+            className={`d-flex justify-content-between flex-column pt-3 ${styles.font}`}
+          >
+            <span className="d-block pb-2">Font </span>
+            <FontPicker
+              apiKey={FONT_KEY}
+              activeFontFamily={orderFontFamily}
+              onChange={(nextFont) => setOrderFontFamily(nextFont.family)}
+            />
+          </div>
+        </Card.Body>
+      </Card>
       {product && product.layouts && product.layouts.length > 0 && (
         <Card className={`${styles.crd_size} shadow`}>
           <Card.Body>
@@ -331,6 +400,7 @@ const OrderDescription = ({ sizes, addToCart, product, color, user }) => {
 
 const mapStateToProps = (state) => ({
   user: state.auth.user,
+  cart: state.cart.cart,
 });
 
 export default connect(mapStateToProps, { setSize, addToCart })(

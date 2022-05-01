@@ -22,7 +22,7 @@ import {
   SIDEBAR_TOGGLE,
 } from "../constants/Type";
 import { DELETE_USER, DELETE_USER_ERROR } from "../constants/TypeLanding";
-import { BASE_URL, PROTOCOL } from "../constants/URL";
+import { BASE_URL } from "../constants/URL";
 import setAuthToken from "../utils/setAuthToken";
 import { getIepList } from "./Payment.acton";
 

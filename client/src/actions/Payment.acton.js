@@ -9,6 +9,8 @@ import {
   GET_COMPLETED_ORDERS,
   GET_COMPLETED_ORDERS_ERROR,
   GET_CONTACT_LIST,
+  GET_PLAYER_REQUEST,
+  GET_PLAYER_REQUEST_ERROR,
   GET_REPORT_DATA,
   GET_RUNNING_ORDERS,
   GET_RUNNING_ORDERS_ERROR,
@@ -78,6 +80,7 @@ export const createOrder = (values, cart, logo) => async (dispatch) => {
       formData.append("teamName", values.teamName);
       formData.append("location", values.location);
       formData.append("color", values.color);
+      formData.append("type", "team");
     }
 
     const config = {
@@ -92,13 +95,20 @@ export const createOrder = (values, cart, logo) => async (dispatch) => {
       for (let i = 0; i < cart.length; i++) {
         let frmData = new FormData();
         let item = cart[i];
+        if (logo) {
+          frmData.append("type", "team");
+        } else {
+          frmData.append("type", item.type);
+        }
 
-        frmData.append("type", item.type);
         if (item.type === "custom") {
           frmData.append("productTypeId", item.product._id);
         }
         if (item.type === "template") {
           frmData.append("templateId", item.product._id);
+        }
+        if (item.type === "link") {
+          frmData.append("productId", item.product._id);
         }
         frmData.append("count", item.quantity);
         if (item.description) {
@@ -107,6 +117,12 @@ export const createOrder = (values, cart, logo) => async (dispatch) => {
         frmData.append("size", item.size);
         if (item.color) {
           frmData.append("color", item.color);
+        }
+        if (item.productFont) {
+          frmData.append("productFont", item.productFont);
+        }
+        if (item.orderColor) {
+          frmData.append("orderColor", item.orderColor);
         }
 
         if (item.selectedLayout) {
@@ -180,6 +196,27 @@ export const getRunningOrders = (page) => async (dispatch) => {
   }
 };
 
+//GET RUNNING PLAYER REQ
+export const getPlayerRequest = (page) => async (dispatch) => {
+  try {
+    const res = await axios.get(
+      `${BASE_URL}/api/v1/order/player/active?page=${page}&limit=12`
+    );
+    //console.log(res);
+
+    dispatch({
+      type: GET_PLAYER_REQUEST,
+      payload: res.data.orders,
+    });
+    //console.log(res);
+  } catch (err) {
+    dispatch({
+      type: GET_PLAYER_REQUEST_ERROR,
+    });
+    console.log(err);
+  }
+};
+
 //GET COMPLETED ORDERS
 export const getCompletedOrders = (page) => async (dispatch) => {
   try {
@@ -245,7 +282,6 @@ export const getUserList = (page) => async (dispatch) => {
       `${BASE_URL}/api/v1/admin/user?page=${page}&limit=12`,
       config
     );
-    console.log(res);
 
     dispatch({
       type: CLIENT_LIST_LOAD,
@@ -267,7 +303,6 @@ export const getIepList = (page) => async (dispatch) => {
       `${BASE_URL}/api/v1/admin/iep?page=${page}&limit=12`,
       config
     );
-    console.log(res);
 
     dispatch({
       type: DEVELOPER_LIST_LOAD,

@@ -42,6 +42,21 @@ export const getTemplate = (id) => async (dispatch) => {
   }
 };
 
+// GET TEMPLATE
+export const getTemplateShare = (id) => async (dispatch) => {
+  try {
+    const res = await axios.get(`${BASE_URL}/api/v1/share/${id}`);
+    console.log(res);
+    dispatch({
+      type: GET_TEMPLATE_DETAILS,
+      payload: res.data.data,
+    });
+  } catch (err) {
+    dispatch({ type: TEMPLATE_ERROR });
+    console.log(err);
+  }
+};
+
 // SET SIZE
 export const setSize = (size) => (dispatch) => {
   console.log(types);
@@ -67,11 +82,42 @@ export const addToCart =
     product,
     color,
     type,
-    font
+    font,
+    productFont,
+    orderColor
   ) =>
   (dispatch) => {
     toast.success("Added to cart");
-    console.log(image);
+    let newDiscount = 0;
+    if (
+      typeof product.discount === "string" ||
+      typeof product.discount === "number"
+    ) {
+      newDiscount = parseInt(product.discount);
+    } else {
+      if (product.discount.range && product.discount.range.length > 0) {
+        product.discount.range.forEach((item, i) => {
+          if (
+            i < product.discount.range.length - 1 &&
+            item <= quantity &&
+            quantity <= product.discount.range[i + 1]
+          ) {
+            newDiscount = product.discount.discount[i + 1];
+          }
+          if (i == 0 && quantity <= product.discount.range[i]) {
+            newDiscount = product.discount.discount[i];
+          } else if (
+            quantity > product.discount.range[product.discount.range.length - 1]
+          ) {
+            newDiscount =
+              product.discount.discount[product.discount.range.length];
+          }
+        });
+      } else {
+        newDiscount = product.discount.discount[0];
+      }
+    }
+
     dispatch({
       type: CART_ADD_ITEM,
       payload: {
@@ -85,10 +131,12 @@ export const addToCart =
         secondaryTextColor,
         selectedLayout,
         quantity,
-        product,
+        product: { ...product, discount: newDiscount },
         color,
         type,
         font,
+        productFont,
+        orderColor,
       },
     });
   };

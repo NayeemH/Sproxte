@@ -135,6 +135,7 @@ const EditProductFinal = ({ category, editProduct, getTypeList, data }) => {
   let initVals = {
     name: data && data.name ? data.name : "",
     price: data && data.price ? parseInt(data.price) : 0,
+    discount: data && data.discount ? parseInt(data.discount) : 0,
     quantity: data && data.quantity ? parseInt(data.quantity) : 0,
     productType: data && data.productType ? data.productType : "",
     size:
@@ -150,6 +151,10 @@ const EditProductFinal = ({ category, editProduct, getTypeList, data }) => {
     price: Yup.number("Insert valid price", "Insert valid price").required(
       "Product price is required!"
     ),
+    discount: Yup.number("Insert valid discount", "Insert valid discount")
+      .min(0)
+      .max(100)
+      .required("Product discount is required!"),
     size: Yup.string().required("Product size is required!"),
     productType: Yup.string().nullable(),
     image: Yup.string().nullable(),
@@ -193,7 +198,7 @@ const EditProductFinal = ({ category, editProduct, getTypeList, data }) => {
                 </InputGroup>
 
                 <Row>
-                  <Col md={6}>
+                  <Col md={12}>
                     <InputGroup className="mb-3 d-flex flex-column">
                       <div className="d-flex justify-content-between align-items-center pb-2">
                         <label htmlFor="description" className="d-block">
@@ -216,7 +221,7 @@ const EditProductFinal = ({ category, editProduct, getTypeList, data }) => {
                       />
                     </InputGroup>
                   </Col>
-                  <Col md={6}>
+                  {/* <Col md={6}>
                     <InputGroup className="mb-3 d-flex flex-column">
                       <div className="d-flex justify-content-between align-items-center pb-2">
                         <label htmlFor="productType" className="d-block">
@@ -265,7 +270,7 @@ const EditProductFinal = ({ category, editProduct, getTypeList, data }) => {
                         </div>
                       </div>
                     </InputGroup>
-                  </Col>
+                  </Col> */}
                   {/* <Col md={6}>
                     <InputGroup className=" d-flex flex-column">
                       <div className="d-flex justify-content-between align-items-center pb-2">
@@ -333,7 +338,7 @@ const EditProductFinal = ({ category, editProduct, getTypeList, data }) => {
                       ))}
                     </Row>
                   </Col> */}
-                  <Col md={12}>
+                  <Col md={6}>
                     <InputGroup className="mb-3 d-flex flex-column">
                       <div className="d-flex justify-content-between align-items-center pb-2">
                         <label htmlFor="size" className="d-block">
@@ -355,6 +360,29 @@ const EditProductFinal = ({ category, editProduct, getTypeList, data }) => {
                         isInvalid={errors.size && touched.size}
                       />
                       <small>Example: L,XL,XXL,M</small>
+                    </InputGroup>
+                  </Col>
+                  <Col md={6}>
+                    <InputGroup className="mb-3 d-flex flex-column">
+                      <div className="d-flex justify-content-between align-items-center pb-2">
+                        <label htmlFor="discount" className="d-block">
+                          Discount (%)
+                        </label>
+                        {errors.discount && touched.discount ? (
+                          <small className="text-danger pt-2">
+                            {errors.discount}
+                          </small>
+                        ) : null}
+                      </div>
+                      <Field
+                        as={BootstrapForm.Control}
+                        placeholder="Type discount in % "
+                        name="discount"
+                        isValid={!errors.discount && touched.discount}
+                        type="number"
+                        className={`${styles.input} w-100`}
+                        isInvalid={errors.discount && touched.discount}
+                      />
                     </InputGroup>
                   </Col>
                 </Row>
