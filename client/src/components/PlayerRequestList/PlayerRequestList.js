@@ -92,10 +92,10 @@ const PlayerRequestList = ({ item, getPlayerRequest }) => {
                       className="d-flex justify-content-center-center flex-column"
                     >
                       <div className={`d-block fw-bold ${styles.lnk}`}>
-                        Address : {notification.address}
+                        Team : {notification.address}
                       </div>
                       <div className={`d-block ${styles.lnk}`}>
-                        Phone : {notification.phone}
+                        Location : {notification.phone}
                       </div>
                       <span className="d-block fw-light text-secondary">
                         <Moment format="dddd, MMMM DD YYYY">
@@ -122,7 +122,7 @@ const PlayerRequestList = ({ item, getPlayerRequest }) => {
                             className={`d-block ${styles.lnk}`}
                             style={{ textTransform: "capitalize" }}
                           >
-                            Status : {notification.deleveryStatus}
+                            Count : {notification.deleveryStatus}
                           </div>
                           {/* <Link
                             to={`/dashboard/order/${notification.projectId}`}
