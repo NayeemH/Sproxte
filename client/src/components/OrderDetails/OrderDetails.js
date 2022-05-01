@@ -126,7 +126,9 @@ const OrderDetails = ({
     e.preventDefault();
     let count = e.target.elements[0].value;
     modals.closeAll();
-    navigate(`/payment-player/${id}/${count}/${data.playerAddPrice}/10`);
+    navigate(
+      `/payment-player/${id}/${count}/${data.playerAddPrice}/${data.singleProductPrice}`
+    );
   };
 
   const clickHandeler = () => {
@@ -186,7 +188,7 @@ const OrderDetails = ({
             new player.
           </span>
           <span className="d-block  pt-3">
-            Single product price is <b>${data.playerAddPrice}</b>
+            Single product price is <b>${data.singleProductPrice}</b>
           </span>
           <span className="d-block">
             Additional price for each player you add is{" "}
@@ -194,7 +196,8 @@ const OrderDetails = ({
           </span>
           <hr />
           <span className="d-block">
-            Total price for each player is <b>${data.playerAddPrice}</b>
+            Total price for each player is{" "}
+            <b>${data.playerAddPrice + data.singleProductPrice}</b>
           </span>
         </>
       ),
