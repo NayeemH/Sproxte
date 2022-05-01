@@ -60,8 +60,8 @@ const PlayerRequestList = ({ item, getPlayerRequest }) => {
             <Card.Body>
               {item &&
                 item.items &&
-                item.items.map((notification) => (
-                  <Row className="mb-3 border-bottom pb-3">
+                item.items.map((notification, i) => (
+                  <Row key={i} className="mb-3 border-bottom pb-3">
                     <Col xs={2}>
                       <Row>
                         <Col

@@ -186,8 +186,15 @@ const OrderDetails = ({
             new player.
           </span>
           <span className="d-block  pt-3">
+            Single product price is <b>${data.playerAddPrice}</b>
+          </span>
+          <span className="d-block">
             Additional price for each player you add is{" "}
             <b>${data.playerAddPrice}</b>
+          </span>
+          <hr />
+          <span className="d-block">
+            Total price for each player is <b>${data.playerAddPrice}</b>
           </span>
         </>
       ),
