@@ -206,7 +206,7 @@ export const getPlayerRequest = (page) => async (dispatch) => {
 
     dispatch({
       type: GET_PLAYER_REQUEST,
-      payload: res.data.orders,
+      payload: res.data.playerAddPrice,
     });
     //console.log(res);
   } catch (err) {

@@ -7,6 +7,7 @@ import { Link, useLocation } from "react-router-dom";
 import { AiOutlineLeft, AiOutlineRight } from "react-icons/ai";
 import { getPlayerRequest } from "../../actions/Payment.acton";
 import { IMAGE_PATH } from "../../constants/URL";
+import { BsArrowRight } from "react-icons/bs";
 const queryString = require("query-string");
 
 const PlayerRequestList = ({ item, getPlayerRequest }) => {
@@ -92,10 +93,10 @@ const PlayerRequestList = ({ item, getPlayerRequest }) => {
                       className="d-flex justify-content-center-center flex-column"
                     >
                       <div className={`d-block fw-bold ${styles.lnk}`}>
-                        Team : {notification.address}
+                        Team : {notification.teamName}
                       </div>
                       <div className={`d-block ${styles.lnk}`}>
-                        Location : {notification.phone}
+                        Location : {notification.location}
                       </div>
                       <span className="d-block fw-light text-secondary">
                         <Moment format="dddd, MMMM DD YYYY">
@@ -122,14 +123,14 @@ const PlayerRequestList = ({ item, getPlayerRequest }) => {
                             className={`d-block ${styles.lnk}`}
                             style={{ textTransform: "capitalize" }}
                           >
-                            Count : {notification.deleveryStatus}
+                            Count : {notification.count}
                           </div>
-                          {/* <Link
-                            to={`/dashboard/order/${notification.projectId}`}
+                          <Link
+                            to={`/team-dashboard/order/${notification.projectId}`}
                             className={`${styles.lnk}`}
                           >
                             <BsArrowRight />
-                          </Link> */}
+                          </Link>
                         </Col>
                       </Row>
                     </Col>
