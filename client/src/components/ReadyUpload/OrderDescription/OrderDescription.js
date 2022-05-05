@@ -64,6 +64,23 @@ const OrderDescription = ({
       });
       return;
     }
+    // CART MODAL SHOW
+    modals.openConfirmModal({
+      title: "You Pay Before Approving The Design",
+      centered: true,
+      children: (
+        <Text size="md">
+          <b>Note:</b> You pay before approving the design.
+        </Text>
+      ),
+      labels: { confirm: "Add to Cart", cancel: "Cancel" },
+      confirmProps: { color: "red" },
+      onCancel: () => {},
+      onConfirm: () => mainSubmitHandeler(),
+    });
+  };
+
+  const mainSubmitHandeler = () => {
     if (quantity < 1) {
       toast.error("Please enter a valid quantity");
     } else if (!size) {

@@ -61,7 +61,6 @@ export const login = (values) => async (dispatch) => {
     headers: {
       "Content-Type": "application/json",
     },
-    withCredentials: true,
   };
   try {
     // TODO ::: API CALL
@@ -108,7 +107,6 @@ export const login = (values) => async (dispatch) => {
   } catch (err) {
     dispatch({
       type: LOGIN_FAIL,
-      payload: err.response.data.msg[0],
     });
     err.response.data.msg.map((msg) => toast.error(msg));
     return false;
@@ -140,9 +138,8 @@ export const getRefreshToken = () => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: ACCESS_TOKEN_ERROR,
-      payload: error.response.data.msg[0],
     });
-    error.response.data.msg.map((msg) => console.log(msg));
+    console.log(error);
     return false;
   }
 };

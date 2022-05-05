@@ -31,19 +31,20 @@ const CardForm = ({
   }, []);
 
   const onClickHandeler = (values) => {
-    modals.openConfirmModal({
-      title: "You Pay Before Approving The Design",
-      centered: true,
-      children: (
-        <Text size="md">
-          <b>Note:</b> You pay before approving the design.
-        </Text>
-      ),
-      labels: { confirm: "Checkout", cancel: "Cancel" },
-      confirmProps: { color: "red" },
-      onCancel: () => {},
-      onConfirm: () => onSubmitHandeler(values),
-    });
+    onSubmitHandeler(values);
+    // modals.openConfirmModal({
+    //   title: "You Pay Before Approving The Design",
+    //   centered: true,
+    //   children: (
+    //     <Text size="md">
+    //       <b>Note:</b> You pay before approving the design.
+    //     </Text>
+    //   ),
+    //   labels: { confirm: "Checkout", cancel: "Cancel" },
+    //   confirmProps: { color: "red" },
+    //   onCancel: () => {},
+    //   onConfirm: () => onSubmitHandeler(values),
+    // });
   };
 
   const navigate = useNavigate();
