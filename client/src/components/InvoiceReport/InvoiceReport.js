@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Button, Col, Container, Row, Table } from "react-bootstrap";
 import { AiOutlineCloudDownload } from "react-icons/ai";
 import { IoIosArrowBack } from "react-icons/io";
@@ -6,10 +6,13 @@ import Moment from "react-moment";
 import { useNavigate } from "react-router-dom";
 import logo from "../../assets/logoSq.png";
 import jsPDF from "jspdf";
+import { DateRangePicker } from "@mantine/dates";
 import html2canvas from "html2canvas";
 import styles from "./InvoiceReport.module.scss";
+import { MdDateRange } from "react-icons/md";
 
 const InvoiceReport = (data) => {
+  const [value, setValue] = useState([null, null]);
   const navigate = useNavigate();
   const months = [
     "January",
@@ -54,6 +57,14 @@ const InvoiceReport = (data) => {
             >
               <IoIosArrowBack className="me-2" /> Go Back
             </Button>
+            <form className="">
+              <DateRangePicker
+                placeholder="Pick dates range"
+                icon={<MdDateRange />}
+                value={value}
+                onChange={setValue}
+              />
+            </form>
             <Button
               className="btn_primary d-flex align-items-center"
               onClick={() => download()}
@@ -103,14 +114,23 @@ const InvoiceReport = (data) => {
                   </tr>
                 </thead>
                 <tbody>
-                  {data.data.data.collections.map((item, i) => (
-                    <tr key={i}>
-                      <td>{i + 1}</td>
-                      <td>{item.year}</td>
-                      <td>{months[item.month - 1]}</td>
-                      <td>{item.count}</td>
-                    </tr>
-                  ))}
+                  {data.data.data.collections
+                    .filter((dt) =>
+                      value[0] === null || value[1] === null
+                        ? dt
+                        : new Date(dt.year, dt.month - 1) >= value[0] &&
+                          new Date(dt.year, dt.month - 1) <= value[1]
+                        ? dt
+                        : null
+                    )
+                    .map((item, i) => (
+                      <tr key={i}>
+                        <td>{i + 1}</td>
+                        <td>{item.year}</td>
+                        <td>{months[item.month - 1]}</td>
+                        <td>{item.count}</td>
+                      </tr>
+                    ))}
                 </tbody>
               </Table>
             </Col>
