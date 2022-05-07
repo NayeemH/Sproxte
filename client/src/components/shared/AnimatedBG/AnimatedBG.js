@@ -8,7 +8,7 @@ const AnimatedBG = memo((h) => {
 
   return (
     <div className={styles.wrapper}>
-      <div
+      {/* <div
         className={styles.background}
         style={{
           background: `url(${BASE_URL}/background/${
@@ -17,8 +17,8 @@ const AnimatedBG = memo((h) => {
           backgroundSize: "cover",
           height: h ? h : "100vh",
         }}
-      >
-        {/* <span></span>
+      > */}
+      {/* <span></span>
         <span></span>
         <span></span>
         <span></span>
@@ -38,7 +38,7 @@ const AnimatedBG = memo((h) => {
         <span></span>
         <span></span>
         <span></span> */}
-      </div>
+      {/* </div> */}
     </div>
   );
 });
