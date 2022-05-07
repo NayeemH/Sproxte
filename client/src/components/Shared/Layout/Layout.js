@@ -19,9 +19,10 @@ import { HiOutlineMail, HiDocumentReport } from "react-icons/hi";
 import { ImStatsBars } from "react-icons/im";
 import { AiOutlineUserAdd } from "react-icons/ai";
 
-const Layout = ({ logout, children, role, title, user }) => {
+const Layout = ({ logout, children, title, user }) => {
   const navigate = useNavigate();
   const [show, setShow] = React.useState(false);
+  let role = user ? user.userType : null;
 
   const logoutHandeler = async () => {
     let check = await logout();
@@ -252,7 +253,6 @@ const Layout = ({ logout, children, role, title, user }) => {
   );
 };
 const mapStateToProps = (state) => ({
-  role: state.auth.user.userType,
   user: state.auth.user,
 });
 
