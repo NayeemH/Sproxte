@@ -63,6 +63,9 @@ const InvoiceReport = (data) => {
                 icon={<MdDateRange />}
                 value={value}
                 onChange={setValue}
+                dropdownType="modal"
+                amountOfMonths={2}
+                maxDate={new Date()}
               />
             </form>
             <Button
