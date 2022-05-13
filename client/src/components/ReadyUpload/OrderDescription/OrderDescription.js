@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 import { useModals } from "@mantine/modals";
 import { switchMode } from "../../../actions/Coach.action";
 import { Text } from "@mantine/core";
+import { IMAGE_PATH } from "../../../constants/URL";
 
 const OrderDescription = ({
   sizes,
@@ -69,9 +70,18 @@ const OrderDescription = ({
       title: "You Pay Before Approving The Design",
       centered: true,
       children: (
-        <Text size="md">
-          <b>Note:</b> You pay before approving the design.
-        </Text>
+        <>
+          <div className="text-center">
+            <img
+              src={`${IMAGE_PATH}small/${product.pngImageFront}`}
+              className={styles.prev__img}
+              alt=""
+            />
+          </div>
+          <Text size="md">
+            <b>Note:</b> You pay before approving the design.
+          </Text>
+        </>
       ),
       labels: { confirm: "Add to Cart", cancel: "Cancel" },
       confirmProps: { color: "red" },

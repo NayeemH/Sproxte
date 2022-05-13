@@ -67,12 +67,20 @@ const OrderDescription = ({ sizes, addToCart, product, color, user, cart }) => {
 
     // CART MODAL SHOW
     modals.openConfirmModal({
-      title: "You Pay Before Approving The Design",
       centered: true,
       children: (
-        <Text size="md">
-          <b>Note:</b> You pay before approving the design.
-        </Text>
+        <>
+          <div className="text-center">
+            <img
+              src={`${IMAGE_PATH}small/${product.pngImageFront}`}
+              className={styles.prev__img}
+              alt=""
+            />
+          </div>
+          <Text size="md">
+            <b>Note:</b> You pay before approving the design.
+          </Text>
+        </>
       ),
       labels: { confirm: "Add to Cart", cancel: "Cancel" },
       confirmProps: { color: "red" },
