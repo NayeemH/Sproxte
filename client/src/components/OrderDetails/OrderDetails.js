@@ -306,23 +306,28 @@ const OrderDetails = ({
             </Col>
           ))}
       </Row>
-
-      {projects && projects.count && projects.count > 0 ? (
-        <Row>
-          <Col className={`text-center pt-4`}>
-            <Button onClick={clickHandeler} className="btn_primary">
-              Add Player Information
-            </Button>
-          </Col>
-        </Row>
+      {projects.type === "normal" ? (
+        <></>
       ) : (
-        <Row>
-          <Col className={`text-center pt-4`}>
-            <Button onClick={clickHandelerReq} className="btn_primary">
-              Add Player Request
-            </Button>
-          </Col>
-        </Row>
+        <>
+          {projects && projects.count && projects.count > 0 ? (
+            <Row>
+              <Col className={`text-center pt-4`}>
+                <Button onClick={clickHandeler} className="btn_primary">
+                  Add Player Information
+                </Button>
+              </Col>
+            </Row>
+          ) : (
+            <Row>
+              <Col className={`text-center pt-4`}>
+                <Button onClick={clickHandelerReq} className="btn_primary">
+                  Add Player Request
+                </Button>
+              </Col>
+            </Row>
+          )}
+        </>
       )}
     </Container>
   );
