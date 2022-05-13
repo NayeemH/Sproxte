@@ -1,3 +1,4 @@
+import Aos from "aos";
 import React, { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -14,6 +15,9 @@ const LandingPage = () => {
     if (parsed.payment && parsed.payment === "success") {
       toast.success("Payment Successful!");
     }
+    Aos.init({
+      duration: 2000,
+    });
   }, []);
 
   return (

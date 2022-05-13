@@ -63,9 +63,6 @@ import PlayerRequestCompletePage from "./views/PlayerRequestCompletePage/PlayerR
 function App({ getRefreshToken }) {
   useEffect(() => {
     getRefreshToken();
-    Aos.init({
-      duration: 2000,
-    });
   }, []);
   return (
     <>
