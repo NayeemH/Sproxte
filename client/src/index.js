@@ -10,6 +10,10 @@ import "slick-carousel/slick/slick-theme.css";
 import { MantineProvider } from "@mantine/core";
 import { ModalsProvider } from "@mantine/modals";
 
+import "swiper/css/bundle";
+import "swiper/css";
+import "swiper/css/effect-creative";
+
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>

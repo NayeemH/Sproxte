@@ -5,7 +5,6 @@ import PrivateOutlet from "./utils/PrivateOutlet";
 import "./App.css";
 import "swiper/css/bundle";
 import {
-  LandingPage,
   SignupPage,
   DiscoverPage,
   CartPage,
@@ -48,6 +47,7 @@ import UserIepPage from "./views/UserIepPage/UserIepPage";
 import ContactListPage from "./views/ContactListPage/ContactListPage";
 import ReportsPage from "./views/ReportsPage/ReportsPage";
 import SharePage from "./views/SharePage/SharePage";
+import LandingPageNew from "./views/LandingPageNew/LandingPageNew";
 import Paymentpage from "./views/Paymentpage/Paymentpage";
 import PolicyPage from "./views/PolicyPage/PolicyPage";
 import GReport from "./components/Reports/GReport/GReport";
@@ -69,7 +69,7 @@ function App({ getRefreshToken }) {
       <ToastContainer newestOnTop theme="dark" />
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<LandingPage />} />
+          <Route path="/" element={<LandingPageNew />} />
           <Route path="/payment-success/:id" element={<PaymentCompelete />} />
           <Route
             path="add-player-success/:id/:count/:addition/:price"
