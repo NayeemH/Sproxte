@@ -6,7 +6,10 @@ import {
   AiFillLinkedin,
   AiFillInstagram,
   AiFillTwitterCircle,
+  AiOutlineShoppingCart,
+  AiOutlineUserAdd,
 } from "react-icons/ai";
+import { Link } from "react-router-dom";
 
 const LandingNavbar = () => {
   return (
@@ -33,6 +36,27 @@ const LandingNavbar = () => {
             <a href="https://facebook.com">
               <AiFillTwitterCircle />
             </a>
+          </div>
+          <div className={styles.link}>
+            <Link to="/contact">Contact Us</Link>
+          </div>
+          <div className={styles.link}>
+            <Link to="/policy">Privacy Policy</Link>
+          </div>
+          <div className={styles.link}>
+            <Link to="/refund-policy">Refund Policy</Link>
+          </div>
+        </div>
+        <div className={`shadow-sm ${styles.box} d-flex align-items-center`}>
+          <div className={styles.link}>
+            <Link to="/cart" style={{ fontSize: 22 }}>
+              <AiOutlineShoppingCart />
+            </Link>
+          </div>
+          <div className={styles.link}>
+            <Link to="/login" style={{ fontSize: 22 }}>
+              <AiOutlineUserAdd />
+            </Link>
           </div>
         </div>
       </div>

@@ -6,6 +6,8 @@
   background-color: #fff;
   border-radius: 5px;
   padding: 3px 10px;
+  margin-left: 10px;
+  height: 36px;
 }
 
 .icon {
@@ -16,7 +18,7 @@
   height: 30px;
   width: 30px;
   border: 1px solid var(--dark);
-  margin: 0 3px;
+  margin: 0 2px;
 
   transition: 0.3s all ease-in-out;
   a {
@@ -33,5 +35,28 @@
       color: var(--white);
       transition: 0.3s all ease-in-out;
     }
+  }
+}
+
+.link {
+  margin: 0 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  a {
+    text-decoration: none;
+    color: var(--dark);
+    font-weight: bold;
+    text-shadow: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 16px;
+    transition: 0.3s all ease-in-out;
+  }
+  a:hover {
+    color: var(--black);
+    text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.16);
+    transition: 0.3s all ease-in-out;
   }
 }
