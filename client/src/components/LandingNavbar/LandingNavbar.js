@@ -9,12 +9,18 @@ import {
   AiOutlineShoppingCart,
   AiOutlineUserAdd,
 } from "react-icons/ai";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
-const LandingNavbar = () => {
+const LandingNavbar = ({ page }) => {
+  const navigate = useNavigate();
   return (
     <div className={`py-3 ${styles.wrapper}`}>
-      <img src={logo} alt="Sports Veins" className={styles.logo} />
+      <img
+        src={logo}
+        alt="Sports Veins"
+        className={styles.logo}
+        onClick={() => navigate("/")}
+      />
       <div className="d-flex align-items-center flex-md-row flex-column">
         <div
           className={`shadow-sm ${styles.box} align-items-center my-md-0 my-2 d-md-flex d-none`}
@@ -39,23 +45,23 @@ const LandingNavbar = () => {
               <AiFillTwitterCircle />
             </a>
           </div>
-          <div className={styles.link}>
+          <div className={page === "contact" ? styles.active : styles.link}>
             <Link to="/contact">Contact Us</Link>
           </div>
-          <div className={styles.link}>
+          <div className={page === "policy" ? styles.active : styles.link}>
             <Link to="/policy">Privacy Policy</Link>
           </div>
-          <div className={styles.link}>
+          <div className={page === "refund" ? styles.active : styles.link}>
             <Link to="/refund-policy">Refund Policy</Link>
           </div>
         </div>
         <div className={`shadow-sm ${styles.box} d-flex align-items-center`}>
-          <div className={styles.link}>
+          <div className={page === "cart" ? styles.active : styles.link}>
             <Link to="/cart" style={{ fontSize: 22 }}>
               <AiOutlineShoppingCart />
             </Link>
           </div>
-          <div className={styles.link}>
+          <div className={page === "login" ? styles.active : styles.link}>
             <Link to="/login" style={{ fontSize: 22 }}>
               <AiOutlineUserAdd />
             </Link>

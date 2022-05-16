@@ -18,8 +18,10 @@ import styles from "./LandingSlider.module.scss";
 import demoImg from "../../assets/templates/long.png";
 import { getLandingData } from "../../actions/Landing.action";
 import { IMAGE_PATH } from "../../constants/URL";
+import { useNavigate } from "react-router-dom";
 
 const LandingSlider = ({ data, getLandingData }) => {
+  const navigate = useNavigate();
   useEffect(() => {
     if (data === null) {
       getLandingData();
@@ -92,7 +94,11 @@ const LandingSlider = ({ data, getLandingData }) => {
                             </div>
                           </div>
                           <div className="text-center d-flex justify-content-center align-items-center">
-                            <Button size="lg" className="btn_primary">
+                            <Button
+                              size="lg"
+                              className="btn_primary"
+                              onClick={() => navigate(`/template/${prod._id}`)}
+                            >
                               {" "}
                               START{" "}
                             </Button>

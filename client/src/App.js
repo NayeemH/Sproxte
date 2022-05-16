@@ -11,6 +11,7 @@ import {
   ContactPage,
   PaymentMethodsPage,
   RefundPolicyPage,
+  LandingPage,
 } from "./views";
 import FileUploadPage from "./views/FileUploadPage/FileUploadPage";
 import { useEffect } from "react";
@@ -59,6 +60,7 @@ import ResetPasswordPage from "./views/ResetPasswordPage/ResetPasswordPage";
 import PasswordResetChangePage from "./views/PasswordResetChangePage/PasswordResetChangePage";
 import PlayerRequestPage from "./views/PlayerRequestPage/PlayerRequestPage";
 import PlayerRequestCompletePage from "./views/PlayerRequestCompletePage/PlayerRequestCompletePage";
+import CartNewPage from "./views/CartNewPage/CartNewPage";
 
 function App({ getRefreshToken }) {
   useEffect(() => {
@@ -70,6 +72,7 @@ function App({ getRefreshToken }) {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<LandingPageNew />} />
+          <Route path="/test" element={<LandingPage />} />
           <Route path="/payment-success/:id" element={<PaymentCompelete />} />
           <Route
             path="add-player-success/:id/:count/:addition/:price"
@@ -89,7 +92,7 @@ function App({ getRefreshToken }) {
             element={<PasswordResetChangePage />}
           />
           <Route path="/login" element={<LoginPage />} />
-          <Route path="/cart" element={<CartPage />} />
+          <Route path="/cart" element={<CartNewPage />} />
           <Route path="/share/:id" element={<SharePage />} />
           <Route path="/contact" element={<ContactPage />} />
           <Route path="/payment-methods" element={<PaymentMethodsPage />} />

@@ -20,71 +20,73 @@ const Cart = ({ cart, removeFromCart, setPaymentKey, user }) => {
   });
 
   return (
-    <div className={styles.wrapper}>
-      <Container className="pt-4 px-5">
-        <h2 className="text-center pb-3">Cart</h2>
+    <Container className={styles.wrapper}>
+      <Row className="pt-4 px-md-5 px-0">
         {cart && cart.length > 0 ? (
           <>
-            <Row className="border-bottom pb-2">
-              <Col xs="1">
-                <span className={styles.heading}>#</span>
-              </Col>
-              <Col xs="6">
-                <span className={styles.heading}>Product Name</span>{" "}
-              </Col>
-              <Col xs="2">
-                <span className={styles.heading}>Quantity</span>
-              </Col>
-              <Col xs="2">
-                <span className={styles.heading}>Price</span>
-              </Col>
-            </Row>
-            {cart.map((item, i) => (
-              <Row key={i} className={styles.item}>
-                <Col xs="1">{i + 1}</Col>
-                <Col xs="6">
-                  {item.product.name}
-                  {item.product.discount && item.product.discount > 0 ? (
-                    <span className="fw-bold ms-3 text-danger">
-                      (-{item.product.discount}%)
-                    </span>
-                  ) : (
-                    ""
-                  )}
-                </Col>
-                <Col xs="2">{item.quantity}</Col>
-                <Col xs="2">
-                  $
-                  {(
-                    (item.product.price *
-                      (100 - item.product.discount) *
-                      item.quantity) /
-                    100
-                  ).toFixed(2)}
-                </Col>
-                <Col xs="1">
-                  <span
-                    className={styles.close}
-                    onClick={() => removeFromCart(i)}
-                  >
-                    <AiOutlineClose />
-                  </span>
-                </Col>
-              </Row>
-            ))}
+            <Col md={6} className={`mb-md-0 mb-4 ${styles.crt}`}>
+              <div className="crd shadow p-md-5 p-2">
+                <h2 className="pb-3">Cart</h2>
+                <Row className="border-bottom pb-2">
+                  <Col xs="1">
+                    <span className={styles.heading}>#</span>
+                  </Col>
+                  <Col xs="5">
+                    <span className={styles.heading}>Product Name</span>{" "}
+                  </Col>
+                  <Col md={2} xs="3">
+                    <span className={styles.heading}>Quantity</span>
+                  </Col>
+                  <Col md={3} xs="2">
+                    <span className={styles.heading}>Price</span>
+                  </Col>
+                </Row>
+                {cart.map((item, i) => (
+                  <Row key={i} className={styles.item}>
+                    <Col xs="1">{i + 1}</Col>
+                    <Col xs="5">
+                      {item.product.name}
+                      {item.product.discount && item.product.discount > 0 ? (
+                        <span className="fw-bold ms-3 text-danger">
+                          (-{item.product.discount}%)
+                        </span>
+                      ) : (
+                        ""
+                      )}
+                    </Col>
+                    <Col xs="2">{item.quantity}</Col>
+                    <Col xs="2">
+                      $
+                      {(
+                        (item.product.price *
+                          (100 - item.product.discount) *
+                          item.quantity) /
+                        100
+                      ).toFixed(2)}
+                    </Col>
+                    <Col xs="1">
+                      <span
+                        className={styles.close}
+                        onClick={() => removeFromCart(i)}
+                      >
+                        <AiOutlineClose />
+                      </span>
+                    </Col>
+                  </Row>
+                ))}
 
-            <Row className={`${styles.item} border-top`}>
-              <Col xs="1"></Col>
-              <Col xs="4">
-                <span className={styles.heading}>Total Price</span>
-              </Col>
-              <Col xs="4"></Col>
-              <Col xs="2">${totalPrice.toFixed(2)}</Col>
-            </Row>
-
-            <Row className="py-5 text-center">
-              <Col md={3}></Col>
-              <Col md={6}>
+                <Row className={`${styles.item} border-top`}>
+                  <Col xs="1"></Col>
+                  <Col xs="4">
+                    <span className={styles.heading}>Total Price</span>
+                  </Col>
+                  <Col xs="3"></Col>
+                  <Col xs="2">${totalPrice.toFixed(2)}</Col>
+                </Row>
+              </div>
+            </Col>
+            <Col md={6} className=" text-center">
+              <Col md={12}>
                 <Card className={`${styles.crd} shadow`}>
                   <Card.Body>
                     <h3>Shipping Information</h3>
@@ -92,13 +94,16 @@ const Cart = ({ cart, removeFromCart, setPaymentKey, user }) => {
                   </Card.Body>
                 </Card>
               </Col>
-            </Row>
+            </Col>
           </>
         ) : (
-          <div>No items in cart</div>
+          <>
+            <h2 className=" pb-3">Cart</h2>
+            <div className="">No items in cart</div>
+          </>
         )}
-      </Container>
-    </div>
+      </Row>
+    </Container>
   );
 };
 
