@@ -1,5 +1,10 @@
 import React from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
+import { Button } from "react-bootstrap";
+import {
+  HiOutlineArrowNarrowLeft,
+  HiOutlineArrowNarrowRight,
+} from "react-icons/hi";
 
 // Import Swiper styles
 import "swiper/css";
@@ -8,10 +13,13 @@ import "swiper/css/pagination";
 // import required modules
 import { Pagination, EffectCreative } from "swiper";
 import styles from "./LandingSlider.module.scss";
+import logo from "../../assets/logoLg.png";
+
+import demoImg from "../../assets/templates/long.png";
 
 const LandingSlider = () => {
   return (
-    <div>
+    <div className={styles.wrapper}>
       <Swiper
         spaceBetween={0}
         className="mySwiper2 swiper-v"
@@ -28,7 +36,7 @@ const LandingSlider = () => {
             pagination={{
               clickable: true,
             }}
-            modules={[Pagination, EffectCreative]}
+            modules={[EffectCreative]}
             effect={"creative"}
             creativeEffect={{
               prev: {
@@ -40,6 +48,40 @@ const LandingSlider = () => {
               },
             }}
           >
+            <SwiperSlide className={styles.slide_top}>
+              <div className="d-flex justify-content-start align-items-center d-md-none d-block">
+                <img src={logo} className={styles.logo} alt="demo" />
+              </div>
+              <div className="">
+                <div className="text-center pt-4">
+                  <img src={demoImg} className={styles.img} alt="" />
+                </div>
+                <div className="text-center">
+                  <span className="d-block fs-4">New T shirt</span>
+                  <span className="d-block fs-5 text-secondary">$20</span>
+                </div>
+              </div>
+              <div className="text-center pb-5 d-flex justify-content-center align-items-center">
+                <Button size="lg" className="btn_primary">
+                  {" "}
+                  START{" "}
+                </Button>
+              </div>
+              <div className={styles.off}>
+                <h6 className={styles.vc}>20% OFF</h6>
+              </div>
+              <div className={styles.bottom_nav}>
+                <span className="d-block text-secondary">
+                  <HiOutlineArrowNarrowLeft />
+                </span>
+                <span className="d-block fs-6 text-secondary">
+                  More Tshirt Designs
+                </span>
+                <span className="d-block text-secondary">
+                  <HiOutlineArrowNarrowRight />
+                </span>
+              </div>
+            </SwiperSlide>
             <SwiperSlide className={styles.slide_top}>
               Vertical Slide 1
             </SwiperSlide>
@@ -73,9 +115,6 @@ const LandingSlider = () => {
               },
             }}
           >
-            <SwiperSlide className={styles.slide_top}>
-              Vertical Slide 1
-            </SwiperSlide>
             <SwiperSlide className={styles.slide_top}>
               Vertical Slide 2
             </SwiperSlide>
