@@ -1,3 +1,9 @@
+.wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
 .logo {
   height: 35px;
 }
@@ -15,8 +21,8 @@
   justify-content: center;
   align-items: center;
   border-radius: 50%;
-  height: 30px;
-  width: 30px;
+  height: 28px;
+  width: 28px;
   border: 1px solid var(--dark);
   margin: 0 2px;
 
@@ -26,7 +32,7 @@
     justify-content: center;
     align-items: center;
     color: var(--dark);
-    font-size: 24px;
+    font-size: 22px;
     text-decoration: none;
   }
   &:hover {
@@ -58,5 +64,11 @@
     color: var(--black);
     text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.16);
     transition: 0.3s all ease-in-out;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .link {
+    margin: 0;
   }
 }

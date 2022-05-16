@@ -109,3 +109,11 @@ body {
 .swiper-v {
   background: #eee;
 }
+
+@media screen and (max-width: 768px) {
+  .swiper {
+    width: 95vw;
+    
+  }
+}
+  

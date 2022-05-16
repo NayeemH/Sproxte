@@ -13,7 +13,6 @@ import "swiper/css/pagination";
 // import required modules
 import { Pagination, EffectCreative } from "swiper";
 import styles from "./LandingSlider.module.scss";
-import logo from "../../assets/logoLg.png";
 
 import demoImg from "../../assets/templates/long.png";
 
@@ -49,9 +48,6 @@ const LandingSlider = () => {
             }}
           >
             <SwiperSlide className={styles.slide_top}>
-              <div className="d-flex justify-content-start align-items-center d-md-none d-block">
-                <img src={logo} className={styles.logo} alt="demo" />
-              </div>
               <div className="">
                 <div className="text-center pt-4">
                   <img src={demoImg} className={styles.img} alt="" />

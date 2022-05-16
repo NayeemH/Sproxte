@@ -16,7 +16,7 @@ const LandingPageNew = () => {
   }, []);
 
   return (
-    <div className={`${styles.wrapper} px-4`}>
+    <div className={`${styles.wrapper} px-md-4 px-2`}>
       <LandingNavbar />
       <div className="d-flex justify-content-start align-items-center">
         <LandingSlider />
