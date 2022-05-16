@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Button } from "react-bootstrap";
+import { Button, Spinner } from "react-bootstrap";
 import {
   HiOutlineArrowNarrowLeft,
   HiOutlineArrowNarrowRight,
 } from "react-icons/hi";
+import { connect } from "react-redux";
 
 // Import Swiper styles
 import "swiper/css";
@@ -15,116 +16,141 @@ import { Pagination, EffectCreative } from "swiper";
 import styles from "./LandingSlider.module.scss";
 
 import demoImg from "../../assets/templates/long.png";
+import { getLandingData } from "../../actions/Landing.action";
+import { IMAGE_PATH } from "../../constants/URL";
 
-const LandingSlider = () => {
+const LandingSlider = ({ data, getLandingData }) => {
+  useEffect(() => {
+    if (data === null) {
+      getLandingData();
+    }
+  }, []);
   return (
     <div className={styles.wrapper}>
-      <Swiper
-        spaceBetween={0}
-        className="mySwiper2 swiper-v"
-        direction={"vertical"}
-        pagination={{
-          clickable: true,
-        }}
-        modules={[Pagination]}
-      >
-        <SwiperSlide className={styles.slide_left}>
+      {data === null ? (
+        <div
+          className="d-flex justify-content-center align-items-center"
+          style={{
+            minHeight: 800,
+            minWidth: "50%",
+            paddingLeft: "10%",
+          }}
+        >
+          <Spinner variant="dark" animation="grow" />
+        </div>
+      ) : (
+        <>
           <Swiper
-            className="mySwiper swiper-h"
-            spaceBetween={30}
+            spaceBetween={0}
+            className="mySwiper2 swiper-v"
+            direction={"vertical"}
             pagination={{
               clickable: true,
             }}
-            modules={[EffectCreative]}
-            effect={"creative"}
-            creativeEffect={{
-              prev: {
-                shadow: true,
-                translate: [0, 0, -400],
-              },
-              next: {
-                translate: ["100%", 0, 0],
-              },
-            }}
+            modules={[Pagination]}
           >
-            <SwiperSlide className={styles.slide_top}>
-              <div className="">
-                <div className="text-center pt-4">
-                  <img src={demoImg} className={styles.img} alt="" />
-                </div>
-                <div className="text-center">
-                  <span className="d-block fs-4">New T shirt</span>
-                  <span className="d-block fs-5 text-secondary">$20</span>
-                </div>
-              </div>
-              <div className="text-center d-flex justify-content-center align-items-center">
-                <Button size="lg" className="btn_primary">
-                  {" "}
-                  START{" "}
-                </Button>
-              </div>
-              <div className={styles.off}>
-                <h6 className={styles.vc}>20% OFF</h6>
-              </div>
-              <div className={styles.bottom_nav}>
-                <span className="d-block text-secondary">
-                  <HiOutlineArrowNarrowLeft />
-                </span>
-                <span className="d-block fs-6 text-secondary">
-                  More Tshirt Designs
-                </span>
-                <span className="d-block text-secondary">
-                  <HiOutlineArrowNarrowRight />
-                </span>
-              </div>
-            </SwiperSlide>
-            <SwiperSlide className={styles.slide_top}>
-              Vertical Slide 1
-            </SwiperSlide>
-            <SwiperSlide className={styles.slide_top}>
-              Vertical Slide 2
-            </SwiperSlide>
-            <SwiperSlide className={styles.slide_top}>
-              Vertical Slide3
-            </SwiperSlide>
-            <SwiperSlide className={styles.slide_top}>
-              Vertical Slide 4
-            </SwiperSlide>
+            {data.map((cat) => (
+              <SwiperSlide className={styles.slide_left} key={cat._id}>
+                <Swiper
+                  className="mySwiper swiper-h"
+                  spaceBetween={30}
+                  pagination={{
+                    clickable: true,
+                  }}
+                  modules={[EffectCreative]}
+                  effect={"creative"}
+                  creativeEffect={{
+                    prev: {
+                      shadow: true,
+                      translate: [0, 0, -400],
+                    },
+                    next: {
+                      translate: ["100%", 0, 0],
+                    },
+                  }}
+                >
+                  {cat.productType.length > 0 ? (
+                    <>
+                      {cat.productType.map((prod, i) => (
+                        <SwiperSlide
+                          className={styles.slide_top}
+                          key={prod._id}
+                        >
+                          <div className="">
+                            <div className="text-center pt-4">
+                              <img
+                                src={`${IMAGE_PATH}small/${prod.pngImageFront}`}
+                                className={styles.img}
+                                alt=""
+                              />
+                            </div>
+                            <div className="text-center">
+                              <span className="d-block fs-4">{prod.name}</span>
+                              <span className="d-block fs-5 text-secondary">
+                                ${prod.price}
+                              </span>
+                            </div>
+                          </div>
+                          <div className="text-center d-flex justify-content-center align-items-center">
+                            <Button size="lg" className="btn_primary">
+                              {" "}
+                              START{" "}
+                            </Button>
+                          </div>
+                          <div className={styles.off}>
+                            {prod.discount > 0 ? (
+                              <h6 className={styles.vc}>
+                                {prod.discount}% OFF
+                              </h6>
+                            ) : (
+                              <></>
+                            )}
+                          </div>
+                          <div className={styles.bottom_nav}>
+                            {i === 0 ? (
+                              <>
+                                <span className="d-block text-white">
+                                  <HiOutlineArrowNarrowLeft />
+                                </span>
+                              </>
+                            ) : (
+                              <span className="d-block text-secondary">
+                                <HiOutlineArrowNarrowLeft />
+                              </span>
+                            )}
+                            <span className="d-block fs-6 text-secondary">
+                              More {cat.name} Designs
+                            </span>
+                            {i === cat.productType.length - 1 ? (
+                              <>
+                                <span className="d-block text-white">
+                                  <HiOutlineArrowNarrowRight />
+                                </span>
+                              </>
+                            ) : (
+                              <span className="d-block text-secondary">
+                                <HiOutlineArrowNarrowRight />
+                              </span>
+                            )}
+                          </div>
+                        </SwiperSlide>
+                      ))}
+                    </>
+                  ) : (
+                    <></>
+                  )}
+                </Swiper>
+              </SwiperSlide>
+            ))}
           </Swiper>
-        </SwiperSlide>
-        <SwiperSlide className={styles.slide_left}>
-          <Swiper
-            className="mySwiper swiper-h"
-            spaceBetween={30}
-            pagination={{
-              clickable: true,
-            }}
-            modules={[Pagination, EffectCreative]}
-            effect={"creative"}
-            creativeEffect={{
-              prev: {
-                shadow: true,
-                translate: [0, 0, -400],
-              },
-              next: {
-                translate: ["100%", 0, 0],
-              },
-            }}
-          >
-            <SwiperSlide className={styles.slide_top}>
-              Vertical Slide 2
-            </SwiperSlide>
-            <SwiperSlide className={styles.slide_top}>
-              Vertical Slide3
-            </SwiperSlide>
-            <SwiperSlide className={styles.slide_top}>
-              Vertical Slide 4
-            </SwiperSlide>
-          </Swiper>
-        </SwiperSlide>
-      </Swiper>
+        </>
+      )}
     </div>
   );
 };
 
-export default LandingSlider;
+const mapStateToProps = (state) => ({
+  data: state.landing.data,
+});
+
+export default connect(mapStateToProps, { getLandingData })(LandingSlider);

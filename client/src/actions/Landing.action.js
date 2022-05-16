@@ -114,12 +114,12 @@ export const loginUserAccount = (values) => async (dispatch) => {
 //GET LANDING DATA NEW UI
 export const getLandingData = () => async (dispatch) => {
   try {
-    const res = await axios.get(`${BASE_URL}/api/v1/type/`);
+    const res = await axios.get(`${BASE_URL}/api/v1/type/categoryAll/`);
     // console.log(res);
 
     dispatch({
       type: GET_LANDING_DATA,
-      payload: res.data.types,
+      payload: res.data.finalData,
     });
   } catch (err) {
     dispatch({

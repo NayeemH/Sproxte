@@ -15,6 +15,7 @@ import {
   DISCOVER_LOAD,
   PRODUCT_BY_CATEGORY,
   GET_TEMPLATE_DETAILS,
+  GET_LANDING_DATA,
 } from "../constants/TypeLanding";
 
 const initialState = {
@@ -31,6 +32,7 @@ const initialState = {
   discover_featured: {},
   discover_popular: {},
   category_products: null,
+  data: null,
   loading: true,
 };
 
@@ -42,6 +44,9 @@ const LandingReducer = (state = initialState, action) => {
 
     case SELECT_TEMPLATE:
       return { ...state, template: payload, loading: false };
+
+    case GET_LANDING_DATA:
+      return { ...state, data: payload, loading: false };
 
     case GET_LANDING_LIST:
       return { ...state, landing_list: payload, loading: false };
