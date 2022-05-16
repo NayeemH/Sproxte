@@ -4,6 +4,7 @@ import {
   DISCOVER_FEATURED,
   DISCOVER_LOAD,
   DISCOVER_POPULAR,
+  GET_LANDING_DATA,
   GET_LANDING_LIST,
   LANDING_SIDEBAR_TOGGLE,
   PRODUCT_BY_CATEGORY,
@@ -110,6 +111,23 @@ export const loginUserAccount = (values) => async (dispatch) => {
   }
 };
 
+//GET LANDING DATA NEW UI
+export const getLandingData = () => async (dispatch) => {
+  try {
+    const res = await axios.get(`${BASE_URL}/api/v1/type/`);
+    // console.log(res);
+
+    dispatch({
+      type: GET_LANDING_DATA,
+      payload: res.data.types,
+    });
+  } catch (err) {
+    dispatch({
+      type: TYPES_LOAD_ERROR,
+    });
+    console.log(err);
+  }
+};
 //GET Type LIST ACTION
 export const getTypeList = () => async (dispatch) => {
   try {
