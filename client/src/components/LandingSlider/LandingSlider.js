@@ -61,7 +61,7 @@ const LandingSlider = () => {
                   <span className="d-block fs-5 text-secondary">$20</span>
                 </div>
               </div>
-              <div className="text-center pb-5 d-flex justify-content-center align-items-center">
+              <div className="text-center d-flex justify-content-center align-items-center">
                 <Button size="lg" className="btn_primary">
                   {" "}
                   START{" "}

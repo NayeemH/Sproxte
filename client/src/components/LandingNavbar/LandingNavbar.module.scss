@@ -1,0 +1,37 @@
+.logo {
+  height: 35px;
+}
+
+.box {
+  background-color: #fff;
+  border-radius: 5px;
+  padding: 3px 10px;
+}
+
+.icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  height: 30px;
+  width: 30px;
+  border: 1px solid var(--dark);
+  margin: 0 3px;
+
+  transition: 0.3s all ease-in-out;
+  a {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--dark);
+    font-size: 24px;
+    text-decoration: none;
+  }
+  &:hover {
+    background: var(--dark);
+    a {
+      color: var(--white);
+      transition: 0.3s all ease-in-out;
+    }
+  }
+}
