@@ -97,10 +97,10 @@ const Cart = ({ cart, removeFromCart, setPaymentKey, user }) => {
             </Col>
           </>
         ) : (
-          <>
+          <div className="crd shadow p-5">
             <h2 className=" pb-3">Cart</h2>
             <div className="">No items in cart</div>
-          </>
+          </div>
         )}
       </Row>
     </Container>

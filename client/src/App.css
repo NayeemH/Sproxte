@@ -110,10 +110,27 @@ body {
   background: #eee;
 }
 
+.mh{
+  min-height: 100vh;
+  padding: 0 24px;
+}
+
+.bg_custom{
+  background: url(./assets/bg.jpg);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
 @media screen and (max-width: 768px) {
   .swiper {
     width: 95vw;
     
+  }
+
+  .mh{
+    min-height: 100vh;
+    padding: 0 0;
   }
 }
   

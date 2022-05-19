@@ -1,18 +1,12 @@
 import React from "react";
-import BottomNav from "../../components/BottomNav/BottomNav";
 import ContactForm from "../../components/ContactForm/ContactForm";
-import Footer from "../../components/Footer/Footer";
-import LandingSidebar from "../../components/LandingSidebar/LandingSidebar";
-import Nav from "../../components/Nav/Nav";
+import LandingNavbar from "../../components/LandingNavbar/LandingNavbar";
 
 const ContactPage = () => {
   return (
-    <div>
-      <LandingSidebar />
-      <Nav />
+    <div className="mh bg_custom">
+      <LandingNavbar page={"contact"} />
       <ContactForm />
-      {/* <BottomNav /> */}
-      <Footer />
     </div>
   );
 };

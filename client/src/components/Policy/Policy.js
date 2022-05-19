@@ -6,7 +6,7 @@ const Policy = () => {
   return (
     <div className={styles.wrapper}>
       <h1 className="text-center fw-dark py-3 ">PRIVACY POLICY</h1>
-      <Container>
+      <Container className="px-md-5 px-2">
         <span className="d-block text-center fs-3 fw-bold pt-3">
           1. Personal information
         </span>
