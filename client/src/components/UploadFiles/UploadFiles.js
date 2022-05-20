@@ -18,8 +18,6 @@ const UploadFiles = ({ product }) => {
     }
   }, [product]);
 
-  console.log(product);
-
   return (
     <div className={styles.wrapper}>
       {!product || !product.name ? (
