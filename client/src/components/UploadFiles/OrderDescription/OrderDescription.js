@@ -20,6 +20,7 @@ import "swiper/css/pagination";
 // import required modules
 import { Pagination, EffectCreative } from "swiper";
 import ProductCard from "../../Shared/ProductCard/ProductCard";
+import Moment from "react-moment";
 
 const OrderDescription = ({
   sizes,
@@ -44,6 +45,7 @@ const OrderDescription = ({
   const [orderFontFamily, setOrderFontFamily] = useState("Open Sans");
   const [activeFontFamily, setActiveFontFamily] = useState("Open Sans");
   const [orderColor, setOrderColor] = useState(null);
+  const [my_swiper, set_my_swiper] = useState({});
   const fileRef = useRef();
   const navigate = useNavigate();
 
@@ -198,30 +200,48 @@ const OrderDescription = ({
           clickable: true,
         }}
         modules={[Pagination]}
+        onInit={(ev) => {
+          set_my_swiper(ev);
+        }}
       >
         <SwiperSlide className={styles.slide_left}>
           {product && product.imageData && (
-            <ProductCard
-              title={product.name}
-              h
-              img={
-                selectedColor
-                  ? `${IMAGE_PATH}small/${
-                      product.imageData.filter(
-                        (item) => item.color === selectedColor
-                      )[0].image
-                    }`
-                  : `${IMAGE_PATH}small/${product.pngImageFront}`
-              }
-              id={product._id}
-              template
-              price={product.price}
-              discount={product.discount?.discount[0]}
-            />
+            <>
+              <ProductCard
+                title={product.name}
+                h
+                img={
+                  selectedColor
+                    ? `${IMAGE_PATH}small/${
+                        product.imageData.filter(
+                          (item) => item.color === selectedColor
+                        )[0].image
+                      }`
+                    : `${IMAGE_PATH}small/${product.pngImageFront}`
+                }
+                id={product._id}
+                template
+                hidden={true}
+                price={product.price}
+                noshadow
+                notitle={true}
+                discount={product.discount?.discount[0]}
+              />
+              <h3 className="pt-3">{product.name}</h3>
+              <span className="d-block text-center text-secondary fs-6 pb-3">
+                Added <Moment fromNow>{product.createdAt}</Moment>
+              </span>
+              <Button
+                className="btn_primary"
+                onClick={() => my_swiper.slideNext()}
+              >
+                Next
+              </Button>
+            </>
           )}
         </SwiperSlide>
         <SwiperSlide className={styles.slide_left}>
-          <Card className="crd mt-4 shadow">
+          <Card className="crd">
             <Card.Body>
               <span className="d-block fs-4">Discount Ranges</span>
               <div className="pt-3">
@@ -229,8 +249,8 @@ const OrderDescription = ({
                   className="d-flex 
                   justify-content-between align-items-center"
                 >
-                  <span className="d-block fw-bold">Range</span>
-                  <span className="d-block fw-bold">Discount</span>
+                  <span className="d-block fw-bold fs-6">Range</span>
+                  <span className="d-block fw-bold fs-6">Discount</span>
                 </div>
                 <hr />
                 {product && product.discount && product.discount.range ? (
@@ -240,11 +260,11 @@ const OrderDescription = ({
                         className="d-flex 
                   justify-content-between align-items-center"
                       >
-                        <span className="d-block fw-bold">
+                        <span className="d-block fw-bold fs-6">
                           {i === 0 ? 1 : product.discount.range[i - 1] + 1} -{" "}
                           {dis}
                         </span>
-                        <span className="d-block fw-bold">
+                        <span className="d-block fw-bold fs-6">
                           {product.discount.discount[i]}%
                         </span>
                       </div>
@@ -263,7 +283,7 @@ const OrderDescription = ({
                       className="d-flex 
                   justify-content-between align-items-center"
                     >
-                      <span className="d-block fw-bold">
+                      <span className="d-block fw-bold fs-6">
                         {
                           product.discount.range[
                             product.discount.range.length - 1
@@ -271,7 +291,7 @@ const OrderDescription = ({
                         }
                         +
                       </span>
-                      <span className="d-block fw-bold">
+                      <span className="d-block fw-bold fs-6">
                         {
                           product.discount.discount[
                             product.discount.discount.length - 1
@@ -288,8 +308,10 @@ const OrderDescription = ({
                       className="d-flex 
                   justify-content-between align-items-center"
                     >
-                      <span className="d-block fw-bold">For all count</span>
-                      <span className="d-block fw-bold">
+                      <span className="d-block fw-bold fs-6">
+                        For all count
+                      </span>
+                      <span className="d-block fw-bold fs-6">
                         {
                           product.discount.discount[
                             product.discount.discount.length - 1
@@ -304,13 +326,13 @@ const OrderDescription = ({
               </div>
             </Card.Body>
           </Card>
-          <Card className={`${styles.crd} shadow mt-3`}>
+          <Card className={`${styles.crd} shadow`}>
             <Card.Body>
               <Row>
                 <Col>
                   <span className="d-block fs-4">Upload Front Images</span>
 
-                  <div className="pt-3">
+                  <div className="pt-2">
                     <Button
                       variant="outline-dark"
                       onClick={() => fileRef.current.click()}
@@ -330,8 +352,13 @@ const OrderDescription = ({
                       onChange={onSelectFile}
                     />
                   </div>
+                  {selectedFile.length > 0 ? (
+                    <span className="d-block pt-2 fs-6 text-small">
+                      {selectedFile.length} file selected
+                    </span>
+                  ) : null}
                 </Col>
-                <Col>
+                {/* <Col>
                   <div className={styles.preview}>
                     {selectedFile && selectedFile.length > 0 ? (
                       <div className="text-center pb-3">
@@ -346,7 +373,7 @@ const OrderDescription = ({
                       <></>
                     )}
                   </div>
-                </Col>
+                </Col> */}
               </Row>
               <Row>
                 <Col>
@@ -371,6 +398,12 @@ const OrderDescription = ({
               </Row>
             </Card.Body>
           </Card>
+          <Button
+            className="btn_primary mt-4"
+            onClick={() => my_swiper.slideNext()}
+          >
+            Next
+          </Button>
         </SwiperSlide>
         <SwiperSlide className={styles.slide_left}>
           <Card className={`${styles.crd_size} shadow`}>
@@ -432,6 +465,12 @@ const OrderDescription = ({
             </Card.Body>
           </Card>
           {/* FONT */}
+          <Button
+            className="btn_primary mt-4"
+            onClick={() => my_swiper.slideNext()}
+          >
+            Next
+          </Button>
         </SwiperSlide>
 
         {product && product.layouts && product.layouts.length > 0 && (
@@ -466,6 +505,12 @@ const OrderDescription = ({
                 </Container>
               </Card.Body>
             </Card>
+            <Button
+              className="btn_primary mt-5"
+              onClick={() => my_swiper.slideNext()}
+            >
+              Next
+            </Button>
           </SwiperSlide>
         )}
         {selectedLayout && (
@@ -525,6 +570,12 @@ const OrderDescription = ({
                 </select>
               </Card.Body>
             </Card>
+            <Button
+              className="btn_primary mt-5"
+              onClick={() => my_swiper.slideNext()}
+            >
+              Next
+            </Button>
           </SwiperSlide>
         )}
         <SwiperSlide className={styles.slide_left}>
@@ -542,7 +593,7 @@ const OrderDescription = ({
               </div>
             </Card.Body>
           </Card>
-          <div className="py-4 d-flex align-items-center">
+          <div className="py-4 d-flex align-items-center justify-content-center">
             <span className="fs-5 fw-bold me-3">
               {user && user.userType !== "client"
                 ? "Team Member Count"

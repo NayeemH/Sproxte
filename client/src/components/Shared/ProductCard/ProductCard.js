@@ -22,6 +22,7 @@ const ProductCard = ({
   tags,
   bottom,
   hidden,
+  notitle,
 }) => {
   const navigate = useNavigate();
   return (
@@ -51,11 +52,15 @@ const ProductCard = ({
               {bottom ? <span className={styles.bottom}>{bottom}</span> : null}
             </Col>
             <Col md={!hidden ? 9 : 12}>
-              <span
-                className={`d-block fs-5 text-start  d-flex align-items-center pt-2 ${styles.title}`}
-              >
-                {title}
-              </span>
+              {!notitle ? (
+                <span
+                  className={`d-block fs-5 text-start  d-flex align-items-center pt-2 ${styles.title}`}
+                >
+                  {title}
+                </span>
+              ) : (
+                <></>
+              )}
               {description && (
                 <span className={`d-block fs-6 text-secondary text-start`}>
                   <IoIosTimer className="me-1" />{" "}
