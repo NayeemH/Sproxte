@@ -15,7 +15,6 @@ import "swiper/css/pagination";
 import { Pagination, EffectCreative } from "swiper";
 import styles from "./LandingSlider.module.scss";
 
-import demoImg from "../../assets/templates/long.png";
 import { getLandingData } from "../../actions/Landing.action";
 import { IMAGE_PATH } from "../../constants/URL";
 import { useNavigate } from "react-router-dom";
