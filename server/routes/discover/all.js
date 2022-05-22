@@ -7,7 +7,7 @@ router.get('/all', async (req, res, next) => {
         // Total items
         const totalCount = await Template.find().countDocuments();
 
-        const {skip, limit} = pagination(req.query);
+        const {skip, limit} = pagination(req.query, totalCount);
         
 
 
