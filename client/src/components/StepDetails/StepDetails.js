@@ -292,12 +292,12 @@ const StepDetails = ({
                           <span className="fw-bold">Price :</span> ${step.price}
                         </span>
                       </Col>
-                      <Col xs={6}>
+                      {/* <Col xs={6}>
                         <span className="d-block fs-5">
                           <span className="fw-bold">Discount :</span>{" "}
                           {step.discount}%
                         </span>
-                      </Col>
+                      </Col> */}
                       <Col xs={6}>
                         <span className="d-block fs-5">
                           <span className="fw-bold">Quantity :</span>{" "}

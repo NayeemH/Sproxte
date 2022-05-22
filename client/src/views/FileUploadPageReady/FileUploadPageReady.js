@@ -2,9 +2,7 @@ import { connect } from "react-redux";
 import React, { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { getTemplate } from "../../actions/Cart.action";
-import Footer from "../../components/Footer/Footer";
-import LandingSidebar from "../../components/LandingSidebar/LandingSidebar";
-import Nav from "../../components/Nav/Nav";
+import LandingNavbar from "../../components/LandingNavbar/LandingNavbar";
 import { ReadyUpload } from "../../components/ReadyUpload";
 
 const FileUploadPageReady = ({ getTemplate, product }) => {
@@ -13,11 +11,11 @@ const FileUploadPageReady = ({ getTemplate, product }) => {
     getTemplate(id);
   }, []);
   return (
-    <div>
-      <LandingSidebar />
-      <Nav />
-      <ReadyUpload product={product} />
-      <Footer />
+    <div className={`wrapper_custom px-md-4 px-2`}>
+      <LandingNavbar />
+      <div className="d-flex justify-content-start align-items-center">
+        <ReadyUpload product={product} />
+      </div>
     </div>
   );
 };

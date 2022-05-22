@@ -9,6 +9,15 @@ import { useModals } from "@mantine/modals";
 import { switchMode } from "../../../actions/Coach.action";
 import { Text } from "@mantine/core";
 import { IMAGE_PATH } from "../../../constants/URL";
+import { Swiper, SwiperSlide } from "swiper/react";
+// Import Swiper styles
+import "swiper/css";
+import "swiper/css/pagination";
+
+// import required modules
+import { Pagination, EffectCreative } from "swiper";
+import ProductCard from "../../Shared/ProductCard/ProductCard";
+import Moment from "react-moment";
 
 const OrderDescription = ({
   sizes,
@@ -29,6 +38,7 @@ const OrderDescription = ({
   const [mainTextColor, setMainTextColor] = useState(undefined);
   const [secondaryTextColor, setSecondaryTextColor] = useState(undefined);
   const [selectedFileBack, setSelectedFile2] = useState();
+  const [my_swiper, set_my_swiper] = useState({});
 
   const navigate = useNavigate();
   const modals = useModals();
@@ -151,38 +161,78 @@ const OrderDescription = ({
 
   return (
     <div className={styles.wrapper}>
-      <Card className={`${styles.crd_size} shadow`}>
-        <Card.Body>
-          <span className="d-block fs-4">Select Size</span>
-          <div className={`${styles.grid_size} pt-3`}>
-            {sizes &&
-              sizes.map((s) => (
-                <div
-                  className={`${styles.size} ${
-                    size === s && styles.active
-                  } me-2`}
-                  onClick={() => setSize(s)}
-                >
-                  <span className="fs-5 d-block">{s}</span>
-                </div>
-              ))}
-          </div>
-        </Card.Body>
-      </Card>
+      <Swiper
+        spaceBetween={0}
+        className="mySwiper2 swiper-v"
+        direction={"vertical"}
+        pagination={{
+          clickable: true,
+        }}
+        onInit={(ev) => {
+          set_my_swiper(ev);
+        }}
+        modules={[Pagination]}
+      >
+        <SwiperSlide className={`${styles.slide_left}`}>
+          <ProductCard
+            title={product.name}
+            h
+            img={`${IMAGE_PATH}small/${product.pngImageFront}`}
+            id={product._id}
+            template
+            hidden={true}
+            price={product.price}
+            noshadow
+            notitle={true}
+            //discount={product.discount?.discount[0]}
+          />
+          <h3 className="pt-3">{product.name}</h3>
+          <span className="d-block text-center text-secondary fs-6 pb-3">
+            Added <Moment fromNow>{product.createdAt}</Moment>
+          </span>
 
-      <div className="py-4 d-flex align-items-center">
-        <span className="fs-5 fw-bold me-3">Quantity</span>
-        <input
-          type="number"
-          value={quantity}
-          onChange={(e) => setQuantity(e.target.value)}
-          className="form-control"
-          style={{ width: "60px" }}
-        />
-      </div>
-      <Button onClick={submitHandeler} className={styles.btn}>
-        Add To Cart
-      </Button>
+          <h4 className="pb-3">
+            Sold : <span className="fw-normal">{product.sellCount}</span>{" "}
+          </h4>
+          <Button className="btn_primary" onClick={() => my_swiper.slideNext()}>
+            Next
+          </Button>
+        </SwiperSlide>
+        <SwiperSlide className={styles.slide_left}>
+          <Card className={`${styles.crd_size} shadow`}>
+            <Card.Body>
+              <span className="d-block fs-4">Select Size</span>
+              <div className={`${styles.grid_size} pt-3`}>
+                {sizes &&
+                  sizes.map((s) => (
+                    <div
+                      className={`${styles.size} ${
+                        size === s && styles.active
+                      } me-2`}
+                      onClick={() => setSize(s)}
+                    >
+                      <span className="fs-5 d-block">{s}</span>
+                    </div>
+                  ))}
+              </div>
+            </Card.Body>
+          </Card>
+
+          <div className="py-4 d-flex align-items-center">
+            <span className="fs-5 fw-bold me-3">Quantity</span>
+            <input
+              type="number"
+              value={quantity}
+              onChange={(e) => setQuantity(e.target.value)}
+              className="form-control"
+              style={{ width: "60px" }}
+            />
+          </div>
+          <Button onClick={submitHandeler} className={styles.btn}>
+            Add To Cart
+          </Button>
+        </SwiperSlide>
+      </Swiper>
     </div>
   );
 };

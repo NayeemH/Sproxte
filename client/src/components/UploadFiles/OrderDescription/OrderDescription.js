@@ -18,7 +18,7 @@ import "swiper/css";
 import "swiper/css/pagination";
 
 // import required modules
-import { Pagination, EffectCreative } from "swiper";
+import { Pagination } from "swiper";
 import ProductCard from "../../Shared/ProductCard/ProductCard";
 import Moment from "react-moment";
 
@@ -352,7 +352,7 @@ const OrderDescription = ({
                       onChange={onSelectFile}
                     />
                   </div>
-                  {selectedFile.length > 0 ? (
+                  {selectedFile && selectedFile.length > 0 ? (
                     <span className="d-block pt-2 fs-6 text-small">
                       {selectedFile.length} file selected
                     </span>

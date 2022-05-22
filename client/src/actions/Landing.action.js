@@ -169,9 +169,7 @@ export const deleteType = (id) => async (dispatch) => {
 //GET LANDING LIST
 export const getLandingList = () => async (dispatch) => {
   try {
-    const res = await axios.get(
-      `${BASE_URL}/api/v1/discover/all?page=1&limit=8`
-    );
+    const res = await axios.get(`${BASE_URL}/api/v1/discover/all`);
     // console.log(res);
 
     dispatch({
