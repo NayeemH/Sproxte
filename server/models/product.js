@@ -41,6 +41,9 @@ const productSchema = Schema({
         type: Number,
         default: 0
     },
+    priceArray: {
+        type: Schema.Types.Mixed
+    },
     discount: {
         type: Schema.Types.Mixed
     },

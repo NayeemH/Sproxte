@@ -39,8 +39,15 @@ const productTypeSchema = Schema({
         type: Number,
         default: 0
     },
+    priceArray: {
+        type: Object
+    },
     discount: {
         type: Object
+    },
+    weight: {
+        type: Number,
+        required: true
     },
     playerAddPrice: {
         type: Number,

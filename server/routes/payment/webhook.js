@@ -191,6 +191,7 @@ const paymentHandle = async (object) => {
                 back: templates[i].pngImageBack,
             },
             price: templates[i].price,
+            priceArray: templates[i].priceArray,
             discount: templates[i].discount,
             count: order.count,
             size: order.size
@@ -203,6 +204,7 @@ const paymentHandle = async (object) => {
             name: links[i].name,
             image: links[i].image,
             price: links[i].price,
+            priceArray: links[i].priceArray,
             discount: links[i].discount,
             count: order.count,
             size: order.size
@@ -219,6 +221,7 @@ const paymentHandle = async (object) => {
             },
             colorImage: order.color && customs[i].imageData.filter(({color}) => color === order.color)[0].image,
             price: customs[i].price,
+            priceArray: customs[i].priceArray,
             discount: customs[i].discount,
             count: order.count,
             size: order.size,
@@ -246,6 +249,7 @@ const paymentHandle = async (object) => {
             },
             colorImage: order.color && teams[i].imageData.filter(({color}) => color === order.color)[0].image,
             price: teams[i].price,
+            priceArray: teams[i].priceArray,
             discount: teams[i].discount,
             count: order.count,
             size: order.size,
