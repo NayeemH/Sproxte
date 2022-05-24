@@ -72,26 +72,6 @@ const Sidebar = ({ logout }) => {
                 </div>
               </>
             )}
-            {/* <div className={styles.link_base}>
-              <div></div>
-              <h3>
-                <span>
-                  <BsFillFolderFill />
-                </span>
-                Project
-              </h3>
-            </div>
-            <div className={styles.link_group}>
-              <NavLink to="/dashboard" onClick={handeleClick}>
-                Running Tasks
-              </NavLink>
-              <NavLink to="/dashboard" onClick={handeleClick}>
-                Compeleted Tasks
-              </NavLink>
-              <NavLink to="/admin/add-house" onClick={handeleClick}>
-                Downloads
-              </NavLink>
-            </div> */}
 
             {role === "admin" && (
               <>

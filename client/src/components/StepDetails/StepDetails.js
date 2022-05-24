@@ -11,7 +11,6 @@ import { saveAs } from "file-saver";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import styles from "./StepDetails.module.scss";
 import { toast } from "react-toastify";
-import demoImg from "../../assets/logo.PNG";
 import { useModals } from "@mantine/modals";
 import { Text, TextInput } from "@mantine/core";
 import { rejectOrder } from "../../actions/Order.action";
@@ -25,6 +24,7 @@ const StepDetails = ({
   role,
   approveStep,
   rejectOrder,
+  auth,
 }) => {
   const { stepId, projectId } = useParams();
 
@@ -112,10 +112,6 @@ const StepDetails = ({
     });
   };
 
-  useEffect(() => {
-    getStepDetails(stepId);
-  }, [stepId]);
-
   return (
     <div className={styles.wrapper}>
       {(step === {} || step._id !== stepId) && loading === false ? (
@@ -128,7 +124,10 @@ const StepDetails = ({
       ) : (
         <Row>
           {step.status !== "delivered" ? (
-            <Col xs={12} className={`d-flex align-items-center pb-3`}>
+            <Col
+              xs={12}
+              className={`d-flex align-items-center flex-md-row flex-column pb-3`}
+            >
               {step.status !== "approved" ? (
                 <>
                   <Button
@@ -182,7 +181,10 @@ const StepDetails = ({
           ) : null}
           <Col md={role === "admin" || role === "iep" ? 8 : 12}>
             <Row className="pb-4">
-              {selectedCollectionIndex >= 0 && (
+              {step &&
+              step._id &&
+              step.collections &&
+              selectedCollectionIndex >= 0 ? (
                 <Preview
                   data={step.collections[selectedCollectionIndex]}
                   length={step.collections.length}
@@ -198,8 +200,14 @@ const StepDetails = ({
                   hoverFB={hoverFB}
                   setHoverFB={setHoverFB}
                 />
+              ) : (
+                <></>
               )}
-              {selectedCollectionIndex >= 0 && (
+              {step &&
+              step._id &&
+              step.collections &&
+              step.collections.length &&
+              selectedCollectionIndex >= 0 ? (
                 <Overview
                   collection={step.collections[selectedCollectionIndex]}
                   final={
@@ -216,10 +224,17 @@ const StepDetails = ({
                   setHoverFB={setHoverFB}
                   sellCount={step.sellCount}
                 />
+              ) : (
+                <></>
               )}
-              {step.collections.length === 0 && <Overview />}
+              {step && step._id && step.collections.length === 0 ? (
+                <Overview />
+              ) : (
+                <></>
+              )}
             </Row>
             {step &&
+            step._id &&
             step.gurdianNotifications &&
             step.gurdianNotifications.length > 0 ? (
               <Row className="text-dark">
@@ -229,6 +244,7 @@ const StepDetails = ({
                 </Col>
                 <Col md={12}>
                   {step &&
+                    step._id &&
                     step.gurdianNotifications &&
                     step.gurdianNotifications.map((item) => (
                       <div className="crd crd-body p-3 my-3">
@@ -490,9 +506,9 @@ const StepDetails = ({
 };
 
 const mapStateToProps = (state) => ({
-  step: state.project.selected_step,
   selectedCollectionIndex: state.project.selected_collection,
   role: state.auth.user.userType,
+  auth: state.auth.isAuthenticated,
   loading: state.project.loading,
 });
 

@@ -736,7 +736,7 @@ export const getStepDetails = (id) => async (dispatch) => {
     dispatch({
       type: GET_STEP_ERROR,
     });
-    console.log(err);
+    //console.log(err);
   }
 };
 

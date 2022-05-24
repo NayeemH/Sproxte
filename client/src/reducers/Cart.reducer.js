@@ -7,7 +7,7 @@ import {
 } from "../constants/TypeLanding";
 
 const initialState = {
-  cart: [],
+  cart: [] || JSON.parse(localStorage.getItem("sv_cart")).data,
   selected_cart: {},
 };
 
@@ -16,11 +16,21 @@ const CartReducer = (state = initialState, action) => {
 
   switch (type) {
     case CART_ADD_ITEM:
+      localStorage.setItem(
+        "sv_cart",
+        JSON.stringify({ data: [...state.cart, payload] })
+      );
       return {
         ...state,
         cart: [...state.cart, payload],
       };
     case CART_REMOVE_ITEM:
+      localStorage.setItem(
+        "sv_cart",
+        JSON.stringify({
+          data: [...state.cart.filter((item, i) => i !== payload)],
+        })
+      );
       return {
         ...state,
         cart: [...state.cart.filter((item, i) => i !== payload)],

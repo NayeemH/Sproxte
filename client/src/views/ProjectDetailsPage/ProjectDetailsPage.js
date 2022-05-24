@@ -5,12 +5,14 @@ import { getProjectDetails } from "../../actions/Project.action";
 import OrderDetails from "../../components/OrderDetails/OrderDetails";
 import Layout from "../../components/Shared/Layout/Layout";
 
-const ProjectDetailsPage = ({ getProjectDetails, project, team }) => {
+const ProjectDetailsPage = ({ getProjectDetails, project, team, auth }) => {
   const { id } = useParams();
 
   useEffect(() => {
-    getProjectDetails(id);
-  }, [id]);
+    if (auth === true) {
+      getProjectDetails(id);
+    }
+  }, [id, auth]);
   return (
     <div
       className="bg_dark"
@@ -25,6 +27,7 @@ const ProjectDetailsPage = ({ getProjectDetails, project, team }) => {
 
 const mapStateToProps = (state) => ({
   project: state.project.selected_project,
+  auth: state.auth.isAuthenticated,
 });
 
 export default connect(mapStateToProps, { getProjectDetails })(

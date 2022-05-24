@@ -218,7 +218,7 @@ const OrderDescription = ({
             </Card.Body>
           </Card>
 
-          <div className="py-4 d-flex align-items-center">
+          <div className="py-4 d-flex align-items-center justify-content-center">
             <span className="fs-5 fw-bold me-3">Quantity</span>
             <input
               type="number"

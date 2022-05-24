@@ -14,7 +14,7 @@ import { decodeToken } from "react-jwt";
 
 const initialState = {
   token: "",
-  isAuthenticated: false,
+  isAuthenticated: null,
   user: null,
   loading: true,
   notifications: null,
