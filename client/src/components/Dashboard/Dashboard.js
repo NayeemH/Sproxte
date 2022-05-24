@@ -54,7 +54,7 @@ const Dashboard = ({ dashboard, projects, fetchProjects }) => {
       <div className="d-flex justify-content-between align-items-center flex-md-row flex-column">
         <h3 className="pb-3">Running Orders</h3>
 
-        <div className="d-flex flex-column flex-md-row justify-content-between align-items-center">
+        <div className="d-flex flex-column flex-md-row justify-content-between align-items-center pb-3 pb-md-0">
           <div className="d-flex">
             <Dropdown>
               <Dropdown.Toggle

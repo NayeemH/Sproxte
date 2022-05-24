@@ -124,7 +124,7 @@ const IepList = ({ item, getIepList, dashboard, deleteUser }) => {
                     className="mb-3 border-bottom pb-3"
                     key={notification._id}
                   >
-                    <Col xs={2}>
+                    <Col md={2}>
                       <Row>
                         <Col
                           md={7}
@@ -139,7 +139,7 @@ const IepList = ({ item, getIepList, dashboard, deleteUser }) => {
                           </div>
                         </Col>
                         <Col
-                          xs={3}
+                          md={3}
                           className="d-flex justify-content-center align-items-center"
                         >
                           <div className={styles.line}></div>
@@ -147,7 +147,7 @@ const IepList = ({ item, getIepList, dashboard, deleteUser }) => {
                       </Row>
                     </Col>
                     <Col
-                      xs={8}
+                      md={8}
                       className="d-flex justify-content-center-center flex-column"
                     >
                       <div className={`d-block fw-bold ${styles.lnk}`}>
@@ -161,7 +161,7 @@ const IepList = ({ item, getIepList, dashboard, deleteUser }) => {
                       </span>
                     </Col>
                     <Col
-                      xs={1}
+                      md={1}
                       className="d-flex justify-content-end align-items-center"
                     >
                       <div

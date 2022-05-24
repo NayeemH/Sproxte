@@ -139,7 +139,7 @@ const Reports = ({ getReportData, data }) => {
       ) : (
         <Container className="pb-4">
           <Row>
-            <Col xs={6} md={3} className="mb-3">
+            <Col xs={12} md={3} className="mb-3">
               <Card className="crd shadow hov__card">
                 <Card.Body>
                   <Row>
@@ -162,7 +162,7 @@ const Reports = ({ getReportData, data }) => {
                 </Card.Body>
               </Card>
             </Col>
-            <Col xs={6} md={3} className="mb-3">
+            <Col xs={12} md={3} className="mb-3">
               <Card className="crd shadow hov__card">
                 <Card.Body>
                   <Row>
@@ -187,7 +187,7 @@ const Reports = ({ getReportData, data }) => {
                 </Card.Body>
               </Card>
             </Col>
-            <Col xs={6} md={3} className="mb-3">
+            <Col xs={12} md={3} className="mb-3">
               <Card className="crd shadow hov__card">
                 <Card.Body>
                   <Row>
@@ -212,7 +212,7 @@ const Reports = ({ getReportData, data }) => {
                 </Card.Body>
               </Card>
             </Col>
-            <Col xs={6} md={3} className="mb-3">
+            <Col xs={12} md={3} className="mb-3">
               <Card className="crd shadow hov__card">
                 <Card.Body>
                   <Row>
@@ -239,7 +239,7 @@ const Reports = ({ getReportData, data }) => {
             </Col>
             <Col md={6} className="my-2">
               <Card className="crd shadow hov__card">
-                <Card.Body>
+                <Card.Body className="p-0 p-md-3">
                   <h5 className="pb-3 text-center">Image Processed </h5>
                   <Chart
                     options={{
@@ -265,7 +265,7 @@ const Reports = ({ getReportData, data }) => {
             </Col>
             <Col md={6} className="my-2">
               <Card className="crd shadow hov__card">
-                <Card.Body>
+                <Card.Body className="p-0 p-md-3">
                   <h5 className="pb-3 text-center">All Order Report</h5>
                   <Chart
                     options={{
@@ -289,8 +289,8 @@ const Reports = ({ getReportData, data }) => {
               </Card>
             </Col>
             <Col md={6} className="my-2">
-              <Card className="crd shadow hov__card">
-                <Card.Body>
+              <Card className="crd shadow hov__card p-0">
+                <Card.Body className="p-0 p-md-3">
                   <h5 className="pb-3 text-center">Running Order Report</h5>
                   <Chart
                     options={{
@@ -315,7 +315,7 @@ const Reports = ({ getReportData, data }) => {
             </Col>
             <Col md={6} className="my-2">
               <Card className="crd shadow hov__card">
-                <Card.Body>
+                <Card.Body className="p-0 p-md-3">
                   <h5 className="pb-3 text-center">
                     Completed Order Sell Report
                   </h5>
