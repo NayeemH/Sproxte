@@ -14,7 +14,6 @@ import { connect } from "react-redux";
 import { createProject } from "../../actions/Project.action";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
-import colors from "../../config/Colors";
 import { getTypeList } from "../../actions/Landing.action";
 
 const AddProjectForm = ({ category, createProject, getTypeList }) => {
@@ -25,30 +24,16 @@ const AddProjectForm = ({ category, createProject, getTypeList }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [selectedColor, setSelectedColor] = useState([]);
   const [colorInput, setColorInput] = useState("");
-  const [typeInput, setTypeInput] = useState("");
-  const [focus, setFocus] = useState(false);
-  const [focus2, setFocus2] = useState(false);
+
   const navigate = useNavigate();
 
   const fileRef = useRef();
-  const fileRef2 = useRef();
 
   useEffect(() => {
     if (category.length === 0) {
       getTypeList();
     }
   }, []);
-
-  const blurHandeler = () => {
-    setTimeout(() => {
-      setFocus(false);
-    }, 200);
-  };
-  const blurHandeler2 = () => {
-    setTimeout(() => {
-      setFocus2(false);
-    }, 200);
-  };
 
   const onSubmitHandeler = async (values) => {
     if (selectedFile) {
@@ -132,6 +117,7 @@ const AddProjectForm = ({ category, createProject, getTypeList }) => {
     price: 0,
     discount: 0,
     quantity: 0,
+    weight: 0,
     // productType: "",
     size: "",
     image: "",
@@ -145,6 +131,10 @@ const AddProjectForm = ({ category, createProject, getTypeList }) => {
     price: Yup.number("Insert valid price", "Insert valid price").required(
       "Product price is required!"
     ),
+    weight: Yup.number(
+      "Insert valid weight",
+      "Insert valid weight in gram"
+    ).required("Product weight is required!"),
     price: Yup.number("Insert valid price", "Insert valid price")
       .min(0)
       .max(100)
@@ -189,7 +179,30 @@ const AddProjectForm = ({ category, createProject, getTypeList }) => {
                 </InputGroup>
 
                 <Row>
-                  <Col md={12}>
+                  <Col md={6}>
+                    <InputGroup className="mb-3 d-flex flex-column">
+                      <div className="d-flex justify-content-between align-items-center pb-2">
+                        <label htmlFor="weight" className="d-block">
+                          Weight in grams
+                        </label>
+                        {errors.weight && touched.weight ? (
+                          <small className="text-danger pt-2">
+                            {errors.weight}
+                          </small>
+                        ) : null}
+                      </div>
+                      <Field
+                        as={BootstrapForm.Control}
+                        placeholder="Type project weight"
+                        name="weight"
+                        isValid={!errors.weight && touched.weight}
+                        type="text"
+                        className={`${styles.input} w-100`}
+                        isInvalid={errors.weight && touched.weight}
+                      />
+                    </InputGroup>
+                  </Col>
+                  <Col md={6}>
                     <InputGroup className="mb-3 d-flex flex-column">
                       <div className="d-flex justify-content-between align-items-center pb-2">
                         <label htmlFor="description" className="d-block">

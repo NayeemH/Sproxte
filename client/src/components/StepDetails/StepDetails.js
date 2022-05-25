@@ -112,6 +112,20 @@ const StepDetails = ({
     });
   };
 
+  const getDiscount = (data) => {
+    if (step.count < data.range[0]) {
+      return data.discount[0];
+    } else if (step.count > data.range[data.range.length - 1]) {
+      return data.discount[data.discount.length - 1];
+    } else {
+      for (let i = 0; i < data.range.length; i++) {
+        if (step.count >= data.range[i] && step.count <= data.range[i + 1]) {
+          return data.discount[i + 1];
+        }
+      }
+    }
+  };
+
   return (
     <div className={styles.wrapper}>
       {(step === {} || step._id !== stepId) && loading === false ? (
@@ -246,8 +260,8 @@ const StepDetails = ({
                   {step &&
                     step._id &&
                     step.gurdianNotifications &&
-                    step.gurdianNotifications.map((item) => (
-                      <div className="crd crd-body p-3 my-3">
+                    step.gurdianNotifications.map((item, i) => (
+                      <div className="crd crd-body p-3 my-3" key={i}>
                         <Row>
                           <Col>
                             <span className="d-block fs-5">{item.message}</span>
@@ -308,12 +322,12 @@ const StepDetails = ({
                           <span className="fw-bold">Price :</span> ${step.price}
                         </span>
                       </Col>
-                      {/* <Col xs={6}>
+                      <Col xs={6}>
                         <span className="d-block fs-5">
                           <span className="fw-bold">Discount :</span>{" "}
-                          {step.discount}%
+                          {getDiscount(step.discount)}%
                         </span>
-                      </Col> */}
+                      </Col>
                       <Col xs={6}>
                         <span className="d-block fs-5">
                           <span className="fw-bold">Quantity :</span>{" "}
@@ -334,7 +348,10 @@ const StepDetails = ({
                             </span>
                             <div className="">
                               {step.orderColor.split(",").map((orderClr, i) => (
-                                <div className="d-flex align-items-center w-100 fs-6">
+                                <div
+                                  className="d-flex align-items-center w-100 fs-6"
+                                  key={i}
+                                >
                                   <span className="fw-bold">
                                     {i + 1}.{" "}
                                     {
@@ -380,8 +397,8 @@ const StepDetails = ({
                       </Col>
 
                       {step.frontImages &&
-                        step.frontImages.map((img) => (
-                          <Col xs={6}>
+                        step.frontImages.map((img, i) => (
+                          <Col xs={6} key={i}>
                             <img
                               onClick={() =>
                                 saveAs(

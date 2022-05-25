@@ -183,6 +183,8 @@ export const createProject =
     formData.append("name", values.name);
     formData.append("price", values.price);
     formData.append("quantity", values.quantity);
+    // ::: WEIGHT :::
+    formData.append("weight", values.weight);
     if (values.productType) {
       formData.append("productType", values.productType);
     }
@@ -252,6 +254,8 @@ export const editProduct =
 
     formData.append("name", values.name);
     formData.append("price", values.price);
+    // ::: WEIGHT :::
+    formData.append("weight", values.weight);
     formData.append("quantity", values.quantity);
     formData.append("description", values.description);
     if (values.discount) {

@@ -14,7 +14,6 @@ import { connect } from "react-redux";
 import { editProduct } from "../../actions/Project.action";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
-import colors from "../../config/Colors";
 import { getTypeList } from "../../actions/Landing.action";
 
 const EditProductFinal = ({ category, editProduct, getTypeList, data }) => {
@@ -25,13 +24,9 @@ const EditProductFinal = ({ category, editProduct, getTypeList, data }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [selectedColor, setSelectedColor] = useState([]);
   const [colorInput, setColorInput] = useState("");
-  const [typeInput, setTypeInput] = useState("");
-  const [focus, setFocus] = useState(false);
-  const [focus2, setFocus2] = useState(false);
   const navigate = useNavigate();
 
   const fileRef = useRef();
-  const fileRef2 = useRef();
 
   useEffect(() => {
     if (category.length === 0) {
@@ -39,26 +34,8 @@ const EditProductFinal = ({ category, editProduct, getTypeList, data }) => {
     }
   }, []);
 
-  const blurHandeler = () => {
-    setTimeout(() => {
-      setFocus(false);
-    }, 200);
-  };
-  const blurHandeler2 = () => {
-    setTimeout(() => {
-      setFocus2(false);
-    }, 200);
-  };
-
   const onSubmitHandeler = async (values) => {
     setIsLoading(true);
-    // let check = await createProject(
-    //   values,
-    //   selectedFile,
-    //   selectedFile2,
-    //   selectedFile3,
-    //   selectedColor
-    // );
 
     let check = await editProduct(
       values,
@@ -99,43 +76,11 @@ const EditProductFinal = ({ category, editProduct, getTypeList, data }) => {
     setSelectedFile(e.target.files[0]);
   };
 
-  //ONSELECT FILE HANDELER 2
-  const onSelectFile2 = (e) => {
-    if (!e.target.files || e.target.files.length === 0) {
-      setSelectedFile2(undefined);
-      return;
-    }
-    if (e.target.files[0].size > 2000000) {
-      toast.error("File size is too big");
-      return;
-    }
-    setSelectedFile2(e.target.files[0]);
-  };
-
-  //ONSELECT FILE HANDELER Multiple
-  const onSelectFile3 = (e) => {
-    if (!e.target.files || e.target.files.length === 0) {
-      setSelectedFile3(undefined);
-      return;
-    }
-
-    let flag = false;
-    let list = e.target.files;
-    for (let index = 0; index < list.length; index++) {
-      if (list[index].size > 2000000) {
-        toast.error("File size is too big");
-        flag = true;
-      }
-    }
-    if (!flag) {
-      setSelectedFile3(list);
-    }
-  };
-
   let initVals = {
     name: data && data.name ? data.name : "",
     price: data && data.price ? parseInt(data.price) : 0,
     discount: data && data.discount ? parseInt(data.discount) : 0,
+    weight: data && data.weight ? parseInt(data.weight) : 0,
     quantity: data && data.quantity ? parseInt(data.quantity) : 0,
     productType: data && data.productType ? data.productType : "",
     size:
@@ -150,6 +95,9 @@ const EditProductFinal = ({ category, editProduct, getTypeList, data }) => {
     quantity: Yup.number().required("Product quantity is required!"),
     price: Yup.number("Insert valid price", "Insert valid price").required(
       "Product price is required!"
+    ),
+    weight: Yup.number("Insert valid weight", "Insert valid weight").required(
+      "Product weight is required!"
     ),
     discount: Yup.number("Insert valid discount", "Insert valid discount")
       .min(0)
@@ -198,7 +146,7 @@ const EditProductFinal = ({ category, editProduct, getTypeList, data }) => {
                 </InputGroup>
 
                 <Row>
-                  <Col md={12}>
+                  <Col md={6}>
                     <InputGroup className="mb-3 d-flex flex-column">
                       <div className="d-flex justify-content-between align-items-center pb-2">
                         <label htmlFor="description" className="d-block">
@@ -218,6 +166,29 @@ const EditProductFinal = ({ category, editProduct, getTypeList, data }) => {
                         type="text"
                         className={`${styles.input} w-100`}
                         isInvalid={errors.description && touched.description}
+                      />
+                    </InputGroup>
+                  </Col>
+                  <Col md={6}>
+                    <InputGroup className="mb-3 d-flex flex-column">
+                      <div className="d-flex justify-content-between align-items-center pb-2">
+                        <label htmlFor="weight" className="d-block">
+                          Weight in grams
+                        </label>
+                        {errors.weight && touched.weight ? (
+                          <small className="text-danger pt-2">
+                            {errors.weight}
+                          </small>
+                        ) : null}
+                      </div>
+                      <Field
+                        as={BootstrapForm.Control}
+                        placeholder="Type project weight"
+                        name="weight"
+                        isValid={!errors.weight && touched.weight}
+                        type="text"
+                        className={`${styles.input} w-100`}
+                        isInvalid={errors.weight && touched.weight}
                       />
                     </InputGroup>
                   </Col>
