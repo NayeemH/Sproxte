@@ -30,8 +30,15 @@ const templateSchema = Schema({
         type: Number,
         required: true,
     },
+    priceArray: {
+        type: Object
+    },
     discount: {
         type: Object
+    },
+    weight: {
+        type: Number,
+        required: true
     },
     description: {
         type: String,

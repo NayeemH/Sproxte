@@ -111,20 +111,28 @@ const addCustomTemplate = async (req) => {
     const count = parseInt(stringCount);
     if(count < 0) count = - count;
 
-    const productType = await ProductType.findOne({_id: productTypeId}, {price: 1, discount: 1});
+    const productType = await ProductType.findOne({_id: productTypeId}, {price: 1, discount: 1, priceArray: 1});
 
     if(!productType) throw Error('Product Type not found');
     
-    const { price, discount } = productType;
+    const { price, discount, priceArray } = productType;
 
+    // Calculate price
     let i;
+    for(i = 0; i < priceArray.range.length; i++) 
+        if(count <= priceArray.range[i]) 
+            break;
+
+    const calPriceArray = priceArray.price[i];
+
+    // Calculate discount
     for(i = 0; i < discount.range.length; i++) 
         if(count <= discount.range[i]) 
             break;
 
     const calDiscount = discount.discount[i];
 
-    const netPrice = Math.round(price * count * (1 - calDiscount / 100));
+    const netPrice = Math.round(calPriceArray * count * (1 - calDiscount / 100));
 
     await Order.findOneAndUpdate(
         {_id: id, userId}, 
