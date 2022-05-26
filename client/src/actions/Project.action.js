@@ -378,7 +378,8 @@ export const deleteProduct = (id) => async (dispatch) => {
 
 // CREATE PRODUCT TYPE
 export const createProductType =
-  (values, file, previewFile, layouts, discountList) => async (dispatch) => {
+  (values, file, previewFile, layouts, discountList, priceList) =>
+  async (dispatch) => {
     let formData = new FormData();
     //console.log(layouts);
 
@@ -386,21 +387,34 @@ export const createProductType =
       range: [],
       discount: [],
     };
+
     if (discountList) {
       discountList.map((d, i) => {
         discountData.range.push(parseInt(d.range));
         discountData.discount.push(parseInt(d.discount));
       });
     }
+    const priceData = {
+      range: [],
+      price: [],
+    };
+    if (priceList) {
+      priceList.map((d, i) => {
+        priceData.range.push(parseInt(d.range));
+        priceData.price.push(parseInt(d.price));
+      });
+    }
 
     discountData.discount.push(values.discount);
+    priceData.price.push(values.price);
     formData.append("playerAddPrice", values.playerAddPrice);
 
     formData.append("name", values.name);
     formData.append("categoryType", values.categoryType);
-    formData.append("price", values.price);
     formData.append("discount", JSON.stringify(discountData));
+    formData.append("priceArray", JSON.stringify(priceData));
     formData.append("pngImageFront", file);
+    formData.append("weight", 20);
 
     if (previewFile) {
       formData.append("pngImageBack", previewFile);
