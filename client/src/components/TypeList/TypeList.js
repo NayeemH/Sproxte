@@ -65,7 +65,12 @@ const TypeList = ({ deleteType }) => {
                       </div>
                     </td>
                     <td>
-                      <div className={styles.img_wrapper}>${item.price}</div>
+                      <div className={styles.img_wrapper}>
+                        $
+                        {item && item.priceArray && item.priceArray.price[0]
+                          ? item.priceArray.price[0]
+                          : "NaN"}
+                      </div>
                     </td>
                     <td>
                       {item.sizes.map((size, j) => (

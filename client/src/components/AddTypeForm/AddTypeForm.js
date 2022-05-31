@@ -174,6 +174,7 @@ const AddTypeForm = ({ createProductType, getCategoryList, category }) => {
     categoryType: "",
     price: 0,
     discount: 0,
+    weight: 0,
     playerAddPrice: 0,
   };
 
@@ -183,9 +184,8 @@ const AddTypeForm = ({ createProductType, getCategoryList, category }) => {
     size: Yup.string().required("Size is required!"),
     categoryType: Yup.string().required("Valid Category name is required!"),
     price: Yup.number().min(0).required("Price is required!"),
-    playerAddPrice: Yup.number()
-      .min(0)
-      .required("Player add price is required!"),
+    playerAddPrice: Yup.number().required("Player add price is required!"),
+    weight: Yup.number().min(0).required("Weight is required!"),
     discount: Yup.number().min(0).max(100).required("Discount is required!"),
   });
   return (
@@ -268,30 +268,6 @@ const AddTypeForm = ({ createProductType, getCategoryList, category }) => {
                 </InputGroup>
 
                 <Row className="pt-3">
-                  {/* <Col md={6}>
-                    <InputGroup className="mb-3 d-flex flex-column">
-                      <div className="d-flex justify-content-between align-items-center pb-2">
-                        <label htmlFor="price" className="d-block">
-                          Product Price
-                        </label>
-                      </div>
-                      <Field
-                        as={BootstrapForm.Control}
-                        placeholder="Type product price"
-                        name="price"
-                        isValid={!errors.price && touched.price}
-                        type="number"
-                        className={`${styles.input} w-100`}
-                        isInvalid={errors.price && touched.price}
-                      />
-                      {errors.price && touched.price ? (
-                        <small className="text-danger pt-2">
-                          {errors.price}
-                        </small>
-                      ) : null}
-                      <small>in USD</small>
-                    </InputGroup>
-                  </Col> */}
                   <Col md={12}>
                     <InputGroup className="mb-3 d-flex flex-column">
                       <div className="d-flex justify-content-between align-items-center pb-2">
@@ -317,31 +293,63 @@ const AddTypeForm = ({ createProductType, getCategoryList, category }) => {
                     </InputGroup>
                   </Col>
                 </Row>
-                <InputGroup className="mb-3 d-flex flex-column">
-                  <div className="d-flex justify-content-between align-items-center pb-2">
-                    <label htmlFor="playerAddPrice" className="d-block">
-                      Extra Fee for adding new player
-                    </label>
-                  </div>
-                  <Field
-                    as={BootstrapForm.Control}
-                    placeholder="Type product playerAddPrice"
-                    name="playerAddPrice"
-                    isValid={!errors.playerAddPrice && touched.playerAddPrice}
-                    type="number"
-                    className={`${styles.input} w-100`}
-                    isInvalid={errors.playerAddPrice && touched.playerAddPrice}
-                  />
-                  {errors.playerAddPrice && touched.playerAddPrice ? (
-                    <small className="text-danger pt-2">
-                      {errors.playerAddPrice}
-                    </small>
-                  ) : null}
-                  <small>
-                    This fee applicable for adding new player after coach has
-                    orderd.
-                  </small>
-                </InputGroup>
+                <Row>
+                  <Col md={6}>
+                    <InputGroup className="mb-3 d-flex flex-column">
+                      <div className="d-flex justify-content-between align-items-center pb-2">
+                        <label htmlFor="playerAddPrice" className="d-block">
+                          Extra Fee for adding new player
+                        </label>
+                      </div>
+                      <Field
+                        as={BootstrapForm.Control}
+                        placeholder="Type product playerAddPrice"
+                        name="playerAddPrice"
+                        isValid={
+                          !errors.playerAddPrice && touched.playerAddPrice
+                        }
+                        type="number"
+                        className={`${styles.input} w-100`}
+                        isInvalid={
+                          errors.playerAddPrice && touched.playerAddPrice
+                        }
+                      />
+                      {errors.playerAddPrice && touched.playerAddPrice ? (
+                        <small className="text-danger pt-2">
+                          {errors.playerAddPrice}
+                        </small>
+                      ) : null}
+                      <small>
+                        This fee applicable for adding new player after coach
+                        has orderd.
+                      </small>
+                    </InputGroup>
+                  </Col>
+                  <Col md={6}>
+                    <InputGroup className="mb-3 d-flex flex-column">
+                      <div className="d-flex justify-content-between align-items-center pb-2">
+                        <label htmlFor="weight" className="d-block">
+                          Weight in grams
+                        </label>
+                        {errors.weight && touched.weight ? (
+                          <small className="text-danger pt-2">
+                            {errors.weight}
+                          </small>
+                        ) : null}
+                      </div>
+                      <Field
+                        as={BootstrapForm.Control}
+                        placeholder="Type product weight"
+                        name="weight"
+                        isValid={!errors.weight && touched.weight}
+                        type="text"
+                        className={`${styles.input} w-100`}
+                        isInvalid={errors.weight && touched.weight}
+                      />
+                    </InputGroup>
+                  </Col>
+                </Row>
+
                 <hr />
                 {/* PRICE START */}
                 <>

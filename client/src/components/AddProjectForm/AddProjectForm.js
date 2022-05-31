@@ -193,7 +193,7 @@ const AddProjectForm = ({ category, createProject, getTypeList }) => {
                       </div>
                       <Field
                         as={BootstrapForm.Control}
-                        placeholder="Type project weight"
+                        placeholder="Type product weight"
                         name="weight"
                         isValid={!errors.weight && touched.weight}
                         type="text"

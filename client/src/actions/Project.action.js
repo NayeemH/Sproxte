@@ -405,8 +405,8 @@ export const createProductType =
       });
     }
 
-    discountData.discount.push(values.discount);
     priceData.price.push(values.price);
+    discountData.discount.push(values.discount);
     formData.append("playerAddPrice", values.playerAddPrice);
 
     formData.append("name", values.name);
@@ -414,7 +414,7 @@ export const createProductType =
     formData.append("discount", JSON.stringify(discountData));
     formData.append("priceArray", JSON.stringify(priceData));
     formData.append("pngImageFront", file);
-    formData.append("weight", 20);
+    formData.append("weight", values.weight);
 
     if (previewFile) {
       formData.append("pngImageBack", previewFile);
@@ -476,7 +476,7 @@ export const createProductType =
 
 // EDIT PRODUCT TYPE
 export const editProductType =
-  (values, id, file, previewFile, layouts, discountList) =>
+  (values, id, file, previewFile, layouts, discountList, priceList) =>
   async (dispatch) => {
     let formData = new FormData();
 
@@ -492,14 +492,29 @@ export const editProductType =
     };
     if (discountList) {
       discountList.map((d, i) => {
-        discountData.range.push(parseInt(d.range));
-        discountData.discount.push(parseInt(d.discount));
+        discountData.range.push(d.range);
+        discountData.discount.push(d.discount);
       });
     }
+
+    const priceData = {
+      range: [],
+      price: [],
+    };
+    if (priceList) {
+      priceList.map((d, i) => {
+        priceData.range.push(parseInt(d.range));
+        priceData.price.push(parseInt(d.price));
+      });
+    }
+
+    priceData.price.push(values.price);
 
     discountData.discount.push(values.discount);
     formData.append("playerAddPrice", values.playerAddPrice);
     formData.append("discount", JSON.stringify(discountData));
+    formData.append("priceArray", JSON.stringify(priceData));
+    formData.append("weight", values.weight);
     if (layouts) {
       for (let i = 0; i < layouts.length; i++) {
         formData.append(`layouts`, layouts[i]);
