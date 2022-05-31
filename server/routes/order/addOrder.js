@@ -50,11 +50,11 @@ const addTemplate = async (req) => {
     const count = parseInt(stringCount);
     if(count < 0) count = - count;
 
-    const template = await Template.findOne({_id: templateId}, {price: 1, priceArray: 1, discount: 1});
+    const template = await Template.findOne({_id: templateId}, {price: 1, priceArray: 1, discount: 1, weight: 1});
 
     if(!template) throw Error("Template not found");
 
-    const { price, discount, priceArray } = template;
+    const { price, discount, priceArray, weight } = template;
 
     // Calculate price
     let i;
@@ -78,7 +78,7 @@ const addTemplate = async (req) => {
         {_id: id, userId}, 
         {
             $push: {orders: {type, templateId, count: count, size, color, color2}},
-            $inc: {price: netPrice}
+            $inc: {price: netPrice, weight: count * weight}
         }
     );
 }
@@ -128,11 +128,11 @@ const addCustomTemplate = async (req) => {
     const count = parseInt(stringCount);
     if(count < 0) count = - count;
 
-    const productType = await ProductType.findOne({_id: productTypeId}, {price: 1, discount: 1, priceArray: 1});
+    const productType = await ProductType.findOne({_id: productTypeId}, {price: 1, discount: 1, priceArray: 1, weight: 1});
 
     if(!productType) throw Error('Product Type not found');
     
-    const { price, discount, priceArray } = productType;
+    const { price, discount, priceArray, weight } = productType;
 
     // Calculate price
     let i;
@@ -173,7 +173,7 @@ const addCustomTemplate = async (req) => {
                 orderColor,
                 productFont
             }},
-            $inc: {price: netPrice}
+            $inc: {price: netPrice, weight: count * weight}
         }
     );
 }
@@ -187,11 +187,11 @@ const addLinkTemplate = async (req) => {
     const count = parseInt(stringCount);
     if(count < 0) count = - count;
 
-    const product = await Product.findOne({_id: productId}, {price: 1, priceArray: 1, discount: 1});
+    const product = await Product.findOne({_id: productId}, {price: 1, priceArray: 1, discount: 1, weight: 1});
 
     if(!product) throw Error("Product not found");
 
-    const { price, discount, priceArray } = product;
+    const { price, discount, priceArray, weight } = product;
 
     // Calculate price
     let i;
@@ -215,7 +215,7 @@ const addLinkTemplate = async (req) => {
         {_id: id, userId}, 
         {
             $push: {orders: {type, productId, count: count, size, color, color2}},
-            $inc: {price: netPrice}
+            $inc: {price: netPrice, weight: count * weight}
         }
     );
 }

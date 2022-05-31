@@ -7,7 +7,8 @@ const sendNotification = async (message, users, projectId, productId, type = 'su
             message,
             projectId,
             productId,
-            users
+            users,
+            user: users[users.length - 1]
         }).save();
     }
     catch(error) {

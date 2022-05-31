@@ -15,7 +15,8 @@ router.get('/', async (req, res, next) => {
             .find({users: userId}, {__v: 0, users: 0})
             .sort({_id: -1})
             .skip(skip)
-            .limit(limit);
+            .limit(limit)
+            .populate('user', '_id name image');
 
 
         res.json({

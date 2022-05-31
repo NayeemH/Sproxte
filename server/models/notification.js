@@ -20,6 +20,11 @@ const notificationSchema = Schema({
     users: {
         type: [Schema.Types.ObjectId],
         required: true,
+    },
+    user: {
+        type: Schema.Types.ObjectId,
+        required: true,
+        ref: 'user'
     }
 }, {timestamps: true});
 
