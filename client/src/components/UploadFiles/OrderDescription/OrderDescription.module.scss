@@ -20,6 +20,18 @@
   transition: 0.3s all ease-in-out;
 }
 
+.dd_item {
+  display: flex !important;
+  flex-direction: row !important;
+  justify-content: flex-start !important;
+  align-items: center !important;
+  cursor: pointer;
+}
+
+.dd_item:hover {
+  background: rgba(0, 0, 0, 0.1) !important;
+}
+
 .crd .footer {
   border-color: var(--black) !important;
   transition: 0.3s all ease-in-out;

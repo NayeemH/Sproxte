@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Card, Col, Container, Row, Spinner } from "react-bootstrap";
-import { IMAGE_PATH } from "../../constants/URL";
-import ProductCard from "../Shared/ProductCard/ProductCard";
+import { Container, Spinner } from "react-bootstrap";
 import OrderDescription from "./OrderDescription/OrderDescription";
 import styles from "./UploadFiles.module.scss";
 

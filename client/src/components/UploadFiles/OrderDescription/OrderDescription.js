@@ -10,8 +10,9 @@ import { FONT_KEY, IMAGE_PATH } from "../../../constants/URL";
 import { useNavigate } from "react-router-dom";
 import FontPicker from "font-picker-react";
 import { useModals } from "@mantine/modals";
-import { MultiSelect, Text } from "@mantine/core";
+import { Select, Text } from "@mantine/core";
 import { Swiper, SwiperSlide } from "swiper/react";
+import { BsSquareFill } from "react-icons/bs";
 
 // Import Swiper styles
 import "swiper/css";
@@ -45,9 +46,12 @@ const OrderDescription = ({
   const [orderFontFamily, setOrderFontFamily] = useState("Open Sans");
   const [activeFontFamily, setActiveFontFamily] = useState("Open Sans");
   const [orderColor, setOrderColor] = useState(null);
+  const [orderColor2, setOrderColor2] = useState(null);
   const [my_swiper, set_my_swiper] = useState({});
   const fileRef = useRef();
   const navigate = useNavigate();
+  const selectRef = useRef(null);
+  const selectRef2 = useRef(null);
 
   const modals = useModals();
 
@@ -120,6 +124,10 @@ const OrderDescription = ({
         toast.error("Please select size");
       } else if (!color) {
         toast.error("Please select color");
+      } else if (!orderColor) {
+        toast.error("Please select primary color");
+      } else if (!orderColor2) {
+        toast.error("Please secondary color");
       } else {
         addToCart(
           description,
@@ -137,7 +145,8 @@ const OrderDescription = ({
           "custom",
           activeFontFamily,
           orderFontFamily,
-          orderColor.join(",")
+          orderColor,
+          orderColor2
         );
         resetlHandeler();
         setDescription("");
@@ -332,15 +341,18 @@ const OrderDescription = ({
                 <Col>
                   <span className="d-block fs-4">Upload Front Images</span>
 
-                  <div className="pt-2">
+                  <div className="d-flex align-items-center justify-content-center pt-2">
                     <Button
                       variant="outline-dark"
                       onClick={() => fileRef.current.click()}
+                      className="d-flex align-items-center justify-content-center"
                     >
-                      <span className="d-block mr-4">
-                        <ImUpload />
-                      </span>{" "}
-                      <span className="pl-3 d-block"> Upload Image</span>
+                      <span className="d-block ">
+                        <span className="me-2">
+                          <ImUpload />
+                        </span>
+                        Upload Image
+                      </span>
                     </Button>
                   </div>
                   <div style={{ display: "none" }}>
@@ -358,22 +370,6 @@ const OrderDescription = ({
                     </span>
                   ) : null}
                 </Col>
-                {/* <Col>
-                  <div className={styles.preview}>
-                    {selectedFile && selectedFile.length > 0 ? (
-                      <div className="text-center pb-3">
-                        <img src={preview} alt="admin" className="img-fluid" />{" "}
-                        {selectedFile.length > 1 ? (
-                          <span className="d-block pt-2">
-                            + {selectedFile.length - 1} more files selected
-                          </span>
-                        ) : null}
-                      </div>
-                    ) : (
-                      <></>
-                    )}
-                  </div>
-                </Col> */}
               </Row>
               <Row>
                 <Col>
@@ -398,6 +394,35 @@ const OrderDescription = ({
               </Row>
             </Card.Body>
           </Card>
+          <Card className={`${styles.crd} shadow mt-2`}>
+            <Card.Body className="d-flex justify-content-between flex-column">
+              <div
+                className={`d-flex justify-content-between flex-column pb-2 ${styles.font}`}
+              >
+                <span className="d-block fs-4">Primary Color</span>
+                <Select
+                  data={colors.map((c, i) => {
+                    return {
+                      label: c.name,
+                      value: c.hex,
+                    };
+                  })}
+                  itemComponent={({ value, label, ...others }) => (
+                    <div className={styles.dd_item} ref={selectRef} {...others}>
+                      <span className="d-flex align-items-center">
+                        <BsSquareFill color={`${value}`} className="me-2" />{" "}
+                        <span>{label}</span>
+                      </span>
+                    </div>
+                  )}
+                  placeholder="Pick primary color"
+                  value={orderColor}
+                  onChange={(e) => setOrderColor(e)}
+                  required
+                />
+              </div>
+            </Card.Body>
+          </Card>
           <Button
             className="btn_primary mt-4"
             onClick={() => my_swiper.slideNext()}
@@ -406,6 +431,41 @@ const OrderDescription = ({
           </Button>
         </SwiperSlide>
         <SwiperSlide className={styles.slide_left}>
+          <Card className={`${styles.crd} shadow mt-2`}>
+            <Card.Body className="d-flex justify-content-between flex-column">
+              <div
+                className={`d-flex justify-content-between flex-column pb-2 ${styles.font}`}
+              >
+                <span className="d-block fs-4">Secondary Color</span>
+                <Select
+                  data={colors.map((c, i) => {
+                    return {
+                      label: c.name,
+                      value: c.hex,
+                    };
+                  })}
+                  itemComponent={({ value, label, ...others }) => (
+                    <div
+                      className={styles.dd_item}
+                      ref={selectRef2}
+                      {...others}
+                    >
+                      <span className="d-flex align-items-center">
+                        <BsSquareFill color={`${value}`} className="me-2" />{" "}
+                        <span>{label}</span>
+                      </span>
+                    </div>
+                  )}
+                  placeholder="Pick secondary color"
+                  value={orderColor2}
+                  onChange={(e) => {
+                    setOrderColor2(e);
+                  }}
+                  required
+                />
+              </div>
+            </Card.Body>
+          </Card>
           <Card className={`${styles.crd_size} shadow`}>
             <Card.Body>
               <span className="d-block fs-4">Select Size</span>
@@ -438,32 +498,7 @@ const OrderDescription = ({
               ></textarea>
             </Card.Body>
           </Card>
-          <Card className={`${styles.crd} shadow mt-4`}>
-            <Card.Body className="d-flex justify-content-between flex-column">
-              <div
-                className={`d-flex justify-content-between flex-column pb-3 ${styles.font}`}
-              >
-                <span className="d-block fs-4">Colors</span>
-                <MultiSelect
-                  data={colors.map((c, i) => {
-                    return {
-                      key: i,
-                      label: c.name,
-                      value: c.hex,
-                    };
-                  })}
-                  placeholder="Pick all colors that you like"
-                  defaultValue={orderColor?.map((c) => c)}
-                  onChange={(e) => {
-                    setOrderColor(e);
-                  }}
-                  clearButtonLabel="Clear selection"
-                  clearable
-                  required
-                />
-              </div>
-            </Card.Body>
-          </Card>
+
           {/* FONT */}
           <Button
             className="btn_primary mt-4"

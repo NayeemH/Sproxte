@@ -20,6 +20,10 @@
   transition: 0.3s all ease-in-out;
 }
 
+.img__link:hover {
+  cursor: pointer !important;
+}
+
 .price {
   position: absolute;
   top: -1rem;

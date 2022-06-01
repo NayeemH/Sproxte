@@ -88,6 +88,7 @@ body {
 .swiper {
   width: 500px;
   height: 88vh;
+  min-height: 700px !important;
   border-radius: 15px;
 }
 

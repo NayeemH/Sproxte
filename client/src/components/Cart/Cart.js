@@ -58,7 +58,7 @@ const Cart = ({ cart, removeFromCart, setPaymentKey, user }) => {
                     <Col xs="2">
                       $
                       {(
-                        (item.product.price *
+                        (parseInt(item.product.price) *
                           (100 - item.product.discount) *
                           item.quantity) /
                         100

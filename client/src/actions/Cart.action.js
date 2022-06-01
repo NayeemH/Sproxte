@@ -11,6 +11,7 @@ import types from "../config/ProductTypes";
 import { toast } from "react-toastify";
 import { BASE_URL } from "../constants/URL";
 import axios from "axios";
+import { getPrice } from "../utils/getPrice";
 
 // GET PRODUCT
 export const getProduct = (id) => async (dispatch) => {
@@ -84,17 +85,26 @@ export const addToCart =
     type,
     font,
     productFont,
-    orderColor
+    orderColor,
+    orderColor2
   ) =>
   (dispatch) => {
     toast.success("Added to cart");
     let newDiscount = 0;
+    let newPrice = 0;
     if (
       typeof product.discount === "string" ||
       typeof product.discount === "number"
     ) {
       newDiscount = parseInt(product.discount);
     } else {
+      if (!product.priceArray) {
+        newPrice = parseInt(product.price);
+      } else {
+        console.log(product.priceArray);
+        newPrice = getPrice(product.priceArray, quantity);
+      }
+
       if (product.discount.range && product.discount.range.length > 0) {
         product.discount.range.forEach((item, i) => {
           if (
@@ -131,18 +141,18 @@ export const addToCart =
         secondaryTextColor,
         selectedLayout,
         quantity,
-        product: { ...product, discount: newDiscount },
+        product: { ...product, discount: newDiscount, price: newPrice },
         color,
         type,
         font,
         productFont,
         orderColor,
+        orderColor2,
       },
     });
   };
 
 export const removeFromCart = (id) => (dispatch) => {
-  console.log(id);
   dispatch({
     type: CART_REMOVE_ITEM,
     payload: id,

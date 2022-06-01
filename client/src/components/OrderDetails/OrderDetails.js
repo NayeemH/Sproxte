@@ -282,6 +282,7 @@ const OrderDetails = ({
           projects.products.map((project, i) => (
             <Col key={project._id} md={3} className="p-3">
               <ProductCard
+                imgLink={true}
                 title={project.name}
                 img={`${IMAGE_PATH}small/${project.colorImage}`}
                 description={project.createdAt}
@@ -329,6 +330,11 @@ const OrderDetails = ({
           )}
         </>
       )}
+      <div className="d-flex justify-content-center pt-4">
+        <Button className="btn_primary" onClick={() => navigate(-1)}>
+          Go Back
+        </Button>
+      </div>
     </Container>
   );
 };

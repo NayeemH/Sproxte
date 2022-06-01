@@ -23,6 +23,7 @@ const ProductCard = ({
   bottom,
   hidden,
   notitle,
+  imgLink,
 }) => {
   const navigate = useNavigate();
   return (
@@ -45,7 +46,11 @@ const ProductCard = ({
                   <span>{status}</span>
                 </span>
               )}
-              <img src={img} alt={title} className="w-100" />
+              <img
+                src={img}
+                alt={title}
+                className={`w-100 ${imgLink ? styles.img__link : ""}`}
+              />
               {discount && discount > 0 ? (
                 <span className={styles.discount}>-{discount}%</span>
               ) : null}

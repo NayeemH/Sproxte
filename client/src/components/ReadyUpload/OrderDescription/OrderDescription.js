@@ -184,7 +184,7 @@ const OrderDescription = ({
             price={product.price}
             noshadow
             notitle={true}
-            //discount={product.discount?.discount[0]}
+            discount={product.discount}
           />
           <h3 className="pt-3">{product.name}</h3>
           <span className="d-block text-center text-secondary fs-6 pb-3">

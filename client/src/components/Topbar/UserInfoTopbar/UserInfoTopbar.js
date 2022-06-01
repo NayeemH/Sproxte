@@ -100,7 +100,7 @@ const UserInfoTopbar = ({
         </Dropdown.Item>
 
         <Dropdown.Divider className={styles.divider} />
-        {user && user.userType !== "admin" ? (
+        {user && user.userType !== "admin" && user.userType !== "iep" ? (
           <>
             <Dropdown.Item
               className={styles.dropdown_item}
