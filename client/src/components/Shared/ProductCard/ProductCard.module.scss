@@ -19,9 +19,14 @@
   border-bottom-right-radius: 14px !important;
   transition: 0.3s all ease-in-out;
 }
+.img__link {
+  transform: scale(1);
+}
 
 .img__link:hover {
   cursor: pointer !important;
+  transform: scale(1.03);
+  transition: 0.3s all ease-in-out;
 }
 
 .price {

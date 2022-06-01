@@ -125,6 +125,7 @@ const DashboardTeam = ({ dashboard, projects, fetchTeamProjects }) => {
                 .map((project) => (
                   <Col key={project._id} md={3} className="p-3">
                     <ProductCard
+                      imgLink={true}
                       title={project.name}
                       img={`${IMAGE_PATH}small/${project.image}`}
                       description={project.createdAt}

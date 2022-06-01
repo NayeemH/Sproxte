@@ -31,6 +31,7 @@ const DashboardTeamCompleted = ({
       pages.push(
         <Link
           to={`/team-dashboard/completed?page=${parseInt(i)}`}
+          imgLink={true}
           key={i}
           className={`${styles.link} ${
             (!parsed.page && i == 1) || parsed.page == i

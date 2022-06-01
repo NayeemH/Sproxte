@@ -50,6 +50,21 @@ const ProductCard = ({
                 src={img}
                 alt={title}
                 className={`w-100 ${imgLink ? styles.img__link : ""}`}
+                onClick={() =>
+                  imgLink
+                    ? navigate(
+                        `/${
+                          dashboard
+                            ? dashboard
+                            : template
+                            ? "template"
+                            : order
+                            ? "order"
+                            : "product"
+                        }/${id ? id : ""}`
+                      )
+                    : null
+                }
               />
               {discount && discount > 0 ? (
                 <span className={styles.discount}>-{discount}%</span>
