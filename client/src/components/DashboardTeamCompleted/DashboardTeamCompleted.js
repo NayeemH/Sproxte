@@ -78,10 +78,12 @@ const DashboardTeamCompleted = ({
             <Col key={project._id} md={3} className="p-3">
               <ProductCard
                 title={project.name}
+                team={project.teamName}
                 img={`${IMAGE_PATH}small/${project.image}`}
                 description={project.createdAt}
                 dashboard={`dashboard/order/${project._id}`}
                 template
+                id={project._id}
                 status={project.status}
               />
             </Col>

@@ -3,8 +3,11 @@ import { Badge, Card, Col, Row } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { AiOutlineArrowRight } from "react-icons/ai";
 import { IoIosTimer } from "react-icons/io";
+import { RiTeamLine } from "react-icons/ri";
+import { BiHash } from "react-icons/bi";
 import styles from "./ProductCard.module.scss";
 import Moment from "react-moment";
+import { hexToBase64 } from "../../../utils/hexToBase";
 
 const ProductCard = ({
   title,
@@ -24,6 +27,7 @@ const ProductCard = ({
   hidden,
   notitle,
   imgLink,
+  team,
 }) => {
   const navigate = useNavigate();
   return (
@@ -81,12 +85,28 @@ const ProductCard = ({
               ) : (
                 <></>
               )}
+              {id ? (
+                <span className={`d-block fs-6 text-dark text-start fw-bold`}>
+                  <BiHash className="me-1" />
+                  {hexToBase64(id.slice(0, 8)).slice(0, 6)}
+                </span>
+              ) : null}
+              {team && (
+                <span
+                  className={`d-block fs-6 text-warning text-start fw-bold`}
+                >
+                  <RiTeamLine className="me-1" />
+                  {team}
+                </span>
+              )}
+
               {description && (
                 <span className={`d-block fs-6 text-secondary text-start`}>
                   <IoIosTimer className="me-1" />{" "}
                   <Moment format="DD-MM-YYYY">{description}</Moment>
                 </span>
               )}
+
               {tags &&
                 tags.length > 0 &&
                 tags.map((tag, i) => (

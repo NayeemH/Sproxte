@@ -82,6 +82,7 @@ const DashboardCompleted = ({
                 description={project.createdAt}
                 dashboard={`dashboard/order/${project._id}`}
                 template
+                id={project._id}
                 status={project.status}
               />
             </Col>

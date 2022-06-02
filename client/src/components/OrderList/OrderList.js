@@ -9,6 +9,7 @@ import { getRunningOrders } from "../../actions/Payment.acton";
 import { BsArrowRight } from "react-icons/bs";
 import demoImg from "../../assets/logoSq.png";
 import { IMAGE_PATH } from "../../constants/URL";
+import { hexToBase64 } from "../../utils/hexToBase";
 const queryString = require("query-string");
 
 const OrderList = ({ item, getRunningOrders }) => {
@@ -94,16 +95,15 @@ const OrderList = ({ item, getRunningOrders }) => {
                       className="d-flex justify-content-center-center flex-column"
                     >
                       <div className={`d-block fw-bold ${styles.lnk}`}>
+                        Order No. :
+                        {hexToBase64(notification._id.slice(0, 8)).slice(0, 6)}
+                      </div>
+                      <div className={`d-block  ${styles.lnk}`}>
                         Address : {notification.address}
                       </div>
                       <div className={`d-block ${styles.lnk}`}>
                         Phone : {notification.phone}
                       </div>
-                      <span className="d-block fw-light text-secondary">
-                        <Moment format="dddd, MMMM DD YYYY">
-                          {notification.createdAt}
-                        </Moment>
-                      </span>
                     </Col>
                     <Col xs={4}>
                       <Row>
@@ -120,18 +120,17 @@ const OrderList = ({ item, getRunningOrders }) => {
                           <div className={`d-block fw-bold ${styles.lnk}`}>
                             Price : ${notification.price}
                           </div>
+                          <span className="d-block fw-light text-secondary">
+                            <Moment format="dddd, MMMM DD YYYY">
+                              {notification.createdAt}
+                            </Moment>
+                          </span>
                           <div
                             className={`d-block ${styles.lnk}`}
                             style={{ textTransform: "capitalize" }}
                           >
                             Status : {notification.deleveryStatus}
                           </div>
-                          {/* <Link
-                            to={`/dashboard/order/${notification.projectId}`}
-                            className={`${styles.lnk}`}
-                          >
-                            <BsArrowRight />
-                          </Link> */}
                         </Col>
                       </Row>
                     </Col>

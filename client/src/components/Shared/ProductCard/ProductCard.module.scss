@@ -21,6 +21,7 @@
 }
 .img__link {
   transform: scale(1);
+  z-index: 2;
 }
 
 .img__link:hover {
@@ -34,6 +35,7 @@
   top: -1rem;
   left: -1rem;
   font-size: 20px;
+  z-index: 999999 !important;
   color: var(--dark);
   font-weight: bold;
   background: linear-gradient(90deg, #ffe502 0%, #ffa602 100%);
@@ -49,6 +51,7 @@
   font-size: 20px;
   color: var(--dark);
   font-weight: bold;
+  z-index: 999999 !important;
   background: linear-gradient(90deg, #ffe502 0%, #ffa602 100%);
   padding: 5px 25px;
   text-transform: capitalize;
@@ -66,6 +69,7 @@
   background: var(--dark);
   padding: 5px 25px;
   border-top-left-radius: 14px;
+  z-index: 999999 !important;
 }
 
 .bottom {

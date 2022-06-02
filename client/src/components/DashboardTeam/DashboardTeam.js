@@ -127,10 +127,12 @@ const DashboardTeam = ({ dashboard, projects, fetchTeamProjects }) => {
                     <ProductCard
                       imgLink={true}
                       title={project.name}
+                      team={project.teamName}
                       img={`${IMAGE_PATH}small/${project.image}`}
                       description={project.createdAt}
                       dashboard={`team-dashboard/order/${project._id}`}
                       template
+                      id={project._id}
                       status={project.status}
                     />
                   </Col>
