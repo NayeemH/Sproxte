@@ -20,6 +20,7 @@ const notification = require('./notification');
 const contactUs = require('./ContactUs');
 const share = require('./share');
 const iep = require('./iep');
+const shipment = require('./shipment');
 
 
 
@@ -73,6 +74,9 @@ router.use('/share', share);
 
 // IEP
 router.use('/iep', isAuth, iep);
+
+// Shipment
+router.use('/shipment', isAuth, shipment);
 
 
 module.exports = router;

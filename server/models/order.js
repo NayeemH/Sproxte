@@ -51,6 +51,14 @@ const orderSchema = Schema({
         type: String,
         required: true
     },
+    serviceType: {
+        type: String,
+        required: true
+    },
+    shippingCost: {
+        type: Number,
+        default: null
+    },
     // For team info
     logo: {
         type: String
@@ -73,6 +81,10 @@ const orderSchema = Schema({
         default: 'due'
     },
     price: {
+        type: Number,
+        default: 0
+    },
+    weight: {
         type: Number,
         default: 0
     },
