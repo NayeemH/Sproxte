@@ -11,6 +11,7 @@ const {
     FEDEX_PICKUP_TYPE,
     ADMIN_NAME,
     ADMIN_PHONE,
+    ADMIN_EMAIL,
     ADMIN_COMPANY_NAME,
     ADMIN_STREET_LINE,
     ADMIN_CITY,
@@ -24,7 +25,7 @@ const AuthURL = 'https://apis-sandbox.fedex.com/oauth/token';
 const AddressResolverURL = 'https://apis-sandbox.fedex.com/address/v1/addresses/resolve';
 const shippingRateURL = 'https://apis-sandbox.fedex.com/rate/v1/rates/quotes';
 const shippingLabelURL = 'https://apis-sandbox.fedex.com/ship/v1/shipments';
-
+const trackingInfoURL = 'https://apis-sandbox.fedex.com/track/v1/trackingnumbers';
 
 // Get access token from stripe
 const authToken = async () => {
@@ -161,7 +162,7 @@ const shippingRate = async (shipperAddress, recipientAddress, serviceType, weigh
 // ).then(data => console.log(data));
 
 
-const shippingLabel = async (contact, address, serviceType, packagingType, pickupType, weight) => {
+const shippingLabel = async (contact, address, serviceType, packagingType, weight) => {
     // Get auth token
     const {access_token, token_type} = await authToken();
     
@@ -177,6 +178,7 @@ const shippingLabel = async (contact, address, serviceType, packagingType, picku
                 contact: {
                     personName: ADMIN_NAME,
                     phoneNumber: ADMIN_PHONE,
+                    emailAddress: ADMIN_EMAIL,
                     companyName: ADMIN_COMPANY_NAME
                 },
                 address: {
@@ -195,7 +197,7 @@ const shippingLabel = async (contact, address, serviceType, packagingType, picku
             // shipDatestamp: "2022-05-26",
             serviceType,
             packagingType,
-            pickupType,
+            pickupType: FEDEX_PICKUP_TYPE,
             blockInsightVisibility: false,
             shippingChargesPayment: {
                 paymentType: "SENDER"
@@ -236,6 +238,7 @@ const shippingLabel = async (contact, address, serviceType, packagingType, picku
 // shippingLabel(
 //     {
 //         personName: "Mr. Karim",
+//         emailAddress: 'istiyak.riyad@gmail.com',
 //         phoneNumber: 1234567890
 //     },
 //     {
@@ -249,9 +252,43 @@ const shippingLabel = async (contact, address, serviceType, packagingType, picku
 //     },
 //     "FEDEX_GROUND",
 //     "YOUR_PACKAGING",
-//     "USE_SCHEDULED_PICKUP",
 //     30
 // ).then(data => console.log(data));
+
+
+const trackingInfo = async (trackingNumber) => {
+    // Get auth token
+    const {access_token, token_type} = await authToken();
+    
+    // Data
+    const body = {
+        trackingInfo: [
+            {
+                trackingNumberInfo: {
+                    trackingNumber
+                }
+            }
+        ],
+        includeDetailedScans: true
+    }
+
+    const response = await fetch(trackingInfoURL, {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json', authorization: token_type + ' ' + access_token},
+        credentials: 'include', 
+        body: JSON.stringify(body)
+    });
+
+
+    const data = await response.json();
+
+    if(!data.output) throw Error(data.errors[0].message);
+
+    return data.output.completeTrackResults[0].trackResults[0];
+}
+
+trackingInfo('7946 3729 2323')
+.then(data => console.log(data));
 
 
 module.exports = {addressResolver, shippingRate, shippingLabel};

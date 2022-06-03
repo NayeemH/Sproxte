@@ -59,6 +59,14 @@ const orderSchema = Schema({
         type: Number,
         default: null
     },
+    isShippingLabel: {
+        type: Boolean,
+        default: false
+    },
+    masterTrackingNumber: {
+        type: Number,
+        default: null
+    },
     // For team info
     logo: {
         type: String
