@@ -4,6 +4,7 @@ const fetch = require('node-fetch');
 require('dotenv').config();
 
 const {
+    FEDEX_BASE_URL,
     FEDEX_CLIENT_ID,
     FEDEX_CLIENT_SECRET,
     FEDEX_ACCOUNT_NUMBER,
@@ -17,15 +18,16 @@ const {
     ADMIN_CITY,
     ADMIN_STATE_OR_PROVINCE_CODE,
     ADMIN_POSTAL_CODE,
-    ADMIN_COUNTRY_CODE
+    ADMIN_COUNTRY_CODE,
 } = process.env;
 
 // URL 
-const AuthURL = 'https://apis-sandbox.fedex.com/oauth/token';
-const AddressResolverURL = 'https://apis-sandbox.fedex.com/address/v1/addresses/resolve';
-const shippingRateURL = 'https://apis-sandbox.fedex.com/rate/v1/rates/quotes';
-const shippingLabelURL = 'https://apis-sandbox.fedex.com/ship/v1/shipments';
-const trackingInfoURL = 'https://apis-sandbox.fedex.com/track/v1/trackingnumbers';
+
+const AuthURL = `${FEDEX_BASE_URL}/oauth/token`;
+const AddressResolverURL = `${FEDEX_BASE_URL}/address/v1/addresses/resolve`;
+const shippingRateURL = `${FEDEX_BASE_URL}/rate/v1/rates/quotes`;
+const shippingLabelURL = `${FEDEX_BASE_URL}/ship/v1/shipments`;
+const trackingInfoURL = `${FEDEX_BASE_URL}/track/v1/trackingnumbers`;
 
 // Get access token from stripe
 const authToken = async () => {
@@ -283,12 +285,15 @@ const trackingInfo = async (trackingNumber) => {
     const data = await response.json();
 
     if(!data.output) throw Error(data.errors[0].message);
+    const trackResults = data.output.completeTrackResults[0].trackResults[0];
 
-    return data.output.completeTrackResults[0].trackResults[0];
+    if(trackResults.error) throw Error(trackResults.error.message);
+    
+    return trackResults.scanEvents;
 }
 
-trackingInfo('7946 3729 2323')
-.then(data => console.log(data));
+// trackingInfo('122816215025810')
+// .then(data => console.log(data));
 
 
-module.exports = {addressResolver, shippingRate, shippingLabel};
+module.exports = {addressResolver, shippingRate, shippingLabel, trackingInfo};

@@ -64,7 +64,7 @@ const orderSchema = Schema({
         default: false
     },
     masterTrackingNumber: {
-        type: Number,
+        type: String,
         default: null
     },
     // For team info
