@@ -6,6 +6,7 @@ import { getNotifications } from "../../actions/Notification.action";
 import styles from "./NotificationList.module.scss";
 import { Link, useLocation } from "react-router-dom";
 import { AiOutlineLeft, AiOutlineRight } from "react-icons/ai";
+import { IMAGE_PATH } from "../../constants/URL";
 const queryString = require("query-string");
 
 const NotificationList = ({ item, getNotifications }) => {
@@ -67,7 +68,17 @@ const NotificationList = ({ item, getNotifications }) => {
                           xs={8}
                           className={`${styles.small} d-flex align-items-center`}
                         >
-                          <Moment fromNow>{notification.createdAt}</Moment>
+                          <div className={styles.img_wrapper}>
+                            {notification.user ? (
+                              <img
+                                src={`${IMAGE_PATH}small/${notification.user.image}`}
+                                alt=""
+                                className={styles.img}
+                              />
+                            ) : (
+                              <></>
+                            )}
+                          </div>
                         </Col>
                         <Col
                           xs={3}
@@ -93,12 +104,20 @@ const NotificationList = ({ item, getNotifications }) => {
                         }`}
                         className={`d-block fw-bold ${styles.lnk}`}
                       >
-                        {notification.message}
+                        {notification.message}{" "}
+                        {notification.user ? (
+                          <>
+                            by
+                            <span className={styles.username}>
+                              {notification.user.name}
+                            </span>
+                          </>
+                        ) : (
+                          ``
+                        )}
                       </Link>
                       <span className="d-block fw-light text-secondary">
-                        <Moment format="dddd, MMMM DD YYYY">
-                          {notification.createdAt}
-                        </Moment>
+                        <Moment fromNow>{notification.createdAt}</Moment>
                       </span>
                     </Col>
                   </Row>

@@ -28,6 +28,8 @@ const ProductCard = ({
   notitle,
   imgLink,
   team,
+  idBASE,
+  Imgid,
 }) => {
   const navigate = useNavigate();
   return (
@@ -65,7 +67,7 @@ const ProductCard = ({
                             : order
                             ? "order"
                             : "product"
-                        }/${id ? id : ""}`
+                        }/${Imgid ? Imgid : ""}`
                       )
                     : null
                 }
@@ -85,10 +87,10 @@ const ProductCard = ({
               ) : (
                 <></>
               )}
-              {id ? (
+              {idBASE && Imgid ? (
                 <span className={`d-block fs-6 text-dark text-start fw-bold`}>
                   <BiHash className="me-1" />
-                  {hexToBase64(id.slice(0, 8)).slice(0, 6)}
+                  {Imgid ? hexToBase64(Imgid.slice(0, 8)).slice(0, 6) : null}
                 </span>
               ) : null}
               {team && (

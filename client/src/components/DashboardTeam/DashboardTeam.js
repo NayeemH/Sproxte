@@ -132,8 +132,9 @@ const DashboardTeam = ({ dashboard, projects, fetchTeamProjects }) => {
                       description={project.createdAt}
                       dashboard={`team-dashboard/order/${project._id}`}
                       template
-                      id={project._id}
+                      Imgid={project._id}
                       status={project.status}
+                      idBASE
                     />
                   </Col>
                 ))}
