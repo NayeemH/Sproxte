@@ -51,6 +51,14 @@ const projectSchema = Schema({
         type: String,   // pending, accepted, shipping, delevered
         default: 'pending'
     },
+    isShippingLabel: {
+        type: Boolean,
+        default: false
+    },
+    masterTrackingNumber: {
+        type: String,
+        default: null
+    },
     price: {
         type: Number,
         default: 0
