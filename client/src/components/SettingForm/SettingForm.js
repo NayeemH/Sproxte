@@ -164,7 +164,8 @@ const SettingForm = ({ updateProfile, user }) => {
                     </InputGroup>
                   </Col>
                   <Col md={6}>
-                    <div className="d-flex align-items-center pt-3">
+                    <div className="pt-3">Profile Picture</div>
+                    <div className="d-flex align-items-center ">
                       <div className={styles.preview}>
                         {selectedFile ? (
                           <div
