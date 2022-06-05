@@ -26,6 +26,9 @@ import { FaIcons } from "react-icons/fa";
 import { saveAs } from "file-saver";
 import AddPlayerInfo from "../AddPlayerInfo/AddPlayerInfo";
 import { useNavigate } from "react-router-dom";
+import packageTypes from "../../constants/fedexPackageType";
+import { Text } from "@mantine/core";
+import { downloadLabel } from "../../actions/Dashboard.action";
 
 const OrderDetails = ({
   projects,
@@ -34,12 +37,29 @@ const OrderDetails = ({
   changeProjectStatus,
   role,
   team,
+  downloadLabel,
 }) => {
   const [status, setStatus] = useState("");
   const navigate = useNavigate();
 
   const modals = useModals();
   const modal = useModals();
+
+  const handelPackage = (type, name) => {
+    modals.openConfirmModal({
+      title: "Packaging Type",
+      centered: true,
+      children: (
+        <Text size="md">
+          Selected Type: <b>{name}</b>
+        </Text>
+      ),
+      labels: { confirm: "Download", cancel: "Cancel" },
+      confirmProps: { color: "red" },
+      onCancel: () => {},
+      onConfirm: () => downloadLabel(type, projects.orderId),
+    });
+  };
 
   const viewHandeler = () =>
     modals.openModal({
@@ -265,6 +285,29 @@ const OrderDetails = ({
               </Button>
             )}
           </div>
+          <div className="d-flex">
+            <Dropdown>
+              <Dropdown.Toggle
+                variant="success"
+                id="dropdown-basic"
+                className={`${styles.active_btn} mt-3 mt-md-0`}
+              >
+                Select Package Type
+              </Dropdown.Toggle>
+
+              <Dropdown.Menu>
+                {packageTypes.map((item) => (
+                  <Dropdown.Item
+                    key={item.id}
+                    onClick={() => handelPackage(item.value, item.label)}
+                    style={{ textTransform: "capitalize" }}
+                  >
+                    {item.label}
+                  </Dropdown.Item>
+                ))}
+              </Dropdown.Menu>
+            </Dropdown>
+          </div>
         </div>
       )}
 
@@ -347,4 +390,5 @@ const mapStateToProps = (state) => ({
 export default connect(mapStateToProps, {
   getProjectDetails,
   changeProjectStatus,
+  downloadLabel,
 })(OrderDetails);
