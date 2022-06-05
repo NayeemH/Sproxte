@@ -20,6 +20,8 @@ const CardForm = ({
   states,
   getCountryList,
   getStateList,
+  address,
+  total,
 }) => {
   const [loading, setLoading] = useState(false);
   const [logo, setLogo] = useState(undefined);
@@ -94,6 +96,84 @@ const CardForm = ({
         : await createOrder(values, cart);
     if (check !== false) {
       setLoading(false);
+      // FILLED ADDRESS
+
+      modals.openConfirmModal({
+        title: "Your Address",
+        centered: true,
+        children: (
+          <Text size="md">
+            <div className="d-flex justify-content-between align-items-center border-bottom py-2">
+              <div className="d-flex align-items-center justify-content-center">
+                <span className="d-block fw-bold ms-1">Address</span>
+              </div>
+              <span className="d-block">
+                {address.address && address.address}
+              </span>
+            </div>
+            <div className="d-flex justify-content-between align-items-center border-bottom py-2">
+              <div className="d-flex align-items-center justify-content-center">
+                <span className="d-block fw-bold ms-1">Postal Code</span>
+              </div>
+              <span className="d-block">{address.zip && address.zip}</span>
+            </div>
+            <div className="d-flex justify-content-between align-items-center border-bottom py-2">
+              <div className="d-flex align-items-center justify-content-center">
+                <span className="d-block fw-bold ms-1">City</span>
+              </div>
+              <span className="d-block">{address.city && address.city}</span>
+            </div>
+            <div className="d-flex justify-content-between align-items-center border-bottom py-2">
+              <div className="d-flex align-items-center justify-content-center">
+                <span className="d-block fw-bold ms-1">State</span>
+              </div>
+              <span className="d-block">{address.state && address.state}</span>
+            </div>
+            <div className="d-flex justify-content-between align-items-center border-bottom py-2">
+              <div className="d-flex align-items-center justify-content-center">
+                <span className="d-block fw-bold ms-1">Country</span>
+              </div>
+              <span className="d-block">
+                {address.country && address.country}
+              </span>
+            </div>
+            <b>Note:</b> This address is auto corrected.
+            <hr />
+            <h4>Price</h4>
+            <div className="d-flex justify-content-between align-items-center border-bottom py-2">
+              <div className="d-flex align-items-center justify-content-center">
+                <span className="d-block fw-bold ms-1">Subtotal</span>
+              </div>
+              <span className="d-block">${total && total}</span>
+            </div>
+            <div className="d-flex justify-content-between align-items-center border-bottom py-2">
+              <div className="d-flex align-items-center justify-content-center">
+                <span className="d-block fw-bold ms-1">Shipping Cost</span>
+              </div>
+              <span className="d-block">
+                ${address.shippingRate.price && address.shippingRate.price}
+              </span>
+            </div>
+            <hr />
+            <div className="d-flex justify-content-between align-items-center border-bottom fs-4 py-2">
+              <div className="d-flex align-items-center justify-content-center">
+                <span className="d-block fw-bold ms-1">Total Price</span>
+              </div>
+              <span className="d-block">
+                $
+                {address.shippingRate.price && total
+                  ? address.shippingRate.price + total
+                  : "Invalid Price"}
+              </span>
+            </div>
+          </Text>
+        ),
+        labels: { confirm: "Checkout", cancel: "Cancel" },
+        confirmProps: { color: "red" },
+        onCancel: () => {},
+        onConfirm: () => onSubmitHandeler(values),
+      });
+
       navigate(`/payment/${check}`);
     } else {
       setLoading(false);
@@ -230,7 +310,7 @@ const CardForm = ({
             <InputGroup className="mb-3 d-flex flex-column">
               <div className="d-flex justify-content-between align-items-center pb-2">
                 <label htmlFor="address" className="d-block">
-                  Address
+                  Street Lines
                 </label>
                 {errors.address && touched.address ? (
                   <small className="text-danger pt-2">{errors.address}</small>
@@ -238,7 +318,7 @@ const CardForm = ({
               </div>
               <Field
                 as={BootstrapForm.Control}
-                placeholder="Type full address "
+                placeholder="Type street lines... "
                 name="address"
                 isValid={!errors.address && touched.address}
                 type="text"
@@ -302,7 +382,7 @@ const CardForm = ({
             <InputGroup className="mb-3 d-flex flex-column">
               <div className="d-flex justify-content-between align-items-center pb-2">
                 <label htmlFor="zip" className="d-block">
-                  Zip
+                  Postal Code
                 </label>
                 {errors.zip && touched.zip ? (
                   <small className="text-danger pt-2">{errors.zip}</small>
@@ -437,6 +517,7 @@ const mapStateToProps = (state) => ({
   user: state.auth.user,
   country: state.order.country,
   states: state.order.states,
+  address: state.order.address,
 });
 
 export default connect(mapStateToProps, {

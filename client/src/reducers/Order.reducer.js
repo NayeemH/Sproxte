@@ -4,6 +4,7 @@ import {
   SET_ORDER,
   SET_PRICE,
   SET_STATES,
+  GET_VALID_ADDRESS,
 } from "../constants/Type";
 import { GET_PLAYER_REQUEST } from "../constants/TypeLanding";
 
@@ -12,6 +13,7 @@ const initialValues = {
   states: null,
   order: null,
   price: null,
+  address: null,
   selected_order: null,
   player_request: null,
   loading: true,
@@ -33,6 +35,22 @@ const OrderReducer = (state = initialValues, action) => {
       return { ...state, order: payload, loading: false };
     case GET_SELECTED_ORDER:
       return { ...state, selected_order: payload, loading: false };
+    case GET_VALID_ADDRESS:
+      return {
+        ...state,
+        address: {
+          ...payload,
+          country: state.country.filter(
+            (item) => item.value === payload.shippingAddress.country
+          )[0].label,
+          state: state.filter(
+            (st) => st.value === payload.shippingAddress.state
+          )[0].label,
+          address: payload.shippingAddress.address[0],
+          ...payload.shippingAddress,
+        },
+        loading: false,
+      };
     default:
       return state;
   }

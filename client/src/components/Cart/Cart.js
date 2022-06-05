@@ -90,7 +90,7 @@ const Cart = ({ cart, removeFromCart, setPaymentKey, user }) => {
                 <Card className={`${styles.crd} shadow`}>
                   <Card.Body>
                     <h3>Shipping Information</h3>
-                    <CardForm cart={cart} />
+                    <CardForm cart={cart} total={totalPrice} />
                   </Card.Body>
                 </Card>
               </Col>

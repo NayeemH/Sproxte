@@ -1,6 +1,10 @@
 import axios from "axios";
 import { toast } from "react-toastify";
-import { CLIENT_LIST_LOAD, DEVELOPER_LIST_LOAD } from "../constants/Type";
+import {
+  CLIENT_LIST_LOAD,
+  DEVELOPER_LIST_LOAD,
+  GET_VALID_ADDRESS,
+} from "../constants/Type";
 import {
   CHANGE_STATUS,
   CHANGE_STATUS_ERROR,
@@ -166,6 +170,20 @@ export const createOrder = (values, cart, logo) => async (dispatch) => {
     if (check === cart.length) {
       // toast.success("Order created successfully");
       dispatch({ type: ORDER_SUCCESS, payload: res.data.orderId });
+      const config2 = {
+        withCredentials: true,
+      };
+
+      const res2 = await axios.get(
+        `${BASE_URL}/api/v1/shipment/${res.data.orderId}`,
+        config2
+      );
+
+      dispatch({
+        type: GET_VALID_ADDRESS,
+        payload: { ...res2.data, orderId: res.data.orderId },
+      });
+
       return res.data.orderId;
     }
   } catch (err) {
