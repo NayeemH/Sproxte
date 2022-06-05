@@ -1,5 +1,6 @@
 const router = require('express').Router();
 const Order = require('../../models/order');
+const Project = require('../../models/project');
 const {shippingLabel} = require('../../lib/shipping');
 
 const {
@@ -35,6 +36,11 @@ router.post('/:orderId', async (req, res, next) => {
             order.weight ? order.weight : 1
         );
         await Order.findOneAndUpdate({_id: orderId}, {$set: {
+            isShippingLabel: true,
+            masterTrackingNumber
+        }});
+
+        await Project.findOneAndUpdate({orderId}, { $set: {
             isShippingLabel: true,
             masterTrackingNumber
         }});
