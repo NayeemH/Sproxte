@@ -4,6 +4,7 @@ const fetch = require('node-fetch');
 require('dotenv').config();
 
 const {
+    FEDEX_BASE_URL,
     FEDEX_CLIENT_ID,
     FEDEX_CLIENT_SECRET,
     FEDEX_ACCOUNT_NUMBER,
@@ -11,20 +12,22 @@ const {
     FEDEX_PICKUP_TYPE,
     ADMIN_NAME,
     ADMIN_PHONE,
+    ADMIN_EMAIL,
     ADMIN_COMPANY_NAME,
     ADMIN_STREET_LINE,
     ADMIN_CITY,
     ADMIN_STATE_OR_PROVINCE_CODE,
     ADMIN_POSTAL_CODE,
-    ADMIN_COUNTRY_CODE
+    ADMIN_COUNTRY_CODE,
 } = process.env;
 
 // URL 
-const AuthURL = 'https://apis-sandbox.fedex.com/oauth/token';
-const AddressResolverURL = 'https://apis-sandbox.fedex.com/address/v1/addresses/resolve';
-const shippingRateURL = 'https://apis-sandbox.fedex.com/rate/v1/rates/quotes';
-const shippingLabelURL = 'https://apis-sandbox.fedex.com/ship/v1/shipments';
 
+const AuthURL = `${FEDEX_BASE_URL}/oauth/token`;
+const AddressResolverURL = `${FEDEX_BASE_URL}/address/v1/addresses/resolve`;
+const shippingRateURL = `${FEDEX_BASE_URL}/rate/v1/rates/quotes`;
+const shippingLabelURL = `${FEDEX_BASE_URL}/ship/v1/shipments`;
+const trackingInfoURL = `${FEDEX_BASE_URL}/track/v1/trackingnumbers`;
 
 // Get access token from stripe
 const authToken = async () => {
@@ -161,7 +164,7 @@ const shippingRate = async (shipperAddress, recipientAddress, serviceType, weigh
 // ).then(data => console.log(data));
 
 
-const shippingLabel = async (contact, address, serviceType, packagingType, pickupType, weight) => {
+const shippingLabel = async (contact, address, serviceType, packagingType, weight) => {
     // Get auth token
     const {access_token, token_type} = await authToken();
     
@@ -177,6 +180,7 @@ const shippingLabel = async (contact, address, serviceType, packagingType, picku
                 contact: {
                     personName: ADMIN_NAME,
                     phoneNumber: ADMIN_PHONE,
+                    emailAddress: ADMIN_EMAIL,
                     companyName: ADMIN_COMPANY_NAME
                 },
                 address: {
@@ -195,7 +199,7 @@ const shippingLabel = async (contact, address, serviceType, packagingType, picku
             // shipDatestamp: "2022-05-26",
             serviceType,
             packagingType,
-            pickupType,
+            pickupType: FEDEX_PICKUP_TYPE,
             blockInsightVisibility: false,
             shippingChargesPayment: {
                 paymentType: "SENDER"
@@ -236,6 +240,7 @@ const shippingLabel = async (contact, address, serviceType, packagingType, picku
 // shippingLabel(
 //     {
 //         personName: "Mr. Karim",
+//         emailAddress: 'istiyak.riyad@gmail.com',
 //         phoneNumber: 1234567890
 //     },
 //     {
@@ -249,9 +254,46 @@ const shippingLabel = async (contact, address, serviceType, packagingType, picku
 //     },
 //     "FEDEX_GROUND",
 //     "YOUR_PACKAGING",
-//     "USE_SCHEDULED_PICKUP",
 //     30
 // ).then(data => console.log(data));
 
 
-module.exports = {addressResolver, shippingRate, shippingLabel};
+const trackingInfo = async (trackingNumber) => {
+    // Get auth token
+    const {access_token, token_type} = await authToken();
+    
+    // Data
+    const body = {
+        trackingInfo: [
+            {
+                trackingNumberInfo: {
+                    trackingNumber
+                }
+            }
+        ],
+        includeDetailedScans: true
+    }
+
+    const response = await fetch(trackingInfoURL, {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json', authorization: token_type + ' ' + access_token},
+        credentials: 'include', 
+        body: JSON.stringify(body)
+    });
+
+
+    const data = await response.json();
+
+    if(!data.output) throw Error(data.errors[0].message);
+    const trackResults = data.output.completeTrackResults[0].trackResults[0];
+
+    if(trackResults.error) throw Error(trackResults.error.message);
+    
+    return trackResults.scanEvents;
+}
+
+// trackingInfo('122816215025810')
+// .then(data => console.log(data));
+
+
+module.exports = {addressResolver, shippingRate, shippingLabel, trackingInfo};

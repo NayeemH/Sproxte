@@ -39,11 +39,12 @@ router.get('/:orderId', async (req, res, next) => {
         );
 
         await Order.findOneAndUpdate({_id: orderId, userId}, {$set: {
-            address: validAddress.streetLines,
+            address: validAddress.streetLines[0],
             zip: validAddress.postalCode,
             city: validAddress.city,
             state: validAddress.stateOrProvinceCode,
-            country: validAddress.countryCode
+            country: validAddress.countryCode,
+            shippingCost: shippingPrice.price
         }});
         
 
