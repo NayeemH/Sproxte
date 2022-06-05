@@ -29,6 +29,7 @@ import { useNavigate } from "react-router-dom";
 import packageTypes from "../../constants/fedexPackageType";
 import { Text } from "@mantine/core";
 import { downloadLabel } from "../../actions/Dashboard.action";
+import TrackingInfo from "../TrackingInfo/TrackingInfo";
 
 const OrderDetails = ({
   projects,
@@ -234,6 +235,22 @@ const OrderDetails = ({
     });
   };
 
+  const trackingModal = () => {
+    modals.openModal({
+      title: "Tracking",
+      closeOnClickOutside: false,
+      closeOnEscape: false,
+      centered: true,
+      children: (
+        <TrackingInfo
+          id={projects.orderId}
+          tracking={projects.masterTrackingNumber}
+        />
+      ),
+      zIndex: 9999991,
+    });
+  };
+
   return (
     <Container className={styles.wrapper}>
       {role && (role === "admin" || role === "iep") && (
@@ -374,8 +391,11 @@ const OrderDetails = ({
         </>
       )}
       <div className="d-flex justify-content-center pt-4">
-        <Button className="btn_primary" onClick={() => navigate(-1)}>
+        <Button className="btn_primary me-3" onClick={() => navigate(-1)}>
           Go Back
+        </Button>
+        <Button className="btn_primary" onClick={() => trackingModal()}>
+          Track Now
         </Button>
       </div>
     </Container>

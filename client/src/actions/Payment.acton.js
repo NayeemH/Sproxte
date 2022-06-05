@@ -3,6 +3,7 @@ import { toast } from "react-toastify";
 import {
   CLIENT_LIST_LOAD,
   DEVELOPER_LIST_LOAD,
+  FEDEX_TRACKING_SUCCESS,
   GET_VALID_ADDRESS,
 } from "../constants/Type";
 import {
@@ -180,7 +181,6 @@ export const createOrder = (values, cart, logo) => async (dispatch) => {
           `${BASE_URL}/api/v1/shipment/${res.data.orderId}`,
           config2
         );
-        console.log(res2);
 
         // dispatch({
         //   type: GET_VALID_ADDRESS,
@@ -196,6 +196,21 @@ export const createOrder = (values, cart, logo) => async (dispatch) => {
     dispatch({ type: ORDER_ERROR });
     console.log(err);
     return false;
+  }
+};
+
+//GET Tracking
+export const getTrackingInfo = (id) => async (dispatch) => {
+  try {
+    const res = await axios.get(`${BASE_URL}/api/v1/shipment/track/${id}`);
+
+    dispatch({
+      type: FEDEX_TRACKING_SUCCESS,
+      payload: { ...res.data, orderId: id },
+    });
+    //console.log(res);
+  } catch (err) {
+    console.log(err);
   }
 };
 
