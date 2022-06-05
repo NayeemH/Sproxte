@@ -11,6 +11,7 @@ import { toast } from "react-toastify";
 import { getCountryList, getStateList } from "../../actions/Order.action";
 import { Select, Text } from "@mantine/core";
 import { useModals } from "@mantine/modals";
+import methods from "../../constants/fedexMethods";
 
 const CardForm = ({
   cart,
@@ -97,7 +98,7 @@ const CardForm = ({
     if (check !== false) {
       setLoading(false);
       // FILLED ADDRESS
-
+      console.log("INNNN");
       modals.openConfirmModal({
         title: "Your Address",
         centered: true,
@@ -108,33 +109,40 @@ const CardForm = ({
                 <span className="d-block fw-bold ms-1">Address</span>
               </div>
               <span className="d-block">
-                {address.address && address.address}
+                {check.shippingAddress.address &&
+                  check.shippingAddress.address[0]}
               </span>
             </div>
             <div className="d-flex justify-content-between align-items-center border-bottom py-2">
               <div className="d-flex align-items-center justify-content-center">
                 <span className="d-block fw-bold ms-1">Postal Code</span>
               </div>
-              <span className="d-block">{address.zip && address.zip}</span>
+              <span className="d-block">
+                {check.shippingAddress && check.shippingAddress.zip}
+              </span>
             </div>
             <div className="d-flex justify-content-between align-items-center border-bottom py-2">
               <div className="d-flex align-items-center justify-content-center">
                 <span className="d-block fw-bold ms-1">City</span>
               </div>
-              <span className="d-block">{address.city && address.city}</span>
+              <span className="d-block">
+                {check.shippingAddress.city && check.shippingAddress.city}
+              </span>
             </div>
             <div className="d-flex justify-content-between align-items-center border-bottom py-2">
               <div className="d-flex align-items-center justify-content-center">
                 <span className="d-block fw-bold ms-1">State</span>
               </div>
-              <span className="d-block">{address.state && address.state}</span>
+              <span className="d-block">
+                {check.shippingAddress.state && check.shippingAddress.state}
+              </span>
             </div>
-            <div className="d-flex justify-content-between align-items-center border-bottom py-2">
+            <div className="d-flex justify-content-between align-items-center border-bottom py-2 mb-3">
               <div className="d-flex align-items-center justify-content-center">
                 <span className="d-block fw-bold ms-1">Country</span>
               </div>
               <span className="d-block">
-                {address.country && address.country}
+                {check.shippingAddress.country && check.shippingAddress.country}
               </span>
             </div>
             <b>Note:</b> This address is auto corrected.
@@ -151,18 +159,17 @@ const CardForm = ({
                 <span className="d-block fw-bold ms-1">Shipping Cost</span>
               </div>
               <span className="d-block">
-                ${address.shippingRate.price && address.shippingRate.price}
+                ${check.shippingRate.price && check.shippingRate.price}
               </span>
             </div>
-            <hr />
             <div className="d-flex justify-content-between align-items-center border-bottom fs-4 py-2">
               <div className="d-flex align-items-center justify-content-center">
                 <span className="d-block fw-bold ms-1">Total Price</span>
               </div>
               <span className="d-block">
                 $
-                {address.shippingRate.price && total
-                  ? address.shippingRate.price + total
+                {check.shippingRate.price && total
+                  ? check.shippingRate.price + total
                   : "Invalid Price"}
               </span>
             </div>
@@ -171,10 +178,8 @@ const CardForm = ({
         labels: { confirm: "Checkout", cancel: "Cancel" },
         confirmProps: { color: "red" },
         onCancel: () => {},
-        onConfirm: () => onSubmitHandeler(values),
+        onConfirm: () => navigate(`/payment/${check.orderId}`),
       });
-
-      navigate(`/payment/${check}`);
     } else {
       setLoading(false);
     }
@@ -195,6 +200,7 @@ const CardForm = ({
     teamName: "",
     location: "",
     color: "",
+    method: "",
   };
 
   const SignupSchema = Yup.object().shape({
@@ -212,6 +218,7 @@ const CardForm = ({
     state: Yup.string().required("State is required!"),
     zip: Yup.string().required("Zip is required!"),
     country: Yup.string().required("Country is required!"),
+    method: Yup.string().required("Delivery method is required!"),
     color: Yup.string()
       .test("Is selected?", "Please select a color", (val) => {
         return val !== "none" || user.userType === "coach";
@@ -390,7 +397,7 @@ const CardForm = ({
               </div>
               <Field
                 as={BootstrapForm.Control}
-                placeholder="Type zip code"
+                placeholder="Type postal code..."
                 name="zip"
                 isValid={!errors.zip && touched.zip}
                 type="text"
@@ -398,7 +405,16 @@ const CardForm = ({
                 isInvalid={errors.zip && touched.zip}
               />
             </InputGroup>
-
+            <span className="d-block text-start pb-2">Delivery Type</span>
+            <Select
+              placeholder="Select delivery type"
+              required
+              value={values.method}
+              onChange={(e) => {
+                setFieldValue("method", e);
+              }}
+              data={methods}
+            />
             {user && user.userType === "coach" ? (
               <>
                 <InputGroup className="mb-3 d-flex flex-column">

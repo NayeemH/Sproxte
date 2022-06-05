@@ -78,6 +78,7 @@ export const createOrder = (values, cart, logo) => async (dispatch) => {
     formData.append("state", values.state);
     formData.append("zip", values.zip);
     formData.append("country", values.country);
+    formData.append("serviceType", values.method);
 
     if (logo) {
       formData.append("logo", logo);
@@ -169,22 +170,27 @@ export const createOrder = (values, cart, logo) => async (dispatch) => {
 
     if (check === cart.length) {
       // toast.success("Order created successfully");
-      dispatch({ type: ORDER_SUCCESS, payload: res.data.orderId });
+
       const config2 = {
         withCredentials: true,
       };
+      dispatch({ type: ORDER_SUCCESS, payload: res.data.orderId });
+      try {
+        const res2 = await axios.get(
+          `${BASE_URL}/api/v1/shipment/${res.data.orderId}`,
+          config2
+        );
+        console.log(res2);
 
-      const res2 = await axios.get(
-        `${BASE_URL}/api/v1/shipment/${res.data.orderId}`,
-        config2
-      );
+        // dispatch({
+        //   type: GET_VALID_ADDRESS,
+        //   payload: { ...res2.data, orderId: res.data.orderId },
+        // });
 
-      dispatch({
-        type: GET_VALID_ADDRESS,
-        payload: { ...res2.data, orderId: res.data.orderId },
-      });
-
-      return res.data.orderId;
+        return { ...res2.data, orderId: res.data.orderId };
+      } catch (error) {
+        toast.error(error.response.data.message);
+      }
     }
   } catch (err) {
     dispatch({ type: ORDER_ERROR });
