@@ -183,7 +183,7 @@ const AddProjectForm = ({ category, createProject, getTypeList }) => {
                     <InputGroup className="mb-3 d-flex flex-column">
                       <div className="d-flex justify-content-between align-items-center pb-2">
                         <label htmlFor="weight" className="d-block">
-                          Weight in grams
+                          Weight in Lb
                         </label>
                         {errors.weight && touched.weight ? (
                           <small className="text-danger pt-2">
