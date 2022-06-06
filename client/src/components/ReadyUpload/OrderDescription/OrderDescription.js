@@ -183,7 +183,7 @@ const OrderDescription = ({
                     {" "}
                     {product.priceArray.price.length === 1
                       ? ""
-                      : `/ ${product.priceArray.range[index - 1]}+{" "}`}{" "}
+                      : `/ ${product.priceArray.range[index - 1]}+`}{" "}
                     <span className="fw-bold">${item}</span>
                   </span>
                 );
