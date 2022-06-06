@@ -483,55 +483,6 @@ const EditTypeFinal = ({
                             className={`${styles.input} w-100`}
                           />
                           <small>Count Range End</small>
-                          {/* <div
-                        className={styles.auth__list}
-                        style={{ display: focus2 === i ? "block" : "none" }}
-                      >
-                        <div className="list-group">
-                          {colors
-                            .filter((item) => {
-                              return item.name
-                                .toLowerCase()
-                                .includes(colorInput.toLowerCase());
-                            })
-                            .map((item, k) => (
-                              <div
-                                className={`list-group-item ${styles.item} d-flex`}
-                                key={k}
-                                onClick={() => {
-                                  //console.log("click");
-                                  let check = variant.filter(
-                                    (v) => v.color === item.hex
-                                  );
-
-                                  if (check.length === 0) {
-                                    setVariant([
-                                      ...variant.map((vr, j) =>
-                                        j === i
-                                          ? {
-                                              ...vr,
-                                              color: `${
-                                                item.name
-                                              }-${item.hex.trim()}`,
-                                            }
-                                          : vr
-                                      ),
-                                    ]);
-                                  } else {
-                                    toast.error("Color already selected");
-                                  }
-                                  setColorInput("");
-                                }}
-                              >
-                                <div
-                                  className={`${styles.color} me-2`}
-                                  style={{ background: `${item.hex}` }}
-                                ></div>{" "}
-                                {item.name} ({item.hex})
-                              </div>
-                            ))}
-                        </div> 
-                      </div>*/}
                         </InputGroup>
                       </Col>
                       <Col xs={6}>

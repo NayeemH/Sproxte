@@ -278,7 +278,8 @@ export const createProject =
 
 // EDIT PRODUCT
 export const editProduct =
-  (values, file1, file2, file3, colors, id, priceList) => async (dispatch) => {
+  (values, file1, file2, file3, colors, id, priceList, discountList) =>
+  async (dispatch) => {
     let formData = new FormData();
 
     const priceData = {
@@ -292,6 +293,17 @@ export const editProduct =
       });
     }
 
+    const discountData = {
+      range: [],
+      discount: [],
+    };
+    if (discountList) {
+      discountList.map((d, i) => {
+        discountData.range.push(d.range);
+        discountData.discount.push(d.discount);
+      });
+    }
+
     priceData.price.push(values.price);
 
     formData.append("name", values.name);
@@ -301,9 +313,7 @@ export const editProduct =
     formData.append("weight", values.weight);
     formData.append("quantity", values.quantity);
     formData.append("description", values.description);
-    if (values.discount) {
-      formData.append("discount", values.discount);
-    }
+    formData.append("discount", JSON.stringify(discountData));
 
     formData.append("featured", values.featured);
 

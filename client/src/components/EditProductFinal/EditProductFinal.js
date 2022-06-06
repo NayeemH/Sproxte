@@ -28,12 +28,22 @@ const EditProductFinal = ({ category, editProduct, getTypeList, data }) => {
   const [colorInput, setColorInput] = useState("");
   const navigate = useNavigate();
   const [priceList, setPriceList] = useState([]);
-
+  const [discountList, setDiscountList] = useState([]);
   const fileRef = useRef();
 
   useEffect(() => {
     if (category.length === 0) {
       getTypeList();
+    }
+    if (data && data.discount && data.discount.discount.length > 0) {
+      let tempDisList = [];
+      data.discount.range.forEach((element, i) => {
+        tempDisList.push({
+          range: element,
+          discount: data.discount.discount[i],
+        });
+      });
+      setDiscountList(tempDisList);
     }
     if (
       data &&
@@ -54,9 +64,36 @@ const EditProductFinal = ({ category, editProduct, getTypeList, data }) => {
 
   const onSubmitHandeler = async (values) => {
     setIsLoading(true);
-
+    let checkDis = false;
     let checkPrice = false;
-
+    discountList.forEach((item, i) => {
+      if (
+        item.discount === undefined ||
+        item.discount === null ||
+        item.discount === ""
+      ) {
+        toast.error("Please enter discount");
+        checkDis = true;
+      }
+      if (
+        item.range === undefined ||
+        item.range === null ||
+        item.range === ""
+      ) {
+        toast.error("Please enter range");
+        checkDis = true;
+      }
+      if (i > 0 && i < discountList.length) {
+        if (item.range <= parseInt(discountList[i - 1].range)) {
+          toast.error("Range should be in increasing order");
+          checkDis = true;
+        }
+      }
+    });
+    if (checkDis === true) {
+      setIsLoading(false);
+      return false;
+    }
     priceList.forEach((item, i) => {
       if (
         item.price === undefined ||
@@ -93,7 +130,8 @@ const EditProductFinal = ({ category, editProduct, getTypeList, data }) => {
       selectedFile3,
       selectedColor,
       data._id && data._id,
-      priceList
+      priceList,
+      discountList
     );
 
     if (check) {
@@ -128,8 +166,14 @@ const EditProductFinal = ({ category, editProduct, getTypeList, data }) => {
 
   let initVals = {
     name: data && data.name ? data.name : "",
-    price: data && data.price ? parseInt(data.price) : 0,
-    discount: data && data.discount ? parseInt(data.discount) : 0,
+    price:
+      data && data.priceArray
+        ? parseInt(data.priceArray.price[data.priceArray.range.length])
+        : 0,
+    discount:
+      data && data.discount && data.discount.discount
+        ? data.discount.discount[data.discount.discount.length - 1]
+        : 0,
     weight: data && data.weight ? parseInt(data.weight) : 0,
     quantity: data && data.quantity ? parseInt(data.quantity) : 0,
     productType: data && data.productType ? data.productType : "",
@@ -243,7 +287,7 @@ const EditProductFinal = ({ category, editProduct, getTypeList, data }) => {
                     </InputGroup>
                   </Col>
 
-                  <Col md={6}>
+                  <Col md={12}>
                     <InputGroup className="mb-3 d-flex flex-column">
                       <div className="d-flex justify-content-between align-items-center pb-2">
                         <label htmlFor="size" className="d-block">
@@ -265,29 +309,6 @@ const EditProductFinal = ({ category, editProduct, getTypeList, data }) => {
                         isInvalid={errors.size && touched.size}
                       />
                       <small>Example: L,XL,XXL,M</small>
-                    </InputGroup>
-                  </Col>
-                  <Col md={6}>
-                    <InputGroup className="mb-3 d-flex flex-column">
-                      <div className="d-flex justify-content-between align-items-center pb-2">
-                        <label htmlFor="discount" className="d-block">
-                          Discount (%)
-                        </label>
-                        {errors.discount && touched.discount ? (
-                          <small className="text-danger pt-2">
-                            {errors.discount}
-                          </small>
-                        ) : null}
-                      </div>
-                      <Field
-                        as={BootstrapForm.Control}
-                        placeholder="Type discount in % "
-                        name="discount"
-                        isValid={!errors.discount && touched.discount}
-                        type="number"
-                        className={`${styles.input} w-100`}
-                        isInvalid={errors.discount && touched.discount}
-                      />
                     </InputGroup>
                   </Col>
                 </Row>
@@ -429,6 +450,118 @@ const EditProductFinal = ({ category, editProduct, getTypeList, data }) => {
                   </Col>
                 </Row>
                 {/* PRICE END */}
+
+                <hr />
+                <>
+                  {discountList.length > 0 ? (
+                    <span className="d-block h5">
+                      Discount List with different ranges in increasing order.
+                    </span>
+                  ) : (
+                    <></>
+                  )}
+                  {discountList.map((item, i) => (
+                    <Row className="pb-2">
+                      <Col xs={5}>
+                        <InputGroup className=" d-flex flex-column">
+                          <BootstrapForm.Control
+                            placeholder="Type Range End"
+                            type="number"
+                            value={discountList[i].range}
+                            onChange={(e) =>
+                              setDiscountList(
+                                discountList.map((item, j) =>
+                                  j === i
+                                    ? { ...item, range: e.target.value }
+                                    : item
+                                )
+                              )
+                            }
+                            autoComplete="off"
+                            className={`${styles.input} w-100`}
+                          />
+                          <small>Count Range End</small>
+                        </InputGroup>
+                      </Col>
+                      <Col xs={6}>
+                        <input
+                          type="number"
+                          placeholder="Type Discount for this Range (%)"
+                          className="form-control w-100"
+                          value={discountList[i].discount}
+                          onChange={(e) =>
+                            setDiscountList(
+                              discountList.map((item, j) =>
+                                j === i
+                                  ? { ...item, discount: e.target.value }
+                                  : item
+                              )
+                            )
+                          }
+                          id=""
+                        />
+                        <small>Discount in %</small>
+                      </Col>
+                      <Col
+                        xs={1}
+                        className="d-flex justufy-content-end align-items-center"
+                      >
+                        <span
+                          className={`${styles.del} text-danger`}
+                          onClick={() =>
+                            setDiscountList([
+                              ...discountList.filter((it, j) => j !== i),
+                            ])
+                          }
+                        >
+                          <BiTrash />
+                        </span>
+                      </Col>
+                    </Row>
+                  ))}
+                </>
+                <Row className="">
+                  <Col xs={12}>
+                    <span
+                      className={`${styles.plus} shadow`}
+                      onClick={() =>
+                        setDiscountList([
+                          ...discountList,
+                          {
+                            discount: 0,
+                            range: 0,
+                          },
+                        ])
+                      }
+                    >
+                      <AiOutlinePlus /> Add Discount Range
+                    </span>
+                  </Col>
+                  <Col md={12}>
+                    <InputGroup className="mb-3 mt-4 d-flex flex-column">
+                      <div className="d-flex justify-content-between align-items-center pb-2">
+                        <label htmlFor="discount" className="d-block">
+                          Default Product Discount (%)
+                        </label>
+                      </div>
+                      <Field
+                        as={BootstrapForm.Control}
+                        placeholder="Type product discount"
+                        name="discount"
+                        isValid={!errors.discount && touched.discount}
+                        type="number"
+                        className={`${styles.input} w-100`}
+                        isInvalid={errors.discount && touched.discount}
+                      />
+                      {errors.discount && touched.discount ? (
+                        <small className="text-danger pt-2">
+                          {errors.discount}
+                        </small>
+                      ) : null}
+                    </InputGroup>
+                  </Col>
+                </Row>
+                <hr />
 
                 <Row>
                   <Col className="mb-3">
