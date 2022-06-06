@@ -107,7 +107,7 @@ const NotificationList = ({ item, getNotifications }) => {
                         {notification.message}{" "}
                         {notification.user ? (
                           <>
-                            by
+                            by{" "}
                             <span className={styles.username}>
                               {notification.user.name}
                             </span>
