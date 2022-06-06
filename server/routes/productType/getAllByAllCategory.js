@@ -9,7 +9,7 @@ router.get('/', async (req, res, next) => {
 
         const categoryIds = categoryType.map(categoryType => categoryType._id);
 
-        const productType = await ProductType.find({categoryType: {$in: categoryIds}}, {_id: 1, categoryType: 1, name: 1, price: 1, discount: 1, pngImageFront: 1});
+        const productType = await ProductType.find({categoryType: {$in: categoryIds}}, {_id: 1, categoryType: 1, name: 1, price: 1, priceArray: 1, discount: 1, pngImageFront: 1});
 
         const finalData = categoryType.map(type => {
             const data = type.toJSON();
