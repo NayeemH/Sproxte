@@ -5,6 +5,7 @@ import { TiPointOfInterest } from "react-icons/ti";
 import Moment from "react-moment";
 import styles from "./TrackingInfo.module.scss";
 import { useEffect } from "react";
+import { BsCheckCircle } from "react-icons/bs";
 import { getTrackingInfo } from "../../actions/Payment.acton";
 
 const TrackingInfo = ({ info, id, getTrackingInfo, tracking }) => {
@@ -22,14 +23,14 @@ const TrackingInfo = ({ info, id, getTrackingInfo, tracking }) => {
         </div>
       ) : (
         <>
-          <Timeline active={1} bulletSize={24} lineWidth={2}>
+          <Timeline active={0} color={"orange"} bulletSize={30} lineWidth={2}>
             {info.trackingInfo.map((item) => (
               <Timeline.Item
-                bullet={<TiPointOfInterest size={12} />}
+                bullet={<BsCheckCircle size={22} />}
                 title={item.eventDescription}
               >
                 <span className="d-block ">
-                  <Moment ago>{item.date}</Moment>
+                  <Moment fromNow>{item.date}</Moment>
                 </span>
               </Timeline.Item>
             ))}
@@ -40,10 +41,6 @@ const TrackingInfo = ({ info, id, getTrackingInfo, tracking }) => {
           </div>
         </>
       )}
-      <hr />
-      <div className="text-center">
-        Tracking ID: <b>{tracking}</b>
-      </div>
     </div>
   );
 };
