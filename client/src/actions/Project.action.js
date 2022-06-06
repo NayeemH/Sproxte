@@ -177,11 +177,25 @@ export const createAccountExisting = (id) => async (dispatch) => {
 
 // CREATE PROJECT
 export const createProject =
-  (values, file1, file2, file3, colors) => async (dispatch) => {
+  (values, file1, file2, file3, colors, priceList) => async (dispatch) => {
     let formData = new FormData();
 
+    const priceData = {
+      range: [],
+      price: [],
+    };
+    if (priceList) {
+      priceList.map((d, i) => {
+        priceData.range.push(parseInt(d.range));
+        priceData.price.push(parseInt(d.price));
+      });
+    }
+
+    priceData.price.push(values.price);
+
     formData.append("name", values.name);
-    formData.append("price", values.price);
+    formData.append("priceArray", JSON.stringify(priceData));
+    formData.append("price", 0);
     formData.append("quantity", values.quantity);
     // ::: WEIGHT :::
     formData.append("weight", values.weight);
@@ -249,11 +263,25 @@ export const createProject =
 
 // EDIT PRODUCT
 export const editProduct =
-  (values, file1, file2, file3, colors, id) => async (dispatch) => {
+  (values, file1, file2, file3, colors, id, priceList) => async (dispatch) => {
     let formData = new FormData();
+
+    const priceData = {
+      range: [],
+      price: [],
+    };
+    if (priceList) {
+      priceList.map((d, i) => {
+        priceData.range.push(parseInt(d.range));
+        priceData.price.push(parseInt(d.price));
+      });
+    }
+
+    priceData.price.push(values.price);
 
     formData.append("name", values.name);
     formData.append("price", values.price);
+    formData.append("priceArray", JSON.stringify(priceData));
     // ::: WEIGHT :::
     formData.append("weight", values.weight);
     formData.append("quantity", values.quantity);

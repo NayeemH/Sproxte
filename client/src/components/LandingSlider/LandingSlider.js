@@ -89,7 +89,7 @@ const LandingSlider = ({ data, getLandingData, templates, getLandingList }) => {
                             <div className="text-center">
                               <span className="d-block fs-4">{prod.name}</span>
                               <span className="d-block fs-5 text-secondary">
-                                ${prod.price}
+                                ${prod.priceArray?.price[0]}
                               </span>
                             </div>
                           </div>
@@ -181,7 +181,7 @@ const LandingSlider = ({ data, getLandingData, templates, getLandingList }) => {
                         <div className="text-center">
                           <span className="d-block fs-4">{temp.name}</span>
                           <span className="d-block fs-5 text-secondary">
-                            ${temp.price}
+                            ${temp.priceArray?.price[0]}
                           </span>
                         </div>
                       </div>

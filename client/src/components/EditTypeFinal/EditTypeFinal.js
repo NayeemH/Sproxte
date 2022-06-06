@@ -32,7 +32,6 @@ const EditTypeFinal = ({
   const [focus, setFocus] = useState(false);
   const [catInput, setCatInput] = useState("");
   const [selectedFile3, setSelectedFile3] = useState();
-  const [focus2, setFocus2] = useState(undefined);
   const [priceList, setPriceList] = useState([]);
 
   const [discountList, setDiscountList] = useState([]);
@@ -115,8 +114,7 @@ const EditTypeFinal = ({
         checkDis = true;
       }
       if (i > 0 && i < discountList.length) {
-        if (item.range <= discountList[i - 1].range) {
-          console.log(item.range, discountList[i - 1].range);
+        if (item.range <= parseInt(discountList[i - 1].range)) {
           toast.error("Range should be in increasing order");
           checkDis = true;
         }

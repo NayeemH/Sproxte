@@ -259,7 +259,6 @@ const AddTypeForm = ({ createProductType, getCategoryList, category }) => {
                               setCatInput(item.name);
                             }}
                           >
-                            <div className={`${styles.color}`}></div>{" "}
                             {item.name}
                           </div>
                         ))}

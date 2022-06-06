@@ -15,6 +15,8 @@ import { createProject } from "../../actions/Project.action";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { getTypeList } from "../../actions/Landing.action";
+import { AiOutlinePlus } from "react-icons/ai";
+import { BiTrash } from "react-icons/bi";
 
 const AddProjectForm = ({ category, createProject, getTypeList }) => {
   //STATES
@@ -24,6 +26,7 @@ const AddProjectForm = ({ category, createProject, getTypeList }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [selectedColor, setSelectedColor] = useState([]);
   const [colorInput, setColorInput] = useState("");
+  const [priceList, setPriceList] = useState([]);
 
   const navigate = useNavigate();
 
@@ -38,12 +41,43 @@ const AddProjectForm = ({ category, createProject, getTypeList }) => {
   const onSubmitHandeler = async (values) => {
     if (selectedFile) {
       setIsLoading(true);
+      let checkPrice = false;
+      priceList.forEach((item, i) => {
+        if (
+          item.price === undefined ||
+          item.price === null ||
+          item.price === ""
+        ) {
+          toast.error("Please enter price");
+          checkPrice = true;
+        }
+        if (
+          item.range === undefined ||
+          item.range === null ||
+          item.range === ""
+        ) {
+          toast.error("Please enter range");
+          checkPrice = true;
+        }
+        if (i > 0 && i < priceList.length) {
+          if (item.range <= parseInt(priceList[i - 1].range)) {
+            toast.error("Price range should be in increasing order");
+
+            checkPrice = true;
+          }
+        }
+      });
+      if (checkPrice === true) {
+        setIsLoading(false);
+        return false;
+      }
       let check = await createProject(
         values,
         selectedFile,
         selectedFile2,
         selectedFile3,
-        selectedColor
+        selectedColor,
+        priceList
       );
 
       if (check) {
@@ -54,7 +88,9 @@ const AddProjectForm = ({ category, createProject, getTypeList }) => {
       setIsLoading(false);
     } else {
       toast.error("Please select a file");
+      setIsLoading(false);
     }
+    setIsLoading(false);
   };
 
   //RESET IMAGE
@@ -276,30 +312,7 @@ const AddProjectForm = ({ category, createProject, getTypeList }) => {
                 </Row>
 
                 <Row>
-                  <Col md={6}>
-                    <InputGroup className="mb-3 d-flex flex-column">
-                      <div className="d-flex justify-content-between align-items-center pb-2">
-                        <label htmlFor="price" className="d-block">
-                          Product Price
-                        </label>
-                        {errors.price && touched.price ? (
-                          <small className="text-danger pt-2">
-                            {errors.price}
-                          </small>
-                        ) : null}
-                      </div>
-                      <Field
-                        as={BootstrapForm.Control}
-                        placeholder="Type product price"
-                        name="price"
-                        isValid={!errors.price && touched.price}
-                        type="number"
-                        className={`${styles.input} w-100`}
-                        isInvalid={errors.price && touched.price}
-                      />
-                    </InputGroup>
-                  </Col>
-                  <Col md={6}>
+                  <Col md={12}>
                     <InputGroup className="mb-3 d-flex flex-column">
                       <div className="d-flex justify-content-between align-items-center pb-2">
                         <label htmlFor="quantity" className="d-block">
@@ -323,6 +336,119 @@ const AddProjectForm = ({ category, createProject, getTypeList }) => {
                     </InputGroup>
                   </Col>
                 </Row>
+
+                <hr />
+                {/* PRICE START */}
+                <>
+                  {priceList.length > 0 ? (
+                    <span className="d-block h5">
+                      Price List with different ranges in increasing order.
+                    </span>
+                  ) : (
+                    <></>
+                  )}
+                  {priceList.map((item, i) => (
+                    <Row className="pb-2" key={i}>
+                      <Col xs={5}>
+                        <InputGroup className=" d-flex flex-column">
+                          <BootstrapForm.Control
+                            placeholder="Type Price Range End"
+                            type="number"
+                            value={priceList[i].range}
+                            onChange={(e) =>
+                              setPriceList(
+                                priceList.map((item, j) =>
+                                  j === i
+                                    ? { ...item, range: e.target.value }
+                                    : item
+                                )
+                              )
+                            }
+                            autoComplete="off"
+                            className={`${styles.input} w-100`}
+                          />
+                          <small>Count Range End</small>
+                        </InputGroup>
+                      </Col>
+                      <Col xs={6}>
+                        <input
+                          type="number"
+                          placeholder="Type price of the product in USD"
+                          className="form-control w-100"
+                          value={priceList[i].price}
+                          onChange={(e) =>
+                            setPriceList(
+                              priceList.map((item, j) =>
+                                j === i
+                                  ? { ...item, price: e.target.value }
+                                  : item
+                              )
+                            )
+                          }
+                          id=""
+                        />
+                        <small>Price in USD</small>
+                      </Col>
+                      <Col
+                        xs={1}
+                        className="d-flex justufy-content-end align-items-center"
+                      >
+                        <span
+                          className={`${styles.del} text-danger`}
+                          onClick={() =>
+                            setPriceList([
+                              ...priceList.filter((it, j) => j !== i),
+                            ])
+                          }
+                        >
+                          <BiTrash />
+                        </span>
+                      </Col>
+                    </Row>
+                  ))}
+                </>
+                <Row className="">
+                  <Col xs={12}>
+                    <span
+                      className={`${styles.plus} shadow`}
+                      onClick={() =>
+                        setPriceList([
+                          ...priceList,
+                          {
+                            price: 0,
+                            range: 0,
+                          },
+                        ])
+                      }
+                    >
+                      <AiOutlinePlus /> Add Price Range
+                    </span>
+                  </Col>
+                  <Col md={12}>
+                    <InputGroup className="mb-3 mt-4 d-flex flex-column">
+                      <div className="d-flex justify-content-between align-items-center pb-2">
+                        <label htmlFor="price" className="d-block">
+                          Default Product Price in USD
+                        </label>
+                      </div>
+                      <Field
+                        as={BootstrapForm.Control}
+                        placeholder="Type product price"
+                        name="price"
+                        isValid={!errors.price && touched.price}
+                        type="number"
+                        className={`${styles.input} w-100`}
+                        isInvalid={errors.price && touched.price}
+                      />
+                      {errors.price && touched.price ? (
+                        <small className="text-danger pt-2">
+                          {errors.price}
+                        </small>
+                      ) : null}
+                    </InputGroup>
+                  </Col>
+                </Row>
+                {/* PRICE END */}
 
                 <Row>
                   <Col className="mb-3">

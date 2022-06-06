@@ -231,7 +231,7 @@ const OrderDescription = ({
                 id={product._id}
                 template
                 hidden={true}
-                price={product.price}
+                price={product.priceArray.price[0]}
                 noshadow
                 notitle={true}
                 discount={product.discount?.discount[0]}
@@ -240,6 +240,38 @@ const OrderDescription = ({
               <span className="d-block text-center text-secondary fs-6 pb-3">
                 Added <Moment fromNow>{product.createdAt}</Moment>
               </span>
+
+              {/* PRICE LIST */}
+              <div className="text-center text-secondary fs-6 pb-3">
+                {product.priceArray.price.map((item, index) => {
+                  if (index === product.priceArray.price.length - 1) {
+                    return (
+                      <span>
+                        {" "}
+                        / {product.priceArray.range[index - 1]}+{" "}
+                        <span className="fw-bold">${item}</span>
+                      </span>
+                    );
+                  } else if (index === 0) {
+                    return (
+                      <span>
+                        1 - {product.priceArray.range[index]}{" "}
+                        <span className="fw-bold">${item}</span>
+                      </span>
+                    );
+                  } else {
+                    return (
+                      <span>
+                        {" "}
+                        / {product.priceArray.range[index - 1] + 1} -{" "}
+                        {product.priceArray.range[index]}{" "}
+                        <span className="fw-bold">${item}</span>
+                      </span>
+                    );
+                  }
+                })}
+              </div>
+
               <Button
                 className="btn_primary"
                 onClick={() => my_swiper.slideNext()}
