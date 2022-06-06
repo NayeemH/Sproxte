@@ -98,7 +98,6 @@ const CardForm = ({
     if (check !== false) {
       setLoading(false);
       // FILLED ADDRESS
-      console.log("INNNN");
       modals.openConfirmModal({
         title: "Your Address",
         centered: true,
@@ -211,7 +210,10 @@ const CardForm = ({
       )
       .required("Email is required!"),
     address: Yup.string().required("Address is required!"),
-    phone: Yup.string().required("Phone is required!"),
+    phone: Yup.string()
+      .max(10, "Maximum 10 digit allowed")
+      .min(10, "Minimum 10 digit allowed")
+      .required("Phone is required!"),
     firstName: Yup.string().required("First name is required!"),
     lastName: Yup.string().required("Last name is required!"),
     city: Yup.string().required("City is required!"),

@@ -15,7 +15,7 @@ import "swiper/css";
 import "swiper/css/pagination";
 
 // import required modules
-import { Pagination, EffectCreative } from "swiper";
+import { Pagination } from "swiper";
 import ProductCard from "../../Shared/ProductCard/ProductCard";
 import Moment from "react-moment";
 
@@ -85,7 +85,7 @@ const OrderDescription = ({
             <img
               src={`${IMAGE_PATH}small/${product.pngImageFront}`}
               className={styles.prev__img}
-              alt=""
+              alt="front"
             />
           </div>
           <Text size="md">
@@ -139,26 +139,6 @@ const OrderDescription = ({
     setSelectedLayout(undefined);
   };
 
-  //ONSELECT FILE HANDELER
-  const onSelectFile = (e) => {
-    if (!e.target.files || e.target.files.length === 0) {
-      setSelectedFile(undefined);
-      return;
-    }
-
-    let flag = false;
-    let list = e.target.files;
-    for (let index = 0; index < list.length; index++) {
-      if (list[index].size > 2000000) {
-        toast.error("File size is too big");
-        flag = true;
-      }
-    }
-    if (!flag) {
-      setSelectedFile(list);
-    }
-  };
-
   return (
     <div className={styles.wrapper}>
       <Swiper
@@ -181,10 +161,10 @@ const OrderDescription = ({
             id={product._id}
             template
             hidden={true}
-            price={product.price}
+            price={product.priceArray?.price[0]}
             noshadow
             notitle={true}
-            discount={product.discount}
+            discount={product.discount?.discount[0]}
           />
           <h3 className="pt-3">{product.name}</h3>
           <span className="d-block text-center text-secondary fs-6 pb-3">
@@ -194,6 +174,38 @@ const OrderDescription = ({
           <h4 className="pb-3">
             Sold : <span className="fw-normal">{product.sellCount}</span>{" "}
           </h4>
+          {/* PRICE LIST */}
+          <div className="text-center text-secondary fs-6 pb-3">
+            {product.priceArray?.price.map((item, index) => {
+              if (index === product.priceArray.price.length - 1) {
+                return (
+                  <span key={index}>
+                    {" "}
+                    {product.priceArray.price.length === 1
+                      ? ""
+                      : `/ ${product.priceArray.range[index - 1]}+{" "}`}{" "}
+                    <span className="fw-bold">${item}</span>
+                  </span>
+                );
+              } else if (index === 0) {
+                return (
+                  <span key={index}>
+                    1 - {product.priceArray.range[index]}{" "}
+                    <span className="fw-bold">${item}</span>
+                  </span>
+                );
+              } else {
+                return (
+                  <span key={index}>
+                    {" "}
+                    / {product.priceArray.range[index - 1] + 1} -{" "}
+                    {product.priceArray.range[index]}{" "}
+                    <span className="fw-bold">${item}</span>
+                  </span>
+                );
+              }
+            })}
+          </div>
           <Button className="btn_primary" onClick={() => my_swiper.slideNext()}>
             Next
           </Button>
@@ -204,12 +216,13 @@ const OrderDescription = ({
               <span className="d-block fs-4">Select Size</span>
               <div className={`${styles.grid_size} pt-3`}>
                 {sizes &&
-                  sizes.map((s) => (
+                  sizes.map((s, i) => (
                     <div
                       className={`${styles.size} ${
                         size === s && styles.active
                       } me-2`}
                       onClick={() => setSize(s)}
+                      key={i}
                     >
                       <span className="fs-5 d-block">{s}</span>
                     </div>

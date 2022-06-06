@@ -246,7 +246,7 @@ const OrderDescription = ({
                 {product.priceArray.price.map((item, index) => {
                   if (index === product.priceArray.price.length - 1) {
                     return (
-                      <span>
+                      <span key={index}>
                         {" "}
                         / {product.priceArray.range[index - 1]}+{" "}
                         <span className="fw-bold">${item}</span>
@@ -254,14 +254,14 @@ const OrderDescription = ({
                     );
                   } else if (index === 0) {
                     return (
-                      <span>
+                      <span key={index}>
                         1 - {product.priceArray.range[index]}{" "}
                         <span className="fw-bold">${item}</span>
                       </span>
                     );
                   } else {
                     return (
-                      <span>
+                      <span key={index}>
                         {" "}
                         / {product.priceArray.range[index - 1] + 1} -{" "}
                         {product.priceArray.range[index]}{" "}

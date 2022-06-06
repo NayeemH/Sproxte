@@ -89,7 +89,6 @@ const AddTypeForm = ({ createProductType, getCategoryList, category }) => {
         }
         if (i > 0 && i < discountList.length) {
           if (item.range <= discountList[i - 1].range) {
-            console.log(item.range, discountList[i - 1].range);
             toast.error("Discount range should be in increasing order");
             checkDis = true;
           }

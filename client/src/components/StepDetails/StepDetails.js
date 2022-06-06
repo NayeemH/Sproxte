@@ -15,6 +15,7 @@ import { useModals } from "@mantine/modals";
 import { Text, TextInput } from "@mantine/core";
 import { rejectOrder } from "../../actions/Order.action";
 import Moment from "react-moment";
+import { getPrice } from "../../utils/getPrice";
 
 const StepDetails = ({
   step,
@@ -319,13 +320,14 @@ const StepDetails = ({
                       </Col>
                       <Col xs={6}>
                         <span className="d-block fs-5">
-                          <span className="fw-bold">Price :</span> ${step.price}
+                          <span className="fw-bold">Price :</span> $
+                          {getPrice(step.priceArray, step.count)}
                         </span>
                       </Col>
                       <Col xs={6}>
                         <span className="d-block fs-5">
                           <span className="fw-bold">Discount :</span>{" "}
-                          {getDiscount(step.discount)}%
+                          {getDiscount(step?.discount)}%
                         </span>
                       </Col>
                       <Col xs={6}>
@@ -344,7 +346,7 @@ const StepDetails = ({
                         <Col xs={12} className="py-3">
                           <span className="fs-5 align-items-center">
                             <span className="fw-bold d-block">
-                              Order Colors:{" "}
+                              Primary Color:{" "}
                             </span>
                             <div className="">
                               {step.orderColor.split(",").map((orderClr, i) => (
@@ -353,7 +355,6 @@ const StepDetails = ({
                                   key={i}
                                 >
                                   <span className="fw-bold">
-                                    {i + 1}.{" "}
                                     {
                                       colors.filter(
                                         (item) =>
@@ -388,6 +389,49 @@ const StepDetails = ({
                             </div>
                           </span>
                         </Col>
+                      )}
+                      {step.color2 ? (
+                        <Col xs={12} className="py-3">
+                          <span className="fs-5 align-items-center">
+                            <span className="fw-bold d-block">
+                              Secondary Color:{" "}
+                            </span>
+                          </span>
+                          <div className="d-flex align-items-center w-100 fs-6">
+                            <span className="fw-bold">
+                              {
+                                colors.filter(
+                                  (item) =>
+                                    step.color2 === item.name ||
+                                    step.color2 === item.hex
+                                )[0]?.name
+                              }
+                            </span>{" "}
+                            (
+                            {
+                              colors.filter(
+                                (item) =>
+                                  step.color2 === item.name ||
+                                  step.color2 === item.hex
+                              )[0]?.hex
+                            }
+                            )
+                            <div
+                              className={styles.color}
+                              style={{
+                                background: `${
+                                  colors.filter(
+                                    (item) =>
+                                      step.color2 === item.name ||
+                                      step.color2 === item.hex
+                                  )[0]?.hex
+                                }`,
+                              }}
+                            ></div>
+                          </div>
+                        </Col>
+                      ) : (
+                        <></>
                       )}
 
                       <Col xs={12}>

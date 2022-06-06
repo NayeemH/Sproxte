@@ -4,6 +4,7 @@ import { AiOutlineClose } from "react-icons/ai";
 import { connect } from "react-redux";
 import { removeFromCart } from "../../actions/Cart.action";
 import { createOrder, setPaymentKey } from "../../actions/Payment.acton";
+import { getPrice } from "../../utils/getPrice";
 import CardForm from "./CardForm";
 import styles from "./Cart.module.scss";
 
@@ -15,7 +16,9 @@ const Cart = ({ cart, removeFromCart, setPaymentKey, user }) => {
   let totalPrice = 0;
   cart.map((item) => {
     totalPrice +=
-      (item.product.price * (100 - item.product.discount) * item.quantity) /
+      (getPrice(item.product.priceArray, parseInt(item.quantity)) *
+        (100 - item.product.discount) *
+        item.quantity) /
       100;
   });
 
@@ -58,7 +61,10 @@ const Cart = ({ cart, removeFromCart, setPaymentKey, user }) => {
                     <Col xs="2">
                       $
                       {(
-                        (parseInt(item.product.price) *
+                        (getPrice(
+                          item.product.priceArray,
+                          parseInt(item.quantity)
+                        ) *
                           (100 - item.product.discount) *
                           item.quantity) /
                         100

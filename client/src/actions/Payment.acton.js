@@ -68,7 +68,6 @@ export const setPaymentToken = (id) => async (dispatch) => {
 // CREATE ORDER
 export const createOrder = (values, cart, logo) => async (dispatch) => {
   try {
-    console.log(values);
     const formData = new FormData();
     formData.append("address", values.address);
     formData.append("phone", values.phone);
@@ -129,6 +128,9 @@ export const createOrder = (values, cart, logo) => async (dispatch) => {
         }
         if (item.orderColor) {
           frmData.append("orderColor", item.orderColor);
+        }
+        if (item.orderColor2) {
+          frmData.append("color2", item.orderColor2);
         }
 
         if (item.selectedLayout) {

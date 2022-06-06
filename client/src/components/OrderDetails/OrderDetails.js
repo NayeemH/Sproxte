@@ -30,6 +30,7 @@ import packageTypes from "../../constants/fedexPackageType";
 import { Text } from "@mantine/core";
 import { downloadLabel } from "../../actions/Dashboard.action";
 import TrackingInfo from "../TrackingInfo/TrackingInfo";
+import { getPrice } from "../../utils/getPrice";
 
 const OrderDetails = ({
   projects,
@@ -57,6 +58,7 @@ const OrderDetails = ({
       ),
       labels: { confirm: "Download", cancel: "Cancel" },
       confirmProps: { color: "red" },
+      zIndex: 10000000,
       onCancel: () => {},
       onConfirm: () => downloadLabel(type, projects.orderId),
     });
@@ -344,7 +346,11 @@ const OrderDetails = ({
               <ProductCard
                 imgLink={true}
                 title={project.name}
-                img={`${IMAGE_PATH}small/${project.colorImage}`}
+                img={`${IMAGE_PATH}small/${
+                  project.type === "template"
+                    ? project.image.front
+                    : project.colorImage
+                }`}
                 description={project.createdAt}
                 dashboard={`${team === true ? "team-" : ""}dashboard/${
                   project.type === "template" ? "product" : `${id}`
@@ -357,7 +363,7 @@ const OrderDetails = ({
                     : "template"
                 }
                 bottom={project.status}
-                tags={[`x${project.count}`, `$${project.price}`]}
+                tags={[`x${project.count}`]}
                 hidden={
                   project.type === "template" || project.type === "link"
                     ? true

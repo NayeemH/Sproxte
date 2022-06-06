@@ -177,8 +177,21 @@ export const createAccountExisting = (id) => async (dispatch) => {
 
 // CREATE PROJECT
 export const createProject =
-  (values, file1, file2, file3, colors, priceList) => async (dispatch) => {
+  (values, file1, file2, file3, colors, priceList, discountList) =>
+  async (dispatch) => {
     let formData = new FormData();
+
+    const discountData = {
+      range: [],
+      discount: [],
+    };
+
+    if (discountList) {
+      discountList.map((d, i) => {
+        discountData.range.push(parseInt(d.range));
+        discountData.discount.push(parseInt(d.discount));
+      });
+    }
 
     const priceData = {
       range: [],
@@ -192,6 +205,8 @@ export const createProject =
     }
 
     priceData.price.push(values.price);
+    discountData.discount.push(values.discount);
+    formData.append("discount", JSON.stringify(discountData));
 
     formData.append("name", values.name);
     formData.append("priceArray", JSON.stringify(priceData));
@@ -202,9 +217,9 @@ export const createProject =
     if (values.productType) {
       formData.append("productType", values.productType);
     }
-    if (values.discount) {
-      formData.append("discount", values.discount);
-    }
+    // if (values.discount) {
+    //   formData.append("discount", values.discount);
+    // }
     formData.append("description", values.description);
     if (values.featured === true) {
       formData.append("featured", values.featured);
@@ -435,11 +450,11 @@ export const createProductType =
 
     priceData.price.push(values.price);
     discountData.discount.push(values.discount);
+    formData.append("discount", JSON.stringify(discountData));
     formData.append("playerAddPrice", values.playerAddPrice);
 
     formData.append("name", values.name);
     formData.append("categoryType", values.categoryType);
-    formData.append("discount", JSON.stringify(discountData));
     formData.append("priceArray", JSON.stringify(priceData));
     formData.append("pngImageFront", file);
     formData.append("weight", values.weight);

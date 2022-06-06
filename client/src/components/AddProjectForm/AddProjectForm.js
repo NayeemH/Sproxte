@@ -27,6 +27,7 @@ const AddProjectForm = ({ category, createProject, getTypeList }) => {
   const [selectedColor, setSelectedColor] = useState([]);
   const [colorInput, setColorInput] = useState("");
   const [priceList, setPriceList] = useState([]);
+  const [discountList, setDiscountList] = useState([]);
 
   const navigate = useNavigate();
 
@@ -42,6 +43,36 @@ const AddProjectForm = ({ category, createProject, getTypeList }) => {
     if (selectedFile) {
       setIsLoading(true);
       let checkPrice = false;
+      let checkDis = false;
+      discountList.forEach((item, i) => {
+        if (
+          item.discount === undefined ||
+          item.discount === null ||
+          item.discount === ""
+        ) {
+          toast.error("Please enter discount");
+          checkDis = true;
+        }
+        if (
+          item.range === undefined ||
+          item.range === null ||
+          item.range === ""
+        ) {
+          toast.error("Please enter range");
+          checkDis = true;
+        }
+        if (i > 0 && i < discountList.length) {
+          if (item.range <= discountList[i - 1].range) {
+            console.log(item.range, discountList[i - 1].range);
+            toast.error("Discount range should be in increasing order");
+            checkDis = true;
+          }
+        }
+      });
+      if (checkDis === true) {
+        setIsLoading(false);
+        return false;
+      }
       priceList.forEach((item, i) => {
         if (
           item.price === undefined ||
@@ -77,7 +108,8 @@ const AddProjectForm = ({ category, createProject, getTypeList }) => {
         selectedFile2,
         selectedFile3,
         selectedColor,
-        priceList
+        priceList,
+        discountList
       );
 
       if (check) {
@@ -169,7 +201,7 @@ const AddProjectForm = ({ category, createProject, getTypeList }) => {
     ),
     weight: Yup.number(
       "Insert valid weight",
-      "Insert valid weight in gram"
+      "Insert valid weight in Lb"
     ).required("Product weight is required!"),
     price: Yup.number("Insert valid price", "Insert valid price")
       .min(0)
@@ -262,7 +294,7 @@ const AddProjectForm = ({ category, createProject, getTypeList }) => {
                     </InputGroup>
                   </Col>
 
-                  <Col md={6}>
+                  <Col md={12}>
                     <InputGroup className="mb-3 d-flex flex-column">
                       <div className="d-flex justify-content-between align-items-center pb-2">
                         <label htmlFor="size" className="d-block">
@@ -286,27 +318,114 @@ const AddProjectForm = ({ category, createProject, getTypeList }) => {
                       <small>Example: L,XL,XXL,M</small>
                     </InputGroup>
                   </Col>
-                  <Col md={6}>
-                    <InputGroup className="mb-3 d-flex flex-column">
+                </Row>
+                <hr />
+                <>
+                  {discountList.length > 0 ? (
+                    <span className="d-block h5">
+                      Discount List with different ranges in increasing order.
+                    </span>
+                  ) : (
+                    <></>
+                  )}
+                  {discountList.map((item, i) => (
+                    <Row className="pb-2" key={i}>
+                      <Col xs={5}>
+                        <InputGroup className=" d-flex flex-column">
+                          <BootstrapForm.Control
+                            placeholder="Type Range End"
+                            type="number"
+                            value={discountList[i].range}
+                            onChange={(e) =>
+                              setDiscountList(
+                                discountList.map((item, j) =>
+                                  j === i
+                                    ? { ...item, range: e.target.value }
+                                    : item
+                                )
+                              )
+                            }
+                            autoComplete="off"
+                            className={`${styles.input} w-100`}
+                          />
+                          <small>Count Range End</small>
+                        </InputGroup>
+                      </Col>
+                      <Col xs={6}>
+                        <input
+                          type="number"
+                          placeholder="Type Discount for this Range (%)"
+                          className="form-control w-100"
+                          value={discountList[i].discount}
+                          onChange={(e) =>
+                            setDiscountList(
+                              discountList.map((item, j) =>
+                                j === i
+                                  ? { ...item, discount: e.target.value }
+                                  : item
+                              )
+                            )
+                          }
+                          id=""
+                        />
+                        <small>Discount in %</small>
+                      </Col>
+                      <Col
+                        xs={1}
+                        className="d-flex justufy-content-end align-items-center"
+                      >
+                        <span
+                          className={`${styles.del} text-danger`}
+                          onClick={() =>
+                            setDiscountList([
+                              ...discountList.filter((it, j) => j !== i),
+                            ])
+                          }
+                        >
+                          <BiTrash />
+                        </span>
+                      </Col>
+                    </Row>
+                  ))}
+                </>
+                <Row className="">
+                  <Col xs={12}>
+                    <span
+                      className={`${styles.plus} shadow`}
+                      onClick={() =>
+                        setDiscountList([
+                          ...discountList,
+                          {
+                            discount: 0,
+                            range: 0,
+                          },
+                        ])
+                      }
+                    >
+                      <AiOutlinePlus /> Add Discount Range
+                    </span>
+                  </Col>
+                  <Col md={12}>
+                    <InputGroup className="mb-3 mt-4 d-flex flex-column">
                       <div className="d-flex justify-content-between align-items-center pb-2">
                         <label htmlFor="discount" className="d-block">
-                          Discount (%)
+                          Default Product Discount (%)
                         </label>
-                        {errors.discount && touched.discount ? (
-                          <small className="text-danger pt-2">
-                            {errors.discount}
-                          </small>
-                        ) : null}
                       </div>
                       <Field
                         as={BootstrapForm.Control}
-                        placeholder="Type product discount in %"
+                        placeholder="Type product discount"
                         name="discount"
                         isValid={!errors.discount && touched.discount}
                         type="number"
                         className={`${styles.input} w-100`}
                         isInvalid={errors.discount && touched.discount}
                       />
+                      {errors.discount && touched.discount ? (
+                        <small className="text-danger pt-2">
+                          {errors.discount}
+                        </small>
+                      ) : null}
                     </InputGroup>
                   </Col>
                 </Row>
