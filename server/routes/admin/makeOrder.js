@@ -1,4 +1,5 @@
 const router = require('express').Router();
+const Order = require('../../models/order');
 
 const {paymentHandle} = require('../../lib/paymentHandle');
 
@@ -12,9 +13,12 @@ router.post('/:orderId', async (req, res, next) => {
             metadata: { userId, orderId }
         });
         
-        await Order.findOneAndUpdate({_id: orderId}, {$set: { paymentStatus: 'due'}});
+        const order = await Order.findOneAndUpdate({_id: orderId}, {$set: { paymentStatus: 'due'}});
 
-        res.sendStatus(200);
+        res.json({
+            message: "Admin order",
+            order
+        });
     }
     catch(err) {
         console.log(err);
