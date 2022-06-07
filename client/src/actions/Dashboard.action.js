@@ -361,7 +361,7 @@ export const downloadLabel = (type, id) => async (dispatch) => {
 // MARK AS PAID
 export const markasPaid = (id) => async (dispatch) => {
   try {
-    const res = await axios.post(
+    const res = await axios.patch(
       `${BASE_URL}/api/v1/admin/orderPaid/${id}`,
       JSON.stringify({}),
       {

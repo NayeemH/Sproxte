@@ -29,7 +29,7 @@ const AdminOrderDetails = ({
     if (!id) {
       navigate("/");
     }
-  }, [id, auth, country, payment]);
+  }, []);
   return (
     <div>
       <Nav />

@@ -59,6 +59,12 @@ const AdminInvoice = ({ data, country, user, isAuthenticated }) => {
             <Moment format="DD-MMMM-YYYY">{data.createdAt}</Moment>
           </Col>
         </Row>
+        <Row className="">
+          <Col md={2}>Payment Date:</Col>
+          <Col md={6}>
+            <Moment format="DD-MMMM-YYYY">{data.updatedAt}</Moment>
+          </Col>
+        </Row>
         <Row className="pt-5">
           <Col md={6}>
             <span className="d-block fs-5 fw-bold">Sportsveins</span>
@@ -106,33 +112,31 @@ const AdminInvoice = ({ data, country, user, isAuthenticated }) => {
               </tr>
             </thead>
             <tbody>
-              {data.orders.map((item) => (
-                <>
-                  <tr>
-                    <td>{item.name}</td>
-                    <td>{item.count}</td>
-                    <td>
-                      ${getPrice(item.priceArray, item.count)}{" "}
-                      {getDiscount(item.discount, item.count) > 0 ? (
-                        <span className="fw-bold text-danger fs-6">
-                          {" "}
-                          (-{getDiscount(item.discount, item.count)}%)
-                        </span>
-                      ) : (
-                        ""
-                      )}
-                    </td>
-                    <td>
-                      $
-                      {(
-                        (getPrice(item.priceArray, parseInt(item.count)) *
-                          (100 - getDiscount(item.discount, item.count)) *
-                          item.count) /
-                        100
-                      ).toFixed(2)}
-                    </td>
-                  </tr>
-                </>
+              {data.orders?.map((item, i) => (
+                <tr key={i}>
+                  <td>{item.name}</td>
+                  <td>{item.count}</td>
+                  <td>
+                    ${getPrice(item.priceArray, item.count)}{" "}
+                    {getDiscount(item.discount, item.count) > 0 ? (
+                      <span className="fw-bold text-danger fs-6">
+                        {" "}
+                        (-{getDiscount(item.discount, item.count)}%)
+                      </span>
+                    ) : (
+                      ""
+                    )}
+                  </td>
+                  <td>
+                    $
+                    {(
+                      (getPrice(item.priceArray, parseInt(item.count)) *
+                        (100 - getDiscount(item.discount, item.count)) *
+                        item.count) /
+                      100
+                    ).toFixed(2)}
+                  </td>
+                </tr>
               ))}
 
               <tr>

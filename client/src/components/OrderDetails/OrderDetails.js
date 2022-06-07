@@ -430,7 +430,7 @@ const OrderDetails = ({
         {role === "admin" ? (
           <Button
             className="btn_primary ms-3"
-            onClick={() => navigate(`/admin/order/${projects._id}`)}
+            onClick={() => navigate(`/admin/order/${projects.orderId}`)}
           >
             View Invoice
           </Button>
