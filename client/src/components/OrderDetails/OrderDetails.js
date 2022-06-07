@@ -63,6 +63,19 @@ const OrderDetails = ({
       onConfirm: () => downloadLabel(type, projects.orderId),
     });
   };
+  const markHandeler = () => {
+    modals.openConfirmModal({
+      title: "Mark this order as paid",
+      centered: true,
+      children: (
+        <Text size="md">Are you sure you want to mark this order as paid?</Text>
+      ),
+      labels: { confirm: "Mark as paid", cancel: "Cancel" },
+      zIndex: 10000000,
+      onCancel: () => {},
+      onConfirm: () => markasPaid(projects.orderId),
+    });
+  };
 
   const viewHandeler = () =>
     modals.openModal({
@@ -407,6 +420,25 @@ const OrderDetails = ({
         {projects.isShippingLabel === true ? (
           <Button className="btn_primary" onClick={() => trackingModal()}>
             Track Now
+          </Button>
+        ) : (
+          <></>
+        )}
+
+        {/* ::::: TODO */}
+        {role === "admin" ? (
+          <Button
+            className="btn_primary ms-3"
+            onClick={() => navigate(`/admin/order/${projects._id}`)}
+          >
+            View Invoice
+          </Button>
+        ) : (
+          <></>
+        )}
+        {role === "admin" ? (
+          <Button className="btn_primary ms-3" onClick={() => markHandeler()}>
+            Mark As Paid
           </Button>
         ) : (
           <></>

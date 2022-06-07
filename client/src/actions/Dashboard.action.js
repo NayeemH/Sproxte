@@ -15,6 +15,8 @@ import {
   LOGOUT_FAIL,
   LOGOUT_SUCCESS,
   MANAGER_LIST_LOAD,
+  MARK_PAID,
+  MARK_PAID_FAIL,
   PASSWORD_CHANGE,
   PASSWORD_CHANGE_ERROR,
   REFRESH_TOKEN_GENARATED,
@@ -325,7 +327,7 @@ export const deleteUser = (id) => async (dispatch) => {
   }
 };
 
-//GET REFRESH TOKEN
+//GET LABEL
 export const downloadLabel = (type, id) => async (dispatch) => {
   try {
     const data = {
@@ -350,6 +352,34 @@ export const downloadLabel = (type, id) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: FEDEX_LABLE_DOWNLOAD_FAIL,
+    });
+    toast.error(error.response.data.message);
+    return false;
+  }
+};
+
+// MARK AS PAID
+export const markasPaid = (id) => async (dispatch) => {
+  try {
+    const res = await axios.post(
+      `${BASE_URL}/api/v1/admin/orderPaid/${id}`,
+      JSON.stringify({}),
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+        withCredentials: true,
+      }
+    );
+    dispatch({
+      type: MARK_PAID,
+    });
+    toast.success("Order marked as paid");
+    //}
+    return true;
+  } catch (error) {
+    dispatch({
+      type: MARK_PAID_FAIL,
     });
     toast.error(error.response.data.message);
     return false;
