@@ -9,7 +9,7 @@ router.get('/:id', async (req, res, next) => {
 
 
         const order = await Order
-            .findOne({_id: id}, {__v: 0, orders: 0})
+            .findOne({_id: id}, {__v: 0})
             .populate('userId', '_id name image');
 
 
