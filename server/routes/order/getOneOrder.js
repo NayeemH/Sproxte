@@ -20,7 +20,24 @@ router.get('/:id', async (req, res, next) => {
         const templateProducts = await Template.find({_id: {$in: templateIds}}, {name: 1, priceArray: 1, price: 1, discount: 1});
         const productTypeProducts = await ProductType.find({_id: {$in: productTypeIds}}, {name: 1, priceArray: 1, price: 1, discount: 1});
 
-        order.orders = [...templateProducts, ...productTypeProducts];
+        order.orders = [
+            ...templateProducts.map(product => {
+               return {
+                    count: order.orders.filter(order => order.templateId.toString() === product._id.toString())[0].count,
+                    name: product.name,
+                    priceArray: product.priceArray,
+                    price: product.price,
+                    discount: product.discount
+            }}), 
+            ...productTypeProducts.map(product => {
+                return {
+                     count: order.orders.filter(order => order.productTypeId.toString() === product._id.toString())[0].count,
+                     name: product.name,
+                     priceArray: product.priceArray,
+                     price: product.price,
+                     discount: product.discount
+             }})
+        ];
 
 
         res.json({
