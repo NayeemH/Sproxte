@@ -28,7 +28,7 @@ import AddPlayerInfo from "../AddPlayerInfo/AddPlayerInfo";
 import { useNavigate } from "react-router-dom";
 import packageTypes from "../../constants/fedexPackageType";
 import { Text } from "@mantine/core";
-import { downloadLabel } from "../../actions/Dashboard.action";
+import { downloadLabel, markasPaid } from "../../actions/Dashboard.action";
 import TrackingInfo from "../TrackingInfo/TrackingInfo";
 import { getPrice } from "../../utils/getPrice";
 
@@ -40,6 +40,7 @@ const OrderDetails = ({
   role,
   team,
   downloadLabel,
+  markasPaid,
 }) => {
   const [status, setStatus] = useState("");
   const navigate = useNavigate();
@@ -457,4 +458,5 @@ export default connect(mapStateToProps, {
   getProjectDetails,
   changeProjectStatus,
   downloadLabel,
+  markasPaid,
 })(OrderDetails);
