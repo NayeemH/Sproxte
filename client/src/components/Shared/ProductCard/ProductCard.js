@@ -58,17 +58,29 @@ const ProductCard = ({
                 className={`w-100 ${imgLink ? styles.img__link : ""}`}
                 onClick={() =>
                   imgLink
-                    ? navigate(
-                        `/${
-                          dashboard
-                            ? dashboard
-                            : template
-                            ? "template"
-                            : order
-                            ? "order"
-                            : "product"
-                        }/${Imgid ? Imgid : ""}`
-                      )
+                    ? dashboard
+                      ? navigate(
+                          `/${
+                            dashboard
+                              ? dashboard
+                              : template
+                              ? "template"
+                              : order
+                              ? "order"
+                              : "product"
+                          }/${id ? id : ""}`
+                        )
+                      : navigate(
+                          `/${
+                            dashboard
+                              ? dashboard
+                              : template
+                              ? "template"
+                              : order
+                              ? "order"
+                              : "product"
+                          }/${Imgid ? Imgid : ""}`
+                        )
                     : null
                 }
               />
