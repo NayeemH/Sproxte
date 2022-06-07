@@ -55,6 +55,14 @@ const projectSchema = Schema({
         type: Boolean,
         default: false
     },
+    isPaid: {
+        type: Boolean,
+        default: false
+    },
+    isAdmin: {
+        type: Boolean,
+        default: false
+    },
     masterTrackingNumber: {
         type: String,
         default: null
