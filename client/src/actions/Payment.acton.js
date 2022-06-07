@@ -66,7 +66,7 @@ export const setPaymentToken = (id) => async (dispatch) => {
   }
 };
 // CREATE ORDER
-export const createOrder = (values, cart, logo) => async (dispatch) => {
+export const createOrder = (values, cart, logo, role) => async (dispatch) => {
   try {
     const formData = new FormData();
     formData.append("address", values.address);
@@ -175,6 +175,9 @@ export const createOrder = (values, cart, logo) => async (dispatch) => {
       // toast.success("Order created successfully");
 
       const config2 = {
+        headers: {
+          "Content-Type": "application/json",
+        },
         withCredentials: true,
       };
       dispatch({ type: ORDER_SUCCESS, payload: res.data.orderId });
@@ -188,6 +191,13 @@ export const createOrder = (values, cart, logo) => async (dispatch) => {
         //   type: GET_VALID_ADDRESS,
         //   payload: { ...res2.data, orderId: res.data.orderId },
         // });
+        if (role === "admin") {
+          await axios.post(
+            `${BASE_URL}/api/v1/admin/order/${res.data.orderId}`,
+            {},
+            config2
+          );
+        }
 
         return { ...res2.data, orderId: res.data.orderId };
       } catch (error) {

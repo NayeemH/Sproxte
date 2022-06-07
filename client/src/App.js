@@ -61,6 +61,7 @@ import PasswordResetChangePage from "./views/PasswordResetChangePage/PasswordRes
 import PlayerRequestPage from "./views/PlayerRequestPage/PlayerRequestPage";
 import PlayerRequestCompletePage from "./views/PlayerRequestCompletePage/PlayerRequestCompletePage";
 import CartNewPage from "./views/CartNewPage/CartNewPage";
+import AdminOrderDetails from "./views/AdminOrderDetails/AdminOrderDetails";
 
 function App({ getRefreshToken }) {
   useEffect(() => {
@@ -74,6 +75,7 @@ function App({ getRefreshToken }) {
           <Route path="/" element={<LandingPageNew />} />
           <Route path="/test" element={<LandingPage />} />
           <Route path="/payment-success/:id" element={<PaymentCompelete />} />
+          <Route path="/admin/order/:id" element={<AdminOrderDetails />} />
           <Route
             path="add-player-success/:id/:count/:addition/:price"
             element={<PlayerRequestCompletePage />}

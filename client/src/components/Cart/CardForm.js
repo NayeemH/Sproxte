@@ -26,6 +26,7 @@ const CardForm = ({
 }) => {
   const [loading, setLoading] = useState(false);
   const [logo, setLogo] = useState(undefined);
+  const navigate = useNavigate();
   const modals = useModals();
   useEffect(() => {
     if (!country) {
@@ -34,7 +35,22 @@ const CardForm = ({
   }, []);
 
   const onClickHandeler = (values) => {
-    onSubmitHandeler(values);
+    if (!user) {
+      modals.openConfirmModal({
+        title: "Login Required",
+        centered: true,
+        children: (
+          <Text size="md">
+            <b>Note:</b> You need to login to place an order.
+          </Text>
+        ),
+        labels: { confirm: "Login", cancel: "Cancel" },
+        onCancel: () => {},
+        onConfirm: () => navigate("/login"),
+      });
+    } else {
+      onSubmitHandeler(values);
+    }
     // modals.openConfirmModal({
     //   title: "You Pay Before Approving The Design",
     //   centered: true,
@@ -49,8 +65,6 @@ const CardForm = ({
     //   onConfirm: () => onSubmitHandeler(values),
     // });
   };
-
-  const navigate = useNavigate();
 
   const onSelectFile = (e) => {
     if (e.target.files.length > 0) {
@@ -94,7 +108,7 @@ const CardForm = ({
     let check =
       user.userType === "coach"
         ? await createOrder(values, cart, logo)
-        : await createOrder(values, cart);
+        : await createOrder(values, cart, undefined, user.userType);
     if (check !== false) {
       setLoading(false);
       // FILLED ADDRESS
@@ -174,10 +188,18 @@ const CardForm = ({
             </div>
           </Text>
         ),
-        labels: { confirm: "Checkout", cancel: "Cancel" },
+        labels: {
+          confirm: `${
+            user && user.userType === "admin" ? "Invoice" : "Checkout"
+          }`,
+          cancel: "Cancel",
+        },
         confirmProps: { color: "red" },
         onCancel: () => {},
-        onConfirm: () => navigate(`/payment/${check.orderId}`),
+        onConfirm: () =>
+          user && user.userType === "admin"
+            ? navigate(`/admin/order/${check.orderId}`)
+            : navigate(`/payment/${check.orderId}`),
       });
     } else {
       setLoading(false);
