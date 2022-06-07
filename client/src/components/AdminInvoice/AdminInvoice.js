@@ -9,6 +9,8 @@ import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
 import styles from "./AdminInvoice.module.scss";
 import { AiOutlineDownload } from "react-icons/ai";
+import { getPrice } from "../../utils/getPrice";
+import { getDiscount } from "../../utils/getDiscount";
 
 const AdminInvoice = ({ data, country, user, isAuthenticated }) => {
   const navigate = useNavigate();
@@ -104,18 +106,35 @@ const AdminInvoice = ({ data, country, user, isAuthenticated }) => {
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td>1</td>
-                <td>Mark</td>
-                <td>Otto</td>
-                <td>@mdo</td>
-              </tr>
-              <tr>
-                <td>2</td>
-                <td>Jacob</td>
-                <td>Thornton</td>
-                <td>@fat</td>
-              </tr>
+              {data.orders.map((item) => (
+                <>
+                  <tr>
+                    <td>{item.name}</td>
+                    <td>{item.count}</td>
+                    <td>
+                      ${getPrice(item.priceArray, item.count)}{" "}
+                      {getDiscount(item.discount, item.count) > 0 ? (
+                        <span className="fw-bold text-danger fs-6">
+                          {" "}
+                          (-{getDiscount(item.discount, item.count)}%)
+                        </span>
+                      ) : (
+                        ""
+                      )}
+                    </td>
+                    <td>
+                      $
+                      {(
+                        (getPrice(item.priceArray, parseInt(item.count)) *
+                          (100 - getDiscount(item.discount, item.count)) *
+                          item.count) /
+                        100
+                      ).toFixed(2)}
+                    </td>
+                  </tr>
+                </>
+              ))}
+
               <tr>
                 <td colSpan={3}>Subtotal</td>
                 <td>${data.price}</td>

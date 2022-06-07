@@ -304,29 +304,33 @@ const OrderDetails = ({
               </Button>
             )}
           </div>
-          <div className="d-flex">
-            <Dropdown>
-              <Dropdown.Toggle
-                variant="success"
-                id="dropdown-basic"
-                className={`${styles.active_btn} mt-3 mt-md-0`}
-              >
-                Select Package Type
-              </Dropdown.Toggle>
+          {projects.isShippingLabel === true ? (
+            <></>
+          ) : (
+            <div className="d-flex">
+              <Dropdown>
+                <Dropdown.Toggle
+                  variant="success"
+                  id="dropdown-basic"
+                  className={`${styles.active_btn} mt-3 mt-md-0`}
+                >
+                  Select Package Type
+                </Dropdown.Toggle>
 
-              <Dropdown.Menu>
-                {packageTypes.map((item) => (
-                  <Dropdown.Item
-                    key={item.id}
-                    onClick={() => handelPackage(item.value, item.label)}
-                    style={{ textTransform: "capitalize" }}
-                  >
-                    {item.label}
-                  </Dropdown.Item>
-                ))}
-              </Dropdown.Menu>
-            </Dropdown>
-          </div>
+                <Dropdown.Menu>
+                  {packageTypes.map((item) => (
+                    <Dropdown.Item
+                      key={item.id}
+                      onClick={() => handelPackage(item.value, item.label)}
+                      style={{ textTransform: "capitalize" }}
+                    >
+                      {item.label}
+                    </Dropdown.Item>
+                  ))}
+                </Dropdown.Menu>
+              </Dropdown>
+            </div>
+          )}
         </div>
       )}
 
@@ -400,9 +404,13 @@ const OrderDetails = ({
         <Button className="btn_primary me-3" onClick={() => navigate(-1)}>
           Go Back
         </Button>
-        <Button className="btn_primary" onClick={() => trackingModal()}>
-          Track Now
-        </Button>
+        {projects.isShippingLabel === true ? (
+          <Button className="btn_primary" onClick={() => trackingModal()}>
+            Track Now
+          </Button>
+        ) : (
+          <></>
+        )}
       </div>
     </Container>
   );
