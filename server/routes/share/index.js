@@ -10,7 +10,7 @@ router.get('/:link', async (req, res, next) => {
 
         const product = await Product.findOne(
             {_id: link}, 
-            {name: 1, price: 1, discount: 1, sellCount: 1, typeId: 1}
+            {name: 1, price: 1, discount: 1, sellCount: 1, typeId: 1, priceArray: 1}
         );
 
         const productType = await ProductType.findOne({_id: product.typeId}, {sizes: 1});
