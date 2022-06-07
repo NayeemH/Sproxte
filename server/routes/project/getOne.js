@@ -8,7 +8,7 @@ router.get('/:id', async (req, res, next) => {
         const {userId, userType} = req.user;
         const {id} = req.params;
 
-        const project = await Project.findOne({_id: id}, {userId: 0, active: 0, gurdianIds: 0});
+        const project = await Project.findOne({_id: id}, {active: 0, gurdianIds: 0});
 
         let products;
         if(userType === 'admin' || userType === 'iep') {
