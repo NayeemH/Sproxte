@@ -22,6 +22,12 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import { BASE_URL } from "../constants/URL";
 import { getRefreshToken } from "./Auth.action";
+import {
+  GET_TEAMS,
+  GET_TEAMS_FAIL,
+  GET_TEAM_DETAILS,
+  GET_TEAM_DETAILS_FAIL,
+} from "../constants/Type";
 
 export const toggleLandingSidebar = () => (dispatch) => {
   dispatch({
@@ -258,5 +264,39 @@ export const getCategoryProduct = (id) => async (dispatch) => {
   } catch (err) {
     dispatch({ type: DISCOVER_ERROR });
     console.log(err);
+  }
+};
+
+//GET TEAMS
+export const getTeamList = () => async (dispatch) => {
+  try {
+    const res = await axios.get(`${BASE_URL}/api/v1/team`);
+    // console.log(res);
+
+    dispatch({
+      type: GET_TEAMS,
+      payload: res.data.finalData,
+    });
+  } catch (err) {
+    dispatch({
+      type: GET_TEAMS_FAIL,
+    });
+  }
+};
+
+//GET TEAM PLAYERS
+export const getTeamPlayerList = (id) => async (dispatch) => {
+  try {
+    const res = await axios.get(`${BASE_URL}/api/v1/team/${id}`);
+    // console.log(res);
+
+    dispatch({
+      type: GET_TEAM_DETAILS,
+      payload: res.data.finalData,
+    });
+  } catch (err) {
+    dispatch({
+      type: GET_TEAM_DETAILS_FAIL,
+    });
   }
 };
