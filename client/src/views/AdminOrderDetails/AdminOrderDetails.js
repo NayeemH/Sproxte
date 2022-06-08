@@ -7,6 +7,7 @@ import { getCountryList, getPaymentDetails } from "../../actions/Order.action";
 import PaymentSuccess from "../../components/PaymentSuccess/PaymentSuccess";
 import { Spinner } from "react-bootstrap";
 import AdminInvoice from "../../components/AdminInvoice/AdminInvoice";
+import NewLayout from "../../components/Shared/NewLayout/NewLayout";
 
 const AdminOrderDetails = ({
   payment,
@@ -29,21 +30,21 @@ const AdminOrderDetails = ({
     if (!id) {
       navigate("/");
     }
-  }, []);
+  }, [auth, id, payment]);
   return (
     <div>
-      <Nav />
-      {payment && country ? (
-        <AdminInvoice data={payment} country={country} />
-      ) : (
-        <div
-          className="d-flex justify-content-center align-items-center"
-          style={{ minHeight: "100vh" }}
-        >
-          <Spinner variant="dark" animation="grow" />
-        </div>
-      )}
-      <Footer />
+      <NewLayout>
+        {payment && country ? (
+          <AdminInvoice data={payment} country={country} />
+        ) : (
+          <div
+            className="d-flex justify-content-center align-items-center"
+            style={{ minHeight: "100vh" }}
+          >
+            <Spinner variant="dark" animation="grow" />
+          </div>
+        )}
+      </NewLayout>
     </div>
   );
 };

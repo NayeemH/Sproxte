@@ -6,6 +6,7 @@ import Nav from "../../components/Nav/Nav";
 import { getCountryList, getPaymentDetails } from "../../actions/Order.action";
 import PaymentSuccess from "../../components/PaymentSuccess/PaymentSuccess";
 import { Spinner } from "react-bootstrap";
+import NewLayout from "../../components/Shared/NewLayout/NewLayout";
 
 const DiscoverPage = ({
   payment,
@@ -31,18 +32,18 @@ const DiscoverPage = ({
   }, [id, auth, country, payment]);
   return (
     <div>
-      <Nav />
-      {payment && country ? (
-        <PaymentSuccess data={payment} country={country} />
-      ) : (
-        <div
-          className="d-flex justify-content-center align-items-center"
-          style={{ minHeight: "100vh" }}
-        >
-          <Spinner variant="dark" animation="grow" />
-        </div>
-      )}
-      <Footer />
+      <NewLayout>
+        {payment && country ? (
+          <PaymentSuccess data={payment} country={country} />
+        ) : (
+          <div
+            className="d-flex justify-content-center align-items-center"
+            style={{ minHeight: "100vh" }}
+          >
+            <Spinner variant="dark" animation="grow" />
+          </div>
+        )}
+      </NewLayout>
     </div>
   );
 };

@@ -1,0 +1,16 @@
+.wrapper {
+  background: url(../../../assets/bg.jpg);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  min-height: 100vh;
+  padding: 0px 30px;
+  padding-bottom: 20px;
+}
+
+@media screen and (max-width: 768px) {
+  .wrapper {
+    padding: 0px 10px;
+    padding-bottom: 20px;
+  }
+}

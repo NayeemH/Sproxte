@@ -28,6 +28,7 @@ import {
 import { DELETE_USER, DELETE_USER_ERROR } from "../constants/TypeLanding";
 import { BASE_URL } from "../constants/URL";
 import setAuthToken from "../utils/setAuthToken";
+import { getPaymentDetails } from "./Order.action";
 import { getIepList } from "./Payment.acton";
 
 // PROJECT DISPLAY STYLE ACTION
@@ -375,6 +376,8 @@ export const markasPaid = (id) => async (dispatch) => {
       type: MARK_PAID,
     });
     toast.success("Order marked as paid");
+
+    dispatch(getPaymentDetails(id));
     //}
     return true;
   } catch (error) {

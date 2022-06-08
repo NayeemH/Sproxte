@@ -35,7 +35,7 @@ const AdminInvoice = ({ data, country, user, isAuthenticated }) => {
     });
   };
   return (
-    <Container>
+    <Container className=" bg-light shadow">
       <div className="text-center py-4">
         <Button className="btn_primary" onClick={download}>
           <AiOutlineDownload />
