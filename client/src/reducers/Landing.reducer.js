@@ -1,3 +1,4 @@
+import { GET_TEAMS, GET_TEAM_DETAILS } from "../constants/Type";
 import {
   CATEGORY_DELETE,
   CATEGORY_LOAD,
@@ -33,6 +34,8 @@ const initialState = {
   discover_popular: {},
   category_products: null,
   data: null,
+  teams: null,
+  selected_team: null,
   loading: true,
 };
 
@@ -97,7 +100,10 @@ const LandingReducer = (state = initialState, action) => {
         ...state,
         product: [...state.product.filter((item) => item._id !== payload)],
       };
-
+    case GET_TEAMS:
+      return { ...state, teams: payload, loading: false };
+    case GET_TEAM_DETAILS:
+      return { ...state, selected_team: payload, loading: false };
     default:
       return state;
   }

@@ -275,7 +275,7 @@ export const getTeamList = () => async (dispatch) => {
 
     dispatch({
       type: GET_TEAMS,
-      payload: res.data.finalData,
+      payload: res.data.data,
     });
   } catch (err) {
     dispatch({
@@ -292,7 +292,7 @@ export const getTeamPlayerList = (id) => async (dispatch) => {
 
     dispatch({
       type: GET_TEAM_DETAILS,
-      payload: res.data.finalData,
+      payload: res.data.data,
     });
   } catch (err) {
     dispatch({
