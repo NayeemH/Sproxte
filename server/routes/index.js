@@ -21,6 +21,7 @@ const contactUs = require('./ContactUs');
 const share = require('./share');
 const iep = require('./iep');
 const shipment = require('./shipment');
+const team = require('./team');
 
 
 
@@ -77,6 +78,9 @@ router.use('/iep', isAuth, iep);
 
 // Shipment
 router.use('/shipment', isAuth, shipment);
+
+// Team info
+router.use('/team', team);
 
 
 module.exports = router;
