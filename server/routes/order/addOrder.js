@@ -77,7 +77,7 @@ const addTemplate = async (req) => {
     await Order.findOneAndUpdate(
         {_id: id, userId}, 
         {
-            $push: {orders: {type, templateId, count: count, size, color, color2}},
+            $push: {orders: {type, templateId, count: count, size, color, color2, weight}},
             $inc: {price: netPrice, weight: count * weight}
         }
     );
@@ -161,6 +161,7 @@ const addCustomTemplate = async (req) => {
                 size, 
                 color, 
                 color2,
+                weight,
                 description, 
                 layoutId, 
                 primaryText, 
@@ -214,7 +215,7 @@ const addLinkTemplate = async (req) => {
     await Order.findOneAndUpdate(
         {_id: id, userId}, 
         {
-            $push: {orders: {type, productId, count: count, size, color, color2}},
+            $push: {orders: {type, productId, count: count, size, color, color2, weight}},
             $inc: {price: netPrice, weight: count * weight}
         }
     );
