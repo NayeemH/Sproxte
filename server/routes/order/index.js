@@ -11,11 +11,11 @@ const getPlayerAddInfo = require('./getPlayerAddInfo');
 
 
 // Routes
+router.use('/', getOneOrder);
 router.use('/', isAuth, createOrder);
 router.use('/', isAuth,  addOrder);
 router.use('/player', isAuth,  getPlayerAddInfo);
 router.use('/', isAuth,  getOrder);
-router.use('/', getOneOrder);
 
 
 module.exports = router;
