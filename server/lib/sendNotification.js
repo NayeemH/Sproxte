@@ -15,13 +15,13 @@ const sendNotification = async (message, users, projectId, productId, type = 'su
 
         const usersData = await User.find({_id: {$in: users}}, {name: 1, email: 1});
         
-
+console.log(usersData);
         // Verify Email
         await Promise.all(usersData.map(user => {
             return sendMail({
                 to: user.email,
                 subject: 'Notification Mail',
-                text: `This is a notification main`,
+                text: `This is a notification mail`,
                 template: 'notification',
                 context: {
                     username: user.name,
