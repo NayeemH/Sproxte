@@ -1,6 +1,7 @@
 const router = require('express').Router();
 const Order = require('../../models/order');
 const Project = require('../../models/project');
+const sendMail = require('../../lib/sendMail');
 
 const {paymentHandle} = require('../../lib/paymentHandle');
 
@@ -19,6 +20,19 @@ router.post('/:orderId', async (req, res, next) => {
         
         res.json({
             message: "Admin order"
+        });
+
+        // Send notification
+        await sendMail({
+            to: order.email,
+            subject: 'Notification Mail',
+            text: `This is a notification main`,
+            template: 'notification',
+            context: {
+                username: order.name,
+                message: 'One order has been placed for you at https://sportsveins.com/',
+                link: `${CLIENT_URL}/admin/order/${orderId}`
+            }
         });
     }
     catch(err) {
