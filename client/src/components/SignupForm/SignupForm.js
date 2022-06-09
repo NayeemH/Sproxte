@@ -22,7 +22,7 @@ const SignupForm = ({ createUserAccount, isAuthenticated }) => {
 
   useEffect(() => {
     if (isAuthenticated) {
-      navigate("/discover");
+      navigate("/dashboard");
     }
   }, [isAuthenticated]);
 
@@ -31,7 +31,7 @@ const SignupForm = ({ createUserAccount, isAuthenticated }) => {
     // TODO ::: create account action
     let check = await createUserAccount(values);
     if (check) {
-      console.log("SubmittEd");
+      setSubmitting(false);
     }
     setSubmitting(false);
   };

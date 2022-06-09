@@ -31,6 +31,7 @@ const OrderDescription = ({
   user,
   cart,
   selectedColor,
+  isAuthenticated,
 }) => {
   const [selectedFile, setSelectedFile] = useState();
   const [preview, setPreview] = useState();
@@ -70,6 +71,21 @@ const OrderDescription = ({
 
   //Submit handeler
   const submitHandeler = () => {
+    if (isAuthenticated === false) {
+      modals.openConfirmModal({
+        title: "Login Required",
+        centered: true,
+        children: (
+          <Text size="md">
+            Please, login first to add product into your cart.
+          </Text>
+        ),
+        labels: { confirm: "Login Now", cancel: "Cancel" },
+        confirmProps: { color: "red" },
+        onCancel: () => {},
+        onConfirm: () => navigate("/login"),
+      });
+    }
     if (user.userType === "coach" && cart.length > 0) {
       modals.openConfirmModal({
         title: "You can not order more than one product as a coach at a time",
@@ -686,6 +702,7 @@ const OrderDescription = ({
 const mapStateToProps = (state) => ({
   user: state.auth.user,
   cart: state.cart.cart,
+  isAuthenticated: state.auth.isAuthenticated,
 });
 
 export default connect(mapStateToProps, { setSize, addToCart })(

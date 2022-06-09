@@ -1,10 +1,7 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
-import Footer from "../../components/Footer/Footer";
-import Nav from "../../components/Nav/Nav";
 import { getCountryList, getPaymentDetails } from "../../actions/Order.action";
-import PaymentSuccess from "../../components/PaymentSuccess/PaymentSuccess";
 import { Spinner } from "react-bootstrap";
 import AdminInvoice from "../../components/AdminInvoice/AdminInvoice";
 import NewLayout from "../../components/Shared/NewLayout/NewLayout";
@@ -12,14 +9,13 @@ import NewLayout from "../../components/Shared/NewLayout/NewLayout";
 const AdminOrderDetails = ({
   payment,
   getPaymentDetails,
-  auth,
   country,
   getCountryList,
 }) => {
   const { id } = useParams();
   const navigate = useNavigate();
   useEffect(() => {
-    if (!payment && id && auth) {
+    if (!payment && id) {
       getPaymentDetails(id);
     }
 
@@ -30,7 +26,7 @@ const AdminOrderDetails = ({
     if (!id) {
       navigate("/");
     }
-  }, [auth, id, payment]);
+  }, [id, payment]);
   return (
     <div>
       <NewLayout>
@@ -51,7 +47,6 @@ const AdminOrderDetails = ({
 
 const mapStateToProps = (state) => ({
   payment: state.order.selected_order,
-  auth: state.auth.isAuthenticated,
   country: state.order.country,
 });
 

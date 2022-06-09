@@ -26,6 +26,7 @@ const OrderDescription = ({
   role,
   switchMode,
   type,
+  isAuthenticated,
 }) => {
   const [selectedFile, setSelectedFile] = useState();
   const [preview, setPreview] = useState();
@@ -58,6 +59,21 @@ const OrderDescription = ({
 
   //Submit handeler
   const submitHandeler = () => {
+    if (isAuthenticated === false) {
+      modals.openConfirmModal({
+        title: "Login Required",
+        centered: true,
+        children: (
+          <Text size="md">
+            Please, login first to add product into your cart.
+          </Text>
+        ),
+        labels: { confirm: "Login Now", cancel: "Cancel" },
+        confirmProps: { color: "red" },
+        onCancel: () => {},
+        onConfirm: () => navigate("/login"),
+      });
+    }
     if (role && role === "coach") {
       modals.openConfirmModal({
         title: "Switch to client mode",
@@ -252,6 +268,7 @@ const OrderDescription = ({
 
 const mapStateToProps = (state) => ({
   role: state.auth.user?.userType,
+  isAuthenticated: state.auth.isAuthenticated,
 });
 
 export default connect(mapStateToProps, { setSize, addToCart, switchMode })(
