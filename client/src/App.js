@@ -97,6 +97,7 @@ function App({ getRefreshToken }) {
           <Route path="/login" element={<LoginPage />} />
           <Route path="/cart" element={<CartNewPage />} />
           <Route path="/share/:id" element={<SharePage />} />
+          <Route path="/team/player/:id" element={<SharePage />} />
           <Route path="/contact" element={<ContactPage />} />
           <Route path="/payment-methods" element={<PaymentMethodsPage />} />
 

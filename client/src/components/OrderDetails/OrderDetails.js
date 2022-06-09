@@ -41,6 +41,7 @@ const OrderDetails = ({
   team,
   downloadLabel,
   markasPaid,
+  user,
 }) => {
   const [status, setStatus] = useState("");
   const navigate = useNavigate();
@@ -437,7 +438,9 @@ const OrderDetails = ({
         ) : (
           <></>
         )}
-        {role === "admin" ? (
+        {role === "admin" &&
+        projects.type !== "team" &&
+        user._id === projects.userId ? (
           <Button className="btn_primary ms-3" onClick={() => markHandeler()}>
             Mark As Paid
           </Button>
@@ -452,6 +455,7 @@ const OrderDetails = ({
 const mapStateToProps = (state) => ({
   projects: state.project.selected_project,
   role: state.auth.user.userType,
+  user: state.auth.user,
 });
 
 export default connect(mapStateToProps, {

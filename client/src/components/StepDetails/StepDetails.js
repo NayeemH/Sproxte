@@ -294,7 +294,7 @@ const StepDetails = ({
               <></>
             )}
           </Col>
-          {role === "admin" || role === "iep" ? (
+          {(role === "admin" || role === "iep") && step ? (
             <>
               <Col md={4}>
                 <Card className={`${styles.crd} shadow mb-4`}>
@@ -321,7 +321,9 @@ const StepDetails = ({
                       <Col xs={6}>
                         <span className="d-block fs-5">
                           <span className="fw-bold">Price :</span> $
-                          {getPrice(step.priceArray, step.count)}
+                          {step.priceArray
+                            ? getPrice(step?.priceArray, step.count)
+                            : null}
                         </span>
                       </Col>
                       <Col xs={6}>
