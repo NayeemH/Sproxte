@@ -30,6 +30,7 @@ import { BASE_URL } from "../constants/URL";
 import setAuthToken from "../utils/setAuthToken";
 import { getPaymentDetails } from "./Order.action";
 import { getIepList } from "./Payment.acton";
+import { getProductDetails } from "./Project.action";
 
 // PROJECT DISPLAY STYLE ACTION
 export const toogleDashboardProjectStyle = (type) => (dispatch) => {
@@ -360,7 +361,7 @@ export const downloadLabel = (type, id) => async (dispatch) => {
 };
 
 // MARK AS PAID
-export const markasPaid = (id) => async (dispatch) => {
+export const markasPaid = (id, proj) => async (dispatch) => {
   try {
     const res = await axios.patch(
       `${BASE_URL}/api/v1/admin/orderPaid/${id}`,
@@ -378,6 +379,7 @@ export const markasPaid = (id) => async (dispatch) => {
     toast.success("Order marked as paid");
 
     dispatch(getPaymentDetails(id));
+    dispatch(getProductDetails(proj));
     //}
     return true;
   } catch (error) {

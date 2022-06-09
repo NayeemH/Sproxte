@@ -75,7 +75,7 @@ const OrderDetails = ({
       labels: { confirm: "Mark as paid", cancel: "Cancel" },
       zIndex: 10000000,
       onCancel: () => {},
-      onConfirm: () => markasPaid(projects.orderId),
+      onConfirm: () => markasPaid(projects.orderId, projects._id),
     });
   };
 
@@ -428,7 +428,7 @@ const OrderDetails = ({
         )}
 
         {/* ::::: TODO */}
-        {role === "admin" ? (
+        {role === "admin" && projects?.isAdmin === true ? (
           <Button
             className="btn_primary ms-3"
             onClick={() => navigate(`/admin/order/${projects.orderId}`)}
@@ -439,8 +439,8 @@ const OrderDetails = ({
           <></>
         )}
         {role === "admin" &&
-        projects.type !== "team" &&
-        user._id === projects.userId ? (
+        projects?.isAdmin === true &&
+        projects?.isPaid === false ? (
           <Button className="btn_primary ms-3" onClick={() => markHandeler()}>
             Mark As Paid
           </Button>
