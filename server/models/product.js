@@ -36,6 +36,10 @@ const productSchema = Schema({
         type: String,
         required: true
     },
+    weight: {
+        type: Number,
+        required: true
+    },
     status: {
         type: String,
         default: 'pending' // working approved

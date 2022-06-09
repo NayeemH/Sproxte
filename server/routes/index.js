@@ -47,7 +47,7 @@ router.use('/template', template);
 router.use('/search', search);
 
 // Order
-router.use('/order', isAuth, order);
+router.use('/order', order);
 
 // payment
 router.use('/payment', payment);

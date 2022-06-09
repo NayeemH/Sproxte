@@ -155,7 +155,8 @@ const paymentHandle = async (object) => {
             discount: templates[i].discount,
             color2: order.color2,
             count: order.count,
-            size: order.size
+            size: order.size,
+            weight: order.weight
         }).save()),
         ...linkOrders.map((order, i) => new Product({
             userId,
@@ -169,7 +170,8 @@ const paymentHandle = async (object) => {
             discount: links[i].discount,
             color2: order.color2,
             count: order.count,
-            size: order.size
+            size: order.size,
+            weight: order.weight
         }).save()),
         ...customOrders.map((order, i) => new Product({
             userId,
@@ -188,6 +190,7 @@ const paymentHandle = async (object) => {
             discount: customs[i].discount,
             count: order.count,
             size: order.size,
+            weight: order.weight,
             description: order.description,
             layoutImage: order.layoutId && customs[i].layouts.filter(({_id}) => _id.toString() === order.layoutId.toString())[0].image,
             primaryText: order.primaryText,
@@ -217,6 +220,7 @@ const paymentHandle = async (object) => {
             discount: teams[i].discount,
             count: order.count,
             size: order.size,
+            weight: order.weight,
             description: order.description,
             layoutImage: order.layoutId && teams[i].layouts.filter(({_id}) => _id.toString() === order.layoutId.toString())[0].image,
             primaryText: order.primaryText,

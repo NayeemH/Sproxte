@@ -1,5 +1,6 @@
 const router = require('express').Router();
 
+const isAuth = require('../authenticate/isAuth');
 
 // Import routes
 const createOrder = require('./createOrder');
@@ -10,10 +11,10 @@ const getPlayerAddInfo = require('./getPlayerAddInfo');
 
 
 // Routes
-router.use('/', createOrder);
-router.use('/', addOrder);
-router.use('/player', getPlayerAddInfo);
-router.use('/', getOrder);
+router.use('/', isAuth, createOrder);
+router.use('/', isAuth,  addOrder);
+router.use('/player', isAuth,  getPlayerAddInfo);
+router.use('/', isAuth,  getOrder);
 router.use('/', getOneOrder);
 
 

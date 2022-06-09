@@ -66,7 +66,9 @@ router.post('/:id', fileFetch.single('image'), async (req, res, next) => {
                     back: product.pngImageBack,
                 },
                 colorImage: product.colorImage,
+                color2: product.color2,
                 price: product.price,
+                priceArray: product.priceArray,
                 discount: product.discount,
                 count: product.count,
                 size: size,
@@ -78,7 +80,9 @@ router.post('/:id', fileFetch.single('image'), async (req, res, next) => {
                 secondaryColor: product.secondaryColor,
                 frontImages: image ? [image] : [],   // Store the gurdian image
                 backImages: product.backImages,
-                gurdianNotifications: []     // Store the gurdian email
+                gurdianNotifications: [],     // Store the gurdian email
+                orderColor: product.orderColor,
+                productFont: product.productFont
             }).save();
 
             const collections = await Collection.find({productId: product._id}, {image: 1});
