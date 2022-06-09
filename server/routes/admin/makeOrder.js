@@ -2,7 +2,7 @@ const router = require('express').Router();
 const Order = require('../../models/order');
 const Project = require('../../models/project');
 const sendMail = require('../../lib/sendMail');
-
+const {CLIENT_URL} = process.env;
 const {paymentHandle} = require('../../lib/paymentHandle');
 
 
