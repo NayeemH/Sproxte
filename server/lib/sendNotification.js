@@ -1,5 +1,6 @@
 const Notification = require('../models/notification');
 const User = require('../models/user');
+const sendMail = require('./sendMail');
 
 const sendNotification = async (message, users, projectId, productId, type = 'success') => {
     try {
