@@ -12,6 +12,10 @@
   cursor: pointer;
 }
 
+.ham {
+  display: none;
+}
+
 .box {
   background-color: #fff;
   border-radius: 5px;
@@ -92,8 +96,57 @@
   }
 }
 
+.sidebar_mobile {
+  display: none;
+}
+
 @media screen and (max-width: 768px) {
   .link {
     margin: 0;
+  }
+
+  .ham {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 3;
+  }
+
+  .sidebar_mobile {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    z-index: 2;
+    left: -102%;
+    top: 0;
+    transition: 0.3s all ease-in-out;
+    background: var(--light);
+    padding: 30px 10px;
+  }
+
+  .sidebar_mobile.active {
+    left: 0;
+    transition: 0.3s all ease-in-out;
+  }
+
+  .active a {
+    color: var(--dark) !important;
+    font-size: 24px;
+    margin-top: 10px;
+  }
+
+  .icon {
+    height: 40px;
+    width: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    a {
+      margin-top: 0 !important;
+    }
   }
 }
