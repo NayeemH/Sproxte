@@ -8,11 +8,15 @@ import {
   CLIENT_LIST_LOAD,
   DASHBOARD_PROJECT_LIST_GRID,
   DEVELOPER_LIST_LOAD,
+  FEDEX_LABLE_DOWNLOAD,
+  FEDEX_LABLE_DOWNLOAD_FAIL,
   LOGIN_FAIL,
   LOGIN_SUCCESS,
   LOGOUT_FAIL,
   LOGOUT_SUCCESS,
   MANAGER_LIST_LOAD,
+  MARK_PAID,
+  MARK_PAID_FAIL,
   PASSWORD_CHANGE,
   PASSWORD_CHANGE_ERROR,
   REFRESH_TOKEN_GENARATED,
@@ -24,7 +28,9 @@ import {
 import { DELETE_USER, DELETE_USER_ERROR } from "../constants/TypeLanding";
 import { BASE_URL } from "../constants/URL";
 import setAuthToken from "../utils/setAuthToken";
+import { getPaymentDetails } from "./Order.action";
 import { getIepList } from "./Payment.acton";
+import { getProductDetails } from "./Project.action";
 
 // PROJECT DISPLAY STYLE ACTION
 export const toogleDashboardProjectStyle = (type) => (dispatch) => {
@@ -319,6 +325,68 @@ export const deleteUser = (id) => async (dispatch) => {
       type: DELETE_USER_ERROR,
     });
     console.log(err);
+    return false;
+  }
+};
+
+//GET LABEL
+export const downloadLabel = (type, id) => async (dispatch) => {
+  try {
+    const data = {
+      packagingType: type,
+    };
+    const res = await axios.post(
+      `${BASE_URL}/api/v1/shipment/label/${id}`,
+      JSON.stringify(data),
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+        withCredentials: true,
+      }
+    );
+    dispatch({
+      type: FEDEX_LABLE_DOWNLOAD,
+    });
+
+    window.open(res.data.shippingLabelURL, "_blank");
+    //}
+  } catch (error) {
+    dispatch({
+      type: FEDEX_LABLE_DOWNLOAD_FAIL,
+    });
+    toast.error(error.response.data.message);
+    return false;
+  }
+};
+
+// MARK AS PAID
+export const markasPaid = (id, proj) => async (dispatch) => {
+  try {
+    const res = await axios.patch(
+      `${BASE_URL}/api/v1/admin/orderPaid/${id}`,
+      JSON.stringify({}),
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+        withCredentials: true,
+      }
+    );
+    dispatch({
+      type: MARK_PAID,
+    });
+    toast.success("Order marked as paid");
+
+    dispatch(getPaymentDetails(id));
+    dispatch(getProductDetails(proj));
+    //}
+    return true;
+  } catch (error) {
+    dispatch({
+      type: MARK_PAID_FAIL,
+    });
+    toast.error(error.response.data.message);
     return false;
   }
 };

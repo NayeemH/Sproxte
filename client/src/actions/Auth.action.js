@@ -36,9 +36,11 @@ export const getRefreshToken = () => async (dispatch) => {
     return true;
     //}
   } catch (error) {
-    dispatch({
-      type: ACCESS_TOKEN_ERROR,
-    });
+    if (error.response.status !== 403) {
+      dispatch({
+        type: ACCESS_TOKEN_ERROR,
+      });
+    }
     return false;
   }
 };

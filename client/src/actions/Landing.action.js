@@ -4,6 +4,7 @@ import {
   DISCOVER_FEATURED,
   DISCOVER_LOAD,
   DISCOVER_POPULAR,
+  GET_LANDING_DATA,
   GET_LANDING_LIST,
   LANDING_SIDEBAR_TOGGLE,
   PRODUCT_BY_CATEGORY,
@@ -21,6 +22,12 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import { BASE_URL } from "../constants/URL";
 import { getRefreshToken } from "./Auth.action";
+import {
+  GET_TEAMS,
+  GET_TEAMS_FAIL,
+  GET_TEAM_DETAILS,
+  GET_TEAM_DETAILS_FAIL,
+} from "../constants/Type";
 
 export const toggleLandingSidebar = () => (dispatch) => {
   dispatch({
@@ -110,6 +117,23 @@ export const loginUserAccount = (values) => async (dispatch) => {
   }
 };
 
+//GET LANDING DATA NEW UI
+export const getLandingData = () => async (dispatch) => {
+  try {
+    const res = await axios.get(`${BASE_URL}/api/v1/type/categoryAll/`);
+    // console.log(res);
+
+    dispatch({
+      type: GET_LANDING_DATA,
+      payload: res.data.finalData,
+    });
+  } catch (err) {
+    dispatch({
+      type: TYPES_LOAD_ERROR,
+    });
+    console.log(err);
+  }
+};
 //GET Type LIST ACTION
 export const getTypeList = () => async (dispatch) => {
   try {
@@ -151,9 +175,7 @@ export const deleteType = (id) => async (dispatch) => {
 //GET LANDING LIST
 export const getLandingList = () => async (dispatch) => {
   try {
-    const res = await axios.get(
-      `${BASE_URL}/api/v1/discover/all?page=1&limit=8`
-    );
+    const res = await axios.get(`${BASE_URL}/api/v1/discover/all`);
     // console.log(res);
 
     dispatch({
@@ -242,5 +264,39 @@ export const getCategoryProduct = (id) => async (dispatch) => {
   } catch (err) {
     dispatch({ type: DISCOVER_ERROR });
     console.log(err);
+  }
+};
+
+//GET TEAMS
+export const getTeamList = () => async (dispatch) => {
+  try {
+    const res = await axios.get(`${BASE_URL}/api/v1/team`);
+    // console.log(res);
+
+    dispatch({
+      type: GET_TEAMS,
+      payload: res.data.data,
+    });
+  } catch (err) {
+    dispatch({
+      type: GET_TEAMS_FAIL,
+    });
+  }
+};
+
+//GET TEAM PLAYERS
+export const getTeamPlayerList = (id) => async (dispatch) => {
+  try {
+    const res = await axios.get(`${BASE_URL}/api/v1/team/${id}`);
+    // console.log(res);
+
+    dispatch({
+      type: GET_TEAM_DETAILS,
+      payload: res.data.data,
+    });
+  } catch (err) {
+    dispatch({
+      type: GET_TEAM_DETAILS_FAIL,
+    });
   }
 };

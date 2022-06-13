@@ -1,0 +1,152 @@
+.wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logo {
+  height: 35px;
+}
+
+.logo:hover {
+  cursor: pointer;
+}
+
+.ham {
+  display: none;
+}
+
+.box {
+  background-color: #fff;
+  border-radius: 5px;
+  padding: 3px 10px;
+  margin-left: 10px;
+  height: 36px;
+}
+
+.icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  height: 28px;
+  width: 28px;
+  border: 1px solid var(--dark);
+  margin: 0 2px;
+
+  transition: 0.3s all ease-in-out;
+  a {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--dark);
+    font-size: 22px;
+    text-decoration: none;
+  }
+  &:hover {
+    background: var(--dark);
+    a {
+      color: var(--white);
+      transition: 0.3s all ease-in-out;
+    }
+  }
+}
+
+.link {
+  margin: 0 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  a {
+    text-decoration: none;
+    color: var(--dark);
+    font-weight: bold;
+    text-shadow: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 16px;
+    transition: 0.3s all ease-in-out;
+  }
+  a:hover {
+    color: var(--black);
+    text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.16);
+    transition: 0.3s all ease-in-out;
+  }
+}
+.active {
+  margin: 0 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  a {
+    text-decoration: none;
+    color: var(--orange);
+    font-weight: bold;
+    text-shadow: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 16px;
+    transition: 0.3s all ease-in-out;
+  }
+  a:hover {
+    color: var(--black);
+    transition: 0.3s all ease-in-out;
+  }
+}
+
+.sidebar_mobile {
+  display: none;
+}
+
+@media screen and (max-width: 768px) {
+  .link {
+    margin: 0;
+  }
+
+  .ham {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 3;
+  }
+
+  .sidebar_mobile {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    z-index: 2;
+    left: -102%;
+    top: 0;
+    transition: 0.3s all ease-in-out;
+    background: var(--light);
+    padding: 30px 10px;
+  }
+
+  .sidebar_mobile.active {
+    left: 0;
+    transition: 0.3s all ease-in-out;
+  }
+
+  .active a {
+    color: var(--dark) !important;
+    font-size: 24px;
+    margin-top: 10px;
+  }
+
+  .icon {
+    height: 40px;
+    width: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    a {
+      margin-top: 0 !important;
+    }
+  }
+}

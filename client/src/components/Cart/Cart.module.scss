@@ -1,5 +1,7 @@
 .wrapper {
   min-height: 500px;
+  width: 100%;
+  padding-bottom: 40px;
 }
 
 .heading {
@@ -42,4 +44,17 @@
   background: var(--white) !important;
   border: 1px solid var(--white) !important;
   border-radius: 15px !important;
+}
+
+@media screen and (max-width: 768px) {
+  .heading {
+    font-size: 12px;
+  }
+  .crt {
+    font-size: 12px;
+  }
+
+  .close {
+    font-size: 12px;
+  }
 }

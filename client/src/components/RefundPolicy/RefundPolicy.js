@@ -7,7 +7,7 @@ const RefundPolicy = () => {
     <div className={styles.wrapper}>
       <h1 className="text-center fw-dark py-3 ">Refund Policy</h1>
       <Container>
-        <span className="d-block fs-4 fw-dark text-center pb-5">
+        <span className="d-block fs-4 fw-dark text-center pb-5 px-4">
           How can I return something? Due to the nature of the items being
           customized, all purchases are final. We do not accept returns unless a
           product has a manufactured flaw upon receipt. Please email us at

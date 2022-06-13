@@ -11,6 +11,8 @@ import types from "../config/ProductTypes";
 import { toast } from "react-toastify";
 import { BASE_URL } from "../constants/URL";
 import axios from "axios";
+import { getPrice } from "../utils/getPrice";
+import { getDiscount } from "../utils/getDiscount";
 
 // GET PRODUCT
 export const getProduct = (id) => async (dispatch) => {
@@ -78,45 +80,22 @@ export const addToCart =
     mainTextColor,
     secondaryTextColor,
     selectedLayout,
-    quantity,
+    quantityRaw,
     product,
     color,
     type,
     font,
     productFont,
-    orderColor
+    orderColor,
+    orderColor2
   ) =>
   (dispatch) => {
     toast.success("Added to cart");
     let newDiscount = 0;
-    if (
-      typeof product.discount === "string" ||
-      typeof product.discount === "number"
-    ) {
-      newDiscount = parseInt(product.discount);
-    } else {
-      if (product.discount.range && product.discount.range.length > 0) {
-        product.discount.range.forEach((item, i) => {
-          if (
-            i < product.discount.range.length - 1 &&
-            item <= quantity &&
-            quantity <= product.discount.range[i + 1]
-          ) {
-            newDiscount = product.discount.discount[i + 1];
-          }
-          if (i == 0 && quantity <= product.discount.range[i]) {
-            newDiscount = product.discount.discount[i];
-          } else if (
-            quantity > product.discount.range[product.discount.range.length - 1]
-          ) {
-            newDiscount =
-              product.discount.discount[product.discount.range.length];
-          }
-        });
-      } else {
-        newDiscount = product.discount.discount[0];
-      }
-    }
+    let newPrice = 0;
+    let quantity = parseInt(quantityRaw);
+    newPrice = getPrice(product.priceArray, parseInt(quantity));
+    newDiscount = getDiscount(product.discount, parseInt(quantity));
 
     dispatch({
       type: CART_ADD_ITEM,
@@ -131,18 +110,18 @@ export const addToCart =
         secondaryTextColor,
         selectedLayout,
         quantity,
-        product: { ...product, discount: newDiscount },
+        product: { ...product, discount: newDiscount, price: newPrice },
         color,
         type,
         font,
         productFont,
         orderColor,
+        orderColor2,
       },
     });
   };
 
 export const removeFromCart = (id) => (dispatch) => {
-  console.log(id);
   dispatch({
     type: CART_REMOVE_ITEM,
     payload: id,

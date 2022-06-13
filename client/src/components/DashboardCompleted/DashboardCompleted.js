@@ -76,12 +76,15 @@ const DashboardCompleted = ({
           projects.items.map((project) => (
             <Col key={project._id} md={3} className="p-3">
               <ProductCard
+                imgLink={true}
                 title={project.name}
                 img={`${IMAGE_PATH}small/${project.image}`}
                 description={project.createdAt}
                 dashboard={`dashboard/order/${project._id}`}
                 template
+                Imgid={project._id}
                 status={project.status}
+                idBASE
               />
             </Col>
           ))}

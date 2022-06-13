@@ -3,8 +3,11 @@ import { Badge, Card, Col, Row } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { AiOutlineArrowRight } from "react-icons/ai";
 import { IoIosTimer } from "react-icons/io";
+import { RiTeamLine } from "react-icons/ri";
+import { BiHash } from "react-icons/bi";
 import styles from "./ProductCard.module.scss";
 import Moment from "react-moment";
+import { hexToBase64 } from "../../../utils/hexToBase";
 
 const ProductCard = ({
   title,
@@ -22,6 +25,11 @@ const ProductCard = ({
   tags,
   bottom,
   hidden,
+  notitle,
+  imgLink,
+  team,
+  idBASE,
+  Imgid,
 }) => {
   const navigate = useNavigate();
   return (
@@ -44,24 +52,75 @@ const ProductCard = ({
                   <span>{status}</span>
                 </span>
               )}
-              <img src={img} alt={title} className="w-100" />
+              <img
+                src={img}
+                alt={title}
+                className={`w-100 ${imgLink ? styles.img__link : ""}`}
+                onClick={() =>
+                  imgLink
+                    ? dashboard
+                      ? navigate(
+                          `/${
+                            dashboard
+                              ? dashboard
+                              : template
+                              ? "template"
+                              : order
+                              ? "order"
+                              : "product"
+                          }/${id ? id : ""}`
+                        )
+                      : navigate(
+                          `/${
+                            dashboard
+                              ? dashboard
+                              : template
+                              ? "template"
+                              : order
+                              ? "order"
+                              : "product"
+                          }/${Imgid ? Imgid : ""}`
+                        )
+                    : null
+                }
+              />
               {discount && discount > 0 ? (
                 <span className={styles.discount}>-{discount}%</span>
               ) : null}
               {bottom ? <span className={styles.bottom}>{bottom}</span> : null}
             </Col>
             <Col md={!hidden ? 9 : 12}>
-              <span
-                className={`d-block fs-5 text-start  d-flex align-items-center pt-2 ${styles.title}`}
-              >
-                {title}
-              </span>
+              {!notitle ? (
+                <span
+                  className={`d-block fs-5 text-start  d-flex align-items-center pt-2 ${styles.title}`}
+                >
+                  {title}
+                </span>
+              ) : (
+                <></>
+              )}
+              {idBASE && Imgid ? (
+                <span className={`d-block fs-6 text-dark text-start fw-bold`}>
+                  <BiHash className="me-1" />
+                  {Imgid ? hexToBase64(Imgid.slice(0, 8)).slice(0, 6) : null}
+                </span>
+              ) : null}
+              {team && (
+                <span
+                  className={`d-block fs-6 text-warning text-start fw-bold`}
+                >
+                  <RiTeamLine className="me-1" />
+                  {team}
+                </span>
+              )}
+
               {description && (
                 <span className={`d-block fs-6 text-secondary text-start`}>
                   <IoIosTimer className="me-1" />{" "}
                   <Moment format="DD-MM-YYYY">{description}</Moment>
                 </span>
               )}
+
               {tags &&
                 tags.length > 0 &&
                 tags.map((tag, i) => (

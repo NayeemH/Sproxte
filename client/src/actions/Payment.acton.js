@@ -1,6 +1,11 @@
 import axios from "axios";
 import { toast } from "react-toastify";
-import { CLIENT_LIST_LOAD, DEVELOPER_LIST_LOAD } from "../constants/Type";
+import {
+  CLIENT_LIST_LOAD,
+  DEVELOPER_LIST_LOAD,
+  FEDEX_TRACKING_SUCCESS,
+  GET_VALID_ADDRESS,
+} from "../constants/Type";
 import {
   CHANGE_STATUS,
   CHANGE_STATUS_ERROR,
@@ -61,9 +66,8 @@ export const setPaymentToken = (id) => async (dispatch) => {
   }
 };
 // CREATE ORDER
-export const createOrder = (values, cart, logo) => async (dispatch) => {
+export const createOrder = (values, cart, logo, role) => async (dispatch) => {
   try {
-    console.log(values);
     const formData = new FormData();
     formData.append("address", values.address);
     formData.append("phone", values.phone);
@@ -74,6 +78,7 @@ export const createOrder = (values, cart, logo) => async (dispatch) => {
     formData.append("state", values.state);
     formData.append("zip", values.zip);
     formData.append("country", values.country);
+    formData.append("serviceType", values.method);
 
     if (logo) {
       formData.append("logo", logo);
@@ -124,6 +129,9 @@ export const createOrder = (values, cart, logo) => async (dispatch) => {
         if (item.orderColor) {
           frmData.append("orderColor", item.orderColor);
         }
+        if (item.orderColor2) {
+          frmData.append("color2", item.orderColor2);
+        }
 
         if (item.selectedLayout) {
           frmData.append("layoutId", item.selectedLayout);
@@ -165,13 +173,56 @@ export const createOrder = (values, cart, logo) => async (dispatch) => {
 
     if (check === cart.length) {
       // toast.success("Order created successfully");
+
+      const config2 = {
+        headers: {
+          "Content-Type": "application/json",
+        },
+        withCredentials: true,
+      };
       dispatch({ type: ORDER_SUCCESS, payload: res.data.orderId });
-      return res.data.orderId;
+      try {
+        const res2 = await axios.get(
+          `${BASE_URL}/api/v1/shipment/${res.data.orderId}`,
+          config2
+        );
+
+        // dispatch({
+        //   type: GET_VALID_ADDRESS,
+        //   payload: { ...res2.data, orderId: res.data.orderId },
+        // });
+        if (role === "admin") {
+          await axios.post(
+            `${BASE_URL}/api/v1/admin/order/${res.data.orderId}`,
+            {},
+            config2
+          );
+        }
+
+        return { ...res2.data, orderId: res.data.orderId };
+      } catch (error) {
+        toast.error(error.response.data.message);
+      }
     }
   } catch (err) {
     dispatch({ type: ORDER_ERROR });
     console.log(err);
     return false;
+  }
+};
+
+//GET Tracking
+export const getTrackingInfo = (id) => async (dispatch) => {
+  try {
+    const res = await axios.get(`${BASE_URL}/api/v1/shipment/track/${id}`);
+
+    dispatch({
+      type: FEDEX_TRACKING_SUCCESS,
+      payload: { ...res.data, orderId: id },
+    });
+    //console.log(res);
+  } catch (err) {
+    console.log(err);
   }
 };
 

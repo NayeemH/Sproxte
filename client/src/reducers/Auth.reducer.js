@@ -14,7 +14,7 @@ import { decodeToken } from "react-jwt";
 
 const initialState = {
   token: "",
-  isAuthenticated: false,
+  isAuthenticated: null,
   user: null,
   loading: true,
   notifications: null,
@@ -47,7 +47,6 @@ const authReducer = (state = initialState, action) => {
     case LOGIN_FAIL:
     case LOGOUT_SUCCESS:
     case LOGOUT_FAIL:
-      localStorage.removeItem("token");
       return {
         ...state,
         token: "",

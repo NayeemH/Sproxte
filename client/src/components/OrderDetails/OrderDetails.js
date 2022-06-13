@@ -26,6 +26,11 @@ import { FaIcons } from "react-icons/fa";
 import { saveAs } from "file-saver";
 import AddPlayerInfo from "../AddPlayerInfo/AddPlayerInfo";
 import { useNavigate } from "react-router-dom";
+import packageTypes from "../../constants/fedexPackageType";
+import { Text } from "@mantine/core";
+import { downloadLabel, markasPaid } from "../../actions/Dashboard.action";
+import TrackingInfo from "../TrackingInfo/TrackingInfo";
+import { getPrice } from "../../utils/getPrice";
 
 const OrderDetails = ({
   projects,
@@ -34,12 +39,45 @@ const OrderDetails = ({
   changeProjectStatus,
   role,
   team,
+  downloadLabel,
+  markasPaid,
+  user,
 }) => {
   const [status, setStatus] = useState("");
   const navigate = useNavigate();
 
   const modals = useModals();
   const modal = useModals();
+
+  const handelPackage = (type, name) => {
+    modals.openConfirmModal({
+      title: "Packaging Type",
+      centered: true,
+      children: (
+        <Text size="md">
+          Selected Type: <b>{name}</b>
+        </Text>
+      ),
+      labels: { confirm: "Download", cancel: "Cancel" },
+      confirmProps: { color: "red" },
+      zIndex: 10000000,
+      onCancel: () => {},
+      onConfirm: () => downloadLabel(type, projects.orderId),
+    });
+  };
+  const markHandeler = () => {
+    modals.openConfirmModal({
+      title: "Mark this order as paid",
+      centered: true,
+      children: (
+        <Text size="md">Are you sure you want to mark this order as paid?</Text>
+      ),
+      labels: { confirm: "Mark as paid", cancel: "Cancel" },
+      zIndex: 10000000,
+      onCancel: () => {},
+      onConfirm: () => markasPaid(projects.orderId, projects._id),
+    });
+  };
 
   const viewHandeler = () =>
     modals.openModal({
@@ -214,6 +252,22 @@ const OrderDetails = ({
     });
   };
 
+  const trackingModal = () => {
+    modals.openModal({
+      title: "Tracking",
+      closeOnClickOutside: false,
+      closeOnEscape: false,
+      centered: true,
+      children: (
+        <TrackingInfo
+          id={projects.orderId}
+          tracking={projects.masterTrackingNumber}
+        />
+      ),
+      zIndex: 9999991,
+    });
+  };
+
   return (
     <Container className={styles.wrapper}>
       {role && (role === "admin" || role === "iep") && (
@@ -265,6 +319,33 @@ const OrderDetails = ({
               </Button>
             )}
           </div>
+          {projects.isShippingLabel === true ? (
+            <></>
+          ) : (
+            <div className="d-flex">
+              <Dropdown>
+                <Dropdown.Toggle
+                  variant="success"
+                  id="dropdown-basic"
+                  className={`${styles.active_btn} mt-3 mt-md-0`}
+                >
+                  Select Package Type
+                </Dropdown.Toggle>
+
+                <Dropdown.Menu>
+                  {packageTypes.map((item) => (
+                    <Dropdown.Item
+                      key={item.id}
+                      onClick={() => handelPackage(item.value, item.label)}
+                      style={{ textTransform: "capitalize" }}
+                    >
+                      {item.label}
+                    </Dropdown.Item>
+                  ))}
+                </Dropdown.Menu>
+              </Dropdown>
+            </div>
+          )}
         </div>
       )}
 
@@ -282,8 +363,13 @@ const OrderDetails = ({
           projects.products.map((project, i) => (
             <Col key={project._id} md={3} className="p-3">
               <ProductCard
+                imgLink={true}
                 title={project.name}
-                img={`${IMAGE_PATH}small/${project.colorImage}`}
+                img={`${IMAGE_PATH}small/${
+                  project.type === "template"
+                    ? project.image.front
+                    : project.colorImage
+                }`}
                 description={project.createdAt}
                 dashboard={`${team === true ? "team-" : ""}dashboard/${
                   project.type === "template" ? "product" : `${id}`
@@ -296,7 +382,7 @@ const OrderDetails = ({
                     : "template"
                 }
                 bottom={project.status}
-                tags={[`x${project.count}`, `$${project.price}`]}
+                tags={[`x${project.count}`]}
                 hidden={
                   project.type === "template" || project.type === "link"
                     ? true
@@ -306,24 +392,62 @@ const OrderDetails = ({
             </Col>
           ))}
       </Row>
-
-      {projects && projects.count && projects.count > 0 ? (
-        <Row>
-          <Col className={`text-center pt-4`}>
-            <Button onClick={clickHandeler} className="btn_primary">
-              Add Player Information
-            </Button>
-          </Col>
-        </Row>
+      {projects.type === "normal" ? (
+        <></>
       ) : (
-        <Row>
-          <Col className={`text-center pt-4`}>
-            <Button onClick={clickHandelerReq} className="btn_primary">
-              Add Player Request
-            </Button>
-          </Col>
-        </Row>
+        <>
+          {projects && projects.count && projects.count > 0 ? (
+            <Row>
+              <Col className={`text-center pt-4`}>
+                <Button onClick={clickHandeler} className="btn_primary">
+                  Add Player Information
+                </Button>
+              </Col>
+            </Row>
+          ) : (
+            <Row>
+              <Col className={`text-center pt-4`}>
+                <Button onClick={clickHandelerReq} className="btn_primary">
+                  Add Player Request
+                </Button>
+              </Col>
+            </Row>
+          )}
+        </>
       )}
+      <div className="d-flex justify-content-center pt-4">
+        <Button className="btn_primary me-3" onClick={() => navigate(-1)}>
+          Go Back
+        </Button>
+        {projects.isShippingLabel === true ? (
+          <Button className="btn_primary" onClick={() => trackingModal()}>
+            Track Now
+          </Button>
+        ) : (
+          <></>
+        )}
+
+        {/* ::::: TODO */}
+        {role === "admin" && projects?.isAdmin === true ? (
+          <Button
+            className="btn_primary ms-3"
+            onClick={() => navigate(`/admin/order/${projects.orderId}`)}
+          >
+            View Invoice
+          </Button>
+        ) : (
+          <></>
+        )}
+        {role === "admin" &&
+        projects?.isAdmin === true &&
+        projects?.isPaid === false ? (
+          <Button className="btn_primary ms-3" onClick={() => markHandeler()}>
+            Mark As Paid
+          </Button>
+        ) : (
+          <></>
+        )}
+      </div>
     </Container>
   );
 };
@@ -331,9 +455,12 @@ const OrderDetails = ({
 const mapStateToProps = (state) => ({
   projects: state.project.selected_project,
   role: state.auth.user.userType,
+  user: state.auth.user,
 });
 
 export default connect(mapStateToProps, {
   getProjectDetails,
   changeProjectStatus,
+  downloadLabel,
+  markasPaid,
 })(OrderDetails);

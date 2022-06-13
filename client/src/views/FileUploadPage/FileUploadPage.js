@@ -2,10 +2,9 @@ import { connect } from "react-redux";
 import React, { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { getProduct } from "../../actions/Cart.action";
-import Footer from "../../components/Footer/Footer";
-import LandingSidebar from "../../components/LandingSidebar/LandingSidebar";
-import Nav from "../../components/Nav/Nav";
 import UploadFiles from "../../components/UploadFiles/UploadFiles";
+import LandingNavbar from "../../components/LandingNavbar/LandingNavbar";
+import LandingSlider from "../../components/LandingSlider/LandingSlider";
 
 const FileUploadPage = ({ getProduct, product }) => {
   const { id } = useParams();
@@ -13,11 +12,11 @@ const FileUploadPage = ({ getProduct, product }) => {
     getProduct(id);
   }, []);
   return (
-    <div>
-      <LandingSidebar />
-      <Nav />
-      <UploadFiles product={product} />
-      <Footer />
+    <div className={`wrapper_custom px-md-4 px-2`}>
+      <LandingNavbar />
+      <div className="d-flex justify-content-start align-items-center">
+        <UploadFiles product={product} />
+      </div>
     </div>
   );
 };

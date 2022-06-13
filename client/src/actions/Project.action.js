@@ -177,18 +177,49 @@ export const createAccountExisting = (id) => async (dispatch) => {
 
 // CREATE PROJECT
 export const createProject =
-  (values, file1, file2, file3, colors) => async (dispatch) => {
+  (values, file1, file2, file3, colors, priceList, discountList) =>
+  async (dispatch) => {
     let formData = new FormData();
 
+    const discountData = {
+      range: [],
+      discount: [],
+    };
+
+    if (discountList) {
+      discountList.map((d, i) => {
+        discountData.range.push(parseInt(d.range));
+        discountData.discount.push(parseInt(d.discount));
+      });
+    }
+
+    const priceData = {
+      range: [],
+      price: [],
+    };
+    if (priceList) {
+      priceList.map((d, i) => {
+        priceData.range.push(parseInt(d.range));
+        priceData.price.push(parseInt(d.price));
+      });
+    }
+
+    priceData.price.push(values.price);
+    discountData.discount.push(values.discount);
+    formData.append("discount", JSON.stringify(discountData));
+
     formData.append("name", values.name);
-    formData.append("price", values.price);
+    formData.append("priceArray", JSON.stringify(priceData));
+    formData.append("price", 0);
     formData.append("quantity", values.quantity);
+    // ::: WEIGHT :::
+    formData.append("weight", values.weight);
     if (values.productType) {
       formData.append("productType", values.productType);
     }
-    if (values.discount) {
-      formData.append("discount", values.discount);
-    }
+    // if (values.discount) {
+    //   formData.append("discount", values.discount);
+    // }
     formData.append("description", values.description);
     if (values.featured === true) {
       formData.append("featured", values.featured);
@@ -247,16 +278,42 @@ export const createProject =
 
 // EDIT PRODUCT
 export const editProduct =
-  (values, file1, file2, file3, colors, id) => async (dispatch) => {
+  (values, file1, file2, file3, colors, id, priceList, discountList) =>
+  async (dispatch) => {
     let formData = new FormData();
+
+    const priceData = {
+      range: [],
+      price: [],
+    };
+    if (priceList) {
+      priceList.map((d, i) => {
+        priceData.range.push(parseInt(d.range));
+        priceData.price.push(parseInt(d.price));
+      });
+    }
+
+    const discountData = {
+      range: [],
+      discount: [],
+    };
+    if (discountList) {
+      discountList.map((d, i) => {
+        discountData.range.push(d.range);
+        discountData.discount.push(d.discount);
+      });
+    }
+
+    priceData.price.push(values.price);
 
     formData.append("name", values.name);
     formData.append("price", values.price);
+    formData.append("priceArray", JSON.stringify(priceData));
+    // ::: WEIGHT :::
+    formData.append("weight", values.weight);
     formData.append("quantity", values.quantity);
     formData.append("description", values.description);
-    if (values.discount) {
-      formData.append("discount", values.discount);
-    }
+    formData.append("discount", JSON.stringify(discountData));
 
     formData.append("featured", values.featured);
 
@@ -374,7 +431,8 @@ export const deleteProduct = (id) => async (dispatch) => {
 
 // CREATE PRODUCT TYPE
 export const createProductType =
-  (values, file, previewFile, layouts, discountList) => async (dispatch) => {
+  (values, file, previewFile, layouts, discountList, priceList) =>
+  async (dispatch) => {
     let formData = new FormData();
     //console.log(layouts);
 
@@ -382,21 +440,34 @@ export const createProductType =
       range: [],
       discount: [],
     };
+
     if (discountList) {
       discountList.map((d, i) => {
         discountData.range.push(parseInt(d.range));
         discountData.discount.push(parseInt(d.discount));
       });
     }
+    const priceData = {
+      range: [],
+      price: [],
+    };
+    if (priceList) {
+      priceList.map((d, i) => {
+        priceData.range.push(parseInt(d.range));
+        priceData.price.push(parseInt(d.price));
+      });
+    }
 
+    priceData.price.push(values.price);
     discountData.discount.push(values.discount);
+    formData.append("discount", JSON.stringify(discountData));
     formData.append("playerAddPrice", values.playerAddPrice);
 
     formData.append("name", values.name);
     formData.append("categoryType", values.categoryType);
-    formData.append("price", values.price);
-    formData.append("discount", JSON.stringify(discountData));
+    formData.append("priceArray", JSON.stringify(priceData));
     formData.append("pngImageFront", file);
+    formData.append("weight", values.weight);
 
     if (previewFile) {
       formData.append("pngImageBack", previewFile);
@@ -458,7 +529,7 @@ export const createProductType =
 
 // EDIT PRODUCT TYPE
 export const editProductType =
-  (values, id, file, previewFile, layouts, discountList) =>
+  (values, id, file, previewFile, layouts, discountList, priceList) =>
   async (dispatch) => {
     let formData = new FormData();
 
@@ -474,14 +545,29 @@ export const editProductType =
     };
     if (discountList) {
       discountList.map((d, i) => {
-        discountData.range.push(parseInt(d.range));
-        discountData.discount.push(parseInt(d.discount));
+        discountData.range.push(d.range);
+        discountData.discount.push(d.discount);
       });
     }
+
+    const priceData = {
+      range: [],
+      price: [],
+    };
+    if (priceList) {
+      priceList.map((d, i) => {
+        priceData.range.push(parseInt(d.range));
+        priceData.price.push(parseInt(d.price));
+      });
+    }
+
+    priceData.price.push(values.price);
 
     discountData.discount.push(values.discount);
     formData.append("playerAddPrice", values.playerAddPrice);
     formData.append("discount", JSON.stringify(discountData));
+    formData.append("priceArray", JSON.stringify(priceData));
+    formData.append("weight", values.weight);
     if (layouts) {
       for (let i = 0; i < layouts.length; i++) {
         formData.append(`layouts`, layouts[i]);
@@ -736,7 +822,7 @@ export const getStepDetails = (id) => async (dispatch) => {
     dispatch({
       type: GET_STEP_ERROR,
     });
-    console.log(err);
+    //console.log(err);
   }
 };
 

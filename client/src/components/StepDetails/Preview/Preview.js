@@ -72,10 +72,7 @@ const Preview = ({
     <Col md={9}>
       <div className={`${styles.arrows_section} d-flex align-items-center p-2`}>
         <span className={styles.back_icon}>
-          <AiOutlineLeft
-            size={20}
-            onClick={() => navigate(`/dashboard/order/${projectId}`)}
-          />
+          <AiOutlineLeft size={20} onClick={() => navigate(-1)} />
         </span>
         <div className="d-flex justify-content-center align-items-center w-100">
           <span className={styles.nav}>

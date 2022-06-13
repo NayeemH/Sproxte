@@ -122,7 +122,7 @@ const UsersList = ({ item, getUserList, dashboard, deleteUser }) => {
                     className="mb-3 border-bottom pb-3"
                     key={notification._id}
                   >
-                    <Col xs={2}>
+                    <Col md={2}>
                       <Row>
                         <Col
                           md={7}
@@ -137,7 +137,7 @@ const UsersList = ({ item, getUserList, dashboard, deleteUser }) => {
                           </div>
                         </Col>
                         <Col
-                          xs={3}
+                          md={3}
                           className="d-flex justify-content-center align-items-center"
                         >
                           <div className={styles.line}></div>
@@ -145,7 +145,7 @@ const UsersList = ({ item, getUserList, dashboard, deleteUser }) => {
                       </Row>
                     </Col>
                     <Col
-                      xs={9}
+                      md={9}
                       className="d-flex justify-content-center flex-column"
                     >
                       <div className={`d-block fw-bold ${styles.lnk}`}>
@@ -159,7 +159,7 @@ const UsersList = ({ item, getUserList, dashboard, deleteUser }) => {
                       </span>
                     </Col>
                     <Col
-                      xs={1}
+                      md={1}
                       className="d-flex justify-content-end align-items-center"
                     >
                       <div

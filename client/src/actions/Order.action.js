@@ -49,7 +49,7 @@ export const getStateList = (country) => async (dispatch) => {
     dispatch({
       type: SET_STATES,
       payload: response.data.map((item) => {
-        return { value: item.name, label: item.name };
+        return { value: item.iso2, label: item.name };
       }),
     });
   } catch (err) {

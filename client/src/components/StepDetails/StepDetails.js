@@ -11,11 +11,11 @@ import { saveAs } from "file-saver";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import styles from "./StepDetails.module.scss";
 import { toast } from "react-toastify";
-import demoImg from "../../assets/logo.PNG";
 import { useModals } from "@mantine/modals";
 import { Text, TextInput } from "@mantine/core";
 import { rejectOrder } from "../../actions/Order.action";
 import Moment from "react-moment";
+import { getPrice } from "../../utils/getPrice";
 
 const StepDetails = ({
   step,
@@ -25,6 +25,7 @@ const StepDetails = ({
   role,
   approveStep,
   rejectOrder,
+  auth,
 }) => {
   const { stepId, projectId } = useParams();
 
@@ -112,9 +113,19 @@ const StepDetails = ({
     });
   };
 
-  useEffect(() => {
-    getStepDetails(stepId);
-  }, [stepId]);
+  const getDiscount = (data) => {
+    if (step.count < data.range[0]) {
+      return data.discount[0];
+    } else if (step.count > data.range[data.range.length - 1]) {
+      return data.discount[data.discount.length - 1];
+    } else {
+      for (let i = 0; i < data.range.length; i++) {
+        if (step.count >= data.range[i] && step.count <= data.range[i + 1]) {
+          return data.discount[i + 1];
+        }
+      }
+    }
+  };
 
   return (
     <div className={styles.wrapper}>
@@ -128,7 +139,10 @@ const StepDetails = ({
       ) : (
         <Row>
           {step.status !== "delivered" ? (
-            <Col xs={12} className={`d-flex align-items-center pb-3`}>
+            <Col
+              xs={12}
+              className={`d-flex align-items-center flex-md-row flex-column pb-3`}
+            >
               {step.status !== "approved" ? (
                 <>
                   <Button
@@ -182,7 +196,10 @@ const StepDetails = ({
           ) : null}
           <Col md={role === "admin" || role === "iep" ? 8 : 12}>
             <Row className="pb-4">
-              {selectedCollectionIndex >= 0 && (
+              {step &&
+              step._id &&
+              step.collections &&
+              selectedCollectionIndex >= 0 ? (
                 <Preview
                   data={step.collections[selectedCollectionIndex]}
                   length={step.collections.length}
@@ -198,8 +215,14 @@ const StepDetails = ({
                   hoverFB={hoverFB}
                   setHoverFB={setHoverFB}
                 />
+              ) : (
+                <></>
               )}
-              {selectedCollectionIndex >= 0 && (
+              {step &&
+              step._id &&
+              step.collections &&
+              step.collections.length &&
+              selectedCollectionIndex >= 0 ? (
                 <Overview
                   collection={step.collections[selectedCollectionIndex]}
                   final={
@@ -216,10 +239,17 @@ const StepDetails = ({
                   setHoverFB={setHoverFB}
                   sellCount={step.sellCount}
                 />
+              ) : (
+                <></>
               )}
-              {step.collections.length === 0 && <Overview />}
+              {step && step._id && step.collections.length === 0 ? (
+                <Overview />
+              ) : (
+                <></>
+              )}
             </Row>
             {step &&
+            step._id &&
             step.gurdianNotifications &&
             step.gurdianNotifications.length > 0 ? (
               <Row className="text-dark">
@@ -229,9 +259,10 @@ const StepDetails = ({
                 </Col>
                 <Col md={12}>
                   {step &&
+                    step._id &&
                     step.gurdianNotifications &&
-                    step.gurdianNotifications.map((item) => (
-                      <div className="crd crd-body p-3 my-3">
+                    step.gurdianNotifications.map((item, i) => (
+                      <div className="crd crd-body p-3 my-3" key={i}>
                         <Row>
                           <Col>
                             <span className="d-block fs-5">{item.message}</span>
@@ -263,7 +294,7 @@ const StepDetails = ({
               <></>
             )}
           </Col>
-          {role === "admin" || role === "iep" ? (
+          {(role === "admin" || role === "iep") && step ? (
             <>
               <Col md={4}>
                 <Card className={`${styles.crd} shadow mb-4`}>
@@ -289,13 +320,16 @@ const StepDetails = ({
                       </Col>
                       <Col xs={6}>
                         <span className="d-block fs-5">
-                          <span className="fw-bold">Price :</span> ${step.price}
+                          <span className="fw-bold">Price :</span> $
+                          {step.priceArray
+                            ? getPrice(step?.priceArray, step.count)
+                            : null}
                         </span>
                       </Col>
                       <Col xs={6}>
                         <span className="d-block fs-5">
                           <span className="fw-bold">Discount :</span>{" "}
-                          {step.discount}%
+                          {getDiscount(step?.discount)}%
                         </span>
                       </Col>
                       <Col xs={6}>
@@ -314,13 +348,15 @@ const StepDetails = ({
                         <Col xs={12} className="py-3">
                           <span className="fs-5 align-items-center">
                             <span className="fw-bold d-block">
-                              Order Colors:{" "}
+                              Primary Color:{" "}
                             </span>
                             <div className="">
                               {step.orderColor.split(",").map((orderClr, i) => (
-                                <div className="d-flex align-items-center w-100 fs-6">
+                                <div
+                                  className="d-flex align-items-center w-100 fs-6"
+                                  key={i}
+                                >
                                   <span className="fw-bold">
-                                    {i + 1}.{" "}
                                     {
                                       colors.filter(
                                         (item) =>
@@ -356,6 +392,49 @@ const StepDetails = ({
                           </span>
                         </Col>
                       )}
+                      {step.color2 ? (
+                        <Col xs={12} className="py-3">
+                          <span className="fs-5 align-items-center">
+                            <span className="fw-bold d-block">
+                              Secondary Color:{" "}
+                            </span>
+                          </span>
+                          <div className="d-flex align-items-center w-100 fs-6">
+                            <span className="fw-bold">
+                              {
+                                colors.filter(
+                                  (item) =>
+                                    step.color2 === item.name ||
+                                    step.color2 === item.hex
+                                )[0]?.name
+                              }
+                            </span>{" "}
+                            (
+                            {
+                              colors.filter(
+                                (item) =>
+                                  step.color2 === item.name ||
+                                  step.color2 === item.hex
+                              )[0]?.hex
+                            }
+                            )
+                            <div
+                              className={styles.color}
+                              style={{
+                                background: `${
+                                  colors.filter(
+                                    (item) =>
+                                      step.color2 === item.name ||
+                                      step.color2 === item.hex
+                                  )[0]?.hex
+                                }`,
+                              }}
+                            ></div>
+                          </div>
+                        </Col>
+                      ) : (
+                        <></>
+                      )}
 
                       <Col xs={12}>
                         <span className="d-block fs-5">
@@ -364,8 +443,8 @@ const StepDetails = ({
                       </Col>
 
                       {step.frontImages &&
-                        step.frontImages.map((img) => (
-                          <Col xs={6}>
+                        step.frontImages.map((img, i) => (
+                          <Col xs={6} key={i}>
                             <img
                               onClick={() =>
                                 saveAs(
@@ -490,9 +569,9 @@ const StepDetails = ({
 };
 
 const mapStateToProps = (state) => ({
-  step: state.project.selected_step,
   selectedCollectionIndex: state.project.selected_collection,
   role: state.auth.user.userType,
+  auth: state.auth.isAuthenticated,
   loading: state.project.loading,
 });
 

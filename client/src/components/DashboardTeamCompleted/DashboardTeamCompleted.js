@@ -31,6 +31,7 @@ const DashboardTeamCompleted = ({
       pages.push(
         <Link
           to={`/team-dashboard/completed?page=${parseInt(i)}`}
+          imgLink={true}
           key={i}
           className={`${styles.link} ${
             (!parsed.page && i == 1) || parsed.page == i
@@ -77,11 +78,14 @@ const DashboardTeamCompleted = ({
             <Col key={project._id} md={3} className="p-3">
               <ProductCard
                 title={project.name}
+                team={project.teamName}
                 img={`${IMAGE_PATH}small/${project.image}`}
                 description={project.createdAt}
                 dashboard={`dashboard/order/${project._id}`}
                 template
+                Imgid={project._id}
                 status={project.status}
+                idBASE
               />
             </Col>
           ))}

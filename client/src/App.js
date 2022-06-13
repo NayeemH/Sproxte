@@ -5,13 +5,13 @@ import PrivateOutlet from "./utils/PrivateOutlet";
 import "./App.css";
 import "swiper/css/bundle";
 import {
-  LandingPage,
   SignupPage,
   DiscoverPage,
   CartPage,
   ContactPage,
   PaymentMethodsPage,
   RefundPolicyPage,
+  LandingPage,
 } from "./views";
 import FileUploadPage from "./views/FileUploadPage/FileUploadPage";
 import { useEffect } from "react";
@@ -48,6 +48,7 @@ import UserIepPage from "./views/UserIepPage/UserIepPage";
 import ContactListPage from "./views/ContactListPage/ContactListPage";
 import ReportsPage from "./views/ReportsPage/ReportsPage";
 import SharePage from "./views/SharePage/SharePage";
+import LandingPageNew from "./views/LandingPageNew/LandingPageNew";
 import Paymentpage from "./views/Paymentpage/Paymentpage";
 import PolicyPage from "./views/PolicyPage/PolicyPage";
 import GReport from "./components/Reports/GReport/GReport";
@@ -59,21 +60,23 @@ import ResetPasswordPage from "./views/ResetPasswordPage/ResetPasswordPage";
 import PasswordResetChangePage from "./views/PasswordResetChangePage/PasswordResetChangePage";
 import PlayerRequestPage from "./views/PlayerRequestPage/PlayerRequestPage";
 import PlayerRequestCompletePage from "./views/PlayerRequestCompletePage/PlayerRequestCompletePage";
+import CartNewPage from "./views/CartNewPage/CartNewPage";
+import AdminOrderDetails from "./views/AdminOrderDetails/AdminOrderDetails";
+import TeamPlayerPage from "./views/TeamPlayerPage/TeamPlayerPage";
 
 function App({ getRefreshToken }) {
   useEffect(() => {
     getRefreshToken();
-    Aos.init({
-      duration: 2000,
-    });
   }, []);
   return (
     <>
       <ToastContainer newestOnTop theme="dark" />
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<LandingPage />} />
+          <Route path="/" element={<LandingPageNew />} />
+          <Route path="/team/:id" element={<TeamPlayerPage />} />
           <Route path="/payment-success/:id" element={<PaymentCompelete />} />
+          <Route path="/admin/order/:id" element={<AdminOrderDetails />} />
           <Route
             path="add-player-success/:id/:count/:addition/:price"
             element={<PlayerRequestCompletePage />}
@@ -92,8 +95,9 @@ function App({ getRefreshToken }) {
             element={<PasswordResetChangePage />}
           />
           <Route path="/login" element={<LoginPage />} />
-          <Route path="/cart" element={<CartPage />} />
+          <Route path="/cart" element={<CartNewPage />} />
           <Route path="/share/:id" element={<SharePage />} />
+          <Route path="/team/player/:id" element={<SharePage />} />
           <Route path="/contact" element={<ContactPage />} />
           <Route path="/payment-methods" element={<PaymentMethodsPage />} />
 

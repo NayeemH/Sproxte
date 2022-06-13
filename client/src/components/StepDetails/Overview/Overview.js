@@ -302,7 +302,7 @@ const Overview = ({
               <h5 className="text-dark">Feedbacks</h5>
               {collection.feedbacks.map((item, i) => (
                 <div
-                  key={i}
+                  key={item._id}
                   className={`${styles.feedback} shadow-sm ${
                     hoverFB === item._id ? styles.active : ""
                   }`}

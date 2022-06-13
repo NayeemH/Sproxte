@@ -54,7 +54,7 @@ const Dashboard = ({ dashboard, projects, fetchProjects }) => {
       <div className="d-flex justify-content-between align-items-center flex-md-row flex-column">
         <h3 className="pb-3">Running Orders</h3>
 
-        <div className="d-flex flex-column flex-md-row justify-content-between align-items-center">
+        <div className="d-flex flex-column flex-md-row justify-content-between align-items-center pb-3 pb-md-0">
           <div className="d-flex">
             <Dropdown>
               <Dropdown.Toggle
@@ -126,12 +126,15 @@ const Dashboard = ({ dashboard, projects, fetchProjects }) => {
             .map((project) => (
               <Col key={project._id} md={3} className="p-3">
                 <ProductCard
+                  imgLink={true}
                   title={project.name}
                   img={`${IMAGE_PATH}small/${project.image}`}
                   description={project.createdAt}
                   dashboard={`dashboard/order/${project._id}`}
                   template
+                  Imgid={project._id}
                   status={project.status}
+                  idBASE
                 />
               </Col>
             ))}

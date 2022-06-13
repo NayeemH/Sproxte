@@ -230,7 +230,9 @@ const Layout = ({ logout, children, title, user }) => {
                   <GoThreeBars />
                 </div>
                 {title && (
-                  <h3 className="me-auto ps-4 fs-3 my-auto text-dark">
+                  <h3
+                    className={`me-auto ps-4 my-auto text-dark ${styles.title}`}
+                  >
                     {title}
                   </h3>
                 )}

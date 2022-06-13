@@ -62,6 +62,25 @@
   transition: 0.3s all ease-in-out;
 }
 
+.img_wrapper {
+  width: 45px !important;
+  height: 45px !important;
+  border-radius: 50% !important;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.img {
+  height: 45px !important;
+}
+
+.username {
+  margin-left: 3px !important;
+  color: var(--orange) !important;
+}
+
 span.link:hover {
   color: var(--grey) !important;
   transition: 0.3s all ease-in-out;

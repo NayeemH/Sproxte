@@ -4,6 +4,8 @@ import {
   Form as BootstrapForm,
   InputGroup,
   Button,
+  Row,
+  Col,
 } from "react-bootstrap";
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
@@ -94,142 +96,143 @@ const SettingForm = ({ updateProfile, user }) => {
           >
             {({ errors, touched }) => (
               <Form>
-                <div className="d-flex justify-content-between align-items-end">
-                  <div className="">
-                    <div className={styles.preview}>
-                      {selectedFile ? (
-                        <div
-                          className={`${styles.img__wrapper} text-center mb-3`}
-                        >
-                          <img
-                            src={preview}
-                            alt={user.username}
-                            className="img-fluid"
-                          />
-                        </div>
-                      ) : (
-                        <></>
-                      )}
-                    </div>
-                    <div className={styles.preview}>
-                      {!selectedFile ? (
-                        <div
-                          className={`${styles.img__wrapper} text-center mb-3`}
-                        >
-                          <img
-                            src={`${IMAGE_PATH}small/${user.image}`}
-                            alt={user.username}
-                            className="h-100"
-                          />
-                        </div>
-                      ) : (
-                        <></>
-                      )}
-                    </div>
-                    <div className="d-flex justify-content-center align-items-center">
-                      <Button
-                        variant="outline-dark"
-                        onClick={() => fileRef.current.click()}
-                      >
-                        <span className="d-block mr-4">
-                          <ImUpload />
-                        </span>{" "}
-                        <span className="pl-3 d-block"> Change Image</span>
-                      </Button>
-                    </div>
-                    <div className="" style={{ display: "none" }}>
-                      <input
-                        ref={fileRef}
-                        type="file"
-                        name="image"
-                        onChange={onSelectFile}
+                <Row>
+                  <Col md={6}>
+                    <InputGroup className="mb-3 d-flex flex-column">
+                      <div className="d-flex justify-content-between align-items-center pb-2">
+                        <label htmlFor="username" className="d-block">
+                          Name
+                        </label>
+                        {errors.username && touched.username ? (
+                          <small className="text-danger pt-2">
+                            {errors.username}
+                          </small>
+                        ) : null}
+                      </div>
+                      <Field
+                        as={BootstrapForm.Control}
+                        placeholder="Type name"
+                        name="username"
+                        isValid={!errors.username && touched.username}
+                        type="text"
+                        className={`${styles.input} w-100`}
+                        isInvalid={errors.username && touched.username}
                       />
+                    </InputGroup>
+                  </Col>
+                  <Col md={6}>
+                    <InputGroup className="mb-3 d-flex flex-column">
+                      <div className="d-flex justify-content-between align-items-center pb-2">
+                        <label htmlFor="email" className="d-block">
+                          Email
+                        </label>
+                      </div>
+                      <Field
+                        as={BootstrapForm.Control}
+                        placeholder="Email"
+                        name="email"
+                        type="text"
+                        className={`${styles.input} w-100`}
+                        disabled
+                      />
+                      {/* <small className="pt-2">
+                        Email Address Can not be changed.
+                      </small> */}
+                    </InputGroup>
+                  </Col>
+                  <Col md={6}>
+                    <InputGroup className="my-3 d-flex flex-column">
+                      <div className="d-flex justify-content-between align-items-center pb-2">
+                        <label htmlFor="address" className="d-block">
+                          Address
+                        </label>
+                        {errors.address && touched.address ? (
+                          <small className="text-danger pt-2">
+                            {errors.address}
+                          </small>
+                        ) : null}
+                      </div>
+                      <Field
+                        as={BootstrapForm.Control}
+                        placeholder="Type shipping address"
+                        name="address"
+                        isValid={!errors.address && touched.address}
+                        type="text"
+                        className={`${styles.input} w-100`}
+                        isInvalid={errors.address && touched.address}
+                      />
+                    </InputGroup>
+                  </Col>
+                  <Col md={6}>
+                    <div className="pt-3">Profile Picture</div>
+                    <div className="d-flex align-items-center ">
+                      <div className={styles.preview}>
+                        {selectedFile ? (
+                          <div
+                            className={`${styles.img__wrapper} text-center mb-3`}
+                          >
+                            <img
+                              src={preview}
+                              alt={user.username}
+                              className="img-fluid"
+                            />
+                          </div>
+                        ) : (
+                          <></>
+                        )}
+                      </div>
+                      <div className={styles.preview}>
+                        {!selectedFile ? (
+                          <div className={`${styles.img__wrapper} text-center`}>
+                            <img
+                              src={`${IMAGE_PATH}small/${user.image}`}
+                              alt={user.username}
+                              className="h-100"
+                            />
+                          </div>
+                        ) : (
+                          <></>
+                        )}
+                      </div>
+                      <div className="d-flex justify-content-center align-items-center">
+                        <Button
+                          variant="outline-dark"
+                          className={styles.upload__img}
+                          onClick={() => fileRef.current.click()}
+                        >
+                          {/* <span className="d-block mr-4">
+                              <ImUpload />
+                            </span>{" "} */}
+                          <span className="d-block"> Upload Image</span>
+                        </Button>
+                      </div>
+                      <div className="" style={{ display: "none" }}>
+                        <input
+                          ref={fileRef}
+                          type="file"
+                          name="image"
+                          onChange={onSelectFile}
+                        />
+                      </div>
                     </div>
-                  </div>
-                  <div className={`text-end ${styles.change} ms-2`}>
-                    <Link to="/settings/password" className="btn btn-primary">
-                      Change Password
-                    </Link>
-                  </div>
-                </div>
-                <hr />
-                <InputGroup className="my-3 d-flex flex-column">
-                  <div className="d-flex justify-content-between align-items-center pb-2">
-                    <label htmlFor="username" className="d-block">
-                      Name
-                    </label>
-                    {errors.username && touched.username ? (
-                      <small className="text-danger pt-2">
-                        {errors.username}
-                      </small>
-                    ) : null}
-                  </div>
-                  <Field
-                    as={BootstrapForm.Control}
-                    placeholder="Type name"
-                    name="username"
-                    isValid={!errors.username && touched.username}
-                    type="text"
-                    className={`${styles.input} w-100`}
-                    isInvalid={errors.username && touched.username}
-                  />
-                </InputGroup>
-                <InputGroup className="my-3 d-flex flex-column">
-                  <div className="d-flex justify-content-between align-items-center pb-2">
-                    <label htmlFor="address" className="d-block">
-                      Address
-                    </label>
-                    {errors.address && touched.address ? (
-                      <small className="text-danger pt-2">
-                        {errors.address}
-                      </small>
-                    ) : null}
-                  </div>
-                  <Field
-                    as={BootstrapForm.Control}
-                    placeholder="Type shipping address"
-                    name="address"
-                    isValid={!errors.address && touched.address}
-                    type="text"
-                    className={`${styles.input} w-100`}
-                    isInvalid={errors.address && touched.address}
-                  />
-                </InputGroup>
-                <InputGroup className="mb-3 d-flex flex-column">
-                  <div className="d-flex justify-content-between align-items-center pb-2">
-                    <label htmlFor="email" className="d-block">
-                      Email
-                    </label>
-                  </div>
-                  <Field
-                    as={BootstrapForm.Control}
-                    placeholder="Email"
-                    name="email"
-                    type="text"
-                    className={`${styles.input} w-100`}
-                    disabled
-                  />
-                  <small className="pt-2">
-                    Email Address Can not be changed.
-                  </small>
-                </InputGroup>
+                  </Col>
+                </Row>
 
-                <div className="pt-3">
+                <div className="d-flex align-items-center pt-3">
+                  <Link
+                    to="/settings/password"
+                    className=" btn_primary text-decoration-none me-3"
+                  >
+                    Change Password
+                  </Link>
+
                   <Button
                     variant="primary"
                     type="submit"
                     className={styles.btn}
                     disabled={isLoading}
                   >
-                    {isLoading ? "Loading..." : "Save"}
-                  </Button>
-                  <Button
-                    variant="primary"
-                    type="reset"
-                    onClick={resetlHandeler}
-                    className={`${styles.btn} mx-3`}
-                  >
-                    Cancel
+                    {isLoading ? "Loading..." : "Save Settings"}
                   </Button>
                 </div>
               </Form>

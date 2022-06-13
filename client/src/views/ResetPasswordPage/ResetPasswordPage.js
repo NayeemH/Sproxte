@@ -1,14 +1,12 @@
 import React from "react";
-import Footer from "../../components/Footer/Footer";
-import Nav from "../../components/Nav/Nav";
+import LandingNavbar from "../../components/LandingNavbar/LandingNavbar";
 import ResetLinkForm from "../../components/ResetLinkForm/ResetLinkForm";
 
 const ResetPasswordPage = () => {
   return (
-    <div>
-      <Nav />
+    <div className="mh bg_custom">
+      <LandingNavbar page={"login"} />
       <ResetLinkForm />
-      <Footer />
     </div>
   );
 };

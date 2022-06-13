@@ -1,14 +1,15 @@
 import React from "react";
-import Footer from "../../components/Footer/Footer";
-import Nav from "../../components/Nav/Nav";
+import { Container } from "react-bootstrap";
+import LandingNavbar from "../../components/LandingNavbar/LandingNavbar";
 import RefundPolicy from "../../components/RefundPolicy/RefundPolicy";
 
 const RefundPolicyPage = () => {
   return (
-    <div>
-      <Nav />
-      <RefundPolicy />
-      <Footer />
+    <div className="mh bg_custom">
+      <LandingNavbar page={"refund"} />
+      <Container className="crd shadow px-0 ">
+        <RefundPolicy />
+      </Container>
     </div>
   );
 };

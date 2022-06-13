@@ -14,8 +14,9 @@ import { connect } from "react-redux";
 import { editProduct } from "../../actions/Project.action";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
-import colors from "../../config/Colors";
 import { getTypeList } from "../../actions/Landing.action";
+import { AiOutlinePlus } from "react-icons/ai";
+import { BiTrash } from "react-icons/bi";
 
 const EditProductFinal = ({ category, editProduct, getTypeList, data }) => {
   //STATES
@@ -25,40 +26,102 @@ const EditProductFinal = ({ category, editProduct, getTypeList, data }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [selectedColor, setSelectedColor] = useState([]);
   const [colorInput, setColorInput] = useState("");
-  const [typeInput, setTypeInput] = useState("");
-  const [focus, setFocus] = useState(false);
-  const [focus2, setFocus2] = useState(false);
   const navigate = useNavigate();
-
+  const [priceList, setPriceList] = useState([]);
+  const [discountList, setDiscountList] = useState([]);
   const fileRef = useRef();
-  const fileRef2 = useRef();
 
   useEffect(() => {
     if (category.length === 0) {
       getTypeList();
     }
+    if (data && data.discount && data.discount.discount.length > 0) {
+      let tempDisList = [];
+      data.discount.range.forEach((element, i) => {
+        tempDisList.push({
+          range: element,
+          discount: data.discount.discount[i],
+        });
+      });
+      setDiscountList(tempDisList);
+    }
+    if (
+      data &&
+      data.priceArray &&
+      data.priceArray.range &&
+      data.priceArray.price
+    ) {
+      let tempPriceArr = [];
+      data.priceArray.range.forEach((element, i) => {
+        tempPriceArr.push({
+          range: element,
+          price: data.priceArray.price[i],
+        });
+      });
+      setPriceList(tempPriceArr);
+    }
   }, []);
-
-  const blurHandeler = () => {
-    setTimeout(() => {
-      setFocus(false);
-    }, 200);
-  };
-  const blurHandeler2 = () => {
-    setTimeout(() => {
-      setFocus2(false);
-    }, 200);
-  };
 
   const onSubmitHandeler = async (values) => {
     setIsLoading(true);
-    // let check = await createProject(
-    //   values,
-    //   selectedFile,
-    //   selectedFile2,
-    //   selectedFile3,
-    //   selectedColor
-    // );
+    let checkDis = false;
+    let checkPrice = false;
+    discountList.forEach((item, i) => {
+      if (
+        item.discount === undefined ||
+        item.discount === null ||
+        item.discount === ""
+      ) {
+        toast.error("Please enter discount");
+        checkDis = true;
+      }
+      if (
+        item.range === undefined ||
+        item.range === null ||
+        item.range === ""
+      ) {
+        toast.error("Please enter range");
+        checkDis = true;
+      }
+      if (i > 0 && i < discountList.length) {
+        if (item.range <= parseInt(discountList[i - 1].range)) {
+          toast.error("Range should be in increasing order");
+          checkDis = true;
+        }
+      }
+    });
+    if (checkDis === true) {
+      setIsLoading(false);
+      return false;
+    }
+    priceList.forEach((item, i) => {
+      if (
+        item.price === undefined ||
+        item.price === null ||
+        item.price === ""
+      ) {
+        toast.error("Please enter price");
+        checkPrice = true;
+      }
+      if (
+        item.range === undefined ||
+        item.range === null ||
+        item.range === ""
+      ) {
+        toast.error("Please enter range");
+        checkPrice = true;
+      }
+      if (i > 0 && i < priceList.length) {
+        if (item.range <= parseInt(priceList[i - 1].range)) {
+          toast.error("Price range should be in increasing order");
+          checkPrice = true;
+        }
+      }
+    });
+    if (checkPrice === true) {
+      setIsLoading(false);
+      return false;
+    }
 
     let check = await editProduct(
       values,
@@ -66,7 +129,9 @@ const EditProductFinal = ({ category, editProduct, getTypeList, data }) => {
       selectedFile2,
       selectedFile3,
       selectedColor,
-      data._id && data._id
+      data._id && data._id,
+      priceList,
+      discountList
     );
 
     if (check) {
@@ -99,43 +164,17 @@ const EditProductFinal = ({ category, editProduct, getTypeList, data }) => {
     setSelectedFile(e.target.files[0]);
   };
 
-  //ONSELECT FILE HANDELER 2
-  const onSelectFile2 = (e) => {
-    if (!e.target.files || e.target.files.length === 0) {
-      setSelectedFile2(undefined);
-      return;
-    }
-    if (e.target.files[0].size > 2000000) {
-      toast.error("File size is too big");
-      return;
-    }
-    setSelectedFile2(e.target.files[0]);
-  };
-
-  //ONSELECT FILE HANDELER Multiple
-  const onSelectFile3 = (e) => {
-    if (!e.target.files || e.target.files.length === 0) {
-      setSelectedFile3(undefined);
-      return;
-    }
-
-    let flag = false;
-    let list = e.target.files;
-    for (let index = 0; index < list.length; index++) {
-      if (list[index].size > 2000000) {
-        toast.error("File size is too big");
-        flag = true;
-      }
-    }
-    if (!flag) {
-      setSelectedFile3(list);
-    }
-  };
-
   let initVals = {
     name: data && data.name ? data.name : "",
-    price: data && data.price ? parseInt(data.price) : 0,
-    discount: data && data.discount ? parseInt(data.discount) : 0,
+    price:
+      data && data.priceArray
+        ? parseInt(data.priceArray.price[data.priceArray.range.length])
+        : 0,
+    discount:
+      data && data.discount && data.discount.discount
+        ? data.discount.discount[data.discount.discount.length - 1]
+        : 0,
+    weight: data && data.weight ? parseInt(data.weight) : 0,
     quantity: data && data.quantity ? parseInt(data.quantity) : 0,
     productType: data && data.productType ? data.productType : "",
     size:
@@ -150,6 +189,9 @@ const EditProductFinal = ({ category, editProduct, getTypeList, data }) => {
     quantity: Yup.number().required("Product quantity is required!"),
     price: Yup.number("Insert valid price", "Insert valid price").required(
       "Product price is required!"
+    ),
+    weight: Yup.number("Insert valid weight", "Insert valid weight").required(
+      "Product weight is required!"
     ),
     discount: Yup.number("Insert valid discount", "Insert valid discount")
       .min(0)
@@ -198,7 +240,7 @@ const EditProductFinal = ({ category, editProduct, getTypeList, data }) => {
                 </InputGroup>
 
                 <Row>
-                  <Col md={12}>
+                  <Col md={6}>
                     <InputGroup className="mb-3 d-flex flex-column">
                       <div className="d-flex justify-content-between align-items-center pb-2">
                         <label htmlFor="description" className="d-block">
@@ -221,124 +263,31 @@ const EditProductFinal = ({ category, editProduct, getTypeList, data }) => {
                       />
                     </InputGroup>
                   </Col>
-                  {/* <Col md={6}>
+                  <Col md={6}>
                     <InputGroup className="mb-3 d-flex flex-column">
                       <div className="d-flex justify-content-between align-items-center pb-2">
-                        <label htmlFor="productType" className="d-block">
-                          Template
+                        <label htmlFor="weight" className="d-block">
+                          Weight in Lb
                         </label>
-                        {errors.productType && touched.productType ? (
+                        {errors.weight && touched.weight ? (
                           <small className="text-danger pt-2">
-                            {errors.productType}
+                            {errors.weight}
                           </small>
                         ) : null}
                       </div>
-                      <BootstrapForm.Control
-                        placeholder="Type product template name"
-                        value={typeInput}
-                        isValid={!errors.productType && touched.productType}
+                      <Field
+                        as={BootstrapForm.Control}
+                        placeholder="Type project weight"
+                        name="weight"
+                        isValid={!errors.weight && touched.weight}
                         type="text"
-                        onChange={(e) => setTypeInput(e.target.value)}
                         className={`${styles.input} w-100`}
-                        isInvalid={errors.productType && touched.productType}
-                        onFocus={() => setFocus2(true)}
-                        onBlur={blurHandeler2}
+                        isInvalid={errors.weight && touched.weight}
                       />
-                      <div
-                        className={styles.auth__list}
-                        style={{ display: focus2 ? "block" : "none" }}
-                      >
-                        <div className="list-group">
-                          {category
-                            .filter((item) => {
-                              return item.name
-                                .toLowerCase()
-                                .includes(typeInput.toLowerCase());
-                            })
-                            .map((item, i) => (
-                              <div
-                                className={`list-group-item ${styles.item} d-flex`}
-                                key={i}
-                                onClick={() => {
-                                  setFieldValue("productType", item._id);
-                                  setTypeInput(item.name);
-                                }}
-                              >
-                                {item.name}
-                              </div>
-                            ))}
-                        </div>
-                      </div>
                     </InputGroup>
-                  </Col> */}
-                  {/* <Col md={6}>
-                    <InputGroup className=" d-flex flex-column">
-                      <div className="d-flex justify-content-between align-items-center pb-2">
-                        <label htmlFor="quantity" className="d-block">
-                          Colors
-                        </label>
-                      </div>
-                      <BootstrapForm.Control
-                        placeholder="Type Color name or HEX code"
-                        type="text"
-                        value={colorInput}
-                        onChange={(e) => setColorInput(e.target.value)}
-                        onFocus={() => setFocus(true)}
-                        onBlur={blurHandeler}
-                        autoComplete="off"
-                        className={`${styles.input} w-100`}
-                      />
-                      <div
-                        className={styles.auth__list}
-                        style={{ display: focus ? "block" : "none" }}
-                      >
-                        <div className="list-group">
-                          {colors
-                            .filter((item) => {
-                              return item.name
-                                .toLowerCase()
-                                .includes(colorInput.toLowerCase());
-                            })
-                            .map((item, i) => (
-                              <div
-                                className={`list-group-item ${styles.item} d-flex`}
-                                key={i}
-                                onClick={() => {
-                                  //console.log("click");
+                  </Col>
 
-                                  let check = selectedColor.filter(
-                                    (clr) => clr.hex === item.hex
-                                  );
-                                  if (check.length === 0) {
-                                    setSelectedColor([...selectedColor, item]);
-                                  } else {
-                                    toast.error("Color already selected");
-                                  }
-                                  setColorInput("");
-                                }}
-                              >
-                                <div
-                                  className={`${styles.color} me-2`}
-                                  style={{ background: `${item.hex}` }}
-                                ></div>{" "}
-                                {item.name} ({item.hex})
-                              </div>
-                            ))}
-                        </div>
-                      </div>
-                    </InputGroup>
-                    <Row className="py-2 pb-4">
-                      {selectedColor.map((item, i) => (
-                        <Col xs={1} key={i}>
-                          <div
-                            className={styles.color}
-                            style={{ background: `${item.hex}` }}
-                          ></div>
-                        </Col>
-                      ))}
-                    </Row>
-                  </Col> */}
-                  <Col md={6}>
+                  <Col md={12}>
                     <InputGroup className="mb-3 d-flex flex-column">
                       <div className="d-flex justify-content-between align-items-center pb-2">
                         <label htmlFor="size" className="d-block">
@@ -362,56 +311,10 @@ const EditProductFinal = ({ category, editProduct, getTypeList, data }) => {
                       <small>Example: L,XL,XXL,M</small>
                     </InputGroup>
                   </Col>
-                  <Col md={6}>
-                    <InputGroup className="mb-3 d-flex flex-column">
-                      <div className="d-flex justify-content-between align-items-center pb-2">
-                        <label htmlFor="discount" className="d-block">
-                          Discount (%)
-                        </label>
-                        {errors.discount && touched.discount ? (
-                          <small className="text-danger pt-2">
-                            {errors.discount}
-                          </small>
-                        ) : null}
-                      </div>
-                      <Field
-                        as={BootstrapForm.Control}
-                        placeholder="Type discount in % "
-                        name="discount"
-                        isValid={!errors.discount && touched.discount}
-                        type="number"
-                        className={`${styles.input} w-100`}
-                        isInvalid={errors.discount && touched.discount}
-                      />
-                    </InputGroup>
-                  </Col>
                 </Row>
 
                 <Row>
-                  <Col md={6}>
-                    <InputGroup className="mb-3 d-flex flex-column">
-                      <div className="d-flex justify-content-between align-items-center pb-2">
-                        <label htmlFor="price" className="d-block">
-                          Product Price
-                        </label>
-                        {errors.price && touched.price ? (
-                          <small className="text-danger pt-2">
-                            {errors.price}
-                          </small>
-                        ) : null}
-                      </div>
-                      <Field
-                        as={BootstrapForm.Control}
-                        placeholder="Type product price"
-                        name="price"
-                        isValid={!errors.price && touched.price}
-                        type="number"
-                        className={`${styles.input} w-100`}
-                        isInvalid={errors.price && touched.price}
-                      />
-                    </InputGroup>
-                  </Col>
-                  <Col md={6}>
+                  <Col md={12}>
                     <InputGroup className="mb-3 d-flex flex-column">
                       <div className="d-flex justify-content-between align-items-center pb-2">
                         <label htmlFor="quantity" className="d-block">
@@ -435,6 +338,230 @@ const EditProductFinal = ({ category, editProduct, getTypeList, data }) => {
                     </InputGroup>
                   </Col>
                 </Row>
+
+                {/* PRICE START */}
+                <>
+                  {priceList.length > 0 ? (
+                    <span className="d-block h5">
+                      Price List with different ranges in increasing order.
+                    </span>
+                  ) : (
+                    <></>
+                  )}
+                  {priceList.map((item, i) => (
+                    <Row className="pb-2" key={i}>
+                      <Col xs={5}>
+                        <InputGroup className=" d-flex flex-column">
+                          <BootstrapForm.Control
+                            placeholder="Type Price Range End"
+                            type="number"
+                            value={priceList[i].range}
+                            onChange={(e) =>
+                              setPriceList(
+                                priceList.map((item, j) =>
+                                  j === i
+                                    ? { ...item, range: e.target.value }
+                                    : item
+                                )
+                              )
+                            }
+                            autoComplete="off"
+                            className={`${styles.input} w-100`}
+                          />
+                          <small>Count Range End</small>
+                        </InputGroup>
+                      </Col>
+                      <Col xs={6}>
+                        <input
+                          type="number"
+                          placeholder="Type price of the product in USD"
+                          className="form-control w-100"
+                          value={priceList[i].price}
+                          onChange={(e) =>
+                            setPriceList(
+                              priceList.map((item, j) =>
+                                j === i
+                                  ? { ...item, price: e.target.value }
+                                  : item
+                              )
+                            )
+                          }
+                          id=""
+                        />
+                        <small>Price in USD</small>
+                      </Col>
+                      <Col
+                        xs={1}
+                        className="d-flex justufy-content-end align-items-center"
+                      >
+                        <span
+                          className={`${styles.del} text-danger`}
+                          onClick={() =>
+                            setPriceList([
+                              ...priceList.filter((it, j) => j !== i),
+                            ])
+                          }
+                        >
+                          <BiTrash />
+                        </span>
+                      </Col>
+                    </Row>
+                  ))}
+                </>
+                <Row className="">
+                  <Col xs={12}>
+                    <span
+                      className={`${styles.plus} shadow`}
+                      onClick={() =>
+                        setPriceList([
+                          ...priceList,
+                          {
+                            price: 0,
+                            range: 0,
+                          },
+                        ])
+                      }
+                    >
+                      <AiOutlinePlus /> Add Price Range
+                    </span>
+                  </Col>
+                  <Col md={12}>
+                    <InputGroup className="mb-3 mt-4 d-flex flex-column">
+                      <div className="d-flex justify-content-between align-items-center pb-2">
+                        <label htmlFor="price" className="d-block">
+                          Default Product Price in USD
+                        </label>
+                      </div>
+                      <Field
+                        as={BootstrapForm.Control}
+                        placeholder="Type product price"
+                        name="price"
+                        isValid={!errors.price && touched.price}
+                        type="number"
+                        className={`${styles.input} w-100`}
+                        isInvalid={errors.price && touched.price}
+                      />
+                      {errors.price && touched.price ? (
+                        <small className="text-danger pt-2">
+                          {errors.price}
+                        </small>
+                      ) : null}
+                    </InputGroup>
+                  </Col>
+                </Row>
+                {/* PRICE END */}
+
+                <hr />
+                <>
+                  {discountList.length > 0 ? (
+                    <span className="d-block h5">
+                      Discount List with different ranges in increasing order.
+                    </span>
+                  ) : (
+                    <></>
+                  )}
+                  {discountList.map((item, i) => (
+                    <Row className="pb-2">
+                      <Col xs={5}>
+                        <InputGroup className=" d-flex flex-column">
+                          <BootstrapForm.Control
+                            placeholder="Type Range End"
+                            type="number"
+                            value={discountList[i].range}
+                            onChange={(e) =>
+                              setDiscountList(
+                                discountList.map((item, j) =>
+                                  j === i
+                                    ? { ...item, range: e.target.value }
+                                    : item
+                                )
+                              )
+                            }
+                            autoComplete="off"
+                            className={`${styles.input} w-100`}
+                          />
+                          <small>Count Range End</small>
+                        </InputGroup>
+                      </Col>
+                      <Col xs={6}>
+                        <input
+                          type="number"
+                          placeholder="Type Discount for this Range (%)"
+                          className="form-control w-100"
+                          value={discountList[i].discount}
+                          onChange={(e) =>
+                            setDiscountList(
+                              discountList.map((item, j) =>
+                                j === i
+                                  ? { ...item, discount: e.target.value }
+                                  : item
+                              )
+                            )
+                          }
+                          id=""
+                        />
+                        <small>Discount in %</small>
+                      </Col>
+                      <Col
+                        xs={1}
+                        className="d-flex justufy-content-end align-items-center"
+                      >
+                        <span
+                          className={`${styles.del} text-danger`}
+                          onClick={() =>
+                            setDiscountList([
+                              ...discountList.filter((it, j) => j !== i),
+                            ])
+                          }
+                        >
+                          <BiTrash />
+                        </span>
+                      </Col>
+                    </Row>
+                  ))}
+                </>
+                <Row className="">
+                  <Col xs={12}>
+                    <span
+                      className={`${styles.plus} shadow`}
+                      onClick={() =>
+                        setDiscountList([
+                          ...discountList,
+                          {
+                            discount: 0,
+                            range: 0,
+                          },
+                        ])
+                      }
+                    >
+                      <AiOutlinePlus /> Add Discount Range
+                    </span>
+                  </Col>
+                  <Col md={12}>
+                    <InputGroup className="mb-3 mt-4 d-flex flex-column">
+                      <div className="d-flex justify-content-between align-items-center pb-2">
+                        <label htmlFor="discount" className="d-block">
+                          Default Product Discount (%)
+                        </label>
+                      </div>
+                      <Field
+                        as={BootstrapForm.Control}
+                        placeholder="Type product discount"
+                        name="discount"
+                        isValid={!errors.discount && touched.discount}
+                        type="number"
+                        className={`${styles.input} w-100`}
+                        isInvalid={errors.discount && touched.discount}
+                      />
+                      {errors.discount && touched.discount ? (
+                        <small className="text-danger pt-2">
+                          {errors.discount}
+                        </small>
+                      ) : null}
+                    </InputGroup>
+                  </Col>
+                </Row>
+                <hr />
 
                 <Row>
                   <Col className="mb-3">

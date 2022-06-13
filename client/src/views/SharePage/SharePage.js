@@ -7,6 +7,8 @@ import LandingSidebar from "../../components/LandingSidebar/LandingSidebar";
 import Nav from "../../components/Nav/Nav";
 import { ReadyUpload } from "../../components/ReadyUpload";
 import styles from "./SharePage.module.scss";
+import NewLayout from "../../components/Shared/NewLayout/NewLayout";
+import { Spinner } from "react-bootstrap";
 
 const SharePage = ({ product, getTemplateShare }) => {
   const { id } = useParams();
@@ -15,13 +17,21 @@ const SharePage = ({ product, getTemplateShare }) => {
   }, []);
   return (
     <div>
-      <LandingSidebar />
-      <Nav />
-      <ReadyUpload
-        type="link"
-        product={{ pngImageFront: product.image, ...product }}
-      />
-      <Footer />
+      <NewLayout>
+        {!product.name ? (
+          <div
+            className="d-flex justify-content-center align-items-center"
+            style={{ minHeight: "100vh" }}
+          >
+            <Spinner variant="dark" animation="grow" />
+          </div>
+        ) : (
+          <ReadyUpload
+            type="link"
+            product={{ pngImageFront: product.image, ...product }}
+          />
+        )}
+      </NewLayout>
     </div>
   );
 };

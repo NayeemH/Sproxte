@@ -145,3 +145,9 @@ span.link:hover {
 .btn_modal:hover {
   cursor: pointer !important;
 }
+
+@media screen and (max-width: 768px) {
+  .line {
+    display: none;
+  }
+}

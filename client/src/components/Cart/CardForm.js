@@ -11,6 +11,7 @@ import { toast } from "react-toastify";
 import { getCountryList, getStateList } from "../../actions/Order.action";
 import { Select, Text } from "@mantine/core";
 import { useModals } from "@mantine/modals";
+import methods from "../../constants/fedexMethods";
 
 const CardForm = ({
   cart,
@@ -20,9 +21,12 @@ const CardForm = ({
   states,
   getCountryList,
   getStateList,
+  address,
+  total,
 }) => {
   const [loading, setLoading] = useState(false);
   const [logo, setLogo] = useState(undefined);
+  const navigate = useNavigate();
   const modals = useModals();
   useEffect(() => {
     if (!country) {
@@ -31,7 +35,22 @@ const CardForm = ({
   }, []);
 
   const onClickHandeler = (values) => {
-    onSubmitHandeler(values);
+    if (!user) {
+      modals.openConfirmModal({
+        title: "Login Required",
+        centered: true,
+        children: (
+          <Text size="md">
+            <b>Note:</b> You need to login to place an order.
+          </Text>
+        ),
+        labels: { confirm: "Login", cancel: "Cancel" },
+        onCancel: () => {},
+        onConfirm: () => navigate("/login"),
+      });
+    } else {
+      onSubmitHandeler(values);
+    }
     // modals.openConfirmModal({
     //   title: "You Pay Before Approving The Design",
     //   centered: true,
@@ -46,8 +65,6 @@ const CardForm = ({
     //   onConfirm: () => onSubmitHandeler(values),
     // });
   };
-
-  const navigate = useNavigate();
 
   const onSelectFile = (e) => {
     if (e.target.files.length > 0) {
@@ -91,10 +108,99 @@ const CardForm = ({
     let check =
       user.userType === "coach"
         ? await createOrder(values, cart, logo)
-        : await createOrder(values, cart);
+        : await createOrder(values, cart, undefined, user.userType);
     if (check !== false) {
       setLoading(false);
-      navigate(`/payment/${check}`);
+      // FILLED ADDRESS
+      modals.openConfirmModal({
+        title: "Your Address",
+        centered: true,
+        children: (
+          <Text size="md">
+            <div className="d-flex justify-content-between align-items-center border-bottom py-2">
+              <div className="d-flex align-items-center justify-content-center">
+                <span className="d-block fw-bold ms-1">Address</span>
+              </div>
+              <span className="d-block">
+                {check.shippingAddress.address &&
+                  check.shippingAddress.address[0]}
+              </span>
+            </div>
+            <div className="d-flex justify-content-between align-items-center border-bottom py-2">
+              <div className="d-flex align-items-center justify-content-center">
+                <span className="d-block fw-bold ms-1">Postal Code</span>
+              </div>
+              <span className="d-block">
+                {check.shippingAddress && check.shippingAddress.zip}
+              </span>
+            </div>
+            <div className="d-flex justify-content-between align-items-center border-bottom py-2">
+              <div className="d-flex align-items-center justify-content-center">
+                <span className="d-block fw-bold ms-1">City</span>
+              </div>
+              <span className="d-block">
+                {check.shippingAddress.city && check.shippingAddress.city}
+              </span>
+            </div>
+            <div className="d-flex justify-content-between align-items-center border-bottom py-2">
+              <div className="d-flex align-items-center justify-content-center">
+                <span className="d-block fw-bold ms-1">State</span>
+              </div>
+              <span className="d-block">
+                {check.shippingAddress.state && check.shippingAddress.state}
+              </span>
+            </div>
+            <div className="d-flex justify-content-between align-items-center border-bottom py-2 mb-3">
+              <div className="d-flex align-items-center justify-content-center">
+                <span className="d-block fw-bold ms-1">Country</span>
+              </div>
+              <span className="d-block">
+                {check.shippingAddress.country && check.shippingAddress.country}
+              </span>
+            </div>
+            <b>Note:</b> This address is auto corrected.
+            <hr />
+            <h4>Price</h4>
+            <div className="d-flex justify-content-between align-items-center border-bottom py-2">
+              <div className="d-flex align-items-center justify-content-center">
+                <span className="d-block fw-bold ms-1">Subtotal</span>
+              </div>
+              <span className="d-block">${total && total}</span>
+            </div>
+            <div className="d-flex justify-content-between align-items-center border-bottom py-2">
+              <div className="d-flex align-items-center justify-content-center">
+                <span className="d-block fw-bold ms-1">Shipping Cost</span>
+              </div>
+              <span className="d-block">
+                ${check.shippingRate.price && check.shippingRate.price}
+              </span>
+            </div>
+            <div className="d-flex justify-content-between align-items-center border-bottom fs-4 py-2">
+              <div className="d-flex align-items-center justify-content-center">
+                <span className="d-block fw-bold ms-1">Total Price</span>
+              </div>
+              <span className="d-block">
+                $
+                {check.shippingRate.price && total
+                  ? check.shippingRate.price + total
+                  : "Invalid Price"}
+              </span>
+            </div>
+          </Text>
+        ),
+        labels: {
+          confirm: `${
+            user && user.userType === "admin" ? "Invoice" : "Checkout"
+          }`,
+          cancel: "Cancel",
+        },
+        confirmProps: { color: "red" },
+        onCancel: () => {},
+        onConfirm: () =>
+          user && user.userType === "admin"
+            ? navigate(`/admin/order/${check.orderId}`)
+            : navigate(`/payment/${check.orderId}`),
+      });
     } else {
       setLoading(false);
     }
@@ -115,6 +221,7 @@ const CardForm = ({
     teamName: "",
     location: "",
     color: "",
+    method: "",
   };
 
   const SignupSchema = Yup.object().shape({
@@ -125,13 +232,17 @@ const CardForm = ({
       )
       .required("Email is required!"),
     address: Yup.string().required("Address is required!"),
-    phone: Yup.string().required("Phone is required!"),
+    phone: Yup.string()
+      .max(10, "Maximum 10 digit allowed")
+      .min(10, "Minimum 10 digit allowed")
+      .required("Phone is required!"),
     firstName: Yup.string().required("First name is required!"),
     lastName: Yup.string().required("Last name is required!"),
     city: Yup.string().required("City is required!"),
     state: Yup.string().required("State is required!"),
     zip: Yup.string().required("Zip is required!"),
     country: Yup.string().required("Country is required!"),
+    method: Yup.string().required("Delivery method is required!"),
     color: Yup.string()
       .test("Is selected?", "Please select a color", (val) => {
         return val !== "none" || user.userType === "coach";
@@ -230,7 +341,7 @@ const CardForm = ({
             <InputGroup className="mb-3 d-flex flex-column">
               <div className="d-flex justify-content-between align-items-center pb-2">
                 <label htmlFor="address" className="d-block">
-                  Address
+                  Street Lines
                 </label>
                 {errors.address && touched.address ? (
                   <small className="text-danger pt-2">{errors.address}</small>
@@ -238,7 +349,7 @@ const CardForm = ({
               </div>
               <Field
                 as={BootstrapForm.Control}
-                placeholder="Type full address "
+                placeholder="Type street lines... "
                 name="address"
                 isValid={!errors.address && touched.address}
                 type="text"
@@ -302,7 +413,7 @@ const CardForm = ({
             <InputGroup className="mb-3 d-flex flex-column">
               <div className="d-flex justify-content-between align-items-center pb-2">
                 <label htmlFor="zip" className="d-block">
-                  Zip
+                  Postal Code
                 </label>
                 {errors.zip && touched.zip ? (
                   <small className="text-danger pt-2">{errors.zip}</small>
@@ -310,7 +421,7 @@ const CardForm = ({
               </div>
               <Field
                 as={BootstrapForm.Control}
-                placeholder="Type zip code"
+                placeholder="Type postal code..."
                 name="zip"
                 isValid={!errors.zip && touched.zip}
                 type="text"
@@ -318,7 +429,16 @@ const CardForm = ({
                 isInvalid={errors.zip && touched.zip}
               />
             </InputGroup>
-
+            <span className="d-block text-start pb-2">Delivery Type</span>
+            <Select
+              placeholder="Select delivery type"
+              required
+              value={values.method}
+              onChange={(e) => {
+                setFieldValue("method", e);
+              }}
+              data={methods}
+            />
             {user && user.userType === "coach" ? (
               <>
                 <InputGroup className="mb-3 d-flex flex-column">
@@ -437,6 +557,7 @@ const mapStateToProps = (state) => ({
   user: state.auth.user,
   country: state.order.country,
   states: state.order.states,
+  address: state.order.address,
 });
 
 export default connect(mapStateToProps, {
