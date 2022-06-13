@@ -36,10 +36,7 @@ const Payment = ({ auth }) => {
         console.log(error);
       }
     };
-    if (!auth) {
-      navigate("/login");
-      return;
-    }
+
     if (id) {
       fetchToken();
     }
