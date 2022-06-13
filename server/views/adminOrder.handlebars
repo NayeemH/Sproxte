@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Email Verification</title>
+    <style>
+        div {
+            font-family: Helvetica;
+            padding: 20px;
+            text-align: center;
+            max-width: 456px;
+            margin: auto;
+        }
+        img {
+            width: 100%;
+        }
+        h1 {
+            margin-bottom: 35px;
+            font-size: 26px;
+            color: #202020;
+        }
+        p {
+            font-size: 16px;
+            color: #718096;
+        }
+        small {
+            color: #718096;
+            margin-top: 20px;
+            font-size: 14px;
+        }
+
+        .conferm-link {
+            margin: 20px 0;
+            padding: 18px;
+            display: block;
+            background-color: #374191;
+            border-radius: 20px;
+            text-decoration: none;
+        }
+
+        .email {
+            text-decoration: none;
+        }
+        span {
+            color: #00C1C6;
+            font-size: 16px;
+        }
+        .conferm-link span {
+            color: #ffffff;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <img src="https://sportsveins.com/logoSq.png" alt="Auth">
+        <h1>Sproxte Notification</h1>
+        <p>Hi <span>{{username}},</span> {{message}}</p>
+        
+        <a class='conferm-link' href={{invoiceLink}}><span>Download Invoice</span></a>
+        <a class='conferm-link' href={{paymentLink}}><span>Pay</span></a>
+    </div>
+</body>
+</html>

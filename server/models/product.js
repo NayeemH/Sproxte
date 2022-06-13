@@ -26,6 +26,9 @@ const productSchema = Schema({
         type: Object,
         required: true
     },
+    finalImage: {
+        type: String
+    },
     colorImage: {
         type: String
     },

@@ -6,10 +6,9 @@ const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 
 router.post('/:id', async (req, res, next) => {
     try {
-        const {userId} = req.user;
         const {id} = req.params;
 
-        const order = await Order.findOne({_id: id, userId});
+        const order = await Order.findOne({_id: id});
 
         if(!order) throw Error('Order not found');
 
@@ -21,7 +20,7 @@ router.post('/:id', async (req, res, next) => {
             currency: 'usd',
             payment_method_types: ['card'],
             metadata: {
-                userId,
+                userId: order.userId.toString(),
                 orderId: order._id.toString(),
             }
         });

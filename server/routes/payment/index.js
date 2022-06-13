@@ -10,8 +10,8 @@ const getPlayerAddPayToken = require('./getPlayerAddPayToken');
 const webhook = require('./webhook');
 
 // Routes
-router.use('/publishableKey', isAuth, getPublishableKey);
-router.use('/paymentToken', isAuth, getPaymentToken);
+router.use('/publishableKey', getPublishableKey);
+router.use('/paymentToken', getPaymentToken);
 router.use('/addPlayerPaymentToken', isAuth, getPlayerAddPayToken);
 router.use('/webhook', webhook);
 
