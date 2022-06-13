@@ -26,7 +26,7 @@ router.post('/:orderId', async (req, res, next) => {
             to: order.email,
             subject: 'Notification Mail',
             text: `This is a notification main`,
-            template: 'notification',
+            template: 'adminOrder',
             context: {
                 username: order.name,
                 message: 'One order has been placed for you at https://sportsveins.com/',
