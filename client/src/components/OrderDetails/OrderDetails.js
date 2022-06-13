@@ -363,7 +363,7 @@ const OrderDetails = ({
           projects.products.map((project, i) => (
             <Col key={project._id} md={3} className="p-3">
               <ProductCard
-                imgLink={true}
+                imgLink={project.type === "template" ? false : true}
                 title={project.name}
                 img={`${IMAGE_PATH}small/${
                   project.type === "template"
