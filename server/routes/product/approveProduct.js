@@ -1,6 +1,7 @@
 const router = require('express').Router();
 const Product = require('../../models/product');
 const User = require('../../models/user');
+const Collection = require('../../models/collection');
 const sendNotification = require('../../lib/sendNotification');
 
 
@@ -12,10 +13,24 @@ router.patch('/:id', async (req, res, next) => {
 
         let product;
         if(userType === 'admin') {
-            product = await Product.findOneAndUpdate({_id: id}, {$set: {status: 'approved'}});
+            const collections = await Collection.find({productId: id}, {image: 1});
+
+            product = await Product.findOneAndUpdate({_id: id}, {$set: 
+                {
+                    status: 'approved',
+                    finalImage: collections.length ? collections[collections.length - 1].image : null
+                }
+            });
         }
         else if(userType === 'client' || userType === 'coach') {
-            product = await Product.findOneAndUpdate({_id: id, userId}, {$set: {status: 'approved'}});
+            const collections = await Collection.find({productId: id}, {image: 1});
+
+            product = await Product.findOneAndUpdate({_id: id, userId}, {$set: 
+                {
+                    status: 'approved',
+                    finalImage: collections.length ? collections[collections.length - 1].image : null
+                }
+            });
 
             if(!product) throw Error('You can not approved product');
         }
