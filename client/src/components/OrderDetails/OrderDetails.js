@@ -367,7 +367,13 @@ const OrderDetails = ({
                 title={project.name}
                 img={`${IMAGE_PATH}small/${
                   project.type === "template"
-                    ? project.image.front
+                    ? project.finalImage
+                      ? project.finalImage
+                      : project.image.front
+                    : project.type === "team" || project.type === "custom"
+                    ? project.finalImage
+                      ? project.finalImage
+                      : project.colorImage
                     : project.colorImage
                 }`}
                 description={project.createdAt}

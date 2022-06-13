@@ -678,7 +678,7 @@ const OrderDescription = ({
           </Card>
           <div className="py-4 d-flex align-items-center justify-content-center">
             <span className="fs-5 fw-bold me-3">
-              {user && user.userType !== "client"
+              {user && user.userType !== "client" && user.userType !== "admin"
                 ? "Team Member Count"
                 : "Quantity"}
             </span>
