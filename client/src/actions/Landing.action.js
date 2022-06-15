@@ -75,7 +75,7 @@ export const createUserAccount = (values) => async (dispatch) => {
     dispatch({
       type: USER_REGISTER_ERROR,
     });
-    err.response.data.msg.map((msg) => toast.error(msg));
+    toast.error(err.response.data.message);
     return false;
   }
 };
