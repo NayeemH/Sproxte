@@ -86,23 +86,23 @@ const OrderDescription = ({
         onConfirm: () => navigate("/login"),
       });
     }
-    if (user.userType === "coach" && cart.length > 0) {
-      modals.openConfirmModal({
-        title: "You can not order more than one product as a coach at a time",
-        centered: true,
-        children: (
-          <Text size="md">
-            You can not order more than one product as a coach at a time. Please
-            complete the payment for the previous cart order and try again.
-          </Text>
-        ),
-        labels: { confirm: "Go to Cart Page", cancel: "Cancel" },
-        confirmProps: { color: "red" },
-        onCancel: () => {},
-        onConfirm: () => navigate("/cart"),
-      });
-      return;
-    }
+    // if (user.userType === "coach" && cart.length > 0) {
+    //   modals.openConfirmModal({
+    //     title: "You can not order more than one product as a coach at a time",
+    //     centered: true,
+    //     children: (
+    //       <Text size="md">
+    //         You can not order more than one product as a coach at a time. Please
+    //         complete the payment for the previous cart order and try again.
+    //       </Text>
+    //     ),
+    //     labels: { confirm: "Go to Cart Page", cancel: "Cancel" },
+    //     confirmProps: { color: "red" },
+    //     onCancel: () => {},
+    //     onConfirm: () => navigate("/cart"),
+    //   });
+    //   return;
+    // }
 
     // CART MODAL SHOW
     modals.openConfirmModal({

@@ -43,10 +43,12 @@ const ProductsByCategoryPage = ({
                 <span className="lead fs-3">No Products Found</span>
               </div>
             ) : (
-              <CategoryProducts
-                name={selectedCat ? selectedCat.name : "Loading..."}
-                data={list}
-              />
+              <div className="d-flex justify-content-start align-items-center">
+                <CategoryProducts
+                  name={selectedCat ? selectedCat.name : "Loading..."}
+                  data={list}
+                />
+              </div>
             )}
           </>
         )}

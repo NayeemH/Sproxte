@@ -62,14 +62,14 @@ const TeamPlayers = ({ team }) => {
                           alt=""
                         />
                       </div>
-                      <div className="text-center">
+                      <div className="text-center pt-3">
                         <span className="d-block fs-4">{prod.name}</span>
                         <span className="d-block fs-5 text-secondary">
                           ${prod.priceArray?.price[0]}
                         </span>
                       </div>
                     </div>
-                    <div className="text-center d-flex justify-content-center align-items-center">
+                    <div className="text-center d-flex justify-content-center align-items-center pt-5">
                       <Button
                         size="lg"
                         className="btn_primary"

@@ -145,21 +145,27 @@ const StepDetails = ({
             >
               {step.status !== "approved" ? (
                 <>
-                  <Button
-                    variant="primary"
-                    type="reset"
-                    onClick={() => approveStep(stepId, projectId)}
-                    className={`${styles.btn} mx-md-3 mx-0`}
-                  >
-                    Approve
-                  </Button>
-                  <Button
-                    variant="primary"
-                    onClick={() => rejectHandeler()}
-                    className={`${styles.btn} mx-md-3 mx-0`}
-                  >
-                    Reject
-                  </Button>
+                  {role === "user" ? (
+                    <>
+                      <Button
+                        variant="primary"
+                        type="reset"
+                        onClick={() => approveStep(stepId, projectId)}
+                        className={`${styles.btn} mx-md-3 mx-0`}
+                      >
+                        Approve
+                      </Button>
+                      <Button
+                        variant="primary"
+                        onClick={() => rejectHandeler()}
+                        className={`${styles.btn} mx-md-3 mx-0`}
+                      >
+                        Reject
+                      </Button>
+                    </>
+                  ) : (
+                    <></>
+                  )}
 
                   {role === "admin" || role === "iep" ? (
                     <Link
