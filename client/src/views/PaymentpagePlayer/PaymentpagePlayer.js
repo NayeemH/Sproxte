@@ -1,14 +1,13 @@
 import React from "react";
-import Footer from "../../components/Footer/Footer";
-import Nav from "../../components/Nav/Nav";
 import { PaymentAddPlayer } from "../../components/Payment copy";
+import NewLayout from "../../components/Shared/NewLayout/NewLayout";
 
 const PaymentpagePlayer = () => {
   return (
     <div>
-      <Nav />
-      <PaymentAddPlayer />
-      <Footer />
+      <NewLayout>
+        <PaymentAddPlayer />
+      </NewLayout>
     </div>
   );
 };
