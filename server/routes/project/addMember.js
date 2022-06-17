@@ -25,7 +25,10 @@ router.post('/:id', fileFetch.single('image'), async (req, res, next) => {
 
             if(!project) throw Error('Project not found');
 
-            const product = await Product.findOne({projectId: id});
+            const products = await Product
+                .find({projectId: id})
+                .sort({_id: -1})
+                .limit(project.productCount);
 
             if(project.count  < 1) throw Error('Can not add user');
             
@@ -55,44 +58,49 @@ router.post('/:id', fileFetch.single('image'), async (req, res, next) => {
                 image = await saveImage(req.file);
             }
 
-            const newProduct = await new Product({
-                userId,
-                projectId: project._id,
-                typeId: product.typeId,
-                type: product.type,
-                name,
-                image: {
-                    front: product.pngImageFront,
-                    back: product.pngImageBack,
-                },
-                colorImage: product.colorImage,
-                color2: product.color2,
-                price: product.price,
-                priceArray: product.priceArray,
-                discount: product.discount,
-                count: product.count,
-                size: size,
-                description: product.description,
-                layoutImage: product.layoutImage,
-                primaryText: product.primaryText,
-                primaryColor: product.primaryColor,
-                secondaryText: product.secondaryText,
-                secondaryColor: product.secondaryColor,
-                frontImages: image ? [image] : [],   // Store the gurdian image
-                backImages: product.backImages,
-                gurdianNotifications: [],     // Store the gurdian email
-                orderColor: product.orderColor,
-                productFont: product.productFont
-            }).save();
+            const newProducts = await Promise.all(
+                products.map((product, i) => new Product({
+                    userId,
+                    projectId: project._id,
+                    typeId: product[i].typeId,
+                    type: product[i].type,
+                    name,
+                    image: {
+                        front: product[i].pngImageFront,
+                        back: product[i].pngImageBack,
+                    },
+                    colorImage: product[i].colorImage,
+                    color2: product[i].color2,
+                    price: product[i].price,
+                    priceArray: product[i].priceArray,
+                    discount: product[i].discount,
+                    count: product[i].count,
+                    size: size,
+                    description: product[i].description,
+                    layoutImage: product[i].layoutImage,
+                    primaryText: product[i].primaryText,
+                    primaryColor: product[i].primaryColor,
+                    secondaryText: product[i].secondaryText,
+                    secondaryColor: product[i].secondaryColor,
+                    frontImages: image ? [image] : [],   // Store the gurdian image
+                    backImages: product[i].backImages,
+                    gurdianNotifications: [],     // Store the gurdian email
+                    orderColor: product[i].orderColor,
+                    productFont: product[i].productFont
+                }).save())
+            );
 
-            const collections = await Collection.find({productId: product._id}, {image: 1});
+            newProducts.map(async (product, i) => {
+                const collections = await Collection.find({productId: product._id}, {image: 1});
 
-            await new Collection({
-                userId: product.userId,
-                productId: newProduct._id,
-                title: product.name,
-                image: collections[collections.length - 1].image
-            }).save();
+                await new Collection({
+                    userId: product.userId,
+                    productId: product._id,
+                    title: product.name,
+                    image: collections[collections.length - 1].image
+                }).save();
+            });
+            
 
             await Project.findOneAndUpdate({_id: id}, {$push: {gurdianId: user._id}, $inc: {count: -1}});
             

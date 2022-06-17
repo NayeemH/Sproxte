@@ -79,6 +79,9 @@ const projectSchema = Schema({
         type: Number,
         default: 0
     },
+    productCount: {
+        type: Number
+    },
     sizes: {
         type: Array
     }
