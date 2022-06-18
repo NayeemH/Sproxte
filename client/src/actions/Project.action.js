@@ -16,6 +16,8 @@ import {
   CREATE_TYPE_SUCCESS,
   EDIT_FEEDBACK_ERROR,
   EDIT_FEEDBACK_SUCCESS,
+  FETCH_COMPLETE_TEAM_PROJECT,
+  FETCH_COMPLETE_TEAM_PROJECT_ERROR,
   FETCH_DASHBOARD_PROJECT,
   FETCH_DASHBOARD_PROJECT_ERROR,
   FETCH_DASHBOARD_TEAM_PROJECT,
@@ -715,13 +717,13 @@ export const fetchTeamCompletedProjects = (page) => async (dispatch) => {
     );
     if (res.status === 200) {
       dispatch({
-        type: APPROVED_PROJECT_LOAD,
+        type: FETCH_COMPLETE_TEAM_PROJECT,
         payload: res.data.projects,
       });
     }
   } catch (err) {
     dispatch({
-      type: APPROVED_PROJECT_LOAD_ERROR,
+      type: FETCH_COMPLETE_TEAM_PROJECT_ERROR,
     });
   }
 };

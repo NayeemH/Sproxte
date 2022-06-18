@@ -11,6 +11,7 @@ import {
   DELETE_COMMENT_ERROR,
   DELETE_COMMENT_SUCCESS,
   EDIT_FEEDBACK_MODAL_TOGGLE,
+  FETCH_COMPLETE_TEAM_PROJECT,
   FETCH_DASHBOARD_PROJECT,
   FETCH_DASHBOARD_TEAM_PROJECT,
   FETCH_DASHBOARD_TEAM_PROJECT_ERROR,
@@ -87,11 +88,11 @@ const projectReducer = (state = initialState, action) => {
         loading: false,
         approved_projects: payload,
       };
-    case TEAM_APPROVED_PROJECT_LOAD:
+    case FETCH_COMPLETE_TEAM_PROJECT:
       return {
         ...state,
         loading: false,
-        approved_projects: payload,
+        team_approved_projects: payload,
       };
 
     case ADD_FAVORITE_PROJECT:

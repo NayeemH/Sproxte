@@ -400,6 +400,8 @@ const OrderDetails = ({
       </Row>
       {projects.type === "normal" ? (
         <></>
+      ) : projects.status === "delivered" ? (
+        <></>
       ) : (
         <>
           {projects && projects.count && projects.count > 0 ? (

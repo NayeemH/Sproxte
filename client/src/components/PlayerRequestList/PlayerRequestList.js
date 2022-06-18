@@ -52,7 +52,7 @@ const PlayerRequestList = ({ item, getPlayerRequest }) => {
       ) : item && item.itemCount === 0 ? (
         <Card className="crd">
           <Card.Body>
-            <h4 className="fw-normal text-center">No Completed Orders</h4>
+            <h4 className="fw-normal text-center">No Player Requests</h4>
           </Card.Body>
         </Card>
       ) : (
