@@ -58,7 +58,7 @@ const paymentHandle = async (object) => {
     const {userId, orderId} = object.metadata;
 
     // Find the order
-    const order = await Order.findOne({_id: orderId, userId});
+    const order = await Order.findOne({_id: orderId});
 
     // Filter template
     const templateOrders = order.orders.filter(order => order.type === 'template');
@@ -116,7 +116,7 @@ const paymentHandle = async (object) => {
         type = 'team';
         sizes = teams[0].sizes;
         count = parseInt(teamOrders[0].count) - 1;
-        playerAddPrice = teams[0].playerAddPrice;
+        playerAddPrice = order.playerAddPrice;
         singleProductPrice = order.price / (count + 1);
         productCount = teamOrders.length
     }
@@ -259,7 +259,7 @@ const paymentHandle = async (object) => {
     );
 
     // Put project id to order
-    await Order.findOneAndUpdate({_id: orderId}, {$set: {projectId: project._id, paymentStatus: 'paid', deleveryStatus: 'accepted'}});
+    await Order.findOneAndUpdate({_id: orderId}, {$set: {userId, projectId: project._id, paymentStatus: 'paid', deleveryStatus: 'accepted'}});
 
     // Send notification
     const users = await User.find({$or: [{userType: 'admin'}, {userType: 'iep'}]}, {_id: 1});

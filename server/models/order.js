@@ -97,8 +97,8 @@ const orderSchema = Schema({
         default: 0
     },
     playerAddPrice: {
-        type: Array,
-        default: null
+        type: Number,
+        default: 0
     },
     orders: {
         type: Array

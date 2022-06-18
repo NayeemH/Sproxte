@@ -128,11 +128,11 @@ const addCustomTemplate = async (req) => {
     const count = parseInt(stringCount);
     if(count < 0) count = - count;
 
-    const productType = await ProductType.findOne({_id: productTypeId}, {price: 1, discount: 1, priceArray: 1, weight: 1});
+    const productType = await ProductType.findOne({_id: productTypeId}, {price: 1, discount: 1, priceArray: 1, weight: 1, playerAddPrice: 1});
 
     if(!productType) throw Error('Product Type not found');
     
-    const { price, discount, priceArray, weight } = productType;
+    const { price, discount, priceArray, weight, playerAddPrice } = productType;
 
     // Calculate price
     let i;
@@ -174,7 +174,7 @@ const addCustomTemplate = async (req) => {
                 orderColor,
                 productFont
             }},
-            $inc: {price: netPrice, weight: count * weight}
+            $inc: {playerAddPrice, price: netPrice, weight: count * weight}
         }
     );
 }
