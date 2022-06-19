@@ -187,9 +187,9 @@ const OrderDescription = ({
             Added <Moment fromNow>{product.createdAt}</Moment>
           </span>
 
-          <h4 className="pb-3">
+          {/* <h4 className="pb-3">
             Sold : <span className="fw-normal">{product.sellCount}</span>{" "}
-          </h4>
+          </h4> */}
           {/* PRICE LIST */}
           <div className="text-center text-secondary fs-6 pb-3">
             {product.priceArray?.price.map((item, index) => {

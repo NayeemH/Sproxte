@@ -388,8 +388,17 @@ const OrderDescription = ({
               <Row>
                 <Col>
                   <span className="d-block fs-4">Upload Front Images</span>
-
-                  <div className="d-flex align-items-center justify-content-center pt-2">
+                  <div className="w-100">
+                    <input
+                      type="file"
+                      name="image"
+                      className="form-control w-100"
+                      onChange={onSelectFile}
+                      id="temp2"
+                      multiple
+                    />
+                  </div>
+                  {/* <div className="d-flex align-items-center justify-content-center pt-2">
                     <Button
                       variant="outline-dark"
                       onClick={() => fileRef.current.click()}
@@ -416,7 +425,7 @@ const OrderDescription = ({
                     <span className="d-block pt-2 fs-6 text-small">
                       {selectedFile.length} file selected
                     </span>
-                  ) : null}
+                  ) : null} */}
                 </Col>
               </Row>
               <Row>
