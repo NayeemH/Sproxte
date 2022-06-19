@@ -134,7 +134,7 @@ const Dashboard = ({ dashboard, projects, fetchProjects }) => {
                   template
                   Imgid={project._id}
                   status={project.status}
-                  idBASE
+                  project={project}
                 />
               </Col>
             ))}

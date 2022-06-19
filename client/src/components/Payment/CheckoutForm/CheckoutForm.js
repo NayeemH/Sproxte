@@ -51,13 +51,11 @@ export default function CheckoutForm({ id }) {
         id="submit"
         className={styles.btn}
       >
-        <span id="button-text">
-          {isLoading || !stripe || !elements ? (
-            <Spinner variant="dark" />
-          ) : (
-            "Pay now"
-          )}
-        </span>
+        {isLoading || !stripe || !elements ? (
+          <span id="button-text">Loading...</span>
+        ) : (
+          <span id="button-text">Pay now</span>
+        )}
       </button>
     </form>
   );

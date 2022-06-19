@@ -18,7 +18,7 @@ const DiscoverPage = ({
   const { id } = useParams();
   const navigate = useNavigate();
   useEffect(() => {
-    if (!payment && id && auth) {
+    if (!payment && id) {
       getPaymentDetails(id);
     }
 

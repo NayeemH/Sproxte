@@ -105,9 +105,9 @@ function App({ getRefreshToken }) {
           <Route path="/template/:id" element={<FileUploadPage />} />
           <Route path="/product/:id" element={<FileUploadPageReady />} />
 
+          <Route path="payment/:id" element={<Paymentpage />} />
           <Route path="/*" element={<PrivateOutlet />}>
             <>
-              <Route path="payment/:id" element={<Paymentpage />} />
               <Route
                 path="payment-player/:id/:count/:addition/:price"
                 element={<PaymentpagePlayer />}
