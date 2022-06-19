@@ -21,7 +21,7 @@ router.post('/:id', fileFetch.single('image'), async (req, res, next) => {
 
 
         if(userType === 'admin' || userType === 'coach') {
-            const project = await Project.findOne({_id: id, userId, type: 'team'});
+            const project = await Project.findOne({_id: id, type: 'team'});
 
             if(!project) throw Error('Project not found');
 
@@ -44,7 +44,7 @@ router.post('/:id', fileFetch.single('image'), async (req, res, next) => {
                     name,
                     email,
                     password: await bcrypt.hash(password, 12),
-                    userType: 'gurdian',
+                    userType: 'client',
                 });
     
                 // Save User data to database
