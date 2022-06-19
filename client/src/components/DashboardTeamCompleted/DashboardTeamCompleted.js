@@ -85,7 +85,7 @@ const DashboardTeamCompleted = ({
                 template
                 Imgid={project._id}
                 status={project.status}
-                idBASE
+                project={project}
               />
             </Col>
           ))}
