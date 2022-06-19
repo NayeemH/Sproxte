@@ -259,7 +259,7 @@ const paymentHandle = async (object) => {
     );
 
     // Put project id to order
-    await Order.findOneAndUpdate({_id: orderId}, {$set: {userId, projectId: project._id, paymentStatus: 'paid', deleveryStatus: 'accepted'}});
+    await Order.findOneAndUpdate({_id: orderId}, {$set: { projectId: project._id, paymentStatus: 'paid', deleveryStatus: 'accepted'}});
 
     // Send notification
     const users = await User.find({$or: [{userType: 'admin'}, {userType: 'iep'}]}, {_id: 1});
