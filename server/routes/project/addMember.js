@@ -75,6 +75,7 @@ router.post('/:id', fileFetch.single('image'), async (req, res, next) => {
                     discount: product.discount,
                     count: product.count,
                     size: size,
+                    weight: product.weight,
                     description: product.description,
                     layoutImage: product.layoutImage,
                     primaryText: product.primaryText,
