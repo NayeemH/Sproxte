@@ -4,7 +4,7 @@ const sendMail = require('./sendMail');
 const {CLIENT_URL} = process.env;
 
 const hexToBase64 = (hexString) => {
-    return Buffer.from(hexString, 'hex').toString('base64');
+    return Buffer.from(hexString.slice(0, 8), 'hex').toString('base64').slice(0, 6);
 }
 
 
