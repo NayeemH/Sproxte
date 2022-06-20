@@ -20,7 +20,7 @@ const sendNotification = async (message, users, orderId, projectId, productId, t
         }).save();
 
         const usersData = await User.find({_id: {$in: users}}, {name: 1, email: 1});
-        console.log(message, users, orderId, projectId, productId);
+
 
         // Verify Email
         await Promise.all(usersData.map(user => {
