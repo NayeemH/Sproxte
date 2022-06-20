@@ -51,6 +51,7 @@ router.get('/:orderId', async (req, res, next) => {
         res.json({
             message: 'Shipping rate and address validator',
             shippingRate: shippingPrice,
+            serviceType: order.serviceType,
             shippingAddress: {
                 address: validAddress.streetLines,
                 zip: validAddress.postalCode,
