@@ -55,6 +55,7 @@ const OrderDescription = ({
   const selectRef2 = useRef(null);
 
   const modals = useModals();
+  const modals2 = useModals();
 
   useEffect(() => {
     if (
@@ -166,7 +167,6 @@ const OrderDescription = ({
         );
         resetlHandeler();
         setDescription("");
-        navigate("/cart");
       }
     }
   };
