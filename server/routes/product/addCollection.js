@@ -3,6 +3,7 @@ const Collection = require('../../models/collection');
 const Product = require('../../models/product');
 const {fileFetch} = require('../../lib/imageConverter');
 const User = require('../../models/user');
+const Project = require('../../models/project');
 const sendNotification = require('../../lib/sendNotification');
 const imageMerge = require('../../lib/imageMerge');
 const path = require('path');
@@ -38,13 +39,16 @@ router.post('/:id', fileFetch.single('image'), async (req, res, next) => {
             throw Error('You can not add collection');
         }
 
+        // Order id for notification
+        const project = await Project.findOne({_id: product.projectId});
+
         // Send notification
         const users = await User.find({$or: [{userType: 'admin'}, {userType: 'iep'}]}, {_id: 1});
         const userIds = users.map(({_id}) => _id.toString());
 
         userIds.push(product.userId.toString());
         
-        await sendNotification('Uploaded new preview file for you', userIds, product.projectId, product._id);
+        await sendNotification('Uploaded new preview file for you', userIds, project.orderId,  product.projectId, product._id);
         
         res.json({
             message: 'Collection is added successfully',

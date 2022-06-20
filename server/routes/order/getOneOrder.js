@@ -2,13 +2,14 @@ const router = require('express').Router();
 const Order = require('../../models/order');
 const Template = require('../../models/template');
 const ProductType = require('../../models/productType');
-
+const {ObjectId} = require('mongoose').Types;
 
 
 router.get('/:id', async (req, res, next) => {
     try {
         const {id} = req.params;
 
+        if(!(ObjectId.isValid(id) && new ObjectId(id).toString() == id)) return next();
 
         const order = await Order
             .findOne({_id: id}, {__v: 0})

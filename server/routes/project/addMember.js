@@ -111,7 +111,7 @@ router.post('/:id', fileFetch.single('image'), async (req, res, next) => {
             userIds.push(project.userId.toString());
             userIds.push(user._id.toString());
 
-            await sendNotification('One player is added', userIds, project._id);
+            await sendNotification('One player is added', userIds, project.orderId, project._id);
         }
         else {
             throw Error('You are not authorized');

@@ -24,7 +24,7 @@ router.patch('/:id', async (req, res, next) => {
 
             userIds.push(project.userId.toString());
 
-            await sendNotification('Project status changed', userIds, project._id);
+            await sendNotification('Project status changed', userIds, project.orderId, project._id);
         }
         else {
             throw Error('You are not authorized');

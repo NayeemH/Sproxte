@@ -3,7 +3,12 @@ const User = require('../models/user');
 const sendMail = require('./sendMail');
 const {CLIENT_URL} = process.env;
 
-const sendNotification = async (message, users, projectId, productId, type = 'success') => {
+const hexToBase64 = (hexString) => {
+    return Buffer.from(hexString, 'hex').toString('base64');
+}
+
+
+const sendNotification = async (message, users, orderId, projectId, productId, type = 'success') => {
     try {
         await new Notification({
             type,
@@ -16,7 +21,6 @@ const sendNotification = async (message, users, projectId, productId, type = 'su
 
         const usersData = await User.find({_id: {$in: users}}, {name: 1, email: 1});
         
-        console.log(usersData);
 
         // Verify Email
         await Promise.all(usersData.map(user => {
@@ -27,7 +31,7 @@ const sendNotification = async (message, users, projectId, productId, type = 'su
                 template: 'notification',
                 context: {
                     username: user.name,
-                    message,
+                    message: `${message}. The order id is ${hexToBase64(orderId)}`,
                     link: `${CLIENT_URL}/dashboard`
                 }
             });

@@ -1,8 +1,9 @@
 const router = require('express').Router();
 const Collection = require('../../models/collection');
+const Product = require('../../models/product');
 const User = require('../../models/user');
 const sendNotification = require('../../lib/sendNotification');
-const Product = require('../../models/product');
+const Project = require('../../models/project');
 
 
 router.patch('/:id', async (req, res, next) => {
@@ -24,6 +25,10 @@ router.patch('/:id', async (req, res, next) => {
             // TODO for gurdian
         }
         
+        
+        // Order id for notification
+        const project = await Project.findOne({_id: product.projectId});
+
 
         // Send notification
         const product = await Product.findOne({_id: collection.productId});
@@ -33,7 +38,7 @@ router.patch('/:id', async (req, res, next) => {
 
         userIds.push(product.userId.toString());
         
-        await sendNotification('New feedback is updated', userIds, product.projectId, product._id);
+        await sendNotification('New feedback is updated', userIds, project.orderId, product.projectId, product._id);
         
 
         res.json({
