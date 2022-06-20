@@ -20,7 +20,7 @@ const sendNotification = async (message, users, orderId, projectId, productId, t
         }).save();
 
         const usersData = await User.find({_id: {$in: users}}, {name: 1, email: 1});
-        
+
 
         // Verify Email
         await Promise.all(usersData.map(user => {
@@ -31,7 +31,7 @@ const sendNotification = async (message, users, orderId, projectId, productId, t
                 template: 'notification',
                 context: {
                     username: user.name,
-                    message: `${message}. The order id is ${hexToBase64(orderId)}`,
+                    message: `${message}. The order id is ${hexToBase64(orderId.toString())}`,
                     link: `${CLIENT_URL}/dashboard`
                 }
             });
@@ -42,6 +42,5 @@ const sendNotification = async (message, users, orderId, projectId, productId, t
         console.log(error.message);
     }
 }
-
 
 module.exports = sendNotification;
