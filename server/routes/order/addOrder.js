@@ -104,13 +104,6 @@ const addCustomTemplate = async (req) => {
         orderColor,
         productFont
     } = req.body;
-
-    if(type === 'team') {
-        const order = await Order.findOne({_id: id, userId});
-        if(order.orders.length === 1) {
-            throw Error('Can not add more than one team order');
-        }
-    }
     
     let frontImages, backImages;
     if(req.files && req.files.frontImages) {
