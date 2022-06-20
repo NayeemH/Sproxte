@@ -159,6 +159,14 @@ const CardForm = ({
                 {check.shippingAddress.country && check.shippingAddress.country}
               </span>
             </div>
+            <div className="d-flex justify-content-between align-items-center border-bottom py-2 mb-3">
+              <div className="d-flex align-items-center justify-content-center">
+                <span className="d-block fw-bold ms-1">Shipping Type</span>
+              </div>
+              <span className="d-block">
+                {check.serviceType && check.serviceType}
+              </span>
+            </div>
             <b>Note:</b> This address is auto corrected.
             <hr />
             <h4>Price</h4>

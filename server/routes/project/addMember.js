@@ -88,7 +88,7 @@ router.post("/:id", fileFetch.single("image"), async (req, res, next) => {
 
       newProducts.map(async (product, i) => {
         const collections = await Collection.find(
-          { productId: product._id },
+          { productId: products[i]._id },
           { image: 1 }
         );
 

@@ -436,7 +436,7 @@ const OrderDetails = ({
         )}
 
         {/* ::::: TODO */}
-        {role === "admin" && projects?.isAdmin === true ? (
+        {role === "admin" && projects?.userId === user._id ? (
           <Button
             className="btn_primary ms-3"
             onClick={() => navigate(`/admin/order/${projects.orderId}`)}
