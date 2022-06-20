@@ -27,7 +27,6 @@ router.post('/:id', fileFetch.single('image'), async (req, res, next) => {
 
             const products = await Product
                 .find({projectId: id})
-                .sort({_id: -1})
                 .limit(project.productCount);
 
             if(project.count  < 1) throw Error('Can not add user');
@@ -62,31 +61,31 @@ router.post('/:id', fileFetch.single('image'), async (req, res, next) => {
                 products.map((product, i) => new Product({
                     userId,
                     projectId: project._id,
-                    typeId: product[i].typeId,
-                    type: product[i].type,
+                    typeId: product.typeId,
+                    type: product.type,
                     name,
                     image: {
-                        front: product[i].pngImageFront,
-                        back: product[i].pngImageBack,
+                        front: product.pngImageFront,
+                        back: product.pngImageBack,
                     },
-                    colorImage: product[i].colorImage,
-                    color2: product[i].color2,
-                    price: product[i].price,
-                    priceArray: product[i].priceArray,
-                    discount: product[i].discount,
-                    count: product[i].count,
+                    colorImage: product.colorImage,
+                    color2: product.color2,
+                    price: product.price,
+                    priceArray: product.priceArray,
+                    discount: product.discount,
+                    count: product.count,
                     size: size,
-                    description: product[i].description,
-                    layoutImage: product[i].layoutImage,
-                    primaryText: product[i].primaryText,
-                    primaryColor: product[i].primaryColor,
-                    secondaryText: product[i].secondaryText,
-                    secondaryColor: product[i].secondaryColor,
+                    description: product.description,
+                    layoutImage: product.layoutImage,
+                    primaryText: product.primaryText,
+                    primaryColor: product.primaryColor,
+                    secondaryText: product.secondaryText,
+                    secondaryColor: product.secondaryColor,
                     frontImages: image ? [image] : [],   // Store the gurdian image
-                    backImages: product[i].backImages,
+                    backImages: product.backImages,
                     gurdianNotifications: [],     // Store the gurdian email
-                    orderColor: product[i].orderColor,
-                    productFont: product[i].productFont
+                    orderColor: product.orderColor,
+                    productFont: product.productFont
                 }).save())
             );
 
