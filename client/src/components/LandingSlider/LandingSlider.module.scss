@@ -35,6 +35,15 @@
   padding: 20px 30px;
 }
 
+.prod_name {
+  text-shadow: 1px 1px 0 rgb(255, 255, 255) !important;
+  background-image: linear-gradient(90deg, #080808 0%, #000000 100%) !important;
+  background-clip: text !important;
+
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+}
+
 .slide_top {
   height: 100%;
   position: relative;

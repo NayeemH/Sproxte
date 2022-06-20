@@ -111,13 +111,15 @@ const LandingSlider = ({
                           />
                         </div> */}
                         <div
-                          className={`text-center d-flex justify-content-center align-items-center flex-column ${styles.slider__content}`}
+                          className={`text-center d-flex justify-content-end align-items-center flex-column ${styles.slider__content}`}
                         >
-                          <div
-                            className={`d-flex flex-column ${styles.name__content}`}
-                          >
+                          <div className={`d-flex flex-column pb-5`}>
                             <div className="text-center pb-3">
-                              <span className="d-block fs-4">{prod.name}</span>
+                              <span
+                                className={`d-block fs-1 fw-bold gradient_title ${styles.prod_name}`}
+                              >
+                                {prod.name}
+                              </span>
                             </div>
                             <Button
                               size="lg"
