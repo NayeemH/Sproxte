@@ -1,6 +1,7 @@
 const router = require('express').Router();
 const Product = require('../../models/product');
 const User = require('../../models/user');
+const Project = require('../../models/project');
 const Collection = require('../../models/collection');
 const sendNotification = require('../../lib/sendNotification');
 
@@ -38,13 +39,17 @@ router.patch('/:id', async (req, res, next) => {
             // TODO for gurdian
         }
         
+        
+        // Order id for notification
+        const project = await Project.findOne({_id: product.projectId});
+
         // Send notification
         const users = await User.find({$or: [{userType: 'admin'}, {userType: 'iep'}]}, {_id: 1});
         const userIds = users.map(({_id}) => _id.toString());
 
         userIds.push(product.userId);
         
-        await sendNotification('Product approved', userIds, product.projectId, product._id);
+        await sendNotification('Product approved', userIds, project.orderId, product.projectId, product._id);
 
         res.json({
             message: 'Feedback is added successfully',

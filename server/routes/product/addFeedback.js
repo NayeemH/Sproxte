@@ -2,6 +2,7 @@ const router = require('express').Router();
 const Collection = require('../../models/collection');
 const User = require('../../models/user');
 const sendNotification = require('../../lib/sendNotification');
+const Project = require('../../models/project');
 const Product = require('../../models/product');
 
 
@@ -33,12 +34,15 @@ router.put('/:id', async (req, res, next) => {
         // Send notification
         const product = await Product.findOne({_id: collection.productId});
 
+        // Order id for notification
+        const project = await Project.findOne({_id: product.projectId});
+
         const users = await User.find({$or: [{userType: 'admin'}, {userType: 'iep'}]}, {_id: 1});
         const userIds = users.map(({_id}) => _id.toString());
 
         userIds.push(product.userId.toString());
         
-        await sendNotification('New feedback is added', userIds, product.projectId, product._id);
+        await sendNotification('New feedback is added', userIds, project.orderId, product.projectId, product._id);
         
 
         res.json({
