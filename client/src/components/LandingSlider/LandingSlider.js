@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Button, Spinner } from "react-bootstrap";
 import {
@@ -34,6 +34,9 @@ const LandingSlider = ({
   getTeamList,
 }) => {
   const navigate = useNavigate();
+  const [my_swiper, set_my_swiper] = useState({});
+  const [my_swiper_ready, set_my_swiper_ready] = useState({});
+  const [my_swiper_ready_team, set_my_swiper_ready_team] = useState({});
   useEffect(() => {
     getCategoryList();
 
@@ -84,32 +87,47 @@ const LandingSlider = ({
                     translate: ["100%", 0, 0],
                   },
                 }}
+                onInit={(ev) => {
+                  set_my_swiper(ev);
+                }}
               >
                 {categories && categories.length > 0 ? (
                   <>
                     {categories.map((prod, i) => (
-                      <SwiperSlide className={styles.slide_top} key={prod._id}>
-                        <div className="">
-                          <div className="text-center pt-4">
-                            <img
-                              src={`${IMAGE_PATH}small/${prod.pngImage}`}
-                              className={styles.img}
-                              alt=""
-                            />
-                          </div>
-                          <div className="text-center">
-                            <span className="d-block fs-4">{prod.name}</span>
-                          </div>
-                        </div>
-                        <div className="text-center d-flex justify-content-center align-items-center">
-                          <Button
-                            size="lg"
-                            className="btn_primary"
-                            onClick={() => navigate(`/category/${prod._id}`)}
+                      <SwiperSlide
+                        className={`${styles.slide_top} ${styles.slide_bg}`}
+                        style={{
+                          background: `url(${IMAGE_PATH}small/${prod.pngImage})`,
+                          backgroundSize: "cover",
+                          backgroundPosition: "center center",
+                        }}
+                        key={prod._id}
+                      >
+                        {/* <div className={styles.teaser}>
+                          <img
+                            src={`${IMAGE_PATH}small/${prod.pngImage}`}
+                            className={styles.img_teaser}
+                            alt=""
+                          />
+                        </div> */}
+                        <div
+                          className={`text-center d-flex justify-content-center align-items-center flex-column ${styles.slider__content}`}
+                        >
+                          <div
+                            className={`d-flex flex-column ${styles.name__content}`}
                           >
-                            {" "}
-                            START{" "}
-                          </Button>
+                            <div className="text-center pb-3">
+                              <span className="d-block fs-4">{prod.name}</span>
+                            </div>
+                            <Button
+                              size="lg"
+                              className="btn_primary"
+                              onClick={() => navigate(`/category/${prod._id}`)}
+                            >
+                              {" "}
+                              START{" "}
+                            </Button>
+                          </div>
                         </div>
                         <div className={styles.off}>
                           {prod.discount > 0 ? (
@@ -118,29 +136,37 @@ const LandingSlider = ({
                             <></>
                           )}
                         </div>
-                        <div className={styles.bottom_nav}>
+                        <div
+                          className={`${styles.bottom_nav} ${styles.name__content} py-3`}
+                        >
                           {i === 0 ? (
                             <>
                               <span className="d-block text-white">
-                                <HiOutlineArrowNarrowLeft />
+                                <HiOutlineArrowNarrowLeft className="d-none" />
                               </span>
                             </>
                           ) : (
-                            <span className="d-block text-secondary">
+                            <span
+                              className="d-block text-dark text-cursor"
+                              onClick={() => my_swiper.slidePrev()}
+                            >
                               <HiOutlineArrowNarrowLeft />
                             </span>
                           )}
-                          <span className="d-block fs-6 text-secondary">
+                          <span className="d-block fs-6 text-dark fw-bold">
                             More Category Designs
                           </span>
                           {i === categories.length - 1 ? (
                             <>
                               <span className="d-block text-white">
-                                <HiOutlineArrowNarrowRight />
+                                <HiOutlineArrowNarrowRight className="d-none" />
                               </span>
                             </>
                           ) : (
-                            <span className="d-block text-secondary">
+                            <span
+                              className="d-block  text-dark  text-cursor"
+                              onClick={() => my_swiper.slideNext()}
+                            >
                               <HiOutlineArrowNarrowRight />
                             </span>
                           )}
@@ -172,6 +198,9 @@ const LandingSlider = ({
                     next: {
                       translate: ["100%", 0, 0],
                     },
+                  }}
+                  onInit={(ev) => {
+                    set_my_swiper_ready(ev);
                   }}
                 >
                   {templates.map((temp, i) => (
@@ -216,7 +245,10 @@ const LandingSlider = ({
                             </span>
                           </>
                         ) : (
-                          <span className="d-block text-secondary">
+                          <span
+                            className="d-block text-secondary  text-cursor"
+                            onClick={() => my_swiper_ready.slidePrev()}
+                          >
                             <HiOutlineArrowNarrowLeft />
                           </span>
                         )}
@@ -230,7 +262,10 @@ const LandingSlider = ({
                             </span>
                           </>
                         ) : (
-                          <span className="d-block text-secondary">
+                          <span
+                            className="d-block text-secondary  text-cursor"
+                            onClick={() => my_swiper_ready.slideNext()}
+                          >
                             <HiOutlineArrowNarrowRight />
                           </span>
                         )}
@@ -261,6 +296,9 @@ const LandingSlider = ({
                     next: {
                       translate: ["100%", 0, 0],
                     },
+                  }}
+                  onInit={(ev) => {
+                    set_my_swiper_ready_team(ev);
                   }}
                 >
                   {teams.map((temp, i) => (
@@ -302,7 +340,10 @@ const LandingSlider = ({
                             </span>
                           </>
                         ) : (
-                          <span className="d-block text-secondary">
+                          <span
+                            className="d-block text-secondary  text-cursor"
+                            onClick={() => my_swiper_ready_team.slidePrev()}
+                          >
                             <HiOutlineArrowNarrowLeft />
                           </span>
                         )}
@@ -316,7 +357,10 @@ const LandingSlider = ({
                             </span>
                           </>
                         ) : (
-                          <span className="d-block text-secondary">
+                          <span
+                            className="d-block text-secondary text-cursor"
+                            onClick={() => my_swiper_ready_team.slideNext()}
+                          >
                             <HiOutlineArrowNarrowRight />
                           </span>
                         )}

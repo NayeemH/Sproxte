@@ -5,6 +5,36 @@
   padding-top: 0px;
 }
 
+.teaser {
+  position: relative;
+  overflow: hidden;
+}
+
+.img_teaser {
+  position: absolute;
+  z-index: 23333 !important;
+  width: 100% !important ;
+  height: 700px !important;
+  top: 0 !important;
+  left: 0 !important;
+}
+
+.slide_bg {
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+}
+
+.slider__content {
+  padding-top: 100px;
+  min-height: 90%;
+}
+
+.name__content {
+  background: rgba(255, 255, 255, 0.534);
+  padding: 20px 30px;
+}
+
 .slide_top {
   height: 100%;
   position: relative;

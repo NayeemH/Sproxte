@@ -17,7 +17,9 @@ body {
   overflow-x: hidden;
   background: var(--light) !important;
 }
-
+.text-cursor:hover {
+  cursor: pointer;
+}
 .stroke {
   stroke: #fff;
   stroke-width: 1px;
