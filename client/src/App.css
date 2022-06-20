@@ -42,6 +42,23 @@ body {
   background-image: none !important;
 }
 
+.btn__primary {
+  outline: none !important;
+  border: none !important;
+  padding: 8px 26px !important;
+  margin-top: 5px;
+  font-weight: bold !important;
+  border-radius: 30px !important;
+  color: var(--dark) !important;
+  background: var(--primary) !important;
+  transition: 0.3s all ease-in-out;
+}
+
+.btn__primary:hover {
+  background: var(--orange) !important;
+  transition: 0.3s all ease-in-out;
+}
+
 .gradient_title {
   background-image: linear-gradient(90deg, #ffe502 0%, #ffa602 100%) !important;
   background-clip: text !important;

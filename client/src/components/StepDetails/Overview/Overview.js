@@ -251,7 +251,7 @@ const Overview = ({
               selectedStep.status === "working") && (
               <Button
                 onClick={() => handleClickFeedback()}
-                className={`btn_primary`}
+                className={`btn__primary`}
               >
                 <AiOutlinePlus className=" fs-6" /> New Feedback
               </Button>
