@@ -57,6 +57,11 @@ export default function CheckoutForm({ id }) {
           <span id="button-text">Pay now</span>
         )}
       </button>
+      <div className="">
+        <span className="d-block pt-2">
+          This payment is secured by <a href="https://stripe.com/">Stripe</a>
+        </span>
+      </div>
     </form>
   );
 }

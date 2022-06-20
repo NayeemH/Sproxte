@@ -18,19 +18,19 @@ const SharePage = ({ product, getTemplateShare }) => {
   return (
     <div>
       <NewLayout>
-        {!product.name ? (
-          <div
-            className="d-flex justify-content-center align-items-center"
-            style={{ minHeight: "100vh" }}
-          >
+        <div
+          className="d-flex justify-content-start align-items-center"
+          style={{ minHeight: "100vh" }}
+        >
+          {!product.name ? (
             <Spinner variant="dark" animation="grow" />
-          </div>
-        ) : (
-          <ReadyUpload
-            type="link"
-            product={{ pngImageFront: product.image, ...product }}
-          />
-        )}
+          ) : (
+            <ReadyUpload
+              type="link"
+              product={{ pngImageFront: product.image, ...product }}
+            />
+          )}
+        </div>
       </NewLayout>
     </div>
   );
