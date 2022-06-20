@@ -4,10 +4,10 @@ import { useNavigate, useParams } from "react-router-dom";
 import { Spinner } from "react-bootstrap";
 import NewLayout from "../../components/Shared/NewLayout/NewLayout";
 import { getTeamPlayerList } from "../../actions/Landing.action";
-import { TeamTypes } from "../../components/TeamTypes";
+import TeamPlayers from "../../components/TeamPlayers/TeamPlayers";
 
-const TeamPlayerPage = ({ team, getTeamPlayerList }) => {
-  const { id } = useParams();
+const TeamProductsPage = ({ team, getTeamPlayerList }) => {
+  const { id, type } = useParams();
   const navigate = useNavigate();
   useEffect(() => {
     getTeamPlayerList(id);
@@ -21,7 +21,7 @@ const TeamPlayerPage = ({ team, getTeamPlayerList }) => {
       <NewLayout>
         {team !== null ? (
           <div className="d-flex justify-content-start align-items-center">
-            <TeamTypes team={team} />
+            <TeamPlayers team={team} type={type} />
           </div>
         ) : (
           <div
@@ -40,4 +40,6 @@ const mapStateToProps = (state) => ({
   team: state.landing.selected_team,
 });
 
-export default connect(mapStateToProps, { getTeamPlayerList })(TeamPlayerPage);
+export default connect(mapStateToProps, { getTeamPlayerList })(
+  TeamProductsPage
+);

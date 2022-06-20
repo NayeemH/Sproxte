@@ -2,7 +2,6 @@ import React, { useEffect, useRef, useState } from "react";
 import { Button, Card, Col, Container, InputGroup, Row } from "react-bootstrap";
 import { connect } from "react-redux";
 import { addToCart, setSize } from "../../../actions/Cart.action";
-import { ImUpload } from "react-icons/im";
 import { toast } from "react-toastify";
 import styles from "./OrderDescription.module.scss";
 import colors from "../../../config/Colors";
@@ -22,6 +21,7 @@ import "swiper/css/pagination";
 import { Pagination } from "swiper";
 import ProductCard from "../../Shared/ProductCard/ProductCard";
 import Moment from "react-moment";
+import { setTeamCount } from "../../../actions/Coach.action";
 
 const OrderDescription = ({
   sizes,
@@ -29,15 +29,18 @@ const OrderDescription = ({
   product,
   color,
   user,
-  cart,
+  team_count,
   selectedColor,
   isAuthenticated,
+  setTeamCount,
 }) => {
   const [selectedFile, setSelectedFile] = useState();
   const [preview, setPreview] = useState();
   const [size, setSize] = useState();
   const [description, setDescription] = useState();
-  const [quantity, setQuantity] = useState(1);
+  const [quantity, setQuantity] = useState(
+    team_count === null ? 1 : team_count
+  );
   const [selectedLayout, setSelectedLayout] = useState();
   const [mainText, setMainText] = useState("");
   const [secondaryText, setSecondaryText] = useState("");
@@ -165,6 +168,11 @@ const OrderDescription = ({
           orderColor,
           orderColor2
         );
+        if (user.userType === "coach") {
+          if (team_count === null) {
+            setTeamCount(quantity);
+          }
+        }
         resetlHandeler();
         setDescription("");
       }
@@ -694,6 +702,11 @@ const OrderDescription = ({
             <input
               type="number"
               value={quantity}
+              disabled={
+                user && user.userType === "coach" && team_count !== null
+                  ? true
+                  : false
+              }
               onChange={(e) => setQuantity(e.target.value)}
               className="form-control"
               style={{ width: "60px" }}
@@ -711,9 +724,10 @@ const OrderDescription = ({
 const mapStateToProps = (state) => ({
   user: state.auth.user,
   cart: state.cart.cart,
+  team_count: state.cart.team_count,
   isAuthenticated: state.auth.isAuthenticated,
 });
 
-export default connect(mapStateToProps, { setSize, addToCart })(
+export default connect(mapStateToProps, { setSize, addToCart, setTeamCount })(
   OrderDescription
 );

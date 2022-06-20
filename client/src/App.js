@@ -63,6 +63,7 @@ import PlayerRequestCompletePage from "./views/PlayerRequestCompletePage/PlayerR
 import CartNewPage from "./views/CartNewPage/CartNewPage";
 import AdminOrderDetails from "./views/AdminOrderDetails/AdminOrderDetails";
 import TeamPlayerPage from "./views/TeamPlayerPage/TeamPlayerPage";
+import TeamProductsPage from "./views/TeamProductsPage/TeamProductsPage";
 
 function App({ getRefreshToken }) {
   useEffect(() => {
@@ -75,6 +76,7 @@ function App({ getRefreshToken }) {
         <Routes>
           <Route path="/" element={<LandingPageNew />} />
           <Route path="/team/:id" element={<TeamPlayerPage />} />
+          <Route path="/team/:id/:type" element={<TeamProductsPage />} />
           <Route path="/payment-success/:id" element={<PaymentCompelete />} />
           <Route path="/admin/order/:id" element={<AdminOrderDetails />} />
           <Route

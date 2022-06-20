@@ -1,4 +1,4 @@
-import { CART_RESET } from "../constants/Type";
+import { CART_RESET, SET_TEAM_COUNT } from "../constants/Type";
 import {
   CART_ADD_ITEM,
   CART_REMOVE_ITEM,
@@ -9,12 +9,18 @@ import {
 const initialState = {
   cart: [] || JSON.parse(localStorage.getItem("sv_cart")).data,
   selected_cart: {},
+  team_count: null,
 };
 
 const CartReducer = (state = initialState, action) => {
   const { type, payload } = action;
 
   switch (type) {
+    case SET_TEAM_COUNT:
+      return {
+        ...state,
+        team_count: payload,
+      };
     case CART_ADD_ITEM:
       localStorage.setItem(
         "sv_cart",

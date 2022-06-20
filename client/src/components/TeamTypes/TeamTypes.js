@@ -1,12 +1,8 @@
 import React from "react";
-import styles from "./TeamPlayers.module.scss";
+import styles from "./TeamTypes.module.scss";
 
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Button, Spinner } from "react-bootstrap";
-import {
-  HiOutlineArrowNarrowLeft,
-  HiOutlineArrowNarrowRight,
-} from "react-icons/hi";
 
 // Import Swiper styles
 import "swiper/css";
@@ -18,9 +14,9 @@ import { Pagination } from "swiper";
 import { IMAGE_PATH } from "../../constants/URL";
 import { useNavigate } from "react-router-dom";
 
-const TeamPlayers = ({ team, type }) => {
+const TeamTypes = ({ team }) => {
   const navigate = useNavigate();
-
+  const ids = [];
   return (
     <div className={styles.wrapper}>
       {team === null ? (
@@ -48,7 +44,14 @@ const TeamPlayers = ({ team, type }) => {
           >
             {team !== null && team.products.length > 0 ? (
               team.products
-                .filter((item) => item.typeId === type)
+                .filter((tp) => {
+                  if (ids.includes(tp.typeId)) {
+                    return false;
+                  } else {
+                    ids.push(tp.typeId);
+                    return true;
+                  }
+                })
                 .map((prod) => (
                   <SwiperSlide className={styles.slide_left} key={prod._id}>
                     <>
@@ -75,7 +78,9 @@ const TeamPlayers = ({ team, type }) => {
                         <Button
                           size="lg"
                           className="btn_primary"
-                          onClick={() => navigate(`/team/player/${prod._id}`)}
+                          onClick={() =>
+                            navigate(`/team/${prod._id}/${prod.typeId}`)
+                          }
                         >
                           {" "}
                           START{" "}
@@ -103,4 +108,4 @@ const TeamPlayers = ({ team, type }) => {
   );
 };
 
-export default TeamPlayers;
+export default TeamTypes;

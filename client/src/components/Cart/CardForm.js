@@ -115,6 +115,7 @@ const CardForm = ({
       modals.openConfirmModal({
         title: "Your Address",
         centered: true,
+        closeOnClickOutside: false,
         children: (
           <Text size="md">
             <div className="d-flex justify-content-between align-items-center border-bottom py-2">

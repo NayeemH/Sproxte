@@ -350,7 +350,7 @@ const LandingSlider = ({
                         <span className="d-block fs-6 text-secondary">
                           More Team Designs
                         </span>
-                        {i === templates.length - 1 ? (
+                        {i === teams.length - 1 ? (
                           <>
                             <span className="d-block text-white">
                               <HiOutlineArrowNarrowRight />

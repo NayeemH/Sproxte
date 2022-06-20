@@ -145,7 +145,7 @@ const StepDetails = ({
             >
               {step.status !== "approved" ? (
                 <>
-                  {role === "user" ? (
+                  {role === "user" || role === "coach" ? (
                     <>
                       <Button
                         variant="primary"

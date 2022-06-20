@@ -26,6 +26,7 @@ import {
   SET_TOKEN,
 } from "../constants/TypeLanding";
 import { BASE_URL } from "../constants/URL";
+import { setTeamCount } from "./Coach.action";
 import { getProjectDetails } from "./Project.action";
 
 export const setPaymentKey = () => async (dispatch) => {
@@ -198,6 +199,8 @@ export const createOrder = (values, cart, logo, role) => async (dispatch) => {
             config2
           );
         }
+
+        dispatch(setTeamCount(null));
 
         return { ...res2.data, orderId: res.data.orderId };
       } catch (error) {
