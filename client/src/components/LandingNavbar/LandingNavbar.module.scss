@@ -17,10 +17,13 @@
 }
 
 .dot {
-  width: 4px;
-  height: 4px;
+  width: 10px;
+  height: 10px;
   border-radius: 50%;
-  background: var(--orange);
+  background: var(--danger);
+  position: absolute;
+  top: -3px;
+  right: 0;
 }
 
 .box {
