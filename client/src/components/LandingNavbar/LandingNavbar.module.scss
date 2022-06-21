@@ -16,6 +16,13 @@
   display: none;
 }
 
+.dot {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--orange);
+}
+
 .box {
   background-color: #fff;
   border-radius: 5px;

@@ -18,7 +18,14 @@ import { Text } from "@mantine/core";
 import { useModals } from "@mantine/modals";
 import { switchMode } from "../../actions/Coach.action";
 
-const LandingNavbar = ({ page, isAuthenticated, user, logout, switchMode }) => {
+const LandingNavbar = ({
+  page,
+  isAuthenticated,
+  user,
+  logout,
+  switchMode,
+  cart,
+}) => {
   const navigate = useNavigate();
   const [show, setShow] = useState(false);
   const modals = useModals();
@@ -100,9 +107,18 @@ const LandingNavbar = ({ page, isAuthenticated, user, logout, switchMode }) => {
           </div>
         </div>
         <div
-          className={`shadow-sm ${styles.box} d-none d-md-flex align-items-center`}
+          className={`shadow-sm ${styles.box} d-none d-md-flex align-items-center postion-relative`}
         >
-          <div className={page === "cart" ? styles.active : styles.link}>
+          <div
+            className={`${
+              page === "cart" ? styles.active : styles.link
+            } position-relative`}
+          >
+            {cart && cart.length > 0 ? (
+              <div className={`${styles.dot}`}></div>
+            ) : (
+              <></>
+            )}
             <Link to="/cart" style={{ fontSize: 22 }}>
               <AiOutlineShoppingCart />
             </Link>
@@ -213,6 +229,7 @@ const LandingNavbar = ({ page, isAuthenticated, user, logout, switchMode }) => {
 const mapStateToProps = (state) => ({
   isAuthenticated: state.auth.isAuthenticated,
   user: state.auth.user,
+  cart: state.cart.cart,
 });
 
 export default connect(mapStateToProps, { logout, switchMode })(LandingNavbar);
