@@ -18,7 +18,8 @@
   outline: none !important;
   border: none !important;
   padding: 8px 26px !important;
-  background: linear-gradient(90deg, #ffe502 0%, #ffa602 100%) !important;
+  // /* background: linear-gradient(90deg, #ffe502 0%, #ffa602 100%) !important; */background: var(--primary) !important;
+  background: var(--primary) !important;
   color: var(--dark) !important;
   font-weight: bold !important;
   border-radius: 30px !important;
@@ -26,8 +27,9 @@
 }
 
 .btn:hover {
-  background: rgb(9, 9, 9) !important;
-  color: var(--primary) !important;
+  // background: rgb(9, 9, 9) !important;
+  background: var(--orange) !important;
+  color: var(--dark) !important;
   transition: 0.3s all ease-in-out;
 }
 

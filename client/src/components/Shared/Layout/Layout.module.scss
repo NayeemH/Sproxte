@@ -30,7 +30,8 @@
   margin-left: 10px;
 }
 .nav__item:global(.active) .icon {
-  background: linear-gradient(90deg, #ffe502 0%, #ffa602 100%) !important;
+  /* background: linear-gradient(90deg, #ffe502 0%, #ffa602 100%) !important; */
+  background: var(--primary) !important;
   border-radius: 50%;
 }
 .icon {
@@ -64,7 +65,8 @@
   text-decoration: none !important;
   color: var(--dark) !important;
   border: 1px solid var(--light);
-  background: linear-gradient(90deg, #ffe502 0%, #ffa602 100%) !important;
+  /* background: linear-gradient(90deg, #ffe502 0%, #ffa602 100%) !important; */
+  background: var(--primary) !important;
   transition: 0.3s all ease-in-out;
 }
 

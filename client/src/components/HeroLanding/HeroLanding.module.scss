@@ -21,7 +21,8 @@
 
 .btn {
   height: 60px !important;
-  background: linear-gradient(90deg, #ffe502 0%, #ffa602 100%) !important;
+  /* background: linear-gradient(90deg, #ffe502 0%, #ffa602 100%) !important; */
+  background: var(--primary) !important;
   padding: 5px 2.5rem !important;
   display: flex;
   justify-content: space-between;

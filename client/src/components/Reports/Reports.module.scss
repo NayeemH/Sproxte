@@ -1,6 +1,7 @@
 .icon {
-  color: var(--white) !important;
-  background: linear-gradient(-45deg, #ffe502 0%, #ffa602 100%) !important;
+  color: var(--dark) !important;
+  background: var(--primary) !important;
+  // background: linear-gradient(-45deg, #ffe502 0%, #ffa602 100%) !important;
   width: 55px;
   height: 55px;
   display: flex;

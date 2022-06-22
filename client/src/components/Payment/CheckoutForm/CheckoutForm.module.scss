@@ -6,11 +6,13 @@
   font-weight: bold !important;
   border-radius: 30px !important;
   color: var(--dark) !important;
-  background: linear-gradient(90deg, #ffe502 0%, #ffa602 100%) !important;
+  /* background: linear-gradient(90deg, #ffe502 0%, #ffa602 100%) !important; */
+  background: var(--primary) !important;
   transition: 0.3s all ease-in-out;
 }
 
 .btn:hover {
-  background: linear-gradient(90deg, #fae41a 0%, #fcaf22 100%) !important;
+  background: var(--orange) !important;
+  /* background: linear-gradient(90deg, #fae41a 0%, #fcaf22 100%) !important; */
   transition: 0.3s all ease-in-out;
 }
