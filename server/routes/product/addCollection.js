@@ -33,7 +33,10 @@ router.post('/:id', fileFetch.single('image'), async (req, res, next) => {
                 isIEP: userType === 'iep' ? true : false
             }).save();
 
-            await Product.findOneAndUpdate({_id: id}, {$set: {status: 'working'}});
+            await Product.findOneAndUpdate({_id: id}, {$set: {
+                status: 'working',
+                finalImage: mergeImage
+            }});
         }
         else {
             throw Error('You can not add collection');

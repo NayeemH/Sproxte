@@ -19,7 +19,7 @@ router.patch('/:id', async (req, res, next) => {
             product = await Product.findOneAndUpdate({_id: id}, {$set: 
                 {
                     status: 'approved',
-                    finalImage: collections.length ? collections[collections.length - 1].image : null
+                    // finalImage: collections.length ? collections[collections.length - 1].image : null
                 }
             });
         }
@@ -29,7 +29,7 @@ router.patch('/:id', async (req, res, next) => {
             product = await Product.findOneAndUpdate({_id: id, userId}, {$set: 
                 {
                     status: 'approved',
-                    finalImage: collections.length ? collections[collections.length - 1].image : null
+                    // finalImage: collections.length ? collections[collections.length - 1].image : null
                 }
             });
 
