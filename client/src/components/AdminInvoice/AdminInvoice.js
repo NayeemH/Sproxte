@@ -117,7 +117,7 @@ const AdminInvoice = ({ data, country, user, isAuthenticated }) => {
                   <td>{item.name}</td>
                   <td>{item.count}</td>
                   <td>
-                    ${getPrice(item.priceArray, item.count)}{" "}
+                    ${getPrice(item.priceArray, item.count).toFixed(2)}{" "}
                     {getDiscount(item.discount, item.count) > 0 ? (
                       <span className="fw-bold text-danger fs-6">
                         {" "}
@@ -141,18 +141,20 @@ const AdminInvoice = ({ data, country, user, isAuthenticated }) => {
 
               <tr>
                 <td colSpan={3}>Subtotal</td>
-                <td>${data.price}</td>
+                <td>${data.price.toFixed(2)}</td>
               </tr>
               <tr>
                 <td colSpan={3}>Shipping cost</td>
-                <td>${data.shippingCost}</td>
+                <td>${data.shippingCost.toFixed(2)}</td>
               </tr>
               <tr className="bg-primary" style={{ height: 2 }}></tr>
               <tr>
                 <td colSpan={3} className="fw-bold">
                   Total
                 </td>
-                <td className="fw-bold">${data.shippingCost + data.price}</td>
+                <td className="fw-bold">
+                  ${(data.shippingCost + data.price).toFixed(2)}
+                </td>
               </tr>
             </tbody>
           </Table>

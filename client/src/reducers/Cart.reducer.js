@@ -7,7 +7,11 @@ import {
 } from "../constants/TypeLanding";
 
 const initialState = {
-  cart: [] || JSON.parse(localStorage.getItem("sv_cart")).data,
+  cart:
+    localStorage.getItem("sv_cart") &&
+    JSON.parse(localStorage.getItem("sv_cart")).data
+      ? JSON.parse(localStorage.getItem("sv_cart")).data
+      : [],
   selected_cart: {},
   team_count: null,
 };
