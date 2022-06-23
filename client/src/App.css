@@ -162,3 +162,16 @@ body {
     padding: 0 10px;
   }
 }
+
+@media screen and (max-height: 800px) {
+  .swiper {
+    height: calc(100vh - 100px);
+    min-height: calc(100vh - 80px) !important;
+  }
+  /* .swiper {
+    width: 500px;
+    height: 88vh;
+    min-height: 700px !important;
+    border-radius: 15px;
+  } */
+}

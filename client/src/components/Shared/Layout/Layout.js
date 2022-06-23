@@ -56,14 +56,18 @@ const Layout = ({ logout, children, title, user }) => {
                   <GoThreeBars />
                 </div>
               </div>
-              <div className={styles.nav}>
-                <NavLink to="/dashboard" className={styles.nav__item}>
-                  <span className={styles.icon}>
-                    <VscHome />
-                  </span>
-                  <span className={styles.nav__item_text}>Dashboard</span>
-                </NavLink>
-              </div>
+              {role !== "coach" ? (
+                <div className={styles.nav}>
+                  <NavLink to="/dashboard" className={styles.nav__item}>
+                    <span className={styles.icon}>
+                      <VscHome />
+                    </span>
+                    <span className={styles.nav__item_text}>Dashboard</span>
+                  </NavLink>
+                </div>
+              ) : (
+                <></>
+              )}
               {role === "admin" || role === "iep" || role === "coach" ? (
                 <div className={styles.nav}>
                   <NavLink to="/team-dashboard" className={styles.nav__item}>

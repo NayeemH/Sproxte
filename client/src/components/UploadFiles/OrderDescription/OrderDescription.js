@@ -22,6 +22,7 @@ import { Pagination } from "swiper";
 import ProductCard from "../../Shared/ProductCard/ProductCard";
 import Moment from "react-moment";
 import { setTeamCount } from "../../../actions/Coach.action";
+import { setStore } from "../../../utils/localstore";
 
 const OrderDescription = ({
   sizes,
@@ -33,6 +34,7 @@ const OrderDescription = ({
   selectedColor,
   isAuthenticated,
   setTeamCount,
+  cart,
 }) => {
   const [selectedFile, setSelectedFile] = useState();
   const [preview, setPreview] = useState();
@@ -168,6 +170,10 @@ const OrderDescription = ({
           orderColor,
           orderColor2
         );
+
+        setTimeout(() => {
+          setStore(cart);
+        }, 500);
         if (user.userType === "coach") {
           if (team_count === null) {
             setTeamCount(quantity);

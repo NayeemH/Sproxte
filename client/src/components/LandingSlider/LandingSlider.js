@@ -23,6 +23,8 @@ import {
 import { IMAGE_PATH } from "../../constants/URL";
 import { useNavigate } from "react-router-dom";
 import { getCategoryList } from "../../actions/Category.action";
+import { useModals } from "@mantine/modals";
+import { Text } from "@mantine/core";
 
 const LandingSlider = ({
   categories,
@@ -37,6 +39,7 @@ const LandingSlider = ({
   const [my_swiper, set_my_swiper] = useState({});
   const [my_swiper_ready, set_my_swiper_ready] = useState({});
   const [my_swiper_ready_team, set_my_swiper_ready_team] = useState({});
+  const modals = useModals();
   useEffect(() => {
     getCategoryList();
 
@@ -45,6 +48,19 @@ const LandingSlider = ({
     }
     getLandingList();
   }, []);
+
+  const handleNavigate = (url) => {
+    modals.openConfirmModal({
+      title: "You pay before approval",
+      centered: true,
+      children: <Text size="md">You pay before approval.</Text>,
+      labels: { confirm: "Continue", cancel: "Cancel" },
+      confirmProps: { color: "red" },
+      onCancel: () => {},
+      onConfirm: () => navigate(url),
+    });
+    return;
+  };
   return (
     <div className={styles.wrapper}>
       {categories === [] ? (
@@ -124,7 +140,9 @@ const LandingSlider = ({
                             <Button
                               size="lg"
                               className="btn_primary"
-                              onClick={() => navigate(`/category/${prod._id}`)}
+                              onClick={() =>
+                                handleNavigate(`/category/${prod._id}`)
+                              }
                             >
                               {" "}
                               START{" "}
@@ -226,7 +244,7 @@ const LandingSlider = ({
                         <Button
                           size="lg"
                           className="btn_primary"
-                          onClick={() => navigate(`/product/${temp._id}`)}
+                          onClick={() => handleNavigate(`/product/${temp._id}`)}
                         >
                           {" "}
                           START{" "}
@@ -321,7 +339,7 @@ const LandingSlider = ({
                         <Button
                           size="lg"
                           className="btn_primary"
-                          onClick={() => navigate(`/team/${temp._id}`)}
+                          onClick={() => handleNavigate(`/team/${temp._id}`)}
                         >
                           {" "}
                           START{" "}

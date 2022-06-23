@@ -77,22 +77,22 @@ const LandingNavbar = ({
           className={`shadow-sm ${styles.box} align-items-center my-md-0 my-2 d-md-flex d-none`}
         >
           <div className={styles.icon}>
-            <a href="https://facebook.com">
+            <a target="_blank" href="https://facebook.com">
               <BsFacebook />
             </a>
           </div>
           <div className={styles.icon}>
-            <a href="https://facebook.com">
+            <a href="https://facebook.com" target="_blank">
               <AiFillLinkedin />
             </a>
           </div>
           <div className={styles.icon}>
-            <a href="https://facebook.com">
+            <a href="https://facebook.com" target="_blank">
               <AiFillInstagram />
             </a>
           </div>
           <div className={styles.icon}>
-            <a href="https://facebook.com">
+            <a href="https://facebook.com" target="_blank">
               <AiFillTwitterCircle />
             </a>
           </div>

@@ -50,7 +50,8 @@
 }
 
 .btn:hover {
-  background: linear-gradient(90deg, #f8e646 0%, #f8bb49 100%) !important;
+  // background: linear-gradient(90deg, #f8e646 0%, #f8bb49 100%) !important;
+  background: var(--orange) !important;
   transition: 0.3s all ease-in-out;
 }
 
@@ -102,7 +103,7 @@
 }
 
 .layout.active {
-  border: 1px solid var(--orange) !important;
+  border: 3px solid var(--orange) !important;
 }
 
 .layout {
