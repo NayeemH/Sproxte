@@ -102,6 +102,11 @@
   border: 1px solid var(--dark);
 }
 
+.font :global(.mantine-MultiSelect-defaultValueRemove) {
+  // display: none !important;
+  color: #f1f3f5 !important;
+}
+
 .layout.active {
   border: 3px solid var(--orange) !important;
 }

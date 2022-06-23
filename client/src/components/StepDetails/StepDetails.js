@@ -398,48 +398,53 @@ const StepDetails = ({
                           </span>
                         </Col>
                       )}
-                      {step.color2 ? (
+                      {step.color2 && (
                         <Col xs={12} className="py-3">
                           <span className="fs-5 align-items-center">
                             <span className="fw-bold d-block">
                               Secondary Color:{" "}
                             </span>
+                            <div className="">
+                              {step.color2.split(",").map((orderClr, i) => (
+                                <div
+                                  className="d-flex align-items-center w-100 fs-6"
+                                  key={i}
+                                >
+                                  <span className="fw-bold">
+                                    {
+                                      colors.filter(
+                                        (item) =>
+                                          orderClr === item.name ||
+                                          orderClr === item.hex
+                                      )[0]?.name
+                                    }
+                                  </span>{" "}
+                                  (
+                                  {
+                                    colors.filter(
+                                      (item) =>
+                                        orderClr === item.name ||
+                                        orderClr === item.hex
+                                    )[0]?.hex
+                                  }
+                                  )
+                                  <div
+                                    className={styles.color}
+                                    style={{
+                                      background: `${
+                                        colors.filter(
+                                          (item) =>
+                                            orderClr === item.name ||
+                                            orderClr === item.hex
+                                        )[0]?.hex
+                                      }`,
+                                    }}
+                                  ></div>
+                                </div>
+                              ))}
+                            </div>
                           </span>
-                          <div className="d-flex align-items-center w-100 fs-6">
-                            <span className="fw-bold">
-                              {
-                                colors.filter(
-                                  (item) =>
-                                    step.color2 === item.name ||
-                                    step.color2 === item.hex
-                                )[0]?.name
-                              }
-                            </span>{" "}
-                            (
-                            {
-                              colors.filter(
-                                (item) =>
-                                  step.color2 === item.name ||
-                                  step.color2 === item.hex
-                              )[0]?.hex
-                            }
-                            )
-                            <div
-                              className={styles.color}
-                              style={{
-                                background: `${
-                                  colors.filter(
-                                    (item) =>
-                                      step.color2 === item.name ||
-                                      step.color2 === item.hex
-                                  )[0]?.hex
-                                }`,
-                              }}
-                            ></div>
-                          </div>
                         </Col>
-                      ) : (
-                        <></>
                       )}
 
                       <Col xs={12}>

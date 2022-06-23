@@ -903,7 +903,7 @@ export const approveStep = (id, projectId) => async (dispatch) => {
       type: STEP_APPROVED,
     });
     dispatch(getProjectDetails(projectId));
-    dispatch(getProductDetails(id));
+    dispatch(getStepDetails(id));
     toast.success("Step Approved successfully");
     return true;
   } catch (err) {

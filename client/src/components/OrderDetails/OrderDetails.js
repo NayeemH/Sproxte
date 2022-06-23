@@ -299,9 +299,9 @@ const OrderDetails = ({
               </Dropdown.Toggle>
 
               <Dropdown.Menu>
-                {statusList.map((item) => (
+                {statusList.map((item, i) => (
                   <Dropdown.Item
-                    key={item.id}
+                    key={i}
                     onClick={() => setStatus(item.name)}
                     style={{ textTransform: "capitalize" }}
                   >

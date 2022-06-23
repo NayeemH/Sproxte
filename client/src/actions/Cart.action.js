@@ -97,6 +97,10 @@ export const addToCart =
     newPrice = getPrice(product.priceArray, parseInt(quantity));
     newDiscount = getDiscount(product.discount, parseInt(quantity));
 
+    if (orderColor2) {
+      orderColor2 = orderColor2.join(",");
+    }
+
     dispatch({
       type: CART_ADD_ITEM,
       payload: {

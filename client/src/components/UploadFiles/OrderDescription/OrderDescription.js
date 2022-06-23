@@ -9,7 +9,7 @@ import { FONT_KEY, IMAGE_PATH } from "../../../constants/URL";
 import { useNavigate } from "react-router-dom";
 import FontPicker from "font-picker-react";
 import { useModals } from "@mantine/modals";
-import { Select, Text } from "@mantine/core";
+import { MultiSelect, Select, Text } from "@mantine/core";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { BsSquareFill } from "react-icons/bs";
 
@@ -148,8 +148,6 @@ const OrderDescription = ({
         toast.error("Please select color");
       } else if (!orderColor) {
         toast.error("Please select primary color");
-      } else if (!orderColor2) {
-        toast.error("Please secondary color");
       } else {
         addToCart(
           description,
@@ -508,7 +506,7 @@ const OrderDescription = ({
                 className={`d-flex justify-content-between flex-column pb-2 ${styles.font}`}
               >
                 <span className="d-block fs-4">Secondary Color</span>
-                <Select
+                <MultiSelect
                   data={colors.map((c, i) => {
                     return {
                       label: c.name,

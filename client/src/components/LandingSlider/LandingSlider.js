@@ -200,6 +200,103 @@ const LandingSlider = ({
               </Swiper>
             </SwiperSlide>
 
+            {/* TEAM START */}
+            {teams && teams.length > 0 ? (
+              <SwiperSlide className={styles.slide_left}>
+                <Swiper
+                  className="mySwiper swiper-h"
+                  spaceBetween={30}
+                  pagination={{
+                    clickable: true,
+                  }}
+                  modules={[EffectCreative]}
+                  effect={"creative"}
+                  creativeEffect={{
+                    prev: {
+                      shadow: true,
+                      translate: [0, 0, -400],
+                    },
+                    next: {
+                      translate: ["100%", 0, 0],
+                    },
+                  }}
+                  onInit={(ev) => {
+                    set_my_swiper_ready_team(ev);
+                  }}
+                >
+                  {teams.map((temp, i) => (
+                    <SwiperSlide className={styles.slide_top} key={temp._id}>
+                      <div className="">
+                        <div className="text-center pt-4">
+                          <img
+                            src={`${IMAGE_PATH}small/${temp.logo}`}
+                            className={styles.img}
+                            alt=""
+                          />
+                        </div>
+                        <div className="text-center">
+                          <span className="d-block fs-4">{temp.teamName}</span>
+                        </div>
+                      </div>
+                      <div className="text-center d-flex justify-content-center align-items-center">
+                        <Button
+                          size="lg"
+                          className="btn_primary"
+                          onClick={() => handleNavigate(`/team/${temp._id}`)}
+                        >
+                          {" "}
+                          START{" "}
+                        </Button>
+                      </div>
+                      <div className={styles.off}>
+                        {temp.discount > 0 ? (
+                          <h6 className={styles.vc}>{temp.discount}% OFF</h6>
+                        ) : (
+                          <></>
+                        )}
+                      </div>
+                      <div className={styles.bottom_nav}>
+                        {i === 0 ? (
+                          <>
+                            <span className="d-block text-white">
+                              <HiOutlineArrowNarrowLeft />
+                            </span>
+                          </>
+                        ) : (
+                          <span
+                            className="d-block text-secondary  text-cursor"
+                            onClick={() => my_swiper_ready_team.slidePrev()}
+                          >
+                            <HiOutlineArrowNarrowLeft />
+                          </span>
+                        )}
+                        <span className="d-block fs-6 text-secondary">
+                          More Team Designs
+                        </span>
+                        {i === teams.length - 1 ? (
+                          <>
+                            <span className="d-block text-white">
+                              <HiOutlineArrowNarrowRight />
+                            </span>
+                          </>
+                        ) : (
+                          <span
+                            className="d-block text-secondary text-cursor"
+                            onClick={() => my_swiper_ready_team.slideNext()}
+                          >
+                            <HiOutlineArrowNarrowRight />
+                          </span>
+                        )}
+                      </div>
+                    </SwiperSlide>
+                  ))}
+                </Swiper>
+              </SwiperSlide>
+            ) : (
+              <></>
+            )}
+            {/* TEAM END */}
+
             {templates && templates.length > 0 ? (
               <SwiperSlide className={styles.slide_left}>
                 <Swiper
@@ -297,102 +394,6 @@ const LandingSlider = ({
             ) : (
               <></>
             )}
-            {/* TEAM START */}
-            {teams && teams.length > 0 ? (
-              <SwiperSlide className={styles.slide_left}>
-                <Swiper
-                  className="mySwiper swiper-h"
-                  spaceBetween={30}
-                  pagination={{
-                    clickable: true,
-                  }}
-                  modules={[EffectCreative]}
-                  effect={"creative"}
-                  creativeEffect={{
-                    prev: {
-                      shadow: true,
-                      translate: [0, 0, -400],
-                    },
-                    next: {
-                      translate: ["100%", 0, 0],
-                    },
-                  }}
-                  onInit={(ev) => {
-                    set_my_swiper_ready_team(ev);
-                  }}
-                >
-                  {teams.map((temp, i) => (
-                    <SwiperSlide className={styles.slide_top} key={temp._id}>
-                      <div className="">
-                        <div className="text-center pt-4">
-                          <img
-                            src={`${IMAGE_PATH}small/${temp.logo}`}
-                            className={styles.img}
-                            alt=""
-                          />
-                        </div>
-                        <div className="text-center">
-                          <span className="d-block fs-4">{temp.teamName}</span>
-                        </div>
-                      </div>
-                      <div className="text-center d-flex justify-content-center align-items-center">
-                        <Button
-                          size="lg"
-                          className="btn_primary"
-                          onClick={() => handleNavigate(`/team/${temp._id}`)}
-                        >
-                          {" "}
-                          START{" "}
-                        </Button>
-                      </div>
-                      <div className={styles.off}>
-                        {temp.discount > 0 ? (
-                          <h6 className={styles.vc}>{temp.discount}% OFF</h6>
-                        ) : (
-                          <></>
-                        )}
-                      </div>
-                      <div className={styles.bottom_nav}>
-                        {i === 0 ? (
-                          <>
-                            <span className="d-block text-white">
-                              <HiOutlineArrowNarrowLeft />
-                            </span>
-                          </>
-                        ) : (
-                          <span
-                            className="d-block text-secondary  text-cursor"
-                            onClick={() => my_swiper_ready_team.slidePrev()}
-                          >
-                            <HiOutlineArrowNarrowLeft />
-                          </span>
-                        )}
-                        <span className="d-block fs-6 text-secondary">
-                          More Team Designs
-                        </span>
-                        {i === teams.length - 1 ? (
-                          <>
-                            <span className="d-block text-white">
-                              <HiOutlineArrowNarrowRight />
-                            </span>
-                          </>
-                        ) : (
-                          <span
-                            className="d-block text-secondary text-cursor"
-                            onClick={() => my_swiper_ready_team.slideNext()}
-                          >
-                            <HiOutlineArrowNarrowRight />
-                          </span>
-                        )}
-                      </div>
-                    </SwiperSlide>
-                  ))}
-                </Swiper>
-              </SwiperSlide>
-            ) : (
-              <></>
-            )}
-            {/* TEAM END */}
           </Swiper>
         </>
       )}
