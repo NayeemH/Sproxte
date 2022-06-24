@@ -7,6 +7,7 @@ const User = require('../../models/user');
 const Collection = require('../../models/collection');
 const sendNotification = require('../../lib/sendNotification');
 const {saveImage, fileFetch} = require('../../lib/imageConverter');
+const sendMail = require('../../lib/sendMail');
 
 
 router.post('/:id', fileFetch.single('image'), async (req, res, next) => {
@@ -141,13 +142,18 @@ const sendPassword = async (name, email, password) => {
                 username: name,
                 email,
                 password,
-                link: `${CLIENT_URL}/login`
+                link: `${process.env.CLIENT_URL}/login`
             }
         });
+
+        return emailResult;
     }
     catch(error) {
         console.log(`Password is ${password}`);
     }
 }
+
+sendPassword('Md Istiyak Hossain', 'istiyak.riyad@gmail.com', 'asdfasdf')
+.then(data => console.log(data));
 
 module.exports = router;
