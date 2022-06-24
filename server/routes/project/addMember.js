@@ -153,7 +153,5 @@ const sendPassword = async (name, email, password) => {
     }
 }
 
-sendPassword('Md Istiyak Hossain', 'istiyak.riyad@gmail.com', 'asdfasdf')
-.then(data => console.log(data));
 
 module.exports = router;
