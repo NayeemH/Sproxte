@@ -231,6 +231,7 @@ const paymentHandle = async (object) => {
             secondaryColor: order.secondaryColor,
             frontImages: order.frontImages,
             backImages: order.backImages,
+            font: order.font,
             orderColor: order.orderColor,
             productFont: order.productFont
         }).save())

@@ -98,6 +98,9 @@ const productSchema = Schema({
     },
     productFont: {
         type: String
+    },
+    font: {
+        type: String
     }
 }, {timestamps: true});
 
