@@ -32,7 +32,7 @@ const sendNotification = async (message, users, orderId, projectId, productId, t
                 context: {
                     username: user.name,
                     message: `${message}. The order ID is ${hexToBase64(orderId.toString())}. Payment ID is ${orderId.toString()}.`,
-                    link: `${CLIENT_URL}/dashboard`
+                    link: productId ? `${CLIENT_URL}/dashboard/${projectId.toString()}/${productId.toString()}` : `${CLIENT_URL}/dashboard/order/${projectId.toString()}`
                 }
             });
         }));
