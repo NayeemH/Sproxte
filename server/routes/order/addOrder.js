@@ -6,7 +6,7 @@ const Order = require('../../models/order');
 const {saveImage, fileFetch} = require('../../lib/imageConverter');
 
 
-router.put('/:id', fileFetch.fields([{name: 'frontImages', maxCount: 10}, {name: 'backImages', maxCount: 10}]), async (req, res, next) => {
+router.put('/:id', fileFetch.fields([{name: 'frontImages', maxCount: 10}, {name: 'backImages', maxCount: 10}, {name: 'fontImage', maxCount: 1}]), async (req, res, next) => {
     try {
         const {type} = req.body;
 
@@ -105,7 +105,7 @@ const addCustomTemplate = async (req) => {
         productFont
     } = req.body;
     
-    let frontImages, backImages;
+    let frontImages, backImages, fontImage;
     if(req.files && req.files.frontImages) {
         frontImages = await Promise.all(
             req.files.frontImages.map(image => saveImage(image))
@@ -116,6 +116,10 @@ const addCustomTemplate = async (req) => {
         backImages = await Promise.all(
             req.files.backImages.map(image => saveImage(image))
         );
+    }
+
+    if(req.files && req.files.fontImage) {
+        fontImage = await saveImage(req.files.fontImage[0]);
     }
 
     const count = parseInt(stringCount);
@@ -165,7 +169,8 @@ const addCustomTemplate = async (req) => {
                 backImages,
                 font,
                 orderColor,
-                productFont
+                productFont,
+                fontImage
             }},
             $inc: {playerAddPrice, price: netPrice, weight: count * weight}
         }

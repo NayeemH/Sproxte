@@ -101,6 +101,9 @@ const productSchema = Schema({
     },
     font: {
         type: String
+    },
+    fontImage: {
+        type: String
     }
 }, {timestamps: true});
 
