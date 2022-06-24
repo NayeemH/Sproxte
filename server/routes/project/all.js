@@ -42,7 +42,7 @@ router.get('/:type', async (req, res, next) => {
 
             const projectIds = projects.find(({_id}) => _id);
 
-            const products = await Product.find({projectId: {$in: projectIds}}, {projectId: 1, status: 1});
+            const products = await Product.find({projectId: {$in: projectIds}}, {_id: 1, name: 1, projectId: 1, status: 1});
 
             finalProjects = projects.map(project => {
                 return {
@@ -70,7 +70,7 @@ router.get('/:type', async (req, res, next) => {
 
             const projectIds = projects.find(({_id}) => _id);
 
-            const products = await Product.find({projectId: {$in: projectIds}}, {projectId: 1, status: 1});
+            const products = await Product.find({projectId: {$in: projectIds}}, {_id: 1, name: 1, projectId: 1, status: 1});
 
             finalProjects = projects.map(project => {
                 return {
