@@ -1,7 +1,7 @@
 const router = require('express').Router();
 const pagination = require('../../lib/pagination');
 const Project = require('../../models/project');
-
+const Product = require('../../models/product');
 
 
 router.get('/:type', async (req, res, next) => {
@@ -22,7 +22,7 @@ router.get('/:type', async (req, res, next) => {
 
         const {skip, limit} = pagination(req.query);
 
-        let projects;
+        let projects, finalProjects;
         if(userType === 'admin' || userType === 'iep') {
             // Setup filder
             const filder = {
@@ -34,10 +34,21 @@ router.get('/:type', async (req, res, next) => {
             totalCount = await Project.find(filder).countDocuments();
 
             projects = await Project
-                .find(filder, {__v: 0, userId: 0, active: 0})
+                .find(filder, {__v: 0, userId: 0, active: 0, iShippinglebel: 0, isPaid: 0, isAdmin: 0, playerAddprice: 0, singleProductPrice: 0, sizes: 0})
                 .sort({_id: -1})
                 .skip(skip)
                 .limit(limit);
+
+            const projectIds = projects.map(({_id}) => _id);
+
+            const products = await Product.find({projectId: {$in: projectIds}}, {_id: 1, name: 1, projectId: 1, status: 1});
+
+            finalProjects = projects.map(project => {
+                return {
+                    ...project.toJSON(),
+                    products: products.filter(product => product.projectId.toString() === project._id.toString())
+                }
+            });
         }
         else if(userType === 'client' || userType === 'coach' || userType === 'guardian') {
              // Setup filder
@@ -51,10 +62,22 @@ router.get('/:type', async (req, res, next) => {
             totalCount = await Project.find(filder).countDocuments();
 
             projects = await Project
-                .find(filder, {__v: 0, userId: 0, active: 0})
+                .find(filder, {__v: 0, userId: 0, active: 0, iShippinglebel: 0, isPaid: 0, isAdmin: 0, playerAddprice: 0, singleProductPrice: 0, sizes: 0})
                 .sort({_id: -1})
                 .skip(skip)
                 .limit(limit);
+
+
+            const projectIds = projects.map(({_id}) => _id);
+
+            const products = await Product.find({projectId: {$in: projectIds}}, {_id: 1, name: 1, projectId: 1, status: 1});
+
+            finalProjects = projects.map(project => {
+                return {
+                    ...project.toJSON(),
+                    products: products.filter(product => product.projectId.toString() === project._id.toString())
+                }
+            });
         }
 
         
@@ -63,7 +86,7 @@ router.get('/:type', async (req, res, next) => {
             projects: {
                 pageCount: Math.ceil(totalCount / limit),
                 itemCount: totalCount,
-                items: projects
+                items: finalProjects
             }
         });
     }
