@@ -4,7 +4,7 @@ const {saveImage, fileFetch} = require('../../lib/imageConverter');
 
 
 
-router.post('/', fileFetch.fields([{name: 'pngImageFront', maxCount: 1}, {name: 'pngImageBack', maxCount: 1}, {name: 'layouts', maxCount: 10}, {name: 'images', maxCount: 10}]), async (req, res, next) => {
+router.post('/', fileFetch.fields([{name: 'pngImageFront', maxCount: 1}, {name: 'pngImageBack', maxCount: 1}, {name: 'layouts', maxCount: 10}, {name: 'images', maxCount: 10}, {name: 'fontImages', maxCount: 10}]), async (req, res, next) => {
     try {
         const {name, sizes, categoryType, price, priceArray: tempPriceArray, discount: tempDiscount, weight, playerAddPrice, colors} = req.body;
         const priceArray = JSON.parse(tempPriceArray);
@@ -21,6 +21,13 @@ router.post('/', fileFetch.fields([{name: 'pngImageFront', maxCount: 1}, {name: 
         if(req.files.layouts) {
             layouts = await Promise.all(
                 req.files.layouts.map(layout => saveImage(layout))
+            );
+        }
+
+        let fontImages;
+        if(req.files.fontImages) {
+            fontImages = await Promise.all(
+                req.files.fontImages.map(image => saveImage(image))
             );
         }
 
@@ -43,6 +50,7 @@ router.post('/', fileFetch.fields([{name: 'pngImageFront', maxCount: 1}, {name: 
             categoryType,
             imageData,
             layouts: layouts && layouts.map(image => ({image})),
+            fontImages,
             pngImageFront: frontImage,
             pngImageBack: backImage,
             playerAddPrice
