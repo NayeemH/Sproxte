@@ -4,7 +4,7 @@ const ProductType = require('../../models/productType');
 
 
 
-router.patch('/:id', fileFetch.fields([{name: 'pngImageFront', maxCount: 1}, {name: 'pngImageBack', maxCount: 1}, {name: 'layouts', maxCount: 10}, {name: 'images', maxCount: 10}]), async (req, res, next) => {
+router.patch('/:id', fileFetch.fields([{name: 'pngImageFront', maxCount: 1}, {name: 'pngImageBack', maxCount: 1}, {name: 'layouts', maxCount: 10}, {name: 'images', maxCount: 10}, {name: 'fontImages', maxCount: 10}]), async (req, res, next) => {
     try {
         const {name, sizes, categoryType, price, priceArray, weight, colors, discount} = req.body;
         const {id} = req.params;
@@ -55,6 +55,14 @@ router.patch('/:id', fileFetch.fields([{name: 'pngImageFront', maxCount: 1}, {na
             );
 
             updatedItems.layouts = images.map(image => ({image}));
+        }
+
+        if(req.files && req.files.fontImages) {
+            const images = await Promise.all(
+                req.files.fontImages.map(image => saveImage(image))
+            );
+
+            updatedItems.fontImages = images.map(image => ({image}));
         }
 
         

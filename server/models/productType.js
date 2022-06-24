@@ -29,6 +29,9 @@ const productTypeSchema = Schema({
     layouts: {
         type: [layoutSchema]
     },
+    fontImages: {
+        type: Array
+    },
     imageData: {
         type: Array
     },
