@@ -1,6 +1,7 @@
 const router = require('express').Router();
 const pagination = require('../../lib/pagination');
 const Project = require('../../models/project');
+const Product = require('../../models/product');
 
 
 
@@ -18,7 +19,7 @@ router.get('/:type', async (req, res, next) => {
         
 
         // Data for pagination
-        let totalCount;
+        let totalCount, finalProjects;
 
         const {skip, limit} = pagination(req.query);
 
@@ -38,6 +39,17 @@ router.get('/:type', async (req, res, next) => {
                 .sort({_id: -1})
                 .skip(skip)
                 .limit(limit);
+
+            const projectIds = projects.find(({_id}) => _id);
+
+            const products = await Product.find({projectId: {$in: projectIds}}, {_id: 1, name: 1, projectId: 1, status: 1});
+
+            finalProjects = projects.map(project => {
+                return {
+                    ...project,
+                    products: products.filter(product => product.projectId.toString() === project._id.toString())
+                }
+            });
         }
         else if(userType === 'client' || userType === 'coach' || userType === 'guardian') {
              // Setup filder
@@ -55,6 +67,17 @@ router.get('/:type', async (req, res, next) => {
                 .sort({_id: -1})
                 .skip(skip)
                 .limit(limit);
+
+            const projectIds = projects.find(({_id}) => _id);
+
+            const products = await Product.find({projectId: {$in: projectIds}}, {_id: 1, name: 1, projectId: 1, status: 1});
+
+            finalProjects = projects.map(project => {
+                return {
+                    ...project,
+                    products: products.filter(product => product.projectId.toString() === project._id.toString())
+                }
+            });
         }
 
         
@@ -63,7 +86,7 @@ router.get('/:type', async (req, res, next) => {
             projects: {
                 pageCount: Math.ceil(totalCount / limit),
                 itemCount: totalCount,
-                items: projects
+                items: finalProjects
             }
         });
     }

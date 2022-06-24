@@ -121,13 +121,15 @@ const PaymentSuccess = ({ data, country, isAuthenticated }) => {
             <div className="d-flex align-items-center justify-content-center">
               <span className="d-block fw-bold fs-6 ms-1">Subtotal</span>
             </div>
-            <span className="d-block fs-6">${data.price}</span>
+            <span className="d-block fs-6">${data.price.toFixed(2)}</span>
           </div>
           <div className="d-flex justify-content-between align-items-center pb-2 pt-2">
             <div className="d-flex align-items-center justify-content-center">
               <span className="d-block fw-bold fs-6 ms-1">Shipping Cost</span>
             </div>
-            <span className="d-block fs-6">${data.shippingCost}</span>
+            <span className="d-block fs-6">
+              ${data.shippingCost.toFixed(2)}
+            </span>
           </div>
           <hr />
           <div className="d-flex justify-content-between align-items-center pt-2">
@@ -138,7 +140,7 @@ const PaymentSuccess = ({ data, country, isAuthenticated }) => {
               <span className="d-block fw-bold fs-5 ms-1">Total</span>
             </div>
             <span className="d-block fw-bold fs-5">
-              ${data.shippingCost + data.price}
+              ${(data.shippingCost + data.price).toFixed(2)}
             </span>
           </div>
         </Card.Body>

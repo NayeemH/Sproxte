@@ -181,7 +181,9 @@ const CardForm = ({
                 <span className="d-block fw-bold ms-1">Shipping Cost</span>
               </div>
               <span className="d-block">
-                ${check.shippingRate.price && check.shippingRate.price}
+                $
+                {check.shippingRate.price &&
+                  check.shippingRate.price.toFixed(2)}
               </span>
             </div>
             <div className="d-flex justify-content-between align-items-center border-bottom fs-4 py-2">
@@ -191,7 +193,7 @@ const CardForm = ({
               <span className="d-block">
                 $
                 {check.shippingRate.price && total
-                  ? check.shippingRate.price + total
+                  ? (check.shippingRate.price + total).toFixed(2)
                   : "Invalid Price"}
               </span>
             </div>

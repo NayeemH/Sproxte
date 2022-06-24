@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Badge, Card, Col, Row } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { AiOutlineArrowRight } from "react-icons/ai";
@@ -8,6 +8,20 @@ import { BiHash } from "react-icons/bi";
 import styles from "./ProductCard.module.scss";
 import Moment from "react-moment";
 import { hexToBase64 } from "../../../utils/hexToBase";
+import { Badge as MtBadge } from "@mantine/core";
+import { connect } from "react-redux";
+const products = [
+  {
+    _id: 1,
+    name: "Product 1",
+    status: "pending",
+  },
+  {
+    _id: 2,
+    name: "Product 2",
+    status: "pending",
+  },
+];
 
 const ProductCard = ({
   title,
@@ -31,16 +45,55 @@ const ProductCard = ({
   idBASE,
   Imgid,
   project,
+  user,
 }) => {
   const navigate = useNavigate();
+  const [isOpen, setIsOpen] = useState(false);
   return (
     <>
       <Card
         className={`${styles.crd} ${!h && "h-100"} ${
           !noshadow ? "shadow" : ""
-        }`}
+        } ${products ? `position-relative` : ""}`}
+        onMouseEnter={() => setIsOpen(true)}
+        onMouseLeave={() => setIsOpen(false)}
       >
         <Card.Body>
+          {products &&
+          isOpen &&
+          (user.userType === "admin" || user.userType === "iep") ? (
+            <div
+              className={styles.info}
+              onClick={() =>
+                navigate(
+                  `/${
+                    dashboard
+                      ? dashboard
+                      : template
+                      ? "template"
+                      : order
+                      ? "order"
+                      : "product"
+                  }/${id ? id : ""}`
+                )
+              }
+            >
+              {products.map((product, index) => (
+                <div key={index} className={styles.info_item}>
+                  <span className="d-block text-center text-dark fw-bold">
+                    {product.name}
+                  </span>
+                  <div className="text-center">
+                    <MtBadge variant="filled" size="xs">
+                      {product.status}
+                    </MtBadge>
+                  </div>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <></>
+          )}
           <Row>
             <Col xs={12} style={{ position: "relative" }}>
               {price && (
@@ -170,4 +223,8 @@ const ProductCard = ({
   );
 };
 
-export default ProductCard;
+const mapStateToProps = (state) => ({
+  user: state.auth.user,
+});
+
+export default connect(mapStateToProps, null)(ProductCard);

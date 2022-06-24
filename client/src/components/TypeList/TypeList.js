@@ -36,6 +36,7 @@ const TypeList = ({ deleteType }) => {
               <tr>
                 <th>ID</th>
                 <th>Name</th>
+                <th>Category</th>
                 <th>Template</th>
                 <th>Price</th>
                 <th>Sizes</th>
@@ -55,6 +56,7 @@ const TypeList = ({ deleteType }) => {
                   <tr key={i}>
                     <td>{i + 1}</td>
                     <td>{item.name}</td>
+                    <td>{item?.categoryType?.name}</td>
                     <td>
                       <div className={styles.img_wrapper}>
                         <img

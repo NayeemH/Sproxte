@@ -133,6 +133,9 @@ export const createOrder = (values, cart, logo, role) => async (dispatch) => {
         if (item.orderColor2) {
           frmData.append("color2", item.orderColor2);
         }
+        if (item.selectedFont) {
+          frmData.append("fontImage", item.selectedFont);
+        }
 
         if (item.selectedLayout) {
           frmData.append("layoutId", item.selectedLayout);

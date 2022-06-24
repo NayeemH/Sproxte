@@ -44,6 +44,7 @@ const OrderDescription = ({
     team_count === null ? 1 : team_count
   );
   const [selectedLayout, setSelectedLayout] = useState();
+  const [selectedFont, setSelectedFont] = useState();
   const [mainText, setMainText] = useState("");
   const [secondaryText, setSecondaryText] = useState("");
   const [mainTextColor, setMainTextColor] = useState("Red");
@@ -163,10 +164,11 @@ const OrderDescription = ({
           product,
           color,
           "custom",
-          activeFontFamily,
+          selectedFont,
           orderFontFamily,
           orderColor,
-          orderColor2
+          orderColor2,
+          selectedFont
         );
 
         setTimeout(() => {
@@ -463,35 +465,26 @@ const OrderDescription = ({
               </Row>
             </Card.Body>
           </Card>
-          <Card className={`${styles.crd} shadow mt-2`}>
-            <Card.Body className="d-flex justify-content-between flex-column">
-              <div
-                className={`d-flex justify-content-between flex-column pb-2 ${styles.font}`}
-              >
-                <span className="d-block fs-4">Primary Color</span>
-                <Select
-                  data={colors.map((c, i) => {
-                    return {
-                      label: c.name,
-                      value: c.hex,
-                    };
-                  })}
-                  itemComponent={({ value, label, ...others }) => (
-                    <div className={styles.dd_item} ref={selectRef} {...others}>
-                      <span className="d-flex align-items-center">
-                        <BsSquareFill color={`${value}`} className="me-2" />{" "}
-                        <span>{label}</span>
-                      </span>
-                    </div>
-                  )}
-                  placeholder="Pick primary color"
-                  value={orderColor}
-                  onChange={(e) => setOrderColor(e)}
-                  required
-                />
-              </div>
-            </Card.Body>
-          </Card>
+          <div className="py-4 d-flex align-items-center justify-content-center">
+            <span className="fs-5 fw-bold me-3">
+              {user && user.userType !== "client" && user.userType !== "admin"
+                ? "Team Member Count"
+                : "Quantity"}
+            </span>
+            <input
+              type="number"
+              value={quantity}
+              disabled={
+                user && user.userType === "coach" && team_count !== null
+                  ? true
+                  : false
+              }
+              onChange={(e) => setQuantity(e.target.value)}
+              className="form-control"
+              style={{ width: "60px" }}
+            />
+          </div>
+
           <Button
             className="btn_primary mt-4"
             onClick={() => my_swiper.slideNext()}
@@ -501,6 +494,39 @@ const OrderDescription = ({
         </SwiperSlide>
         <SwiperSlide className={styles.slide_left}>
           <Card className={`${styles.crd} shadow mt-2`}>
+            <Card className={`${styles.crd} shadow mt-2`}>
+              <Card.Body className="d-flex justify-content-between flex-column">
+                <div
+                  className={`d-flex justify-content-between flex-column pb-2 ${styles.font}`}
+                >
+                  <span className="d-block fs-4">Primary Color</span>
+                  <Select
+                    data={colors.map((c, i) => {
+                      return {
+                        label: c.name,
+                        value: c.hex,
+                      };
+                    })}
+                    itemComponent={({ value, label, ...others }) => (
+                      <div
+                        className={styles.dd_item}
+                        ref={selectRef}
+                        {...others}
+                      >
+                        <span className="d-flex align-items-center">
+                          <BsSquareFill color={`${value}`} className="me-2" />{" "}
+                          <span>{label}</span>
+                        </span>
+                      </div>
+                    )}
+                    placeholder="Pick primary color"
+                    value={orderColor}
+                    onChange={(e) => setOrderColor(e)}
+                    required
+                  />
+                </div>
+              </Card.Body>
+            </Card>
             <Card.Body className="d-flex justify-content-between flex-column">
               <div
                 className={`d-flex justify-content-between flex-column pb-2 ${styles.font}`}
@@ -528,8 +554,16 @@ const OrderDescription = ({
                   placeholder="Pick secondary color"
                   value={orderColor2}
                   onChange={(e) => {
-                    setOrderColor2(e);
+                    console.log(e);
+                    if (e.length > 2) {
+                      toast.error("You can select maximum 2 colors");
+                    } else {
+                      setOrderColor2(e);
+                    }
                   }}
+                  clearable
+                  multiple
+                  max={2}
                   required
                 />
               </div>
@@ -553,20 +587,6 @@ const OrderDescription = ({
               </div>
             </Card.Body>
           </Card>
-          <Card className={`${styles.crd} shadow`}>
-            <Card.Body className="d-flex justify-content-between flex-column">
-              <span className="d-block fs-4">Order Description</span>
-              <textarea
-                name="desc"
-                id="desc"
-                cols="30"
-                rows="6"
-                value={description}
-                onChange={(e) => setDescription(e.target.value)}
-                className={`${styles.textarea} form-control mb-3`}
-              ></textarea>
-            </Card.Body>
-          </Card>
 
           {/* FONT */}
           <Button
@@ -587,7 +607,7 @@ const OrderDescription = ({
                     {product &&
                       product.layouts &&
                       product.layouts.map((l) => (
-                        <Col xs={6}>
+                        <Col xs={6} key={l._id}>
                           <div
                             className={`${styles.layout} ${
                               selectedLayout === l._id ? styles.active : ""
@@ -617,12 +637,57 @@ const OrderDescription = ({
             </Button>
           </SwiperSlide>
         )}
+        {product &&
+          selectedLayout &&
+          product.fontImages &&
+          product.fontImages.length > 0 && (
+            <SwiperSlide className={styles.slide_left}>
+              <Card className={`${styles.crd_size} shadow`}>
+                <Card.Body>
+                  <span className="d-block fs-4">Select Layout Font</span>
+                  <Container fluid>
+                    <Row>
+                      {product &&
+                        product.fontImages &&
+                        product.fontImages.map((l, index) => (
+                          <Col xs={6} key={index}>
+                            <div
+                              className={`${styles.layout} ${
+                                selectedFont === product.fontImages[index]
+                                  ? styles.active
+                                  : ""
+                              } h-100 d-flex justify-content-center align-items-center`}
+                            >
+                              <img
+                                src={`${IMAGE_PATH}/small/${l}`}
+                                className="img-fluid"
+                                onClick={() =>
+                                  selectedFont === product.fontImages[index]
+                                    ? setSelectedFont(null)
+                                    : setSelectedFont(product.fontImages[index])
+                                }
+                              />
+                            </div>
+                          </Col>
+                        ))}
+                    </Row>
+                  </Container>
+                </Card.Body>
+              </Card>
+              <Button
+                className="btn_primary mt-5"
+                onClick={() => my_swiper.slideNext()}
+              >
+                Next
+              </Button>
+            </SwiperSlide>
+          )}
         {selectedLayout && (
           <SwiperSlide className={styles.slide_left}>
             <Card className={`${styles.crd} shadow mt-4`}>
               <Card.Body className="d-flex justify-content-between flex-column">
                 <span className="d-block fs-4">Layout Options</span>
-                <div
+                {/* <div
                   className={`d-flex justify-content-between flex-column pt-3 ${styles.font}`}
                 >
                   <span className="d-block pb-2">Layout Font Family </span>
@@ -633,7 +698,7 @@ const OrderDescription = ({
                       setActiveFontFamily(nextFont.family)
                     }
                   />
-                </div>
+                </div> */}
                 <span className="d-block pt-3">Main Text</span>
                 <input
                   type="text"
@@ -697,25 +762,22 @@ const OrderDescription = ({
               </div>
             </Card.Body>
           </Card>
-          <div className="py-4 d-flex align-items-center justify-content-center">
-            <span className="fs-5 fw-bold me-3">
-              {user && user.userType !== "client" && user.userType !== "admin"
-                ? "Team Member Count"
-                : "Quantity"}
-            </span>
-            <input
-              type="number"
-              value={quantity}
-              disabled={
-                user && user.userType === "coach" && team_count !== null
-                  ? true
-                  : false
-              }
-              onChange={(e) => setQuantity(e.target.value)}
-              className="form-control"
-              style={{ width: "60px" }}
-            />
-          </div>
+
+          <Card className={`${styles.crd} shadow mt-3`}>
+            <Card.Body className="d-flex justify-content-between flex-column">
+              <span className="d-block fs-4">Order Description</span>
+              <textarea
+                name="desc"
+                id="desc"
+                cols="30"
+                rows="6"
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
+                className={`${styles.textarea} form-control mb-3`}
+              ></textarea>
+            </Card.Body>
+          </Card>
+
           <Button onClick={submitHandeler} className={styles.btn}>
             Add To Cart
           </Button>

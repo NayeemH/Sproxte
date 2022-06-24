@@ -49,11 +49,22 @@ const LandingSlider = ({
     getLandingList();
   }, []);
 
-  const handleNavigate = (url) => {
+  const handleNavigate = (url, img) => {
     modals.openConfirmModal({
-      title: "You pay before approval",
+      title: "",
       centered: true,
-      children: <Text size="md">You pay before approval.</Text>,
+      children: (
+        <div className="text-center">
+          <img src={img} className="w-50 mx-auto" alt="" />
+          <h3 className="pt-3 pb-2">HOW IT WORKS</h3>
+          <span className="d-block text-justify text-center">
+            Follow the steps entering your information so our Sports Veins
+            Creative Team can design and layout your custom product. <br />A
+            proof of your product will be sent to you by email or text for
+            approval Within 24 to 48hrs.
+          </span>
+        </div>
+      ),
       labels: { confirm: "Continue", cancel: "Cancel" },
       confirmProps: { color: "red" },
       onCancel: () => {},
@@ -141,7 +152,10 @@ const LandingSlider = ({
                               size="lg"
                               className="btn_primary"
                               onClick={() =>
-                                handleNavigate(`/category/${prod._id}`)
+                                handleNavigate(
+                                  `/category/${prod._id}`,
+                                  `${IMAGE_PATH}small/${prod.pngImage}`
+                                )
                               }
                             >
                               {" "}
@@ -242,7 +256,12 @@ const LandingSlider = ({
                         <Button
                           size="lg"
                           className="btn_primary"
-                          onClick={() => handleNavigate(`/team/${temp._id}`)}
+                          onClick={() =>
+                            handleNavigate(
+                              `/team/${temp._id}`,
+                              `${IMAGE_PATH}small/${temp.logo}`
+                            )
+                          }
                         >
                           {" "}
                           START{" "}
@@ -341,7 +360,12 @@ const LandingSlider = ({
                         <Button
                           size="lg"
                           className="btn_primary"
-                          onClick={() => handleNavigate(`/product/${temp._id}`)}
+                          onClick={() =>
+                            handleNavigate(
+                              `/product/${temp._id}`,
+                              `${IMAGE_PATH}small/${temp.pngImageFront}`
+                            )
+                          }
                         >
                           {" "}
                           START{" "}

@@ -50,7 +50,11 @@ const PaymentSuccessAddPlayer = ({ isAuthenticated }) => {
               <span className="d-block fw-bold fs-5 ms-1">Total</span>
             </div>
             <span className="d-block fw-bold fs-5">
-              ${parseInt(count) * (parseInt(price) + parseInt(addition))}
+              $
+              {(
+                parseInt(count) *
+                (parseInt(price) + parseInt(addition))
+              ).toFixed(2)}
             </span>
           </div>
         </Card.Body>

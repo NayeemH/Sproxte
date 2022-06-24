@@ -481,7 +481,7 @@ export const createProductType =
     }
     if (fontFiles) {
       for (let i = 0; i < fontFiles.length; i++) {
-        formData.append(`fontImage`, fontFiles[i]);
+        formData.append(`fontImages`, fontFiles[i]);
       }
     }
 
@@ -591,7 +591,7 @@ export const editProductType =
     }
     if (fontFiles) {
       for (let i = 0; i < fontFiles.length; i++) {
-        formData.append(`fontImage`, fontFiles[i]);
+        formData.append(`fontImages`, fontFiles[i]);
       }
     }
 

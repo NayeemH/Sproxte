@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Button, Card, Col, Form, Row, Spinner } from "react-bootstrap";
 import { connect } from "react-redux";
 import { Link, useParams } from "react-router-dom";
@@ -19,13 +19,11 @@ import { getPrice } from "../../utils/getPrice";
 
 const StepDetails = ({
   step,
-  getStepDetails,
   loading,
   selectedCollectionIndex,
   role,
   approveStep,
   rejectOrder,
-  auth,
 }) => {
   const { stepId, projectId } = useParams();
 
@@ -145,7 +143,7 @@ const StepDetails = ({
             >
               {step.status !== "approved" ? (
                 <>
-                  {role === "user" || role === "coach" ? (
+                  {role === "client" || role === "coach" ? (
                     <>
                       <Button
                         variant="primary"
@@ -350,6 +348,12 @@ const StepDetails = ({
                           {step.description}
                         </span>
                       </Col>
+                      <Col xs={12}>
+                        <span className="d-block fs-5">
+                          <span className="fw-bold">Product Font :</span>{" "}
+                          {step.productFont}
+                        </span>
+                      </Col>
                       {step.orderColor && (
                         <Col xs={12} className="py-3">
                           <span className="fs-5 align-items-center">
@@ -468,6 +472,57 @@ const StepDetails = ({
                             />
                           </Col>
                         ))}
+                      {step.backImages && step.backImages.length > 0 ? (
+                        <Col xs={12}>
+                          <span className="d-block fs-5">
+                            <span className="fw-bold">Back Images :</span>{" "}
+                          </span>
+                        </Col>
+                      ) : (
+                        <></>
+                      )}
+
+                      {step.backImages &&
+                        step.backImages.map((img, i) => (
+                          <Col xs={6} key={i}>
+                            <img
+                              onClick={() =>
+                                saveAs(
+                                  `${IMAGE_PATH}small/${img}`,
+                                  `${step.name} ${img}`
+                                )
+                              }
+                              src={`${IMAGE_PATH}small/${img}`}
+                              className={`${styles.images} w-100`}
+                            />
+                          </Col>
+                        ))}
+                      {step.font ? (
+                        <Col xs={12}>
+                          <span className="d-block fs-5 pt-3">
+                            <span className="fw-bold">Font Image :</span>{" "}
+                          </span>
+                        </Col>
+                      ) : (
+                        <></>
+                      )}
+
+                      {step.font ? (
+                        <Col xs={12}>
+                          <img
+                            onClick={() =>
+                              saveAs(
+                                `${IMAGE_PATH}small/${step.font}`,
+                                `${step.name} ${step.font}`
+                              )
+                            }
+                            src={`${IMAGE_PATH}small/${step.font}`}
+                            className={`${styles.images} w-100`}
+                          />
+                        </Col>
+                      ) : (
+                        <></>
+                      )}
                       {step.layoutImage && (
                         <>
                           <Col xs={12}>
