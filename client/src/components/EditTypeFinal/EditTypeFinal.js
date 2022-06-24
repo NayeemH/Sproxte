@@ -27,6 +27,7 @@ const EditTypeFinal = ({
 }) => {
   //STATES
   const [selectedFile, setSelectedFile] = useState();
+  const [fontFile, setFontFile] = useState();
   const [selectedFile2, setSelectedFile2] = useState();
   const [isLoading, setIsLoading] = useState(false);
   const [focus, setFocus] = useState(false);
@@ -52,6 +53,25 @@ const EditTypeFinal = ({
     }
     if (!flag) {
       setSelectedFile3(list);
+    }
+  };
+
+  const onSelectFont = (e) => {
+    if (!e.target.files || e.target.files.length === 0) {
+      setFontFile(undefined);
+      return;
+    }
+
+    let flag = false;
+    let list = e.target.files;
+    for (let index = 0; index < list.length; index++) {
+      if (list[index].size > 2000000) {
+        toast.error("File size is too big");
+        flag = true;
+      }
+    }
+    if (!flag) {
+      setFontFile(list);
     }
   };
 
@@ -161,7 +181,8 @@ const EditTypeFinal = ({
       selectedFile2,
       selectedFile3,
       discountList,
-      priceList
+      priceList,
+      fontFile
     );
     if (check) {
       setIsLoading(false);
@@ -599,6 +620,24 @@ const EditTypeFinal = ({
                       name="image"
                       className="form-control"
                       onChange={onSelectFile3}
+                    />
+                  </div>
+                </div>
+
+                <div className="pt-3">
+                  <div className="d-flex  justify-content-between align-items-center">
+                    {" "}
+                    <label htmlFor="image" className="d-block">
+                      Font Images (Optional)
+                    </label>
+                  </div>
+                  <div className="">
+                    <input
+                      multiple
+                      type="file"
+                      name="image"
+                      className="form-control"
+                      onChange={onSelectFont}
                     />
                   </div>
                 </div>

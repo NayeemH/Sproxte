@@ -24,6 +24,7 @@ const productTypeSchema = Schema({
     categoryType: {
         type: Schema.Types.ObjectId,
         required: true,
+        ref: 'category'
     },
     layouts: {
         type: [layoutSchema]

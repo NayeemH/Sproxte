@@ -433,7 +433,7 @@ export const deleteProduct = (id) => async (dispatch) => {
 
 // CREATE PRODUCT TYPE
 export const createProductType =
-  (values, file, previewFile, layouts, discountList, priceList) =>
+  (values, file, previewFile, layouts, discountList, priceList, fontFiles) =>
   async (dispatch) => {
     let formData = new FormData();
     //console.log(layouts);
@@ -477,6 +477,11 @@ export const createProductType =
     if (layouts) {
       for (let i = 0; i < layouts.length; i++) {
         formData.append(`layouts`, layouts[i]);
+      }
+    }
+    if (fontFiles) {
+      for (let i = 0; i < fontFiles.length; i++) {
+        formData.append(`fontImage`, fontFiles[i]);
       }
     }
 
@@ -531,7 +536,16 @@ export const createProductType =
 
 // EDIT PRODUCT TYPE
 export const editProductType =
-  (values, id, file, previewFile, layouts, discountList, priceList) =>
+  (
+    values,
+    id,
+    file,
+    previewFile,
+    layouts,
+    discountList,
+    priceList,
+    fontFiles
+  ) =>
   async (dispatch) => {
     let formData = new FormData();
 
@@ -573,6 +587,11 @@ export const editProductType =
     if (layouts) {
       for (let i = 0; i < layouts.length; i++) {
         formData.append(`layouts`, layouts[i]);
+      }
+    }
+    if (fontFiles) {
+      for (let i = 0; i < fontFiles.length; i++) {
+        formData.append(`fontImage`, fontFiles[i]);
       }
     }
 

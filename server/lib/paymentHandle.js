@@ -203,7 +203,8 @@ const paymentHandle = async (object) => {
             backImages: order.backImages,
             font: order.font,
             orderColor: order.orderColor,
-            productFont: order.productFont
+            productFont: order.productFont,
+            fontImage: order.fontImage
         }).save()),
         ...teamOrders.map((order, i) => new Product({
             userId,
@@ -231,8 +232,10 @@ const paymentHandle = async (object) => {
             secondaryColor: order.secondaryColor,
             frontImages: order.frontImages,
             backImages: order.backImages,
+            font: order.font,
             orderColor: order.orderColor,
-            productFont: order.productFont
+            productFont: order.productFont,
+            fontImage: order.fontImage
         }).save())
     ]);
 
