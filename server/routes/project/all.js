@@ -40,7 +40,7 @@ router.get('/:type', async (req, res, next) => {
                 .skip(skip)
                 .limit(limit);
 
-            const projectIds = projects.find(({_id}) => _id);
+            const projectIds = projects.map(({_id}) => _id);
 
             const products = await Product.find({projectId: {$in: projectIds}}, {_id: 1, name: 1, projectId: 1, status: 1});
 
@@ -68,7 +68,7 @@ router.get('/:type', async (req, res, next) => {
                 .skip(skip)
                 .limit(limit);
 
-            const projectIds = projects.find(({_id}) => _id);
+            const projectIds = projects.map(({_id}) => _id);
 
             const products = await Product.find({projectId: {$in: projectIds}}, {_id: 1, name: 1, projectId: 1, status: 1});
 
