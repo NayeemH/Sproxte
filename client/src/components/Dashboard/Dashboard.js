@@ -135,6 +135,7 @@ const Dashboard = ({ dashboard, projects, fetchProjects }) => {
                   Imgid={project._id}
                   status={project.status}
                   project={project}
+                  products={project.products}
                 />
               </Col>
             ))}

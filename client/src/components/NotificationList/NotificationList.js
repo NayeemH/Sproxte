@@ -117,7 +117,9 @@ const NotificationList = ({ item, getNotifications }) => {
                         )}
                       </Link>
                       <span className="d-block fw-light text-secondary">
-                        <Moment fromNow>{notification.createdAt}</Moment>
+                        <Moment format="DD-MM-YYYY hh:mm A">
+                          {notification.createdAt}
+                        </Moment>
                       </span>
                     </Col>
                   </Row>

@@ -10,18 +10,18 @@ import Moment from "react-moment";
 import { hexToBase64 } from "../../../utils/hexToBase";
 import { Badge as MtBadge } from "@mantine/core";
 import { connect } from "react-redux";
-const products = [
-  {
-    _id: 1,
-    name: "Product 1",
-    status: "pending",
-  },
-  {
-    _id: 2,
-    name: "Product 2",
-    status: "pending",
-  },
-];
+// const products = [
+//   {
+//     _id: 1,
+//     name: "Product 1",
+//     status: "pending",
+//   },
+//   {
+//     _id: 2,
+//     name: "Product 2",
+//     status: "pending",
+//   },
+// ];
 
 const ProductCard = ({
   title,
@@ -46,6 +46,7 @@ const ProductCard = ({
   Imgid,
   project,
   user,
+  products,
 }) => {
   const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
