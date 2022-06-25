@@ -124,7 +124,7 @@ const OrderDescription = ({
             />
           </div>
           <Text size="md">
-            <b>Note:</b> You pay before approving the design.
+            Are you sure you want to add this product into your cart?
           </Text>
         </>
       ),

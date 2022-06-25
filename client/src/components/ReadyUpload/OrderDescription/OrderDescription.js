@@ -93,7 +93,6 @@ const OrderDescription = ({
     }
     // CART MODAL SHOW
     modals.openConfirmModal({
-      title: "You Pay Before Approving The Design",
       centered: true,
       children: (
         <>
@@ -105,7 +104,7 @@ const OrderDescription = ({
             />
           </div>
           <Text size="md">
-            <b>Note:</b> You pay before approving the design.
+            Are you sure you want to add this product into your cart?
           </Text>
         </>
       ),

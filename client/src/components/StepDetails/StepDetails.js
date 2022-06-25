@@ -60,8 +60,8 @@ const StepDetails = ({
       children: (
         <div style={{ zIndex: 99999 }}>
           <Text size="md">
-            Please provide why you are rejecting this design and optionally you
-            can upload image for further reference.
+            Please provide why you are rejecting this design and upload image
+            for further reference.
           </Text>
           <Form className="py-3" onSubmit={rejectSubmitHandeler}>
             <Form.Group controlId="exampleForm.ControlTextarea1">
@@ -80,9 +80,9 @@ const StepDetails = ({
                 Upload image for further reference
               </Form.Label>
               <small className="d-block pb-2">
-                This upload image is optional.
+                This upload image is required.
               </small>
-              <Form.Control type="file" />
+              <Form.Control type="file" required />
             </Form.Group>
             <Button className="btn_primary mt-3" type="submit">
               Reject

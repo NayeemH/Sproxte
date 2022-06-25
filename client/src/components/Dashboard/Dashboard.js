@@ -93,7 +93,7 @@ const Dashboard = ({ dashboard, projects, fetchProjects }) => {
                     }
                     style={{ textTransform: "capitalize" }}
                   >
-                    {item.name}
+                    {item.name === "delivered" ? "Shipped" : item.name}
                   </Dropdown.Item>
                 ))}
               </Dropdown.Menu>
@@ -115,7 +115,7 @@ const Dashboard = ({ dashboard, projects, fetchProjects }) => {
             } mt-3 mt-md-0`}
             onClick={() => console.log("completed")}
           >
-            Completed Orders
+            Shipped Orders
           </Link>
         </div>
       </div>

@@ -175,30 +175,30 @@ const LandingSlider = ({
                         >
                           {i === 0 ? (
                             <>
-                              <span className="d-block text-white">
+                              <span className="d-block text-white   fs-6 ">
                                 <HiOutlineArrowNarrowLeft className="d-none" />
                               </span>
                             </>
                           ) : (
                             <span
-                              className="d-block text-dark text-cursor"
+                              className="d-block   fs-6  text-dark text-cursor"
                               onClick={() => my_swiper.slidePrev()}
                             >
                               <HiOutlineArrowNarrowLeft />
                             </span>
                           )}
                           <span className="d-block fs-6 text-dark fw-bold">
-                            More Category Designs
+                            Category Designs
                           </span>
                           {i === categories.length - 1 ? (
                             <>
-                              <span className="d-block text-white">
+                              <span className="d-block   fs-6  text-white">
                                 <HiOutlineArrowNarrowRight className="d-none" />
                               </span>
                             </>
                           ) : (
                             <span
-                              className="d-block  text-dark  text-cursor"
+                              className="d-block   fs-6  text-dark  text-cursor"
                               onClick={() => my_swiper.slideNext()}
                             >
                               <HiOutlineArrowNarrowRight />
@@ -277,30 +277,30 @@ const LandingSlider = ({
                       <div className={styles.bottom_nav}>
                         {i === 0 ? (
                           <>
-                            <span className="d-block text-white">
+                            <span className="d-block   fs-6  text-white">
                               <HiOutlineArrowNarrowLeft />
                             </span>
                           </>
                         ) : (
                           <span
-                            className="d-block text-secondary  text-cursor"
+                            className="d-block text-secondary   fs-6  text-cursor"
                             onClick={() => my_swiper_ready_team.slidePrev()}
                           >
                             <HiOutlineArrowNarrowLeft />
                           </span>
                         )}
-                        <span className="d-block fs-6 text-secondary">
-                          More Team Designs
+                        <span className="d-block fs-6 text-secondary   fs-6 ">
+                          Team Designs
                         </span>
                         {i === teams.length - 1 ? (
                           <>
-                            <span className="d-block text-white">
+                            <span className="d-block text-white   fs-6 ">
                               <HiOutlineArrowNarrowRight />
                             </span>
                           </>
                         ) : (
                           <span
-                            className="d-block text-secondary text-cursor"
+                            className="d-block text-secondary text-cursor   fs-6 "
                             onClick={() => my_swiper_ready_team.slideNext()}
                           >
                             <HiOutlineArrowNarrowRight />
@@ -381,20 +381,20 @@ const LandingSlider = ({
                       <div className={styles.bottom_nav}>
                         {i === 0 ? (
                           <>
-                            <span className="d-block text-white">
+                            <span className="d-block text-white   fs-6 ">
                               <HiOutlineArrowNarrowLeft />
                             </span>
                           </>
                         ) : (
                           <span
-                            className="d-block text-secondary  text-cursor"
+                            className="d-block text-secondary    fs-6  text-cursor"
                             onClick={() => my_swiper_ready.slidePrev()}
                           >
                             <HiOutlineArrowNarrowLeft />
                           </span>
                         )}
-                        <span className="d-block fs-6 text-secondary">
-                          More Ready Made Designs
+                        <span className="d-block fs-6 text-secondary   fs-6 ">
+                          Ready Made Designs
                         </span>
                         {i === templates.length - 1 ? (
                           <>
@@ -404,7 +404,7 @@ const LandingSlider = ({
                           </>
                         ) : (
                           <span
-                            className="d-block text-secondary  text-cursor"
+                            className="d-block text-secondary  fs-6  text-cursor"
                             onClick={() => my_swiper_ready.slideNext()}
                           >
                             <HiOutlineArrowNarrowRight />
