@@ -103,7 +103,7 @@ router.post('/:id', fileFetch.single('image'), async (req, res, next) => {
             });
             
 
-            await Project.findOneAndUpdate({_id: id}, {$push: {gurdianId: user._id}, $inc: {count: -1}});
+            await Project.findOneAndUpdate({_id: id}, {$push: {gurdianIds: user._id}, $inc: {count: -1}});
             
             // Send notification
             const users = await User.find({$or: [{userType: 'admin'}, {userType: 'iep'}]}, {_id: 1});

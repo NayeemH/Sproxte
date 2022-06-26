@@ -19,7 +19,7 @@ router.get('/:id', async (req, res, next) => {
         }
         else if(userType === 'client' || userType === 'coach' || userType === 'guardian') {
             products = await Product.find(
-                {projectId: id, userId}, 
+                {projectId: id, $or: [{userId}, {gurdianIds: userId}]}, 
                 {_id: 1, name: 1, type: 1, image: 1, colorImage: 1, count: 1, price: 1, priceArray: 1, discount: 1, status: 1, finalImage: 1}
             );
 
