@@ -13,6 +13,15 @@ import { BASE_URL } from "../constants/URL";
 import axios from "axios";
 import { getPrice } from "../utils/getPrice";
 import { getDiscount } from "../utils/getDiscount";
+import { RESET_CART } from "../constants/Type";
+
+// clearCart
+
+export const clearCart = () => (dispatch) => {
+  dispatch({
+    type: RESET_CART,
+  });
+};
 
 // GET PRODUCT
 export const getProduct = (id) => async (dispatch) => {

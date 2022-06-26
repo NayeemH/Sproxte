@@ -18,19 +18,23 @@ const PaymentSuccess = ({ data, country, isAuthenticated }) => {
   return (
     <div className={styles.wrapper}>
       {data && data.paymentStatus === "paid" ? (
-        <div className="d-flex justify-content-center align-items-center flex-column">
-          <span className="d-block fs-1 text-success">
-            <BsCheckCircle />
-          </span>
-          <h1 className="pb-4">Payment Successful</h1>
-        </div>
+        data && data.paymentStatus !== "paid" ? (
+          <div className="d-flex justify-content-center align-items-center flex-column">
+            <span className="d-block fs-1 text-success">
+              <BsCheckCircle />
+            </span>
+            <h1 className="pb-4">Payment Successful</h1>
+          </div>
+        ) : (
+          <div className="d-flex justify-content-center align-items-center flex-column">
+            <span className="d-block fs-1 text-danger">
+              <AiOutlineCloseCircle />
+            </span>
+            <h1 className="pb-4">Payment Failed</h1>
+          </div>
+        )
       ) : (
-        <div className="d-flex justify-content-center align-items-center flex-column">
-          <span className="d-block fs-1 text-danger">
-            <AiOutlineCloseCircle />
-          </span>
-          <h1 className="pb-4">Payment Failed</h1>
-        </div>
+        <span className="py-5 fs-3 text-center -block">Loading...</span>
       )}
       <Card className={`crd shadow`} style={{ maxWidth: "30rem" }}>
         <Card.Header>

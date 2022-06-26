@@ -42,7 +42,7 @@ const ContactList = ({ item, getContactList }) => {
   };
   return (
     <Container>
-      {!item || !item.pageCount || !item.pageCount === 0 ? (
+      {item === null ? (
         <div
           className="d-flex justify-content-center align-items-center crd"
           style={{ minHeight: "100vh" }}
@@ -53,6 +53,13 @@ const ContactList = ({ item, getContactList }) => {
         <>
           <Card className="crd p-md-4 p-2">
             <Card.Body>
+              {item && item.items && item.items.length === 0 ? (
+                <span className="d-block text-center fs-3">
+                  No Contact Submission.
+                </span>
+              ) : (
+                <></>
+              )}
               {item &&
                 item.items &&
                 item.items.map((notification) => (

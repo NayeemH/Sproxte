@@ -1,4 +1,4 @@
-import { CART_RESET, SET_TEAM_COUNT } from "../constants/Type";
+import { CART_RESET, RESET_CART, SET_TEAM_COUNT } from "../constants/Type";
 import {
   CART_ADD_ITEM,
   CART_REMOVE_ITEM,
@@ -33,6 +33,12 @@ const CartReducer = (state = initialState, action) => {
       return {
         ...state,
         cart: [...state.cart, payload],
+      };
+    case RESET_CART:
+      localStorage.removeItem("sv_cart");
+      return {
+        ...state,
+        cart: [],
       };
     case CART_REMOVE_ITEM:
       localStorage.setItem(

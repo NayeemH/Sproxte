@@ -114,3 +114,6 @@ export const ORDER_REJECT_ERROR = "ORDER_REJECT_ERROR";
 
 // TEAM
 export const SET_TEAM_COUNT = "SET_TEAM_COUNT";
+
+// CART
+export const RESET_CART = "RESET_CART";
