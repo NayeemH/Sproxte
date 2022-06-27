@@ -138,7 +138,7 @@ const OrderDescription = ({
       );
       resetlHandeler();
       setDescription("");
-      // navigate("/cart");
+      navigate("/");
     }
   };
 

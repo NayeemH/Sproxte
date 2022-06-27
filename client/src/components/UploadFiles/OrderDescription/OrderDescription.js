@@ -149,6 +149,8 @@ const OrderDescription = ({
         toast.error("Please select color");
       } else if (!orderColor) {
         toast.error("Please select primary color");
+      } else if (orderColor.length !== 2) {
+        toast.error("Please select 2 primary color");
       } else {
         addToCart(
           description,
@@ -181,6 +183,7 @@ const OrderDescription = ({
         }
         resetlHandeler();
         setDescription("");
+        navigate("/");
       }
     }
   };
@@ -494,39 +497,45 @@ const OrderDescription = ({
         </SwiperSlide>
         <SwiperSlide className={styles.slide_left}>
           <Card className={`${styles.crd} shadow mt-2`}>
-            <Card className={`${styles.crd} shadow mt-2`}>
-              <Card.Body className="d-flex justify-content-between flex-column">
-                <div
-                  className={`d-flex justify-content-between flex-column pb-2 ${styles.font}`}
-                >
-                  <span className="d-block fs-4">Primary Color</span>
-                  <Select
-                    data={colors.map((c, i) => {
-                      return {
-                        label: c.name,
-                        value: c.hex,
-                      };
-                    })}
-                    itemComponent={({ value, label, ...others }) => (
-                      <div
-                        className={styles.dd_item}
-                        ref={selectRef}
-                        {...others}
-                      >
-                        <span className="d-flex align-items-center">
-                          <BsSquareFill color={`${value}`} className="me-2" />{" "}
-                          <span>{label}</span>
-                        </span>
-                      </div>
-                    )}
-                    placeholder="Pick primary color"
-                    value={orderColor}
-                    onChange={(e) => setOrderColor(e)}
-                    required
-                  />
-                </div>
-              </Card.Body>
-            </Card>
+            <Card.Body className="d-flex justify-content-between flex-column">
+              <div
+                className={`d-flex justify-content-between flex-column pb-2 ${styles.font}`}
+              >
+                <span className="d-block fs-4">Primary Color</span>
+                <MultiSelect
+                  data={colors.map((c, i) => {
+                    return {
+                      label: c.name,
+                      value: c.hex,
+                    };
+                  })}
+                  itemComponent={({ value, label, ...others }) => (
+                    <div className={styles.dd_item} ref={selectRef} {...others}>
+                      <span className="d-flex align-items-center">
+                        <BsSquareFill color={`${value}`} className="me-2" />{" "}
+                        <span>{label}</span>
+                      </span>
+                    </div>
+                  )}
+                  placeholder="Pick primary color"
+                  value={orderColor}
+                  onChange={(e) => {
+                    if (e.length > 2) {
+                      toast.error("You must select 2 colors");
+                    } else if (e.length === 0) {
+                      setOrderColor(e);
+                    } else {
+                      setOrderColor(e);
+                    }
+                  }}
+                  required
+                  clearable
+                />
+              </div>
+              <small>Please select 2 primary color</small>
+            </Card.Body>
+          </Card>
+          <Card className={`${styles.crd} shadow mt-3`}>
             <Card.Body className="d-flex justify-content-between flex-column">
               <div
                 className={`d-flex justify-content-between flex-column pb-2 ${styles.font}`}
@@ -554,7 +563,6 @@ const OrderDescription = ({
                   placeholder="Pick secondary color"
                   value={orderColor2}
                   onChange={(e) => {
-                    console.log(e);
                     if (e.length > 2) {
                       toast.error("You can select maximum 2 colors");
                     } else {
@@ -563,8 +571,6 @@ const OrderDescription = ({
                   }}
                   clearable
                   multiple
-                  max={2}
-                  required
                 />
               </div>
             </Card.Body>
@@ -763,7 +769,7 @@ const OrderDescription = ({
             </Card.Body>
           </Card>
 
-          <Card className={`${styles.crd} shadow mt-3`}>
+          <Card className={`${styles.crd} shadow mt-3 mb-4`}>
             <Card.Body className="d-flex justify-content-between flex-column">
               <span className="d-block fs-4">Order Description</span>
               <textarea
