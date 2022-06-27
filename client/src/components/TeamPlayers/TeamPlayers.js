@@ -56,7 +56,9 @@ const TeamPlayers = ({ team, type }) => {
                         <div className="text-center pt-4">
                           <img
                             src={`${IMAGE_PATH}small/${
-                              prod.image?.front
+                              prod.finalImage
+                                ? prod.finalImage
+                                : prod.image?.front
                                 ? prod.image.front
                                 : prod.colorImage
                             }`}
