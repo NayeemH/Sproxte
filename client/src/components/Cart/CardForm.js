@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Formik, Field, Form } from "formik";
 import * as Yup from "yup";
 import { InputGroup, Form as BootstrapForm, Button } from "react-bootstrap";
@@ -12,6 +12,7 @@ import { getCountryList, getStateList } from "../../actions/Order.action";
 import { Select, Text } from "@mantine/core";
 import { useModals } from "@mantine/modals";
 import methods from "../../constants/fedexMethods";
+import { BsSquareFill } from "react-icons/bs";
 
 const CardForm = ({
   cart,
@@ -27,6 +28,7 @@ const CardForm = ({
   const [loading, setLoading] = useState(false);
   const [logo, setLogo] = useState(undefined);
   const navigate = useNavigate();
+  const selectRef = useRef(null);
   const modals = useModals();
   useEffect(() => {
     if (!country) {
@@ -452,7 +454,7 @@ const CardForm = ({
             />
             {user && user.userType === "coach" ? (
               <>
-                <InputGroup className="mb-3 d-flex flex-column">
+                <InputGroup className="my-3 d-flex flex-column">
                   <div className="d-flex justify-content-between align-items-center pb-2">
                     <label htmlFor="teamName" className="d-block">
                       Team Name
@@ -525,7 +527,34 @@ const CardForm = ({
                       <small className="text-danger pt-2">{errors.color}</small>
                     ) : null}
                   </div>
-                  <Field
+                  <Select
+                    data={colors.map((c, i) => {
+                      return {
+                        label: c.name,
+                        value: c.hex,
+                      };
+                    })}
+                    itemComponent={({ value, label, ...others }) => (
+                      <div
+                        className={styles.dd_item}
+                        ref={selectRef}
+                        {...others}
+                      >
+                        <span className="d-flex align-items-center">
+                          <BsSquareFill color={`${value}`} className="me-2" />{" "}
+                          <span>{label}</span>
+                        </span>
+                      </div>
+                    )}
+                    placeholder="Pick team color"
+                    value={values.color ? values.color : null}
+                    onChange={(e) => {
+                      setFieldValue("color", e);
+                    }}
+                    required
+                    clearable
+                  />
+                  {/* <Field
                     as={BootstrapForm.Select}
                     placeholder="Type team name"
                     name="color"
@@ -542,7 +571,7 @@ const CardForm = ({
                         {clr.name}
                       </option>
                     ))}
-                  </Field>
+                  </Field> */}
                 </InputGroup>
               </>
             ) : null}

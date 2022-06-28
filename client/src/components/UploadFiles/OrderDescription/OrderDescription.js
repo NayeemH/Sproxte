@@ -277,7 +277,15 @@ const OrderDescription = ({
               {/* PRICE LIST */}
               <div className="text-center text-secondary fs-6 pb-3">
                 {product.priceArray.price.map((item, index) => {
-                  if (index === product.priceArray.price.length - 1) {
+                  if (product.priceArray.price.length === 1) {
+                    return (
+                      <span key={index}>
+                        {" "}
+                        {product.priceArray.range[index - 1]}{" "}
+                        <span className="fw-bold">${item}</span>
+                      </span>
+                    );
+                  } else if (index === product.priceArray.price.length - 1) {
                     return (
                       <span key={index}>
                         {" "}

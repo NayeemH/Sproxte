@@ -3,7 +3,7 @@ import { Button, Col, Container, Row, Table } from "react-bootstrap";
 import Moment from "react-moment";
 import { connect } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import logo from "../../assets/logoSq.png";
+import logo from "../../assets/logoSqNew.png";
 import { hexToBase64 } from "../../utils/hexToBase";
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";

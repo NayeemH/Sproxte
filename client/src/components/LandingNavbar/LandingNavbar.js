@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import styles from "./LandingNavbar.module.scss";
-import logo from "../../assets/logoLg.png";
+import logo from "../../assets/logoNew.png";
 import { BsFacebook } from "react-icons/bs";
 import {
   AiFillLinkedin,
@@ -10,6 +10,7 @@ import {
   AiOutlineUserAdd,
   AiOutlineClose,
 } from "react-icons/ai";
+import { FaHome } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
 import { FaBars } from "react-icons/fa";
 import { connect } from "react-redux";
@@ -125,7 +126,7 @@ const LandingNavbar = ({
           </div>
           <div className={page === "login" ? styles.active : styles.link}>
             <Link to="/login" style={{ fontSize: 22 }}>
-              <AiOutlineUserAdd />
+              {user && isAuthenticated ? <FaHome /> : <AiOutlineUserAdd />}
             </Link>
           </div>
         </div>

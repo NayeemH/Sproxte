@@ -4,7 +4,7 @@ import { AiOutlineCloudDownload } from "react-icons/ai";
 import { IoIosArrowBack } from "react-icons/io";
 import Moment from "react-moment";
 import { useNavigate } from "react-router-dom";
-import logo from "../../assets/logoSq.png";
+import logo from "../../assets/logoSqNew.png";
 import jsPDF from "jspdf";
 import { DateRangePicker } from "@mantine/dates";
 import html2canvas from "html2canvas";
