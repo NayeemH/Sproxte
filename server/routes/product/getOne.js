@@ -24,7 +24,7 @@ router.get('/:id', async (req, res, next) => {
         }
         else if(userType === 'client' || userType === 'coach') {
             product = await Product.findOne(
-                {_id: id, $or: [{userId}, {gurdianIds: userId}]}, 
+                {_id: id}, 
                 {__v: 0}
             )
             .populate('gurdianNotifications', 'message image createdAt updatedAt');
