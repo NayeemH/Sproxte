@@ -22,7 +22,7 @@ const share = require('./share');
 const iep = require('./iep');
 const shipment = require('./shipment');
 const team = require('./team');
-
+const heroImage = require('./heroImage');
 
 
 // User Register and login function 
@@ -81,6 +81,9 @@ router.use('/shipment', isAuth, shipment);
 
 // Team info
 router.use('/team', team);
+
+// Hero image
+router.use('/heroImage', heroImage);
 
 
 module.exports = router;
