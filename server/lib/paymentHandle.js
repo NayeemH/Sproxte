@@ -115,9 +115,9 @@ const paymentHandle = async (object) => {
         projectImage = teams[0].pngImageFront;
         type = 'team';
         sizes = teams[0].sizes;
-        count = parseInt(teamOrders[0].count) - 1;
+        count = parseInt(teamOrders[0].count);
         playerAddPrice = order.playerAddPrice;
-        singleProductPrice = order.price / (count + 1);
+        singleProductPrice = order.price / count;
         productCount = teamOrders.length
     }
 
@@ -195,37 +195,6 @@ const paymentHandle = async (object) => {
             weight: order.weight,
             description: order.description,
             layoutImage: order.layoutId && customs[i].layouts.filter(({_id}) => _id.toString() === order.layoutId.toString())[0].image,
-            primaryText: order.primaryText,
-            primaryColor: order.primaryColor,
-            secondaryText: order.secondaryText,
-            secondaryColor: order.secondaryColor,
-            frontImages: order.frontImages,
-            backImages: order.backImages,
-            font: order.font,
-            orderColor: order.orderColor,
-            productFont: order.productFont,
-            fontImage: order.fontImage
-        }).save()),
-        ...teamOrders.map((order, i) => new Product({
-            userId,
-            projectId: project._id,
-            typeId: order.productTypeId,
-            type: order.type,
-            name: teams[i].name,
-            image: {
-                front: teams[i].pngImageFront,
-                back: teams[i].pngImageBack,
-            },
-            colorImage: order.color && teams[i].imageData.filter(({color}) => color === order.color)[0].image,
-            color2: order.color2,
-            price: teams[i].price,
-            priceArray: teams[i].priceArray,
-            discount: teams[i].discount,
-            count: order.count,
-            size: order.size,
-            weight: order.weight,
-            description: order.description,
-            layoutImage: order.layoutId && teams[i].layouts.filter(({_id}) => _id.toString() === order.layoutId.toString())[0].image,
             primaryText: order.primaryText,
             primaryColor: order.primaryColor,
             secondaryText: order.secondaryText,
