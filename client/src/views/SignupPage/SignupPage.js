@@ -1,14 +1,15 @@
 import React from "react";
 import LandingNavbar from "../../components/LandingNavbar/LandingNavbar";
+import BgProvider from "../../components/Shared/BgProvider/BgProvider";
 
 import SignupForm from "../../components/SignupForm/SignupForm";
 
 const SignupPage = () => {
   return (
-    <div className="mh bg_custom">
+    <BgProvider className="mh">
       <LandingNavbar page={"login"} />
       <SignupForm />
-    </div>
+    </BgProvider>
   );
 };
 

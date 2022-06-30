@@ -1,13 +1,14 @@
 import React from "react";
 import ContactForm from "../../components/ContactForm/ContactForm";
 import LandingNavbar from "../../components/LandingNavbar/LandingNavbar";
+import BgProvider from "../../components/Shared/BgProvider/BgProvider";
 
 const ContactPage = () => {
   return (
-    <div className="mh bg_custom">
+    <BgProvider className="mh">
       <LandingNavbar page={"contact"} />
       <ContactForm />
-    </div>
+    </BgProvider>
   );
 };
 

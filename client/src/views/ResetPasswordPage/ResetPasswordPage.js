@@ -1,13 +1,14 @@
 import React from "react";
 import LandingNavbar from "../../components/LandingNavbar/LandingNavbar";
 import ResetLinkForm from "../../components/ResetLinkForm/ResetLinkForm";
+import BgProvider from "../../components/Shared/BgProvider/BgProvider";
 
 const ResetPasswordPage = () => {
   return (
-    <div className="mh bg_custom">
+    <BgProvider className="mh">
       <LandingNavbar page={"login"} />
       <ResetLinkForm />
-    </div>
+    </BgProvider>
   );
 };
 

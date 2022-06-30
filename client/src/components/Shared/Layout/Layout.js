@@ -5,7 +5,7 @@ import logo from "../../../assets/logoLg.png";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import { VscHome, VscTypeHierarchySub } from "react-icons/vsc";
 import { TiCogOutline } from "react-icons/ti";
-import { BsArrowLeftRight } from "react-icons/bs";
+import { BsArrowLeftRight, BsImageFill } from "react-icons/bs";
 import { MdPeopleAlt } from "react-icons/md";
 import { IoMdNotificationsOutline } from "react-icons/io";
 import { logout } from "../../../actions/Dashboard.action";
@@ -169,6 +169,14 @@ const Layout = ({ logout, children, title, user }) => {
                       <span className={styles.nav__item_text}>
                         Contact Submission
                       </span>
+                    </NavLink>
+                  </div>
+                  <div className={styles.nav}>
+                    <NavLink to="/background" className={styles.nav__item}>
+                      <span className={styles.icon}>
+                        <BsImageFill />
+                      </span>
+                      <span className={styles.nav__item_text}>Background</span>
                     </NavLink>
                   </div>
                 </>

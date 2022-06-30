@@ -64,6 +64,7 @@ import CartNewPage from "./views/CartNewPage/CartNewPage";
 import AdminOrderDetails from "./views/AdminOrderDetails/AdminOrderDetails";
 import TeamPlayerPage from "./views/TeamPlayerPage/TeamPlayerPage";
 import TeamProductsPage from "./views/TeamProductsPage/TeamProductsPage";
+import SliderPage from "./views/SliderPage/SliderPage";
 
 function App({ getRefreshToken }) {
   useEffect(() => {
@@ -116,6 +117,7 @@ function App({ getRefreshToken }) {
               />
 
               <Route path="users" element={<UserIepPage />} />
+              <Route path="background" element={<SliderPage />} />
               <Route path="users/iep" element={<UserIepPage iep />} />
               <Route path="dashboard" element={<DashboardPage />} />
               <Route path="team-dashboard" element={<DashboardTeamPage />} />

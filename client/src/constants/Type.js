@@ -117,3 +117,8 @@ export const SET_TEAM_COUNT = "SET_TEAM_COUNT";
 
 // CART
 export const RESET_CART = "RESET_CART";
+
+// BG
+export const UPLOAD_BG = "UPLOAD_BG";
+export const GET_BG = "GET_BG";
+export const GET_BG_ONE = "GET_BG_ONE";

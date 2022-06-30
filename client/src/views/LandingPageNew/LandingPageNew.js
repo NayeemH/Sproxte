@@ -3,6 +3,7 @@ import { useLocation } from "react-router-dom";
 import { toast } from "react-toastify";
 import LandingNavbar from "../../components/LandingNavbar/LandingNavbar";
 import LandingSlider from "../../components/LandingSlider/LandingSlider";
+import BgProvider from "../../components/Shared/BgProvider/BgProvider";
 import styles from "./LandingPageNew.module.scss";
 const queryString = require("query-string");
 
@@ -16,12 +17,12 @@ const LandingPageNew = () => {
   }, []);
 
   return (
-    <div className={`${styles.wrapper} px-md-4 px-2`}>
+    <BgProvider className={`${styles.wrapper} px-md-4 px-2`}>
       <LandingNavbar />
       <div className="d-flex justify-content-start align-items-center">
         <LandingSlider />
       </div>
-    </div>
+    </BgProvider>
   );
 };
 

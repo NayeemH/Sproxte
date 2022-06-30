@@ -1,4 +1,4 @@
-import { GET_TEAMS, GET_TEAM_DETAILS } from "../constants/Type";
+import { GET_BG_ONE, GET_TEAMS, GET_TEAM_DETAILS } from "../constants/Type";
 import {
   CATEGORY_DELETE,
   CATEGORY_LOAD,
@@ -37,11 +37,18 @@ const initialState = {
   teams: null,
   selected_team: null,
   loading: true,
+  bg: null,
 };
 
 const LandingReducer = (state = initialState, action) => {
   const { type, payload } = action;
   switch (type) {
+    case GET_BG_ONE:
+      return {
+        ...state,
+        bg: payload,
+        loading: false,
+      };
     case LANDING_SIDEBAR_TOGGLE:
       return { ...state, sidebarActive: !state.sidebarActive };
 
