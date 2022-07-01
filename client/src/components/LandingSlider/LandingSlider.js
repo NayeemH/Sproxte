@@ -16,9 +16,9 @@ import { Pagination, EffectCreative } from "swiper";
 import styles from "./LandingSlider.module.scss";
 
 import {
-  getLandingData,
   getLandingList,
   getTeamList,
+  getTrendingData,
 } from "../../actions/Landing.action";
 import { IMAGE_PATH } from "../../constants/URL";
 import { useNavigate } from "react-router-dom";
@@ -32,8 +32,9 @@ const LandingSlider = ({
   templates,
   getLandingList,
   teams,
-  data,
+  trending,
   getTeamList,
+  getTrendingData,
 }) => {
   const navigate = useNavigate();
   const [my_swiper, set_my_swiper] = useState({});
@@ -42,6 +43,8 @@ const LandingSlider = ({
   const modals = useModals();
   useEffect(() => {
     getCategoryList();
+
+    getTrendingData();
 
     if (teams === null) {
       getTeamList();
@@ -315,6 +318,106 @@ const LandingSlider = ({
               <></>
             )}
             {/* TEAM END */}
+            {/* TRENDING START */}
+            {trending !== null && trending.length > 0 ? (
+              <SwiperSlide className={styles.slide_left}>
+                <Swiper
+                  className="mySwiper swiper-h"
+                  spaceBetween={30}
+                  pagination={{
+                    clickable: true,
+                  }}
+                  modules={[EffectCreative]}
+                  effect={"creative"}
+                  creativeEffect={{
+                    prev: {
+                      shadow: true,
+                      translate: [0, 0, -400],
+                    },
+                    next: {
+                      translate: ["100%", 0, 0],
+                    },
+                  }}
+                  onInit={(ev) => {
+                    set_my_swiper_ready_team(ev);
+                  }}
+                >
+                  {trending.map((temp, i) => (
+                    <SwiperSlide className={styles.slide_top} key={temp._id}>
+                      <div className="">
+                        <div className="text-center pt-4">
+                          <img
+                            src={`${IMAGE_PATH}small/${temp.image}`}
+                            className={styles.img}
+                            alt=""
+                          />
+                        </div>
+                        <div className="text-center">
+                          <span className="d-block fs-4">{temp.name}</span>
+                        </div>
+                        <div className="text-center">
+                          <span className="d-block fs-6">
+                            Sold: {temp.sellCount}
+                          </span>
+                        </div>
+                      </div>
+                      <div className="text-center d-flex justify-content-center align-items-center">
+                        <Button
+                          size="lg"
+                          className="btn_primary"
+                          onClick={() =>
+                            handleNavigate(
+                              `/product/${temp._id}`,
+                              `${IMAGE_PATH}small/${temp.logo}`
+                            )
+                          }
+                        >
+                          {" "}
+                          START{" "}
+                        </Button>
+                      </div>
+
+                      <div className={styles.bottom_nav}>
+                        {i === 0 ? (
+                          <>
+                            <span className="d-block   fs-6  text-white">
+                              <HiOutlineArrowNarrowLeft />
+                            </span>
+                          </>
+                        ) : (
+                          <span
+                            className="d-block text-secondary   fs-6  text-cursor"
+                            onClick={() => my_swiper_ready_team.slidePrev()}
+                          >
+                            <HiOutlineArrowNarrowLeft />
+                          </span>
+                        )}
+                        <span className="d-block fs-6 text-secondary   fs-6 ">
+                          Trending Designs
+                        </span>
+                        {i === teams.length - 1 ? (
+                          <>
+                            <span className="d-block text-white   fs-6 ">
+                              <HiOutlineArrowNarrowRight />
+                            </span>
+                          </>
+                        ) : (
+                          <span
+                            className="d-block text-secondary text-cursor   fs-6 "
+                            onClick={() => my_swiper_ready_team.slideNext()}
+                          >
+                            <HiOutlineArrowNarrowRight />
+                          </span>
+                        )}
+                      </div>
+                    </SwiperSlide>
+                  ))}
+                </Swiper>
+              </SwiperSlide>
+            ) : (
+              <></>
+            )}
+            {/* TEAM END */}
 
             {templates && templates.length > 0 ? (
               <SwiperSlide className={styles.slide_left}>
@@ -429,10 +532,12 @@ const mapStateToProps = (state) => ({
   categories: state.landing.category,
   templates: state.landing.landing_list,
   teams: state.landing.teams,
+  trending: state.landing.trending,
 });
 
 export default connect(mapStateToProps, {
   getCategoryList,
   getLandingList,
   getTeamList,
+  getTrendingData,
 })(LandingSlider);

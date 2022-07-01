@@ -122,3 +122,5 @@ export const RESET_CART = "RESET_CART";
 export const UPLOAD_BG = "UPLOAD_BG";
 export const GET_BG = "GET_BG";
 export const GET_BG_ONE = "GET_BG_ONE";
+
+export const GET_TRENDING = "GET_TRENDING";

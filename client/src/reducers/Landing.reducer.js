@@ -3,6 +3,7 @@ import {
   GET_BG_ONE,
   GET_TEAMS,
   GET_TEAM_DETAILS,
+  GET_TRENDING,
 } from "../constants/Type";
 import {
   CATEGORY_DELETE,
@@ -44,11 +45,18 @@ const initialState = {
   loading: true,
   bg: null,
   bgList: null,
+  trending: null,
 };
 
 const LandingReducer = (state = initialState, action) => {
   const { type, payload } = action;
   switch (type) {
+    case GET_TRENDING:
+      return {
+        ...state,
+        trending: payload,
+        loading: false,
+      };
     case GET_BG_ONE:
       return {
         ...state,

@@ -27,6 +27,7 @@ import {
   GET_TEAMS_FAIL,
   GET_TEAM_DETAILS,
   GET_TEAM_DETAILS_FAIL,
+  GET_TRENDING,
 } from "../constants/Type";
 
 export const toggleLandingSidebar = () => (dispatch) => {
@@ -131,6 +132,22 @@ export const getLandingData = () => async (dispatch) => {
     dispatch({
       type: TYPES_LOAD_ERROR,
     });
+    console.log(err);
+  }
+};
+
+//GET TRENDING DATA NEW UI
+export const getTrendingData = () => async (dispatch) => {
+  try {
+    const res = await axios.get(`${BASE_URL}/api/v1/team/top`);
+    // console.log(res);
+
+    dispatch({
+      type: GET_TRENDING,
+      payload: res.data.data,
+    });
+    console.log(res);
+  } catch (err) {
     console.log(err);
   }
 };
