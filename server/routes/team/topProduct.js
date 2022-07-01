@@ -6,7 +6,7 @@ const Collection = require('../../models/collection');
 router.get('/', async (req, res, next) => {
     try {
         const products = await Product
-            .find({type: 'team'}, {_id: 1, name: 1, price: 1, sellCount: 1})
+            .find({type: 'team', sellCount: {$ne: 0}}, {_id: 1, name: 1, price: 1, sellCount: 1})
             .sort({sellCount: -1})
             .limit(10);
         
