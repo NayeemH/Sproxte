@@ -48,7 +48,7 @@ const TeamPlayers = ({ team, type }) => {
           >
             {team !== null && team.products.length > 0 ? (
               team.products
-                .filter((item) => item.typeId === type)
+                .filter((item) => item.name === type)
                 .map((prod) => (
                   <SwiperSlide className={styles.slide_left} key={prod._id}>
                     <>

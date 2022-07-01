@@ -1,6 +1,6 @@
 import axios from "axios";
 import { toast } from "react-toastify";
-import { GET_BG_ONE, UPLOAD_BG } from "../constants/Type";
+import { GET_BG, GET_BG_ONE, UPLOAD_BG } from "../constants/Type";
 import { BASE_URL } from "../constants/URL";
 
 export const uploadBg = (files) => async (dispatch) => {
@@ -17,15 +17,11 @@ export const uploadBg = (files) => async (dispatch) => {
     withCredentials: true,
   };
   try {
-    const res = await axios.post(
-      `${BASE_URL}/api/v1/heroImage`,
-      formData,
-      config
-    );
-    console.log(res);
+    await axios.post(`${BASE_URL}/api/v1/heroImage`, formData, config);
     dispatch({
       type: UPLOAD_BG,
     });
+    dispatch(getBgList());
     toast.success("Background uploaded successfully");
     return true;
   } catch (err) {
@@ -39,10 +35,24 @@ export const uploadBg = (files) => async (dispatch) => {
 export const getBgOne = () => async (dispatch) => {
   try {
     const res = await axios.get(`${BASE_URL}/api/v1/heroImage`);
-    console.log(res);
+
     dispatch({
       type: GET_BG_ONE,
       payload: res.data.data.image,
+    });
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+// get bg list
+export const getBgList = () => async (dispatch) => {
+  try {
+    const res = await axios.get(`${BASE_URL}/api/v1/heroImage/all`);
+
+    dispatch({
+      type: GET_BG,
+      payload: res.data,
     });
   } catch (err) {
     console.log(err);

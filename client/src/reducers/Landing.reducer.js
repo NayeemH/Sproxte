@@ -1,4 +1,9 @@
-import { GET_BG_ONE, GET_TEAMS, GET_TEAM_DETAILS } from "../constants/Type";
+import {
+  GET_BG,
+  GET_BG_ONE,
+  GET_TEAMS,
+  GET_TEAM_DETAILS,
+} from "../constants/Type";
 import {
   CATEGORY_DELETE,
   CATEGORY_LOAD,
@@ -38,6 +43,7 @@ const initialState = {
   selected_team: null,
   loading: true,
   bg: null,
+  bgList: null,
 };
 
 const LandingReducer = (state = initialState, action) => {
@@ -47,6 +53,12 @@ const LandingReducer = (state = initialState, action) => {
       return {
         ...state,
         bg: payload,
+        loading: false,
+      };
+    case GET_BG:
+      return {
+        ...state,
+        bgList: payload,
         loading: false,
       };
     case LANDING_SIDEBAR_TOGGLE:

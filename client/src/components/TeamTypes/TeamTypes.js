@@ -45,10 +45,10 @@ const TeamTypes = ({ team }) => {
             {team !== null && team.products.length > 0 ? (
               team.products
                 .filter((tp) => {
-                  if (ids.includes(tp.typeId)) {
+                  if (ids.includes(tp.name)) {
                     return false;
                   } else {
-                    ids.push(tp.typeId);
+                    ids.push(tp.name);
                     return true;
                   }
                 })
@@ -81,7 +81,7 @@ const TeamTypes = ({ team }) => {
                           size="lg"
                           className="btn_primary"
                           onClick={() =>
-                            navigate(`/team/${prod._id}/${prod.typeId}`)
+                            navigate(`/team/${prod._id}/${prod.name}`)
                           }
                         >
                           {" "}

@@ -1,14 +1,19 @@
-import React, { useRef, useState } from "react";
-import { Button, Col, Row } from "react-bootstrap";
+import React, { useEffect, useRef, useState } from "react";
+import { Button, Col, Row, Spinner } from "react-bootstrap";
 import { connect } from "react-redux";
 import { toast } from "react-toastify";
-import { uploadBg } from "../../actions/Bg.action";
+import { getBgList, uploadBg } from "../../actions/Bg.action";
+import { BASE_URL } from "../../constants/URL";
 import styles from "./BgList.module.scss";
 
-const BgList = ({ uploadBg }) => {
+const BgList = ({ uploadBg, getBgList, bgList }) => {
   const ref = useRef();
   const [files, setFiles] = useState(null);
   const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    getBgList();
+  }, []);
 
   const submitHandeler = async () => {
     setLoading(true);
@@ -87,8 +92,35 @@ const BgList = ({ uploadBg }) => {
       ) : (
         <></>
       )}
+
+      <h2 className="text-center text-dark">Current Images</h2>
+
+      {bgList === null ? (
+        <div
+          className="d-flex justify-content-center align-items-center crd"
+          style={{ minHeight: "100vh" }}
+        >
+          <Spinner variant="dark" animation="grow" />
+        </div>
+      ) : (
+        <Row>
+          {bgList.data.images.map((bg, i) => (
+            <Col md={3} className="p-3" key={i}>
+              <img
+                className="w-100"
+                src={`${BASE_URL}/image/small/${bg}`}
+                alt=""
+              />
+            </Col>
+          ))}
+        </Row>
+      )}
     </div>
   );
 };
 
-export default connect(null, { uploadBg })(BgList);
+const mapStateToProps = (state) => ({
+  bgList: state.landing.bgList,
+});
+
+export default connect(mapStateToProps, { uploadBg, getBgList })(BgList);
