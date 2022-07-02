@@ -364,12 +364,7 @@ const LandingSlider = ({
                         <Button
                           size="lg"
                           className="btn_primary"
-                          onClick={() =>
-                            handleNavigate(
-                              `/product/${temp._id}`,
-                              `${IMAGE_PATH}small/${temp.logo}`
-                            )
-                          }
+                          onClick={() => navigate(`/share/${temp._id}`)}
                         >
                           {" "}
                           START{" "}

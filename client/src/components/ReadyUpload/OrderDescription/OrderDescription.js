@@ -17,7 +17,6 @@ import "swiper/css/pagination";
 // import required modules
 import { Pagination } from "swiper";
 import ProductCard from "../../Shared/ProductCard/ProductCard";
-import Moment from "react-moment";
 
 const OrderDescription = ({
   sizes,

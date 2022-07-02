@@ -146,7 +146,6 @@ export const getTrendingData = () => async (dispatch) => {
       type: GET_TRENDING,
       payload: res.data.data,
     });
-    console.log(res);
   } catch (err) {
     console.log(err);
   }
