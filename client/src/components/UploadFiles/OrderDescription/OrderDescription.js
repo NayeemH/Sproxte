@@ -270,9 +270,9 @@ const OrderDescription = ({
                 discount={product.discount?.discount[0]}
               />
               <h3 className="pt-3">{product.name}</h3>
-              <span className="d-block text-center text-secondary fs-6 pb-3">
+              {/* <span className="d-block text-center text-secondary fs-6 pb-3">
                 Added <Moment fromNow>{product.createdAt}</Moment>
-              </span>
+              </span> */}
 
               {/* PRICE LIST */}
               <div className="text-center text-secondary fs-6 pb-3">

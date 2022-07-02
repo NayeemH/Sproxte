@@ -197,10 +197,10 @@ const OrderDetails = ({
         <>
           <form onSubmit={handelAddPlayerSubmit}>
             <FormGroup className="mb-3">
-              <Form.Label>Number of players</Form.Label>
+              <Form.Label>Number of Athlete</Form.Label>
               <input
                 type="number"
-                placeholder="Enter number of players"
+                placeholder="Enter number of athlete"
                 className="form-control"
               />
             </FormGroup>
@@ -215,7 +215,7 @@ const OrderDetails = ({
 
   const clickHandelerReq = () => {
     modals.openConfirmModal({
-      title: "Add Player Request",
+      title: "Add Athlete Request",
       closeOnClickOutside: false,
       closeOnConfirm: false,
       centered: true,
@@ -223,24 +223,24 @@ const OrderDetails = ({
         <>
           <span className="d-block">
             You will need to pay product price plus additional charges to add
-            new player.
+            new athlete.
           </span>
           <span className="d-block  pt-3">
             Single product price is <b>${data.singleProductPrice}</b>
           </span>
           <span className="d-block">
-            Additional price for each player you add is{" "}
+            Additional price for each athlete you add is{" "}
             <b>${data.playerAddPrice}</b>
           </span>
           <hr />
           <span className="d-block">
-            Total price for each player is{" "}
+            Total price for each athlete is{" "}
             <b>${data.playerAddPrice + data.singleProductPrice}</b>
           </span>
         </>
       ),
       labels: {
-        confirm: `Add Player`,
+        confirm: `Add Athlete`,
         cancel: "Cancel",
       },
       confirmProps: { color: "red" },
@@ -408,7 +408,7 @@ const OrderDetails = ({
             <Row>
               <Col className={`text-center pt-4`}>
                 <Button onClick={clickHandeler} className="btn_primary">
-                  Add Player Information
+                  Add Athlete Information
                 </Button>
               </Col>
             </Row>
@@ -416,7 +416,7 @@ const OrderDetails = ({
             <Row>
               <Col className={`text-center pt-4`}>
                 <Button onClick={clickHandelerReq} className="btn_primary">
-                  Add Player Request
+                  Add Athlete Request
                 </Button>
               </Col>
             </Row>

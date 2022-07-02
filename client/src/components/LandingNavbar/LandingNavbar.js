@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import styles from "./LandingNavbar.module.scss";
 import logo from "../../assets/logoNew.png";
-import { BsFacebook } from "react-icons/bs";
+import { BsDot, BsFacebook } from "react-icons/bs";
+import { GoPrimitiveDot } from "react-icons/go";
 import {
   AiFillLinkedin,
   AiFillInstagram,
@@ -200,7 +201,14 @@ const LandingNavbar = ({
         <div className={`d-md-flex align-items-center`}>
           <div className={page === "cart" ? styles.active : styles.link}>
             <Link to="/cart" style={{ fontSize: 22 }}>
-              Cart
+              Cart{" "}
+              {cart && cart.length > 0 ? (
+                <span className="text-danger">
+                  <GoPrimitiveDot />
+                </span>
+              ) : (
+                <></>
+              )}
             </Link>
           </div>
           <div className={page === "login" ? styles.active : styles.link}>

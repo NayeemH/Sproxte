@@ -26,14 +26,12 @@ const UploadFiles = ({ product }) => {
           <Spinner variant="dark" animation="grow" />
         </div>
       ) : (
-        <Container>
-          <OrderDescription
-            sizes={product.sizes}
-            product={product}
-            color={selectedColor ? selectedColor : null}
-            selectedColor={selectedColor}
-          />
-        </Container>
+        <OrderDescription
+          sizes={product.sizes}
+          product={product}
+          color={selectedColor ? selectedColor : null}
+          selectedColor={selectedColor}
+        />
       )}
     </div>
   );

@@ -395,7 +395,7 @@ const LandingSlider = ({
                         <span className="d-block fs-6 text-secondary   fs-6 ">
                           Trending Designs
                         </span>
-                        {i === teams.length - 1 ? (
+                        {i === trending.length - 1 ? (
                           <>
                             <span className="d-block text-white   fs-6 ">
                               <HiOutlineArrowNarrowRight />

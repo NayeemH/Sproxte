@@ -22,7 +22,7 @@ const AddPlayerInfo = ({ modals, project, count, addPlayer }) => {
     setIsLoading(true);
     if (count <= 0) {
       modals.closeAll();
-      toast.success("You have added all players.");
+      toast.success("You have added all Athlete.");
     }
     let check = await addPlayer(values, selectedFile, project._id);
     if (check) {
@@ -32,7 +32,7 @@ const AddPlayerInfo = ({ modals, project, count, addPlayer }) => {
       fileRef.current.value = "";
       if (count <= 0) {
         modals.closeAll();
-        toast.success("You have added all players.");
+        toast.success("You have added all Athlete.");
       }
     }
 
@@ -163,7 +163,7 @@ const AddPlayerInfo = ({ modals, project, count, addPlayer }) => {
                 className={styles.btn}
                 disabled={isLoading}
               >
-                {isLoading ? "Loading..." : "Add Player"}
+                {isLoading ? "Loading..." : "Add Athlete"}
               </Button>
               <Button
                 variant="primary"

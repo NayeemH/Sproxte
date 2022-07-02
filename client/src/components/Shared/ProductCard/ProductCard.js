@@ -176,7 +176,6 @@ const ProductCard = ({
                   {team}
                 </span>
               )}
-
               {description && (
                 <span className={`d-block fs-6 text-secondary text-start`}>
                   <IoIosTimer className="me-1" />{" "}

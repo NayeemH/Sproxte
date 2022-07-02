@@ -34,6 +34,7 @@ const CardForm = ({
     if (!country) {
       getCountryList();
     }
+    getStateList("US");
   }, []);
 
   const onClickHandeler = (values) => {
@@ -230,7 +231,7 @@ const CardForm = ({
     city: "",
     state: "",
     zip: "",
-    country: "",
+    country: "US",
     teamName: "",
     location: "",
     color: "",
