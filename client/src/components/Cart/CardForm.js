@@ -9,7 +9,7 @@ import { connect } from "react-redux";
 import colors from "../../config/Colors";
 import { toast } from "react-toastify";
 import { getCountryList, getStateList } from "../../actions/Order.action";
-import { Select, Text } from "@mantine/core";
+import { MultiSelect, Select, Text } from "@mantine/core";
 import { useModals } from "@mantine/modals";
 import methods from "../../constants/fedexMethods";
 import { BsSquareFill } from "react-icons/bs";
@@ -138,14 +138,18 @@ const CardForm = ({
                 {check.shippingAddress && check.shippingAddress.zip}
               </span>
             </div>
-            <div className="d-flex justify-content-between align-items-center border-bottom py-2">
-              <div className="d-flex align-items-center justify-content-center">
-                <span className="d-block fw-bold ms-1">City</span>
+            {check.shippingAddress.city ? (
+              <div className="d-flex justify-content-between align-items-center border-bottom py-2">
+                <div className="d-flex align-items-center justify-content-center">
+                  <span className="d-block fw-bold ms-1">City</span>
+                </div>
+                <span className="d-block">
+                  {check.shippingAddress.city && check.shippingAddress.city}
+                </span>
               </div>
-              <span className="d-block">
-                {check.shippingAddress.city && check.shippingAddress.city}
-              </span>
-            </div>
+            ) : (
+              <></>
+            )}
             <div className="d-flex justify-content-between align-items-center border-bottom py-2">
               <div className="d-flex align-items-center justify-content-center">
                 <span className="d-block fw-bold ms-1">State</span>
@@ -480,7 +484,7 @@ const CardForm = ({
                 <InputGroup className="mb-3 d-flex flex-column">
                   <div className="d-flex justify-content-between align-items-center pb-2">
                     <label htmlFor="location" className="d-block">
-                      Team Location
+                      Team Mascot Name
                     </label>
                     {errors.location && touched.location ? (
                       <small className="text-danger pt-2">
@@ -490,7 +494,7 @@ const CardForm = ({
                   </div>
                   <Field
                     as={BootstrapForm.Control}
-                    placeholder="Type team name"
+                    placeholder="TypeTeam Mascot Name..."
                     name="location"
                     isValid={!errors.location && touched.location}
                     type="text"
@@ -528,7 +532,7 @@ const CardForm = ({
                       <small className="text-danger pt-2">{errors.color}</small>
                     ) : null}
                   </div>
-                  <Select
+                  <MultiSelect
                     data={colors.map((c, i) => {
                       return {
                         label: c.name,
@@ -548,9 +552,15 @@ const CardForm = ({
                       </div>
                     )}
                     placeholder="Pick team color"
-                    value={values.color ? values.color : null}
+                    value={values.color ? values.color.split(",") : null}
                     onChange={(e) => {
-                      setFieldValue("color", e);
+                      if (e.length > 2) {
+                        toast.error("You must select 2 colors");
+                      } else if (e.length === 0) {
+                        setFieldValue("color", e.join(","));
+                      } else {
+                        setFieldValue("color", e.join(","));
+                      }
                     }}
                     required
                     clearable

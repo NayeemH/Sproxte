@@ -721,17 +721,29 @@ const OrderDescription = ({
                   onChange={(e) => setMainText(e.target.value)}
                 />
                 <span className="d-block pt-2">Main Text Color</span>
-                <select
-                  value={mainTextColor}
-                  onChange={(e) => setMainTextColor(e.target.value)}
-                  className={` form-control mb-3`}
-                >
-                  {colors.map((clr, i) => (
-                    <option key={i} value={clr.name}>
-                      {clr.name}
-                    </option>
-                  ))}
-                </select>
+
+                <Select
+                  data={colors.map((c, i) => {
+                    return {
+                      label: c.name,
+                      value: c.hex,
+                    };
+                  })}
+                  itemComponent={({ value, label, ...others }) => (
+                    <div className={styles.dd_item} ref={selectRef} {...others}>
+                      <span className="d-flex align-items-center">
+                        <BsSquareFill color={`${value}`} className="me-2" />{" "}
+                        <span>{label}</span>
+                      </span>
+                    </div>
+                  )}
+                  placeholder="Pick team color"
+                  value={mainTextColor ? mainTextColor : null}
+                  onChange={(e) => {
+                    setMainTextColor(e);
+                  }}
+                  required
+                />
                 <span className="d-block pt-3">Secondary Text</span>
                 <input
                   type="text"
@@ -739,8 +751,30 @@ const OrderDescription = ({
                   className={`form-control mb-3`}
                   onChange={(e) => setSecondaryText(e.target.value)}
                 />
-                <span className="d-block pt-2">Main Text Color</span>
-                <select
+                <span className="d-block pt-2">Secondary Text Color</span>
+                <Select
+                  data={colors.map((c, i) => {
+                    return {
+                      label: c.name,
+                      value: c.hex,
+                    };
+                  })}
+                  itemComponent={({ value, label, ...others }) => (
+                    <div className={styles.dd_item} ref={selectRef} {...others}>
+                      <span className="d-flex align-items-center">
+                        <BsSquareFill color={`${value}`} className="me-2" />{" "}
+                        <span>{label}</span>
+                      </span>
+                    </div>
+                  )}
+                  placeholder="Pick team color"
+                  value={secondaryTextColor ? secondaryTextColor : null}
+                  onChange={(e) => {
+                    setSecondaryTextColor(e);
+                  }}
+                  required
+                />
+                {/* <select
                   value={secondaryTextColor}
                   onChange={(e) => setSecondaryTextColor(e.target.value)}
                   className={` form-control mb-3`}
@@ -750,7 +784,7 @@ const OrderDescription = ({
                       {clr.name}
                     </option>
                   ))}
-                </select>
+                </select> */}
               </Card.Body>
             </Card>
             <Button

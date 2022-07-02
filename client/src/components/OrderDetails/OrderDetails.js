@@ -31,6 +31,8 @@ import { Text } from "@mantine/core";
 import { downloadLabel, markasPaid } from "../../actions/Dashboard.action";
 import TrackingInfo from "../TrackingInfo/TrackingInfo";
 import { getPrice } from "../../utils/getPrice";
+import colors from "../../config/Colors";
+import { RiCheckboxBlankFill } from "react-icons/ri";
 
 const OrderDetails = ({
   projects,
@@ -113,7 +115,7 @@ const OrderDetails = ({
                 <span className="d-block pb-1 text_primary">
                   <GoLocation />
                 </span>
-                <span className="d-block fw-bold ms-1">Location</span>
+                <span className="d-block fw-bold ms-1">Team Mascot Name</span>
               </div>
               <span className="d-block">{data.location && data.location}</span>
             </div>
@@ -125,7 +127,15 @@ const OrderDetails = ({
               </span>
               <span className="d-block fw-bold ms-1">Color</span>
             </div>
-            <span className="d-block">{data.color && data.color}</span>
+            <span className="d-block">
+              {data.color &&
+                data.color.split(",").map((cl) => (
+                  <span className="d-block">
+                    <RiCheckboxBlankFill style={{ color: `${cl}` }} />{" "}
+                    {colors.filter((item) => item.hex === cl)[0].name}({cl})
+                  </span>
+                ))}
+            </span>
           </div>
           <div className="d-flex justify-content-between align-items-center py-2 ">
             <div className="d-flex align-items-center justify-content-center">

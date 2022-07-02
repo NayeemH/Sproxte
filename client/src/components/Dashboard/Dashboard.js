@@ -10,7 +10,7 @@ import { AiOutlineLeft, AiOutlineRight } from "react-icons/ai";
 import statusList from "../../config/StatusList";
 const queryString = require("query-string");
 
-const Dashboard = ({ dashboard, projects, fetchProjects }) => {
+const Dashboard = ({ dashboard, projects, fetchProjects, user }) => {
   const location = useLocation();
   const navigate = useNavigate();
   const parsed = queryString.parse(location.search);
@@ -22,6 +22,9 @@ const Dashboard = ({ dashboard, projects, fetchProjects }) => {
       page = parsed.page;
     }
     fetchProjects(page, parsed.status ? parsed.status : -1);
+    if (user.userType === "coach") {
+      navigate("/team-dashboard");
+    }
   }, [parsed.page, parsed.status]);
 
   const getPages = (totalPage) => {
@@ -225,6 +228,7 @@ const Dashboard = ({ dashboard, projects, fetchProjects }) => {
 
 const mapStateToProps = (state) => ({
   projects: state.project.projects,
+  user: state.auth.user,
 });
 
 export default connect(mapStateToProps, { fetchProjects })(Dashboard);
