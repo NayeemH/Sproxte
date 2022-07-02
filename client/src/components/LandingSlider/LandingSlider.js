@@ -24,7 +24,6 @@ import { IMAGE_PATH } from "../../constants/URL";
 import { useNavigate } from "react-router-dom";
 import { getCategoryList } from "../../actions/Category.action";
 import { useModals } from "@mantine/modals";
-import { Text } from "@mantine/core";
 
 const LandingSlider = ({
   categories,
@@ -463,12 +462,7 @@ const LandingSlider = ({
                         <Button
                           size="lg"
                           className="btn_primary"
-                          onClick={() =>
-                            handleNavigate(
-                              `/product/${temp._id}`,
-                              `${IMAGE_PATH}small/${temp.pngImageFront}`
-                            )
-                          }
+                          onClick={() => navigate(`/product/${temp._id}`)}
                         >
                           {" "}
                           START{" "}
