@@ -179,7 +179,7 @@ const OrderDetails = ({
 
   const clickHandeler = () => {
     modal.openModal({
-      title: "Add Player Information",
+      title: "Add Athlete Information",
       closeOnClickOutside: false,
       closeOnEscape: false,
       centered: true,
@@ -197,7 +197,7 @@ const OrderDetails = ({
 
   const newHandeler = () => {
     modals.openModal({
-      title: "How many players do you want to add?",
+      title: "How many athlete do you want to add?",
       closeOnClickOutside: false,
 
       centered: true,
