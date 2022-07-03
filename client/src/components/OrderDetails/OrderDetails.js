@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import {
   Button,
-  Card,
   Col,
   Container,
   Dropdown,
@@ -30,7 +29,6 @@ import packageTypes from "../../constants/fedexPackageType";
 import { Text } from "@mantine/core";
 import { downloadLabel, markasPaid } from "../../actions/Dashboard.action";
 import TrackingInfo from "../TrackingInfo/TrackingInfo";
-import { getPrice } from "../../utils/getPrice";
 import colors from "../../config/Colors";
 import { RiCheckboxBlankFill } from "react-icons/ri";
 
@@ -367,6 +365,14 @@ const OrderDetails = ({
             </Button>
           </Col>
         </Row>
+      )}
+
+      {data.type && data.type === "team" && projects.products.length === 0 ? (
+        <div className="text-center py-5">
+          <h3>Please Add Athlete Information</h3>
+        </div>
+      ) : (
+        <></>
       )}
       <Row>
         {projects.products &&
