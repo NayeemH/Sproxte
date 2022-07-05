@@ -54,7 +54,7 @@ router.patch('/:id', fileFetch.fields([{name: 'pngImageFront', maxCount: 1}, {na
                 req.files.layouts.map(layout => saveImage(layout))
             );
 
-            updatedItems.layouts = images.map(image => ({image}));
+            updatedItems.layouts = images;
         }
 
         if(req.files && req.files.fontImages) {
@@ -62,7 +62,7 @@ router.patch('/:id', fileFetch.fields([{name: 'pngImageFront', maxCount: 1}, {na
                 req.files.fontImages.map(image => saveImage(image))
             );
 
-            updatedItems.fontImages = images.map(image => ({image}));
+            updatedItems.fontImages = images;
         }
 
         
