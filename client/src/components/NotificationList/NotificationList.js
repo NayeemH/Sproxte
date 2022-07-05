@@ -97,10 +97,10 @@ const NotificationList = ({ item, getNotifications }) => {
                           notification.productId && notification.projectId
                             ? `dashboard/${notification.projectId}/${notification.productId}`
                             : notification.projectId
-                            ? `dashboard`
+                            ? `dashboard/order/${notification.projectId}`
                             : notification.productId
                             ? `dashboard/${notification.projectId}`
-                            : ``
+                            : `dashboard`
                         }`}
                         className={`d-block fw-bold ${styles.lnk}`}
                       >

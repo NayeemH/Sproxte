@@ -18,6 +18,7 @@ import { useNavigate } from "react-router-dom";
 import { getCategoryList } from "../../actions/Category.action";
 import { AiOutlinePlus } from "react-icons/ai";
 import { BiTrash } from "react-icons/bi";
+import { BASE_URL } from "../../constants/URL";
 
 const EditTypeFinal = ({
   editProductType,
@@ -641,6 +642,59 @@ const EditTypeFinal = ({
                     />
                   </div>
                 </div>
+                {data.pngImageFront ? (
+                  <Row>
+                    <Col xs={12} className="pt-4">
+                      <h4>Current Template Image</h4>
+                    </Col>
+                    <Col sm={12}>
+                      <img
+                        src={`${BASE_URL}/image/small/${data.pngImageFront}`}
+                        alt=""
+                        className="w-50"
+                      />
+                    </Col>
+                  </Row>
+                ) : (
+                  <></>
+                )}
+
+                {data.layouts ? (
+                  <Row className="py-4">
+                    <Col xs={12}>
+                      <h4>Current Layouts</h4>
+                    </Col>
+                    {data.layouts.map((item) => (
+                      <Col md={3} key={item._id}>
+                        <img
+                          src={`${BASE_URL}/image/small/${item.image}`}
+                          alt=""
+                          className="w-100"
+                        />
+                      </Col>
+                    ))}
+                  </Row>
+                ) : (
+                  <></>
+                )}
+                {data.fontImages ? (
+                  <Row className="py-4">
+                    <Col xs={12}>
+                      <h4>Current Font Images</h4>
+                    </Col>
+                    {data.fontImages.map((item, i) => (
+                      <Col md={3} key={i}>
+                        <img
+                          src={`${BASE_URL}/image/small/${item}`}
+                          alt=""
+                          className="w-100"
+                        />
+                      </Col>
+                    ))}
+                  </Row>
+                ) : (
+                  <></>
+                )}
 
                 <div className="pt-3 d-flex flex-column flex-md-row justify-content-start align-items-center">
                   <Button

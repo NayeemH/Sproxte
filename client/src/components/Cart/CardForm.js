@@ -13,6 +13,7 @@ import { MultiSelect, Select, Text } from "@mantine/core";
 import { useModals } from "@mantine/modals";
 import methods from "../../constants/fedexMethods";
 import { BsSquareFill } from "react-icons/bs";
+import { clearCart } from "../../actions/Cart.action";
 
 const CardForm = ({
   cart,
@@ -24,6 +25,7 @@ const CardForm = ({
   getStateList,
   address,
   total,
+  clearCart,
 }) => {
   const [loading, setLoading] = useState(false);
   const [logo, setLogo] = useState(undefined);
@@ -81,6 +83,11 @@ const CardForm = ({
     } else {
       setLogo(undefined);
     }
+  };
+
+  const handleAdminPayment = (id) => {
+    clearCart();
+    navigate(`/admin/order/${id}`);
   };
 
   const onSubmitHandeler = async (values) => {
@@ -216,7 +223,7 @@ const CardForm = ({
         onCancel: () => {},
         onConfirm: () =>
           user && user.userType === "admin"
-            ? navigate(`/admin/order/${check.orderId}`)
+            ? handleAdminPayment(check.orderId)
             : navigate(`/payment/${check.orderId}`),
       });
     } else {
@@ -615,4 +622,5 @@ export default connect(mapStateToProps, {
   createOrder,
   getCountryList,
   getStateList,
+  clearCart,
 })(CardForm);
