@@ -81,7 +81,7 @@ const TeamTypes = ({ team }) => {
                           size="lg"
                           className="btn_primary"
                           onClick={() =>
-                            navigate(`/team/${prod._id}/${prod.name}`)
+                            navigate(`/team/${team._id}/${prod.name}`)
                           }
                         >
                           {" "}

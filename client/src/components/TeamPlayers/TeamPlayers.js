@@ -3,10 +3,6 @@ import styles from "./TeamPlayers.module.scss";
 
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Button, Spinner } from "react-bootstrap";
-import {
-  HiOutlineArrowNarrowLeft,
-  HiOutlineArrowNarrowRight,
-} from "react-icons/hi";
 
 // Import Swiper styles
 import "swiper/css";
