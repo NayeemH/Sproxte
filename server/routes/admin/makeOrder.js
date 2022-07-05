@@ -57,7 +57,8 @@ router.post('/:orderId', async (req, res, next) => {
                 username: user.name,
                 message: `One order has been placed for you at https://sportsveins.com/. ${
                     password ? `Your password is ${password}`: 'Please login'
-                }. Total cost is ${order.price}$`,
+                }`,
+                message2: `Total cost is ${order.price + order.shippingCost}$`,
                 invoiceLink: `${CLIENT_URL}/admin/order/${orderId}`,
                 paymentLink: `${CLIENT_URL}/payment/${orderId}`
             }
@@ -69,6 +70,24 @@ router.post('/:orderId', async (req, res, next) => {
     }
 });
 
-
+// let password = 'asdfasdf';
+// let order = {price: 120, shippingCost: 22};
+// let orderId = '333333333333333'
+// sendMail({
+//     to: 'istiyak.riyad@gmail.com',
+//     subject: 'Notification Mail',
+//     text: `This is a notification main`,
+//     template: 'adminOrder',
+//     context: {
+//         username: 'Md istiyak',
+//         message: `One order has been placed for you at https://sportsveins.com/. ${
+//             password ? `Your password is ${password}`: 'Please login'
+//         }`,
+//         message2: `Total cost is ${order.price + order.shippingCost}$`,
+//         invoiceLink: `${CLIENT_URL}/admin/order/${orderId}`,
+//         paymentLink: `${CLIENT_URL}/payment/${orderId}`
+//     }
+// })
+// .then(data => console.log(data));
 
 module.exports = router;
