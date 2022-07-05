@@ -24,9 +24,9 @@ router.patch('/:id', async (req, res, next) => {
             });
         }
         else if(userType === 'client' || userType === 'coach') {
-            const collections = await Collection.find({productId: id}, {image: 1});
+            // const collections = await Collection.find({productId: id}, {image: 1});
 
-            product = await Product.findOneAndUpdate({_id: id, userId}, {$set: 
+            product = await Product.findOneAndUpdate({_id: id}, {$set: 
                 {
                     status: 'approved',
                     // finalImage: collections.length ? collections[collections.length - 1].image : null
