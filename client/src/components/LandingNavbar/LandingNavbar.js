@@ -74,6 +74,22 @@ const LandingNavbar = ({
         className={styles.logo}
         onClick={() => navigate("/")}
       />
+
+      <div
+        className={`${
+          page === "cart" ? styles.active : styles.link
+        } position-relative d-md-none d-block ms-auto me-4`}
+      >
+        {cart && cart.length > 0 ? (
+          <div className={`${styles.dot}`}></div>
+        ) : (
+          <></>
+        )}
+        <Link to="/cart" style={{ fontSize: 22 }}>
+          <AiOutlineShoppingCart />
+        </Link>
+      </div>
+
       <div className="d-flex align-items-center flex-md-row flex-column">
         <div
           className={`shadow-sm ${styles.box} align-items-center my-md-0 my-2 d-md-flex d-none`}

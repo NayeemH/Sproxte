@@ -5,6 +5,12 @@
   flex-direction: column;
   padding-top: 0px;
 }
+.img {
+  width: 80% !important;
+  height: auto !important;
+  margin: 0 auto !important;
+  max-height: 250px !important;
+}
 
 .slide_top {
   height: 100%;
@@ -19,11 +25,7 @@
     height: 40px;
     margin-right: auto;
   }
-  .img {
-    width: 80%;
-    height: auto;
-    margin: 0 auto;
-  }
+
   .bottom_nav {
     display: flex;
     justify-content: space-between;
