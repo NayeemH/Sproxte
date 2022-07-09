@@ -1,17 +1,16 @@
 import React, { useState } from "react";
 import styles from "./LandingNavbar.module.scss";
 import logo from "../../assets/logoNew.png";
-import { BsDot, BsFacebook } from "react-icons/bs";
+import { BsFacebook } from "react-icons/bs";
 import { GoPrimitiveDot } from "react-icons/go";
 import {
-  AiFillLinkedin,
   AiFillInstagram,
   AiFillTwitterCircle,
   AiOutlineShoppingCart,
   AiOutlineUserAdd,
   AiOutlineClose,
 } from "react-icons/ai";
-import { FaHome } from "react-icons/fa";
+import { FaHome, FaTiktok } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
 import { FaBars } from "react-icons/fa";
 import { connect } from "react-redux";
@@ -95,23 +94,40 @@ const LandingNavbar = ({
           className={`shadow-sm ${styles.box} align-items-center my-md-0 my-2 d-md-flex d-none`}
         >
           <div className={styles.icon}>
-            <a target="_blank" href="https://facebook.com">
+            <a
+              target="_blank"
+              rel="noreferrer"
+              href="https://www.facebook.com/sportsveinsusa"
+            >
               <BsFacebook />
             </a>
           </div>
+
           <div className={styles.icon}>
-            <a href="https://facebook.com" target="_blank">
-              <AiFillLinkedin />
-            </a>
-          </div>
-          <div className={styles.icon}>
-            <a href="https://facebook.com" target="_blank">
+            <a
+              href="https://www.instagram.com/sportsveinsusa"
+              rel="noreferrer"
+              target="_blank"
+            >
               <AiFillInstagram />
             </a>
           </div>
           <div className={styles.icon}>
-            <a href="https://facebook.com" target="_blank">
+            <a
+              href="https://twitter.com/sportsveinsusa"
+              rel="noreferrer"
+              target="_blank"
+            >
               <AiFillTwitterCircle />
+            </a>
+          </div>
+          <div className={styles.icon}>
+            <a
+              href="https://www.tiktok.com/@sportsveins"
+              rel="noreferrer"
+              target="_blank"
+            >
+              <FaTiktok />
             </a>
           </div>
           <div className={page === "contact" ? styles.active : styles.link}>
@@ -168,22 +184,38 @@ const LandingNavbar = ({
           <img src={logo} alt="" style={{ maxWidth: 190 }} />
           <div className="d-flex py-3">
             <div className={styles.icon}>
-              <a href="https://facebook.com">
+              <a
+                target="_blank"
+                rel="noreferrer"
+                href="https://www.facebook.com/sportsveinsusa"
+              >
                 <BsFacebook />
               </a>
             </div>
             <div className={styles.icon}>
-              <a href="https://facebook.com">
-                <AiFillLinkedin />
+              <a
+                href="https://www.tiktok.com/@sportsveins"
+                rel="noreferrer"
+                target="_blank"
+              >
+                <FaTiktok />
               </a>
             </div>
             <div className={styles.icon}>
-              <a href="https://facebook.com">
+              <a
+                href="https://www.instagram.com/sportsveinsusa"
+                rel="noreferrer"
+                target="_blank"
+              >
                 <AiFillInstagram />
               </a>
             </div>
             <div className={styles.icon}>
-              <a href="https://facebook.com">
+              <a
+                href="https://twitter.com/sportsveinsusa"
+                rel="noreferrer"
+                target="_blank"
+              >
                 <AiFillTwitterCircle />
               </a>
             </div>

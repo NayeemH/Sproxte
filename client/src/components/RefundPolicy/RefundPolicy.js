@@ -11,7 +11,7 @@ const RefundPolicy = () => {
           How can I return something? Due to the nature of the items being
           customized, all purchases are final. We do not accept returns unless a
           product has a manufactured flaw upon receipt. Please email us at
-          orders@sproxte.com with a photo of the defect for return approval.
+          sportsveins@gmail.com with a photo of the defect for return approval.
           Purchases made during any promotional sale are final and cannot be
           refunded or returned unless there is a manufacturer defect. Should you
           wish to return an item that is not customized, you will be responsible
@@ -29,8 +29,8 @@ const RefundPolicy = () => {
           best to fix them and correct any issues you may have. If you have
           noticed that we have made a mistake with your order, please email us
           at{" "}
-          <a href="mailto: orders@sproxte.com" className={styles.link}>
-            orders@sproxte.com
+          <a href="mailto: sportsveins@gmail.com" className={styles.link}>
+            sportsveins@gmail.com
           </a>{" "}
           and we will look into it. Please include your order references at all
           times when e-mailing our customer service team.
