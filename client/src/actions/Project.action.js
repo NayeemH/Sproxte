@@ -301,12 +301,13 @@ export const editProduct =
     };
     if (discountList) {
       discountList.map((d, i) => {
-        discountData.range.push(d.range);
-        discountData.discount.push(d.discount);
+        discountData.range.push(parseInt(d.range));
+        discountData.discount.push(parseInt(d.discount));
       });
     }
 
     priceData.price.push(values.price);
+    discountData.discount.push(values.discount);
 
     formData.append("name", values.name);
     formData.append("price", values.price);

@@ -61,13 +61,11 @@ const Cart = ({ cart, removeFromCart, setPaymentKey, user }) => {
                     <Col xs="2">
                       $
                       {(
-                        (getPrice(
-                          item.product.priceArray,
-                          parseInt(item.quantity)
-                        ) *
-                          (100 - item.product.discount) *
-                          item.quantity) /
-                        100
+                        parseInt(
+                          getPrice(item.product.priceArray, item.quantity) *
+                            (100 - item.product.discount) *
+                            item.quantity
+                        ) / 100
                       ).toFixed(2)}
                     </Col>
                     <Col xs="1">
