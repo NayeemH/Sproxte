@@ -65,7 +65,7 @@ const ContactList = ({ item, getContactList }) => {
                 item.items.map((notification) => (
                   <Row className="mb-3 border-bottom pb-3">
                     <Col
-                      xs={3}
+                      md={3}
                       className="d-flex align-items-center justify-content-center"
                     >
                       <Row>
@@ -78,7 +78,7 @@ const ContactList = ({ item, getContactList }) => {
                           </Moment>
                         </Col>
                         <Col
-                          xs={3}
+                          md={3}
                           className="d-flex justify-content-center align-items-center"
                         >
                           <div className={styles.line}></div>
@@ -86,7 +86,7 @@ const ContactList = ({ item, getContactList }) => {
                       </Row>
                     </Col>
                     <Col
-                      xs={4}
+                      md={4}
                       className="d-flex justify-content-center flex-column"
                     >
                       <div className={`d-block fw-bold ${styles.lnk}`}>
@@ -96,16 +96,16 @@ const ContactList = ({ item, getContactList }) => {
                         Email : {notification.email}
                       </div>
                     </Col>
-                    <Col xs={4}>
+                    <Col md={4}>
                       <Row>
                         <Col
-                          xs={3}
+                          md={3}
                           className="d-flex justify-content-center align-items-center"
                         >
                           <div className={styles.line}></div>
                         </Col>
                         <Col
-                          xs={8}
+                          md={8}
                           className="d-flex justify-content-center-center flex-column"
                         >
                           <div className={`d-block fw-bold ${styles.lnk}`}>

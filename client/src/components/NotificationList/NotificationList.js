@@ -61,11 +61,11 @@ const NotificationList = ({ item, getNotifications }) => {
               {item &&
                 item.items &&
                 item.items.map((notification, i) => (
-                  <Row className="mb-3" key={i}>
-                    <Col xs={2}>
+                  <Row className={`mb-3 ${styles.brd}`} key={i}>
+                    <Col md={2}>
                       <Row>
                         <Col
-                          xs={8}
+                          md={8}
                           className={`${styles.small} d-flex align-items-center`}
                         >
                           <div className={styles.img_wrapper}>
@@ -81,7 +81,7 @@ const NotificationList = ({ item, getNotifications }) => {
                           </div>
                         </Col>
                         <Col
-                          xs={3}
+                          md={3}
                           className="d-flex justify-content-center align-items-center"
                         >
                           <div className={styles.line}></div>
@@ -89,7 +89,7 @@ const NotificationList = ({ item, getNotifications }) => {
                       </Row>
                     </Col>
                     <Col
-                      xs={9}
+                      md={9}
                       className="d-flex justify-content-center-center flex-column"
                     >
                       <Link

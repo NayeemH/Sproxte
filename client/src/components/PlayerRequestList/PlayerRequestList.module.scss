@@ -85,3 +85,9 @@ span.link:hover {
 .img {
   height: 45px !important;
 }
+
+@media screen and(max-width: 768px) {
+  .line {
+    display: none !important;
+  }
+}

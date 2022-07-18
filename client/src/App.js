@@ -167,7 +167,7 @@ function App({ getRefreshToken }) {
               <Route path="product/edit/:id" element={<EditProductPage />} />
               <Route path="templates" element={<TypeListPage />} />
               <Route path="orders" element={<OrdersListPage />} />
-              <Route path="player-request" element={<PlayerRequestPage />} />
+              <Route path="athlete-request" element={<PlayerRequestPage />} />
               <Route
                 path="compeleted-orders"
                 element={<CompletedOrdersListPage />}

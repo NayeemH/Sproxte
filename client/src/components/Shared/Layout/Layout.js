@@ -193,12 +193,12 @@ const Layout = ({ logout, children, title, user }) => {
                     </NavLink>
                   </div>
                   <div className={styles.nav}>
-                    <NavLink to="/player-request" className={styles.nav__item}>
+                    <NavLink to="/athlete-request" className={styles.nav__item}>
                       <span className={styles.icon}>
                         <AiOutlineUserAdd />
                       </span>
                       <span className={styles.nav__item_text}>
-                        Player Requests
+                        Athlete Requests
                       </span>
                     </NavLink>
                   </div>

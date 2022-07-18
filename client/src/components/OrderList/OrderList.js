@@ -65,7 +65,7 @@ const OrderList = ({ item, getRunningOrders }) => {
                 item.items &&
                 item.items.map((notification) => (
                   <Row className="mb-3 border-bottom pb-3">
-                    <Col xs={2}>
+                    <Col md={2}>
                       <Row>
                         <Col
                           md={7}
@@ -83,7 +83,7 @@ const OrderList = ({ item, getRunningOrders }) => {
                           </span>
                         </Col>
                         <Col
-                          xs={3}
+                          md={3}
                           className="d-flex justify-content-center align-items-center"
                         >
                           <div className={styles.line}></div>
@@ -91,7 +91,7 @@ const OrderList = ({ item, getRunningOrders }) => {
                       </Row>
                     </Col>
                     <Col
-                      xs={5}
+                      md={5}
                       className="d-flex justify-content-center-center flex-column"
                     >
                       <div className={`d-block fw-bold ${styles.lnk}`}>
@@ -105,16 +105,16 @@ const OrderList = ({ item, getRunningOrders }) => {
                         Phone : {notification.phone}
                       </div>
                     </Col>
-                    <Col xs={4}>
+                    <Col md={4}>
                       <Row>
                         <Col
-                          xs={3}
+                          md={3}
                           className="d-flex justify-content-center align-items-center"
                         >
                           <div className={styles.line}></div>
                         </Col>
                         <Col
-                          xs={8}
+                          md={8}
                           className="d-flex justify-content-center-center flex-column"
                         >
                           <div className={`d-block fw-bold ${styles.lnk}`}>

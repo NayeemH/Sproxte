@@ -63,7 +63,7 @@ const PlayerRequestList = ({ item, getPlayerRequest }) => {
                 item.items &&
                 item.items.map((notification, i) => (
                   <Row key={i} className="mb-3 border-bottom pb-3">
-                    <Col xs={2}>
+                    <Col md={2}>
                       <Row>
                         <Col
                           md={7}
@@ -89,7 +89,7 @@ const PlayerRequestList = ({ item, getPlayerRequest }) => {
                       </Row>
                     </Col>
                     <Col
-                      xs={5}
+                      md={5}
                       className="d-flex justify-content-center-center flex-column"
                     >
                       <div className={`d-block fw-bold ${styles.lnk}`}>
@@ -104,16 +104,16 @@ const PlayerRequestList = ({ item, getPlayerRequest }) => {
                         </Moment>
                       </span>
                     </Col>
-                    <Col xs={4}>
+                    <Col md={4}>
                       <Row>
                         <Col
-                          xs={3}
+                          md={3}
                           className="d-flex justify-content-center align-items-center"
                         >
                           <div className={styles.line}></div>
                         </Col>
                         <Col
-                          xs={8}
+                          md={8}
                           className="d-flex justify-content-center-center flex-column"
                         >
                           <div className={`d-block fw-bold ${styles.lnk}`}>
