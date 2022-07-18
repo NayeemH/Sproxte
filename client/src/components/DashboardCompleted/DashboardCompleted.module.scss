@@ -9,9 +9,9 @@
   padding: 7px 20px !important;
   background: none !important;
   margin-left: 10px !important;
-  color: var(--orange) !important;
+  color: var(--dark) !important;
   text-decoration: none !important;
-  border: 1px solid var(--orange) !important;
+  border: 1px solid var(--primary) !important;
   transition: 0.3s all ease-in-out;
 }
 
@@ -23,28 +23,28 @@
 }
 
 .btn {
+  color: var(--dark) !important;
   margin-left: 10px !important;
   border-radius: 25px !important;
   padding: 7px 20px !important;
-  background: var(--orange) !important;
-  border-color: var(--orange) !important;
+  background: var(--primary) !important;
+  border: 1px solid var(--primary) !important;
   transition: 0.3s all ease-in-out;
 }
 
 .btn:hover {
-  background: var(--dark) !important;
-  border-color: var(--dark) !important;
+  border: 1px solid var(--dark) !important;
   transition: 0.3s all ease-in-out;
 }
 
 .btn:focus,
 .active_btn:focus {
   box-shadow: none !important;
-  border-color: var(--orange) !important;
+  border: 1px solid var(--primary) !important;
 }
 
 .btn__grp {
-  border-color: var(--orange) !important;
+  border: 1px solid var(--primary) !important;
 }
 
 .link {
@@ -55,7 +55,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  border: 1px solid var(--orange);
+  border: 1px solid var(--primary);
   cursor: pointer;
   color: var(--dark) !important;
   transition: 0.3s all ease-in-out;
@@ -78,13 +78,13 @@
 .link.active {
   cursor: none !important;
   color: var(--dark) !important;
-  background: var(--orange) !important;
-  border-color: var(--orange) !important;
+  background: var(--primary) !important;
+  border-color: var(--primary) !important;
   transition: 0.3s all ease-in-out;
 }
 
 .link:hover {
-  color: var(--orange) !important;
+  color: var(--grey) !important;
   transition: 0.3s all ease-in-out;
 }
 

@@ -17,7 +17,7 @@
 
 .lnk:hover {
   cursor: pointer;
-  color: var(--orange) !important;
+  color: var(--primary) !important;
   transition: 0.3s all ease-in-out;
 }
 
@@ -29,7 +29,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  border: 1px solid var(--orange);
+  border: 1px solid var(--primary);
   cursor: pointer;
   color: var(--dark) !important;
   transition: 0.3s all ease-in-out;
@@ -52,13 +52,13 @@
 .link.active {
   cursor: none !important;
   color: var(--dark) !important;
-  background: var(--orange) !important;
-  border-color: var(--orange) !important;
+  background: var(--primary) !important;
+  border-color: var(--primary) !important;
   transition: 0.3s all ease-in-out;
 }
 
 .link:hover {
-  color: var(--orange) !important;
+  color: var(--primary) !important;
   transition: 0.3s all ease-in-out;
 }
 
