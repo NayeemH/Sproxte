@@ -8,6 +8,7 @@ import {
   LOGOUT_SUCCESS,
   LOGOUT_FAIL,
   GET_IEP_INVOICE_DATA,
+  GET_UPLOADS,
 } from "../constants/Type";
 import { GET_REPORT_DATA } from "../constants/TypeLanding";
 
@@ -20,6 +21,7 @@ const initialState = {
   clients: null,
   report: null,
   iep_invoice: null,
+  files: null,
   loading: true,
 };
 
@@ -30,6 +32,12 @@ const dashboardReducer = (state = initialState, action) => {
       return {
         ...state,
         projectListGrid: payload,
+        loading: false,
+      };
+    case GET_UPLOADS:
+      return {
+        ...state,
+        files: payload,
         loading: false,
       };
     case SET_ROLE:

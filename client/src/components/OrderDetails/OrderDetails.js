@@ -296,63 +296,71 @@ const OrderDetails = ({
               {data.status}
             </span>
           </div>
-          <div className="d-flex">
-            <Dropdown>
-              <Dropdown.Toggle
-                variant="success"
-                id="dropdown-basic"
-                className={`${styles.active_btn} mt-3 mt-md-0`}
-              >
-                {status === "" ? "Select Status" : status}
-              </Dropdown.Toggle>
-
-              <Dropdown.Menu>
-                {statusList.map((item, i) => (
-                  <Dropdown.Item
-                    key={i}
-                    onClick={() => setStatus(item.name)}
-                    style={{ textTransform: "capitalize" }}
+          {role === "admin" ? (
+            <>
+              <div className="d-flex">
+                <Dropdown>
+                  <Dropdown.Toggle
+                    variant="success"
+                    id="dropdown-basic"
+                    className={`${styles.active_btn} mt-3 mt-md-0`}
                   >
-                    {item.name}
-                  </Dropdown.Item>
-                ))}
-              </Dropdown.Menu>
-            </Dropdown>
-            {status === "" ? null : (
-              <Button
-                className={styles.btn}
-                onClick={() => changeProjectStatus(status, id) && setStatus("")}
-              >
-                Save
-              </Button>
-            )}
-          </div>
-          {projects.isShippingLabel === true ? (
-            <></>
-          ) : (
-            <div className="d-flex">
-              <Dropdown>
-                <Dropdown.Toggle
-                  variant="success"
-                  id="dropdown-basic"
-                  className={`${styles.active_btn} mt-3 mt-md-0`}
-                >
-                  Select Package Type
-                </Dropdown.Toggle>
+                    {status === "" ? "Select Status" : status}
+                  </Dropdown.Toggle>
 
-                <Dropdown.Menu>
-                  {packageTypes.map((item) => (
-                    <Dropdown.Item
-                      key={item.id}
-                      onClick={() => handelPackage(item.value, item.label)}
-                      style={{ textTransform: "capitalize" }}
+                  <Dropdown.Menu>
+                    {statusList.map((item, i) => (
+                      <Dropdown.Item
+                        key={i}
+                        onClick={() => setStatus(item.name)}
+                        style={{ textTransform: "capitalize" }}
+                      >
+                        {item.name}
+                      </Dropdown.Item>
+                    ))}
+                  </Dropdown.Menu>
+                </Dropdown>
+                {status === "" ? null : (
+                  <Button
+                    className={styles.btn}
+                    onClick={() =>
+                      changeProjectStatus(status, id) && setStatus("")
+                    }
+                  >
+                    Save
+                  </Button>
+                )}
+              </div>
+              {projects.isShippingLabel === true ? (
+                <></>
+              ) : (
+                <div className="d-flex">
+                  <Dropdown>
+                    <Dropdown.Toggle
+                      variant="success"
+                      id="dropdown-basic"
+                      className={`${styles.active_btn} mt-3 mt-md-0`}
                     >
-                      {item.label}
-                    </Dropdown.Item>
-                  ))}
-                </Dropdown.Menu>
-              </Dropdown>
-            </div>
+                      Select Package Type
+                    </Dropdown.Toggle>
+
+                    <Dropdown.Menu>
+                      {packageTypes.map((item) => (
+                        <Dropdown.Item
+                          key={item.id}
+                          onClick={() => handelPackage(item.value, item.label)}
+                          style={{ textTransform: "capitalize" }}
+                        >
+                          {item.label}
+                        </Dropdown.Item>
+                      ))}
+                    </Dropdown.Menu>
+                  </Dropdown>
+                </div>
+              )}
+            </>
+          ) : (
+            <></>
           )}
         </div>
       )}

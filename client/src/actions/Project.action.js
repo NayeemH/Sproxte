@@ -26,6 +26,7 @@ import {
   GET_PROJECT_DETAILS,
   GET_STEP,
   GET_STEP_ERROR,
+  GET_UPLOADS,
   PROJECT_ACCEPT_EXISTING_USER,
   PROJECT_ACCEPT_EXISTING_USER_ERROR,
   PROJECT_CREATE_ERROR,
@@ -1093,5 +1094,20 @@ export const uploadFile = (files, productId, projectId) => async (dispatch) => {
     console.log(err);
 
     return false;
+  }
+};
+
+//GET PROJECT DETAILS WITH TASKS
+export const getFileList = () => async (dispatch) => {
+  try {
+    const res = await axios.get(`${BASE_URL}/api/v1//file`);
+    //console.log(res);
+
+    dispatch({
+      type: GET_UPLOADS,
+      payload: res.data.data.files,
+    });
+  } catch (err) {
+    console.log(err);
   }
 };

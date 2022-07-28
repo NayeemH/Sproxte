@@ -11,7 +11,7 @@ const FileUp = ({ step, project, modals, uploadFile }) => {
 
   const onChangeHandler = (event) => {
     if (event.target.files.length > 0) {
-      setSelectedFile(event.target.files[0]);
+      setSelectedFile(event.target.files);
     } else {
       setSelectedFile(null);
     }
@@ -40,7 +40,7 @@ const FileUp = ({ step, project, modals, uploadFile }) => {
       <Form onSubmit={onSubmitHandeler}>
         <Form.Group controlId="formFile" className="mb-3">
           <Form.Label>Select Final File</Form.Label>
-          <Form.Control type="file" onChange={onChangeHandler} />
+          <Form.Control type="file" onChange={onChangeHandler} multiple />
         </Form.Group>
         <button type="submit" disabled={loading} className={styles.btn}>
           {loading ? "Loading" : "Upload"}

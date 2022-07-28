@@ -5,7 +5,11 @@ import logo from "../../../assets/logoLg.png";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import { VscHome, VscTypeHierarchySub } from "react-icons/vsc";
 import { TiCogOutline } from "react-icons/ti";
-import { BsArrowLeftRight, BsImageFill } from "react-icons/bs";
+import {
+  BsArrowLeftRight,
+  BsFillFileEarmarkImageFill,
+  BsImageFill,
+} from "react-icons/bs";
 import { MdPeopleAlt } from "react-icons/md";
 import { IoMdNotificationsOutline } from "react-icons/io";
 import { logout } from "../../../actions/Dashboard.action";
@@ -99,6 +103,14 @@ const Layout = ({ logout, children, title, user }) => {
               )}
               {role === "admin" && (
                 <>
+                  <div className={styles.nav}>
+                    <NavLink to="/files" className={styles.nav__item}>
+                      <span className={styles.icon}>
+                        <BsFillFileEarmarkImageFill />
+                      </span>
+                      <span className={styles.nav__item_text}>Final Files</span>
+                    </NavLink>
+                  </div>
                   <div className={styles.nav}>
                     <NavLink to="/report" className={styles.nav__item}>
                       <span className={styles.icon}>
