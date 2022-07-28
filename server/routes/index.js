@@ -23,6 +23,7 @@ const iep = require('./iep');
 const shipment = require('./shipment');
 const team = require('./team');
 const heroImage = require('./heroImage');
+const fileData = require('./fileUpload');
 
 
 // User Register and login function 
@@ -84,6 +85,10 @@ router.use('/team', team);
 
 // Hero image
 router.use('/heroImage', heroImage);
+
+
+// File save
+router.use('/file', fileData)
 
 
 module.exports = router;
