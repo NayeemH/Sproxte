@@ -23,7 +23,6 @@ const initialState = {
   report: null,
   iep_invoice: null,
   files: null,
-  loading: true,
 };
 
 const dashboardReducer = (state = initialState, action) => {
