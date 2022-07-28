@@ -11,6 +11,7 @@
 }
 
 .btn:hover {
+  cursor: pointer;
   background: var(--orange) !important;
   transition: 0.3s all ease-in-out;
 }

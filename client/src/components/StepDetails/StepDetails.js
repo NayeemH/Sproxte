@@ -16,6 +16,7 @@ import { Text, TextInput } from "@mantine/core";
 import { rejectOrder } from "../../actions/Order.action";
 import Moment from "react-moment";
 import { getPrice } from "../../utils/getPrice";
+import FileUp from "../FileUp/FileUp";
 
 const StepDetails = ({
   step,
@@ -88,6 +89,21 @@ const StepDetails = ({
               Reject
             </Button>
           </Form>
+        </div>
+      ),
+      labels: { cancel: "Cancel" },
+      onCancel: () => {},
+    });
+    return;
+  };
+  const finalModal = () => {
+    modals.openModal({
+      title: "Upload Final File",
+      centered: true,
+      closeOnClickOutside: false,
+      children: (
+        <div style={{ zIndex: 99999 }}>
+          <FileUp step={stepId} project={projectId} modals={modals} />
         </div>
       ),
       labels: { cancel: "Cancel" },
@@ -178,21 +194,37 @@ const StepDetails = ({
               ) : (
                 <>
                   {selectedCollectionIndex >= 0 && (
-                    <CopyToClipboard
-                      text={`${window.location.origin}/share/${step._id}`}
-                      onCopy={() =>
-                        toast.success("Link copied to clipboard.") &&
-                        showLink(`${window.location.origin}/share/${step._id}`)
-                      }
-                    >
-                      <Button
-                        variant="primary"
-                        type="reset"
-                        className={`${styles.btn} mx-md-3 mx-0`}
+                    <>
+                      <CopyToClipboard
+                        text={`${window.location.origin}/share/${step._id}`}
+                        onCopy={() =>
+                          toast.success("Link copied to clipboard.") &&
+                          showLink(
+                            `${window.location.origin}/share/${step._id}`
+                          )
+                        }
                       >
-                        Share
-                      </Button>
-                    </CopyToClipboard>
+                        <Button
+                          variant="primary"
+                          type="reset"
+                          className={`${styles.btn} mx-md-3 mx-0`}
+                        >
+                          Share
+                        </Button>
+                      </CopyToClipboard>
+
+                      {role === "iep" ? (
+                        <span
+                          onClick={() => finalModal()}
+                          variant="primary"
+                          className={`${styles.btn} text-decoration-none `}
+                        >
+                          Upload Final Image
+                        </span>
+                      ) : (
+                        <></>
+                      )}
+                    </>
                   )}
                 </>
               )}

@@ -38,6 +38,7 @@ import {
   STEP_APPROVE_ERROR,
   TASK_ADDED,
   TASK_ADDED_ERROR,
+  UPLOAD_SUCCESS,
 } from "../constants/Type";
 import { BASE_URL } from "../constants/URL";
 import axios from "axios";
@@ -924,7 +925,7 @@ export const approveStep = (id, projectId) => async (dispatch) => {
     });
     dispatch(getProjectDetails(projectId));
     dispatch(getStepDetails(id));
-    toast.success("Step Approved successfully");
+    toast.success("Approved successfully");
     return true;
   } catch (err) {
     dispatch({
@@ -1059,4 +1060,38 @@ export const addPlayer = (values, file, id) => async (dispatch) => {
   }
 
   return false;
+};
+// ADD PLAYER
+export const uploadFile = (files, productId, projectId) => async (dispatch) => {
+  let formData = new FormData();
+
+  formData.append("projectId", projectId);
+  formData.append("productId", productId);
+
+  if (files) {
+    for (let i = 0; i < files.length; i++) {
+      formData.append("files", files[i]);
+    }
+  }
+
+  const config = {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+    withCredentials: true,
+  };
+  try {
+    // TODO ::: API CALL
+    const res = await axios.post(`${BASE_URL}/api/v1/file`, formData, config);
+    // console.log(res);
+    dispatch({
+      type: UPLOAD_SUCCESS,
+    });
+    toast.success("File Uploaded successfully");
+    return true;
+  } catch (err) {
+    console.log(err);
+
+    return false;
+  }
 };
