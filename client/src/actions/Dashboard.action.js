@@ -28,6 +28,7 @@ import {
 import { DELETE_USER, DELETE_USER_ERROR } from "../constants/TypeLanding";
 import { BASE_URL } from "../constants/URL";
 import setAuthToken from "../utils/setAuthToken";
+import { clearCart } from "./Cart.action";
 import { getPaymentDetails } from "./Order.action";
 import { getIepList } from "./Payment.acton";
 import { getProductDetails } from "./Project.action";
@@ -163,6 +164,7 @@ export const logout = () => async (dispatch) => {
         withCredentials: true,
       }
     );
+    dispatch(clearCart());
     if (refreshRes.status === 200) {
       dispatch({
         type: LOGOUT_SUCCESS,
