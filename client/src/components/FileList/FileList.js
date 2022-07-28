@@ -12,6 +12,7 @@ import { FaFileInvoiceDollar } from "react-icons/fa";
 import ModalCard from "../Shared/ModalCard/ModalCard";
 import { toast } from "react-toastify";
 import { getFileList } from "../../actions/Project.action";
+import Moment from "react-moment";
 const queryString = require("query-string");
 
 const FileList = ({ data, getFileList }) => {
@@ -46,7 +47,24 @@ const FileList = ({ data, getFileList }) => {
                     className="mb-3 border-bottom pb-3"
                     key={notification._id}
                   >
-                    <Col xs={10}>
+                    <Col
+                      xs={2}
+                      className="d-flex justify-content-center align-items-start flex-column"
+                    >
+                      <span className="d-block">
+                        <span className="fw-bold">Date: </span>
+                        <Moment format="DD-MMMM-YYYY">
+                          {notification.createdAt}
+                        </Moment>
+                      </span>
+                      <span className="d-block">
+                        <span className="fw-bold">Time:</span>
+                        <Moment format=" hh:MM A">
+                          {notification.createdAt}
+                        </Moment>
+                      </span>
+                    </Col>
+                    <Col xs={8}>
                       {notification.files.map((file, i) => (
                         <a
                           href={`${IMAGE_PATH}small/${file}`}
@@ -58,7 +76,10 @@ const FileList = ({ data, getFileList }) => {
                         </a>
                       ))}
                     </Col>
-                    <Col xs={2}>
+                    <Col
+                      xs={2}
+                      className="d-flex justify-content-center align-items-center flex-column"
+                    >
                       <Button
                         classname="btn_primary"
                         onClick={() =>
