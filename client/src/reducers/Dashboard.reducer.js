@@ -9,6 +9,7 @@ import {
   LOGOUT_FAIL,
   GET_IEP_INVOICE_DATA,
   GET_UPLOADS,
+  DELETE_UPLOADS,
 } from "../constants/Type";
 import { GET_REPORT_DATA } from "../constants/TypeLanding";
 
@@ -38,6 +39,12 @@ const dashboardReducer = (state = initialState, action) => {
       return {
         ...state,
         files: payload,
+        loading: false,
+      };
+    case DELETE_UPLOADS:
+      return {
+        ...state,
+        files: state.files.filter((item) => item._id !== payload),
         loading: false,
       };
     case SET_ROLE:

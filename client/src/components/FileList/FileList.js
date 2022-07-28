@@ -1,26 +1,38 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { Button, Card, Col, Container, Row, Spinner } from "react-bootstrap";
 import { connect } from "react-redux";
 import styles from "./FileList.module.scss";
-import { Link, useLocation, useNavigate } from "react-router-dom";
-import { AiOutlineLeft, AiOutlineRight } from "react-icons/ai";
-import { getIepList } from "../../actions/Payment.acton";
-import { IMAGE_PATH } from "../../constants/URL";
-import { deleteUser } from "../../actions/Dashboard.action";
-import { BsTrash } from "react-icons/bs";
-import { FaFileInvoiceDollar } from "react-icons/fa";
-import ModalCard from "../Shared/ModalCard/ModalCard";
-import { toast } from "react-toastify";
-import { getFileList } from "../../actions/Project.action";
-import Moment from "react-moment";
-const queryString = require("query-string");
+import { useNavigate } from "react-router-dom";
 
-const FileList = ({ data, getFileList }) => {
+import { IMAGE_PATH } from "../../constants/URL";
+
+import { deleteUpload, getFileList } from "../../actions/Project.action";
+import Moment from "react-moment";
+import { useModals } from "@mantine/modals";
+import { Text } from "@mantine/core";
+
+const FileList = ({ data, getFileList, deleteUpload }) => {
   const navigate = useNavigate();
+  const modals = useModals();
 
   useEffect(() => {
     getFileList();
   }, []);
+
+  const deleteHandeler = (id) => {
+    modals.openConfirmModal({
+      title: "Please confirm your action",
+      centered: true,
+      children: (
+        <Text size="sm">
+          Are you sure you want to delete this file? This action cannot be
+          undone.
+        </Text>
+      ),
+      labels: { confirm: "Delete File", cancel: "Cancel" },
+      onConfirm: () => deleteUpload(id),
+    });
+  };
 
   return (
     <Container>
@@ -64,7 +76,7 @@ const FileList = ({ data, getFileList }) => {
                         </Moment>
                       </span>
                     </Col>
-                    <Col xs={8}>
+                    <Col xs={7}>
                       {notification.files.map((file, i) => (
                         <a
                           href={`${IMAGE_PATH}small/${file}`}
@@ -77,9 +89,16 @@ const FileList = ({ data, getFileList }) => {
                       ))}
                     </Col>
                     <Col
-                      xs={2}
-                      className="d-flex justify-content-center align-items-center flex-column"
+                      xs={3}
+                      className="d-flex justify-content-around align-items-center "
                     >
+                      <Button
+                        classname="btn_primary"
+                        variant="danger"
+                        onClick={() => deleteHandeler(notification._id)}
+                      >
+                        Delete File
+                      </Button>
                       <Button
                         classname="btn_primary"
                         onClick={() =>
@@ -103,4 +122,6 @@ const FileList = ({ data, getFileList }) => {
 const mapStateToProps = (state) => ({
   data: state.dashboard.files,
 });
-export default connect(mapStateToProps, { getFileList, deleteUser })(FileList);
+export default connect(mapStateToProps, { getFileList, deleteUpload })(
+  FileList
+);

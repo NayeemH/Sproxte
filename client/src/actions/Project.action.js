@@ -14,6 +14,7 @@ import {
   COLLECTION_PREV,
   CREATE_TYPE_ERROR,
   CREATE_TYPE_SUCCESS,
+  DELETE_UPLOADS,
   EDIT_FEEDBACK_ERROR,
   EDIT_FEEDBACK_SUCCESS,
   FETCH_COMPLETE_TEAM_PROJECT,
@@ -1109,5 +1110,26 @@ export const getFileList = () => async (dispatch) => {
     });
   } catch (err) {
     console.log(err);
+  }
+};
+
+// ADD PLAYER
+export const deleteUpload = (id) => async (dispatch) => {
+  try {
+    // TODO ::: API CALL
+    const res = await axios.delete(`${BASE_URL}/api/v1/file/${id}`, {
+      withCredentials: true,
+    });
+    // console.log(res);
+    dispatch({
+      type: DELETE_UPLOADS,
+      payload: id,
+    });
+    toast.success("File Deleted successfully");
+    return true;
+  } catch (err) {
+    console.log(err);
+
+    return false;
   }
 };
