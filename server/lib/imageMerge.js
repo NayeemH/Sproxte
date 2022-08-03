@@ -26,7 +26,7 @@ const FinalImage = async (parentBuffer, childBuffer) => {
     // const imageName = await saveImage({buffer: canvas.toBuffer(), mimetype: 'image/jpeg'});
 
     // Only update the image 
-    const imageName = await saveImage({buffer: childBuffer, mimetype: 'image/jpeg'});
+    const imageName = await saveImage({buffer: childBuffer, mimetype: 'image/jpeg', originalname: 'hello.jpeg'});
 
     return imageName;
 }
