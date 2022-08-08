@@ -11,14 +11,13 @@ const methods = [
     label: "FedEx 2Day AM",
     value: "FEDEX_2_DAY_AM",
   },
-
   {
     label: "FedEx Express Saver",
     value: "FEDEX_EXPRESS_SAVER",
   },
   {
     label: "FedEx First Overnight",
-    value: "FEDEX_FIRST_OVERNIGHT",
+    value: "FIRST_OVERNIGHT",
   },
 ];
 

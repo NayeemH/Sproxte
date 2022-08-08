@@ -128,6 +128,9 @@ const StepDetails = ({
   };
 
   const getDiscount = (data) => {
+    if (data.range.length === 0) {
+      return 0;
+    }
     if (step.count < data.range[0]) {
       return data.discount[0];
     } else if (step.count > data.range[data.range.length - 1]) {
@@ -374,18 +377,18 @@ const StepDetails = ({
                           {step.count}
                         </span>
                       </Col>
-                      <Col xs={12}>
+                      {/* <Col xs={12}>
                         <span className="d-block fs-5">
                           <span className="fw-bold">Description :</span>{" "}
                           {step.description}
                         </span>
-                      </Col>
+                      </Col> 
                       <Col xs={12}>
                         <span className="d-block fs-5">
                           <span className="fw-bold">Product Font :</span>{" "}
                           {step.productFont}
                         </span>
-                      </Col>
+                          </Col>*/}
                       {step.orderColor && (
                         <Col xs={12} className="py-3">
                           <span className="fs-5 align-items-center">

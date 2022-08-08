@@ -5,9 +5,8 @@ import { addToCart, setSize } from "../../../actions/Cart.action";
 import { toast } from "react-toastify";
 import styles from "./OrderDescription.module.scss";
 import colors from "../../../config/Colors";
-import { FONT_KEY, IMAGE_PATH } from "../../../constants/URL";
+import { IMAGE_PATH } from "../../../constants/URL";
 import { useNavigate } from "react-router-dom";
-import FontPicker from "font-picker-react";
 import { useModals } from "@mantine/modals";
 import { MultiSelect, Select, Text } from "@mantine/core";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -20,7 +19,6 @@ import "swiper/css/pagination";
 // import required modules
 import { Pagination } from "swiper";
 import ProductCard from "../../Shared/ProductCard/ProductCard";
-import Moment from "react-moment";
 import { setTeamCount } from "../../../actions/Coach.action";
 import { setStore } from "../../../utils/localstore";
 
@@ -39,7 +37,7 @@ const OrderDescription = ({
   const [selectedFile, setSelectedFile] = useState();
   const [preview, setPreview] = useState();
   const [size, setSize] = useState();
-  const [description, setDescription] = useState();
+  const [description, setDescription] = useState(" ");
   const [quantity, setQuantity] = useState(
     team_count === null ? 1 : team_count
   );
@@ -61,7 +59,6 @@ const OrderDescription = ({
   const selectRef2 = useRef(null);
 
   const modals = useModals();
-  const modals2 = useModals();
 
   useEffect(() => {
     if (
@@ -503,113 +500,6 @@ const OrderDescription = ({
             Next
           </Button>
         </SwiperSlide>
-        <SwiperSlide className={styles.slide_left}>
-          <Card className={`${styles.crd} shadow mt-2`}>
-            <Card.Body className="d-flex justify-content-between flex-column">
-              <div
-                className={`d-flex justify-content-between flex-column pb-2 ${styles.font}`}
-              >
-                <span className="d-block fs-4">Primary Color</span>
-                <MultiSelect
-                  data={colors.map((c, i) => {
-                    return {
-                      label: c.name,
-                      value: c.hex,
-                    };
-                  })}
-                  itemComponent={({ value, label, ...others }) => (
-                    <div className={styles.dd_item} ref={selectRef} {...others}>
-                      <span className="d-flex align-items-center">
-                        <BsSquareFill color={`${value}`} className="me-2" />{" "}
-                        <span>{label}</span>
-                      </span>
-                    </div>
-                  )}
-                  placeholder="Pick primary color"
-                  value={orderColor}
-                  onChange={(e) => {
-                    if (e.length > 2) {
-                      toast.error("You must select 2 colors");
-                    } else if (e.length === 0) {
-                      setOrderColor(e);
-                    } else {
-                      setOrderColor(e);
-                    }
-                  }}
-                  required
-                  clearable
-                />
-              </div>
-              <small>Please select 2 primary color</small>
-            </Card.Body>
-          </Card>
-          <Card className={`${styles.crd} shadow mt-3`}>
-            <Card.Body className="d-flex justify-content-between flex-column">
-              <div
-                className={`d-flex justify-content-between flex-column pb-2 ${styles.font}`}
-              >
-                <span className="d-block fs-4">Secondary Color</span>
-                <MultiSelect
-                  data={colors.map((c, i) => {
-                    return {
-                      label: c.name,
-                      value: c.hex,
-                    };
-                  })}
-                  itemComponent={({ value, label, ...others }) => (
-                    <div
-                      className={styles.dd_item}
-                      ref={selectRef2}
-                      {...others}
-                    >
-                      <span className="d-flex align-items-center">
-                        <BsSquareFill color={`${value}`} className="me-2" />{" "}
-                        <span>{label}</span>
-                      </span>
-                    </div>
-                  )}
-                  placeholder="Pick secondary color"
-                  value={orderColor2}
-                  onChange={(e) => {
-                    if (e.length > 2) {
-                      toast.error("You can select maximum 2 colors");
-                    } else {
-                      setOrderColor2(e);
-                    }
-                  }}
-                  clearable
-                  multiple
-                />
-              </div>
-            </Card.Body>
-          </Card>
-          <Card className={`${styles.crd_size} shadow`}>
-            <Card.Body>
-              <span className="d-block fs-4">Select Size</span>
-              <div className={`${styles.grid_size} pt-3`}>
-                {sizes &&
-                  sizes.map((s) => (
-                    <div
-                      className={`${styles.size} ${
-                        size === s && styles.active
-                      } me-2`}
-                      onClick={() => setSize(s)}
-                    >
-                      <span className="fs-5 d-block">{s}</span>
-                    </div>
-                  ))}
-              </div>
-            </Card.Body>
-          </Card>
-
-          {/* FONT */}
-          <Button
-            className="btn_primary mt-4"
-            onClick={() => my_swiper.slideNext()}
-          >
-            Next
-          </Button>
-        </SwiperSlide>
 
         {product && product.layouts && product.layouts.length > 0 && (
           <SwiperSlide className={styles.slide_left}>
@@ -796,6 +686,110 @@ const OrderDescription = ({
           </SwiperSlide>
         )}
         <SwiperSlide className={styles.slide_left}>
+          <Card className={`${styles.crd} shadow mt-2`}>
+            <Card.Body className="d-flex justify-content-between flex-column">
+              <div
+                className={`d-flex justify-content-between flex-column pb-2 ${styles.font}`}
+              >
+                <span className="d-block fs-4">Primary Color</span>
+                <MultiSelect
+                  data={colors.map((c, i) => {
+                    return {
+                      label: c.name,
+                      value: c.hex,
+                    };
+                  })}
+                  itemComponent={({ value, label, ...others }) => (
+                    <div className={styles.dd_item} ref={selectRef} {...others}>
+                      <span className="d-flex align-items-center">
+                        <BsSquareFill color={`${value}`} className="me-2" />{" "}
+                        <span>{label}</span>
+                      </span>
+                    </div>
+                  )}
+                  placeholder="Pick primary color"
+                  value={orderColor}
+                  onChange={(e) => {
+                    if (e.length > 2) {
+                      toast.error("You must select 2 colors");
+                    } else if (e.length === 0) {
+                      setOrderColor(e);
+                    } else {
+                      setOrderColor(e);
+                    }
+                  }}
+                  required
+                  clearable
+                />
+              </div>
+              <small>Please select 2 primary color</small>
+            </Card.Body>
+          </Card>
+          <Card className={`${styles.crd} shadow mt-3`}>
+            <Card.Body className="d-flex justify-content-between flex-column">
+              <div
+                className={`d-flex justify-content-between flex-column pb-2 ${styles.font}`}
+              >
+                <span className="d-block fs-4">Secondary Color</span>
+                <MultiSelect
+                  data={colors.map((c, i) => {
+                    return {
+                      label: c.name,
+                      value: c.hex,
+                    };
+                  })}
+                  itemComponent={({ value, label, ...others }) => (
+                    <div
+                      className={styles.dd_item}
+                      ref={selectRef2}
+                      {...others}
+                    >
+                      <span className="d-flex align-items-center">
+                        <BsSquareFill color={`${value}`} className="me-2" />{" "}
+                        <span>{label}</span>
+                      </span>
+                    </div>
+                  )}
+                  placeholder="Pick secondary color"
+                  value={orderColor2}
+                  onChange={(e) => {
+                    if (e.length > 2) {
+                      toast.error("You can select maximum 2 colors");
+                    } else {
+                      setOrderColor2(e);
+                    }
+                  }}
+                  clearable
+                  multiple
+                />
+              </div>
+            </Card.Body>
+          </Card>
+          <Card className={`${styles.crd_size} shadow`}>
+            <Card.Body>
+              <span className="d-block fs-4">Select Size</span>
+              <div className={`${styles.grid_size} pt-3`}>
+                {sizes &&
+                  sizes.map((s) => (
+                    <div
+                      className={`${styles.size} ${
+                        size === s && styles.active
+                      } me-2`}
+                      onClick={() => setSize(s)}
+                    >
+                      <span className="fs-5 d-block">{s}</span>
+                    </div>
+                  ))}
+              </div>
+            </Card.Body>
+          </Card>
+
+          {/* FONT */}
+          <Button onClick={submitHandeler} className={styles.btn}>
+            Add To Cart
+          </Button>
+        </SwiperSlide>
+        {/* <SwiperSlide className={styles.slide_left}>
           <Card className={`${styles.crd} shadow mt-4`}>
             <Card.Body className="d-flex justify-content-between flex-column">
               <div
@@ -826,10 +820,8 @@ const OrderDescription = ({
             </Card.Body>
           </Card>
 
-          <Button onClick={submitHandeler} className={styles.btn}>
-            Add To Cart
-          </Button>
-        </SwiperSlide>
+          
+        </SwiperSlide> */}
       </Swiper>
     </div>
   );
