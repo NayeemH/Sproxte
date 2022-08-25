@@ -14,6 +14,9 @@ const productSchema = Schema({
     typeId: {
         type: Schema.Types.ObjectId
     },
+    gurdianId: {
+        type: Schema.Types.ObjectId
+    },
     type: {
         type: String,   // custom readymade team
         required: true

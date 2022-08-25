@@ -36,7 +36,7 @@ router.get("/:id", async (req, res, next) => {
       userType === "guardian"
     ) {
       products = await Product.find(
-        { projectId: id, $or: [{ userId }, { gurdianIds: userId }] },
+        { projectId: id, $or: [{ userId }, { gurdianId: userId }] },
         {
           _id: 1,
           name: 1,

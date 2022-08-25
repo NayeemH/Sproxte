@@ -69,6 +69,7 @@ router.post('/:id', fileFetch.single('image'), async (req, res, next) => {
                         projectId: project._id,
                         typeId: product.typeId,
                         type: product.type,
+                        gurdianId: user._id,
                         name,
                         image: {
                             front: product.pngImageFront,
@@ -123,6 +124,7 @@ router.post('/:id', fileFetch.single('image'), async (req, res, next) => {
                         projectId: project._id,
                         typeId: order.productTypeId,
                         type: order.type,
+                        gurdianId: user._id,
                         name: name,
                         image: {
                             front: teams[i].pngImageFront,
