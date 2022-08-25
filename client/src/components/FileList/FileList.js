@@ -61,18 +61,6 @@ const FileList = ({ data, getFileList, deleteUpload }) => {
                     className="mb-3 border-bottom pb-3"
                     key={notification._id}
                   >
-                    {console.log(
-                      hexToBase64(notification.productId.slice(0, 8)).slice(
-                        0,
-                        6
-                      )
-                    )}
-                    {console.log(
-                      hexToBase64(notification.projectId.slice(0, 8)).slice(
-                        0,
-                        6
-                      )
-                    )}
                     <Col
                       xs={2}
                       className="d-flex justify-content-center align-items-start flex-column"
@@ -104,10 +92,9 @@ const FileList = ({ data, getFileList, deleteUpload }) => {
                     </Col>
                     <Col xs={3}>
                       <BiHash className="me-1" />
-                      {hexToBase64(notification.productId.slice(0, 8)).slice(
-                        0,
-                        6
-                      )}
+                      {hexToBase64(
+                        notification.projectId.orderId.slice(0, 8)
+                      ).slice(0, 6)}
                     </Col>
                     <Col
                       xs={3}
@@ -124,7 +111,7 @@ const FileList = ({ data, getFileList, deleteUpload }) => {
                         className="btn_primary"
                         onClick={() =>
                           navigate(
-                            `/dashboard/${notification.projectId}/${notification.productId}`
+                            `/dashboard/${notification.projectId._id}/${notification.productId}`
                           )
                         }
                       >
