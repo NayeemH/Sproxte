@@ -72,7 +72,7 @@ const addTemplate = async (req) => {
     const calDiscount = discount.discount[i];
 
 
-    const netPrice = Math.round(calPriceArray * count * (1 - calDiscount / 100));
+    const netPrice = calPriceArray * count * (1 - calDiscount / 100);
 
     await Order.findOneAndUpdate(
         {_id: id, userId}, 
@@ -146,7 +146,7 @@ const addCustomTemplate = async (req) => {
 
     const calDiscount = discount.discount[i];
 
-    const netPrice = Math.round(calPriceArray * count * (1 - calDiscount / 100));
+    const netPrice = calPriceArray * count * (1 - calDiscount / 100);
 
     await Order.findOneAndUpdate(
         {_id: id, userId}, 
@@ -208,7 +208,7 @@ const addLinkTemplate = async (req) => {
     const calDiscount = discount.discount[i];
 
 
-    const netPrice = Math.round(calPriceArray * count * (1 - calDiscount / 100));
+    const netPrice = calPriceArray * count * (1 - calDiscount / 100);
 
     await Order.findOneAndUpdate(
         {_id: id, userId}, 
