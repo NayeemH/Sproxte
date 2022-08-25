@@ -4,7 +4,9 @@ const FileData = require('../../models/fileData');
 
 router.get('/', async (req, res, next) => {
     try {
-        const files = await FileData.find({}, {__v: 0});
+        const files = await FileData
+            .find({}, {__v: 0})
+            .populate('projectId', 'orderId');
 
         res.json({
             message: 'File data',
@@ -16,6 +18,6 @@ router.get('/', async (req, res, next) => {
     catch(error) {
         next(error)
     }
-})
+});
 
 module.exports = router;
