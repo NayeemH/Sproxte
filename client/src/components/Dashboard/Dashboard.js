@@ -96,7 +96,9 @@ const Dashboard = ({ dashboard, projects, fetchProjects, user }) => {
                     }
                     style={{ textTransform: "capitalize" }}
                   >
-                    {item.name === "delivered" ? "Shipped" : item.name}
+                    {item.name === "delivered"
+                      ? "Delivered (to fedex)"
+                      : item.name}
                   </Dropdown.Item>
                 ))}
               </Dropdown.Menu>

@@ -13,6 +13,7 @@ import { uploadStep } from "../../actions/Project.action";
 import { toast } from "react-toastify";
 import { useNavigate, useParams } from "react-router-dom";
 import { ImUpload } from "react-icons/im";
+import { MAX_SIZE } from "../../constants/size";
 
 const UploadStepForm = ({ uploadStep }) => {
   //STATES
@@ -60,7 +61,7 @@ const UploadStepForm = ({ uploadStep }) => {
       setSelectedFile(undefined);
       return;
     }
-    if (e.target.files[0].size > 2000000) {
+    if (e.target.files[0].size > MAX_SIZE) {
       toast.error("File size is too big");
       return;
     }

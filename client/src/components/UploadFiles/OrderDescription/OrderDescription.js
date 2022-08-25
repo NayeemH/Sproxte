@@ -21,6 +21,7 @@ import { Pagination } from "swiper";
 import ProductCard from "../../Shared/ProductCard/ProductCard";
 import { setTeamCount } from "../../../actions/Coach.action";
 import { setStore } from "../../../utils/localstore";
+import { MAX_SIZE } from "../../../constants/size";
 
 const OrderDescription = ({
   sizes,
@@ -207,7 +208,7 @@ const OrderDescription = ({
     let flag = false;
     let list = e.target.files;
     for (let index = 0; index < list.length; index++) {
-      if (list[index].size > 2000000) {
+      if (list[index].size > MAX_SIZE) {
         toast.error("File size is too big");
         flag = true;
       }
@@ -223,7 +224,7 @@ const OrderDescription = ({
       setSelectedFile2(undefined);
       return;
     }
-    if (e.target.files[0].size > 2000000) {
+    if (e.target.files[0].size > MAX_SIZE) {
       toast.error("File size is too big");
       return;
     }
@@ -323,7 +324,7 @@ const OrderDescription = ({
           <Card className="crd">
             <Card.Body>
               <span className="d-block fs-4">Discount Ranges</span>
-              <div className="pt-3">
+              <div className="pt-md-3 pt-2">
                 <div
                   className="d-flex 
                   justify-content-between align-items-center"
@@ -331,7 +332,7 @@ const OrderDescription = ({
                   <span className="d-block fw-bold fs-6">Range</span>
                   <span className="d-block fw-bold fs-6">Discount</span>
                 </div>
-                <hr />
+                <hr className="my-1" />
                 {product && product.discount && product.discount.range ? (
                   product.discount.range.map((dis, i) => (
                     <div key={i}>
@@ -347,7 +348,7 @@ const OrderDescription = ({
                           {product.discount.discount[i]}%
                         </span>
                       </div>
-                      <hr />
+                      <hr className="my-1" />
                     </div>
                   ))
                 ) : (
@@ -379,7 +380,7 @@ const OrderDescription = ({
                         %
                       </span>
                     </div>
-                    <hr />
+                    <hr className="my-1" />
                   </>
                 ) : (
                   <>
@@ -387,10 +388,10 @@ const OrderDescription = ({
                       className="d-flex 
                   justify-content-between align-items-center"
                     >
-                      <span className="d-block fw-bold fs-6">
+                      <span className="d-block fw-bold  fs-6">
                         For all count
                       </span>
-                      <span className="d-block fw-bold fs-6">
+                      <span className="d-block fw-bold  fs-6">
                         {
                           product.discount.discount[
                             product.discount.discount.length - 1
@@ -399,7 +400,7 @@ const OrderDescription = ({
                         %
                       </span>
                     </div>
-                    <hr />
+                    <hr className="my-1" />
                   </>
                 )}
               </div>
@@ -409,7 +410,7 @@ const OrderDescription = ({
             <Card.Body>
               <Row>
                 <Col>
-                  <span className="d-block fs-4">Upload Front Images</span>
+                  <span className="d-block fs-5 pb-2">Upload Front Images</span>
                   <div className="w-100">
                     <input
                       type="file"
@@ -505,13 +506,16 @@ const OrderDescription = ({
           <SwiperSlide className={styles.slide_left}>
             <Card className={`${styles.crd_size} shadow`}>
               <Card.Body>
-                <span className="d-block fs-4">Select Layout</span>
+                <span className="d-block fs-5">Select Layout</span>
                 <Container fluid>
                   <Row>
                     {product &&
                       product.layouts &&
                       product.layouts.map((l) => (
-                        <Col xs={6} key={l._id}>
+                        <Col
+                          xs={product.layouts.length <= 6 ? 6 : 4}
+                          key={l._id}
+                        >
                           <div
                             className={`${styles.layout} ${
                               selectedLayout === l._id ? styles.active : ""
@@ -534,7 +538,7 @@ const OrderDescription = ({
               </Card.Body>
             </Card>
             <Button
-              className="btn_primary mt-5"
+              className="btn_primary"
               onClick={() => my_swiper.slideNext()}
             >
               Next
@@ -548,7 +552,7 @@ const OrderDescription = ({
             <SwiperSlide className={styles.slide_left}>
               <Card className={`${styles.crd_size} shadow`}>
                 <Card.Body>
-                  <span className="d-block fs-4">Select Layout Font</span>
+                  <span className="d-block fs-5">Select Layout Font</span>
                   <Container fluid>
                     <Row>
                       {product &&
@@ -579,7 +583,7 @@ const OrderDescription = ({
                 </Card.Body>
               </Card>
               <Button
-                className="btn_primary mt-5"
+                className="btn_primary"
                 onClick={() => my_swiper.slideNext()}
               >
                 Next
@@ -590,7 +594,7 @@ const OrderDescription = ({
           <SwiperSlide className={styles.slide_left}>
             <Card className={`${styles.crd} shadow mt-4`}>
               <Card.Body className="d-flex justify-content-between flex-column">
-                <span className="d-block fs-4">Layout Options</span>
+                <span className="d-block fs-5">Layout Options</span>
                 {/* <div
                   className={`d-flex justify-content-between flex-column pt-3 ${styles.font}`}
                 >
@@ -678,7 +682,7 @@ const OrderDescription = ({
               </Card.Body>
             </Card>
             <Button
-              className="btn_primary mt-5"
+              className="btn_primary "
               onClick={() => my_swiper.slideNext()}
             >
               Next
@@ -691,7 +695,7 @@ const OrderDescription = ({
               <div
                 className={`d-flex justify-content-between flex-column pb-2 ${styles.font}`}
               >
-                <span className="d-block fs-4">Primary Color</span>
+                <span className="d-block fs-5">Primary Color</span>
                 <MultiSelect
                   data={colors.map((c, i) => {
                     return {
@@ -730,7 +734,7 @@ const OrderDescription = ({
               <div
                 className={`d-flex justify-content-between flex-column pb-2 ${styles.font}`}
               >
-                <span className="d-block fs-4">Secondary Color</span>
+                <span className="d-block fs-5">Secondary Color</span>
                 <MultiSelect
                   data={colors.map((c, i) => {
                     return {
@@ -767,7 +771,7 @@ const OrderDescription = ({
           </Card>
           <Card className={`${styles.crd_size} shadow`}>
             <Card.Body>
-              <span className="d-block fs-4">Select Size</span>
+              <span className="d-block fs-5">Select Size</span>
               <div className={`${styles.grid_size} pt-3`}>
                 {sizes &&
                   sizes.map((s) => (
@@ -783,14 +787,16 @@ const OrderDescription = ({
               </div>
             </Card.Body>
           </Card>
-
-          {/* FONT */}
-          <Button onClick={submitHandeler} className={styles.btn}>
-            Add To Cart
+          <Button
+            className="btn_primary "
+            onClick={() => my_swiper.slideNext()}
+          >
+            Next
           </Button>
+          {/* FONT */}
         </SwiperSlide>
-        {/* <SwiperSlide className={styles.slide_left}>
-          <Card className={`${styles.crd} shadow mt-4`}>
+        <SwiperSlide className={styles.slide_left}>
+          {/* <Card className={`${styles.crd} shadow mt-4`}>
             <Card.Body className="d-flex justify-content-between flex-column">
               <div
                 className={`d-flex justify-content-between flex-column pt-3 ${styles.font}`}
@@ -803,11 +809,11 @@ const OrderDescription = ({
                 />
               </div>
             </Card.Body>
-          </Card>
+          </Card> */}
 
           <Card className={`${styles.crd} shadow mt-3 mb-4`}>
             <Card.Body className="d-flex justify-content-between flex-column">
-              <span className="d-block fs-4">Order Description</span>
+              <span className="d-block fs-5">Order Description</span>
               <textarea
                 name="desc"
                 id="desc"
@@ -819,9 +825,10 @@ const OrderDescription = ({
               ></textarea>
             </Card.Body>
           </Card>
-
-          
-        </SwiperSlide> */}
+          <Button onClick={submitHandeler} className={styles.btn}>
+            Add To Cart
+          </Button>
+        </SwiperSlide>
       </Swiper>
     </div>
   );

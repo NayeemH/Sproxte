@@ -357,14 +357,18 @@ const StepDetails = ({
                           <span className="fw-bold">Size :</span> {step.size}
                         </span>
                       </Col>
-                      <Col xs={6}>
-                        <span className="d-block fs-5">
-                          <span className="fw-bold">Price :</span> $
-                          {step.priceArray
-                            ? getPrice(step?.priceArray, step.count)
-                            : null}
-                        </span>
-                      </Col>
+                      {role !== "iep" ? (
+                        <Col xs={6}>
+                          <span className="d-block fs-5">
+                            <span className="fw-bold">Price :</span> $
+                            {step.priceArray
+                              ? getPrice(step?.priceArray, step.count)
+                              : null}
+                          </span>
+                        </Col>
+                      ) : (
+                        <></>
+                      )}
                       <Col xs={6}>
                         <span className="d-block fs-5">
                           <span className="fw-bold">Discount :</span>{" "}

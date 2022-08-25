@@ -145,6 +145,28 @@ const PaymentSuccess = ({ data, country, isAuthenticated }) => {
               ${(data.shippingCost + data.price).toFixed(2)}
             </span>
           </div>
+          <hr />
+          <div className="d-flex justify-content-between align-items-center border-bottom py-2 ">
+            <div className="d-flex align-items-center justify-content-center">
+              <span className="d-block fw-bold fs-6 ms-1">Customer Name</span>
+            </div>
+            <span className="d-block fs-6">
+              {data.firstName} {data.lastName}
+            </span>
+          </div>
+
+          <div className="d-flex justify-content-between align-items-center border-bottom py-2 ">
+            <div className="d-flex align-items-center justify-content-center">
+              <span className="d-block fw-bold fs-6 ms-1">Customer Email</span>
+            </div>
+            <span className="d-block fs-6">{data.email}</span>
+          </div>
+          <div className="d-flex justify-content-between align-items-center border-bottom py-2 ">
+            <div className="d-flex align-items-center justify-content-center">
+              <span className="d-block fw-bold fs-6 ms-1">Site URL</span>
+            </div>
+            <span className="d-block fs-6">https://sportsveins.com</span>
+          </div>
         </Card.Body>
       </Card>
 

@@ -422,7 +422,7 @@ const OrderDetails = ({
             </Col>
           ))}
       </Row>
-      {projects.type === "normal" ? (
+      {projects.type === "normal" || role === "iep" ? (
         <></>
       ) : projects.status === "delivered" ? (
         <></>

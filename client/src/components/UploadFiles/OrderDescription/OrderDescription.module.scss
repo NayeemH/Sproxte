@@ -57,13 +57,13 @@
 
 .grid_size {
   display: grid;
-  grid-template-columns: repeat(10, 50px);
-  column-gap: 10px;
+  grid-template-columns: repeat(10, 40px);
+  column-gap: 5px;
 }
 
 .size {
-  width: 50px !important;
-  height: 50px !important;
+  width: 40px !important;
+  height: 40px !important;
   border-radius: 50%;
   border: 1px solid var(--orange);
   display: flex;

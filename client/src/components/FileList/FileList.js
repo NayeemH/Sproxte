@@ -10,6 +10,8 @@ import { deleteUpload, getFileList } from "../../actions/Project.action";
 import Moment from "react-moment";
 import { useModals } from "@mantine/modals";
 import { Text } from "@mantine/core";
+import { hexToBase64 } from "../../utils/hexToBase";
+import { BiHash } from "react-icons/bi";
 
 const FileList = ({ data, getFileList, deleteUpload }) => {
   const navigate = useNavigate();
@@ -59,6 +61,18 @@ const FileList = ({ data, getFileList, deleteUpload }) => {
                     className="mb-3 border-bottom pb-3"
                     key={notification._id}
                   >
+                    {console.log(
+                      hexToBase64(notification.productId.slice(0, 8)).slice(
+                        0,
+                        6
+                      )
+                    )}
+                    {console.log(
+                      hexToBase64(notification.projectId.slice(0, 8)).slice(
+                        0,
+                        6
+                      )
+                    )}
                     <Col
                       xs={2}
                       className="d-flex justify-content-center align-items-start flex-column"
@@ -76,7 +90,7 @@ const FileList = ({ data, getFileList, deleteUpload }) => {
                         </Moment>
                       </span>
                     </Col>
-                    <Col xs={7}>
+                    <Col xs={4}>
                       {notification.files.map((file, i) => (
                         <a
                           href={`${IMAGE_PATH}small/${file}`}
@@ -84,23 +98,30 @@ const FileList = ({ data, getFileList, deleteUpload }) => {
                           key={i}
                           className={styles.file}
                         >
-                          {i + 1}. {file}
+                          {i + 1}. {file.slice(0, 15)}
                         </a>
                       ))}
+                    </Col>
+                    <Col xs={3}>
+                      <BiHash className="me-1" />
+                      {hexToBase64(notification.productId.slice(0, 8)).slice(
+                        0,
+                        6
+                      )}
                     </Col>
                     <Col
                       xs={3}
                       className="d-flex justify-content-around align-items-center "
                     >
                       <Button
-                        classname="btn_primary"
+                        className="btn_primary"
                         variant="danger"
                         onClick={() => deleteHandeler(notification._id)}
                       >
                         Delete File
                       </Button>
                       <Button
-                        classname="btn_primary"
+                        className="btn_primary"
                         onClick={() =>
                           navigate(
                             `/dashboard/${notification.projectId}/${notification.productId}`
