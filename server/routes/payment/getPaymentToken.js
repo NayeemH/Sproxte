@@ -23,6 +23,7 @@ router.post('/:id', async (req, res, next) => {
                 userId: order.userId.toString(),
                 orderId: order._id.toString(),
                 userName: `${order.firstName} ${order.lastName}`,
+                email: `${order.email}`,
                 website: "https://sportsveins.com"
             }
         });

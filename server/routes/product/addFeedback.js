@@ -31,6 +31,10 @@ router.put('/:id', async (req, res, next) => {
         }
         
 
+        res.json({
+            message: 'Feedback is added successfully',
+        });
+
         // Send notification
         const product = await Product.findOne({_id: collection.productId});
 
@@ -45,9 +49,6 @@ router.put('/:id', async (req, res, next) => {
         await sendNotification('New feedback is added', userIds, project.orderId, product.projectId, product._id);
         
 
-        res.json({
-            message: 'Feedback is added successfully',
-        });
         
     }
     catch(err) {
