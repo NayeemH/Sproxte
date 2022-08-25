@@ -40,7 +40,8 @@ router.post('/:id', async (req, res, next) => {
                 userId,
                 projectId: project._id.toString(),
                 price,
-                count
+                count,
+                website: "https://sportsveins.com"
             }
         });
 

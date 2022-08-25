@@ -4,7 +4,8 @@ const {Schema, model} = require('mongoose');
 const fildDataSchema = Schema({
     projectId: {
         type: Schema.Types.ObjectId,
-        required: true
+        required: true,
+        ref: 'project'
     },
     productId: {
         type: Schema.Types.ObjectId,

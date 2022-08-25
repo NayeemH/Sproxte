@@ -22,6 +22,8 @@ router.post('/:id', async (req, res, next) => {
             metadata: {
                 userId: order.userId.toString(),
                 orderId: order._id.toString(),
+                userName: `${order.firstName} ${order.lastName}`,
+                website: "https://sportsveins.com"
             }
         });
 
