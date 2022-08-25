@@ -513,7 +513,15 @@ const OrderDescription = ({
                       product.layouts &&
                       product.layouts.map((l) => (
                         <Col
-                          xs={product.layouts.length <= 6 ? 6 : 4}
+                          xs={
+                            product.layouts.length <= 6
+                              ? 6
+                              : product.layouts.length <= 12
+                              ? 4
+                              : product.layouts.length <= 20
+                              ? 3
+                              : 2
+                          }
                           key={l._id}
                         >
                           <div
