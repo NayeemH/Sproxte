@@ -52,7 +52,7 @@ const DashboardTeamCompleted = ({
   return (
     <Container className={styles.wrapper}>
       <div className="d-flex justify-content-between align-items-center flex-md-row flex-column">
-        <h3 className="pb-3">Completed Orders</h3>
+        <h3 className="pb-3">Shipped Orders</h3>
 
         <div className="d-flex flex-column flex-md-row">
           <Link
