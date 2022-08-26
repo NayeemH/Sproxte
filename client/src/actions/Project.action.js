@@ -1106,7 +1106,7 @@ export const getFileList = () => async (dispatch) => {
 
     dispatch({
       type: GET_UPLOADS,
-      payload: res.data.data.files,
+      payload: res.data.data.files.reverse(),
     });
   } catch (err) {
     console.log(err);
