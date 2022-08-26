@@ -68,7 +68,7 @@ const DashboardTeamCompleted = ({
             } mt-3 mt-md-0`}
             onClick={() => console.log("completed")}
           >
-            Completed Orders
+            Shipped Orders
           </Button>
         </div>
       </div>
