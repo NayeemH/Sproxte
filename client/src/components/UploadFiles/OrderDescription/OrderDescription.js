@@ -312,7 +312,7 @@ const OrderDescription = ({
               </div>
 
               <Button
-                className="btn_primary"
+                className="btn_primary mt-2"
                 onClick={() => my_swiper.slideNext()}
               >
                 Next
@@ -546,7 +546,7 @@ const OrderDescription = ({
               </Card.Body>
             </Card>
             <Button
-              className="btn_primary"
+              className="btn_primary mt-2"
               onClick={() => my_swiper.slideNext()}
             >
               Next
@@ -566,7 +566,20 @@ const OrderDescription = ({
                       {product &&
                         product.fontImages &&
                         product.fontImages.map((l, index) => (
-                          <Col xs={6} key={index}>
+                          <Col
+                            xs={
+                              product.fontImages
+                                ? product.fontImages.length <= 6
+                                  ? 6
+                                  : product.fontImages.length <= 12
+                                  ? 4
+                                  : product.fontImages.length <= 20
+                                  ? 3
+                                  : 2
+                                : 12
+                            }
+                            key={index}
+                          >
                             <div
                               className={`${styles.layout} ${
                                 selectedFont === product.fontImages[index]
@@ -591,7 +604,7 @@ const OrderDescription = ({
                 </Card.Body>
               </Card>
               <Button
-                className="btn_primary"
+                className="btn_primary mt-2"
                 onClick={() => my_swiper.slideNext()}
               >
                 Next
@@ -821,7 +834,15 @@ const OrderDescription = ({
 
           <Card className={`${styles.crd} shadow mt-3 mb-4`}>
             <Card.Body className="d-flex justify-content-between flex-column">
-              <span className="d-block fs-5">Order Description</span>
+              {/* <span className="d-block fs-5 text-center">
+                Order Description
+              </span> */}
+              <span className="d-block fs-5 text-center fw-bold">
+                Enter Any additional information we might Have missed
+              </span>
+              <span className="d-block fs-6 text-center pb-3">
+                Additional text, records and or athlete names
+              </span>
               <textarea
                 name="desc"
                 id="desc"

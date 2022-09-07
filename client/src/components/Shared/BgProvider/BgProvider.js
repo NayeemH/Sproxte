@@ -19,8 +19,9 @@ const BgProvider = ({ bg, getBgOne, children, className }) => {
       style={{
         backgroundRepeat: "no-repeat",
         backgroundPosition: "center center",
-        background: `${`url(${BASE_URL}/image/small/${bg}) no-repeat center`}`,
+        background: `${`url(${BASE_URL}/image/small/${bg})`}`,
         backgroundSize: "cover",
+        minHeight: "100vh",
       }}
       className={`${className} ${styles.wrapper}`}
     >

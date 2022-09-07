@@ -260,13 +260,32 @@ const Layout = ({ logout, children, title, user }) => {
                     {title}
                   </h3>
                 )}
-                <NavLink to="/notification" className={styles.right__item}>
-                  <IoMdNotificationsOutline />
-                </NavLink>
-                <NavLink to="/settings" className={styles.right__item}>
-                  <TiCogOutline />
-                </NavLink>
-                <UserInfoTopbar />
+                <div className="d-md-none d-flex justify-content-between align-items-center w-100">
+                  <div className="ps-2">
+                    <img
+                      src={logo}
+                      onClick={() => navigate("/")}
+                      alt=""
+                      className={styles.logo_mob}
+                    />
+                  </div>
+                  <NavLink to="/notification" className={styles.right__item}>
+                    <IoMdNotificationsOutline />
+                  </NavLink>
+                  <NavLink to="/settings" className={styles.right__item}>
+                    <TiCogOutline />
+                  </NavLink>
+                  <UserInfoTopbar />
+                </div>
+                <div className="d-md-flex d-none">
+                  <NavLink to="/notification" className={styles.right__item}>
+                    <IoMdNotificationsOutline />
+                  </NavLink>
+                  <NavLink to="/settings" className={styles.right__item}>
+                    <TiCogOutline />
+                  </NavLink>
+                  <UserInfoTopbar />
+                </div>
               </div>
               {children}
             </Col>

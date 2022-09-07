@@ -221,7 +221,58 @@ const LandingNavbar = ({
             </div>
           </div>
           <div className="d-flex justify-content-cneter align-items-center flex-column border-top">
-            <div className={page === "contact" ? styles.active : styles.link}>
+            {isAuthenticated ? (
+              <div
+                className={`${
+                  page === "logout" ? styles.active : styles.link
+                } fw-bold`}
+              >
+                <span style={{ fontSize: 22 }} onClick={() => logout()}>
+                  Logout
+                </span>
+              </div>
+            ) : (
+              <></>
+            )}
+            <div className={page === "login" ? styles.active : styles.link}>
+              <Link to="/login" style={{ fontSize: 22 }}>
+                {isAuthenticated ? `Dashboard` : "Login"}
+              </Link>
+            </div>
+
+            <div className={`d-md-flex align-items-center`}>
+              <div className={page === "cart" ? styles.active : styles.link}>
+                <Link to="/cart" style={{ fontSize: 22 }}>
+                  Cart{" "}
+                  {cart && cart.length > 0 ? (
+                    <span className="text-danger">
+                      <GoPrimitiveDot />
+                    </span>
+                  ) : (
+                    <></>
+                  )}
+                </Link>
+              </div>
+            </div>
+            {user && user.userType !== "admin" && user.userType !== "iep" ? (
+              <div
+                className={`${
+                  page === "sda" ? styles.active : styles.link
+                } fw-bold  pt-2 pb-3`}
+              >
+                <span style={{ fontSize: 22 }} onClick={switchCoachMode}>
+                  Switch to{" "}
+                  {user && user.userType === "client" ? "Coach" : "Client"} Mode
+                </span>
+              </div>
+            ) : (
+              <></>
+            )}
+            <div
+              className={`border-top ${
+                page === "contact" ? styles.active : styles.link
+              }`}
+            >
               <Link to="/contact">Contact Us</Link>
             </div>
             <div className={page === "policy" ? styles.active : styles.link}>
@@ -231,52 +282,6 @@ const LandingNavbar = ({
               <Link to="/refund-policy">Refund Policy</Link>
             </div>
           </div>
-        </div>
-        {user && user.userType !== "admin" && user.userType !== "iep" ? (
-          <div
-            className={`${
-              page === "sda" ? styles.active : styles.link
-            } fw-bold border-top pt-4`}
-          >
-            <span style={{ fontSize: 22 }} onClick={switchCoachMode}>
-              Switch to{" "}
-              {user && user.userType === "client" ? "Coach" : "Client"} Mode
-            </span>
-          </div>
-        ) : (
-          <></>
-        )}
-        <div className={`d-md-flex align-items-center`}>
-          <div className={page === "cart" ? styles.active : styles.link}>
-            <Link to="/cart" style={{ fontSize: 22 }}>
-              Cart{" "}
-              {cart && cart.length > 0 ? (
-                <span className="text-danger">
-                  <GoPrimitiveDot />
-                </span>
-              ) : (
-                <></>
-              )}
-            </Link>
-          </div>
-          <div className={page === "login" ? styles.active : styles.link}>
-            <Link to="/login" style={{ fontSize: 22 }}>
-              {isAuthenticated ? `Dashboard` : "Login"}
-            </Link>
-          </div>
-          {isAuthenticated ? (
-            <div
-              className={`${
-                page === "logout" ? styles.active : styles.link
-              } fw-bold`}
-            >
-              <span style={{ fontSize: 22 }} onClick={() => logout()}>
-                Logout
-              </span>
-            </div>
-          ) : (
-            <></>
-          )}
         </div>
       </div>
     </div>

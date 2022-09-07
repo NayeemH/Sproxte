@@ -34,6 +34,10 @@
   background: var(--primary) !important;
   border-radius: 50%;
 }
+
+.logo_mob {
+  display: none;
+}
 .icon {
   height: 35px;
   font-size: 24px;
@@ -95,6 +99,11 @@
     min-height: 100vh !important;
     transition: 0.3s all ease-in-out;
     overflow-y: scroll;
+  }
+  .logo_mob {
+    display: block;
+    width: 35vw;
+    padding-right: 5px;
   }
 
   .wrapper.active {
