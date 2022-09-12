@@ -492,6 +492,7 @@ const AddProjectForm = ({ category, createProject, getTypeList }) => {
                       <Col xs={6}>
                         <input
                           type="number"
+                          step="0.01"
                           placeholder="Type price of the product in USD"
                           className="form-control w-100"
                           value={priceList[i].price}
@@ -556,6 +557,7 @@ const AddProjectForm = ({ category, createProject, getTypeList }) => {
                         name="price"
                         isValid={!errors.price && touched.price}
                         type="number"
+                        step="0.01"
                         className={`${styles.input} w-100`}
                         isInvalid={errors.price && touched.price}
                       />

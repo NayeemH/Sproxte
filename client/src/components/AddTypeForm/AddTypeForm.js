@@ -327,6 +327,7 @@ const AddTypeForm = ({ createProductType, getCategoryList, category }) => {
                           !errors.playerAddPrice && touched.playerAddPrice
                         }
                         type="number"
+                        step="0.01"
                         className={`${styles.input} w-100`}
                         isInvalid={
                           errors.playerAddPrice && touched.playerAddPrice
@@ -404,6 +405,7 @@ const AddTypeForm = ({ createProductType, getCategoryList, category }) => {
                       <Col xs={6}>
                         <input
                           type="number"
+                          step="0.01"
                           placeholder="Type price of the product in USD"
                           className="form-control w-100"
                           value={priceList[i].price}

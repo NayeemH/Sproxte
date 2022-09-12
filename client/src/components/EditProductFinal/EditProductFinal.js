@@ -374,6 +374,7 @@ const EditProductFinal = ({ category, editProduct, getTypeList, data }) => {
                       <Col xs={6}>
                         <input
                           type="number"
+                          step="0.01"
                           placeholder="Type price of the product in USD"
                           className="form-control w-100"
                           value={priceList[i].price}
