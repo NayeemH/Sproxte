@@ -7,15 +7,12 @@ import "swiper/css/bundle";
 import {
   SignupPage,
   DiscoverPage,
-  CartPage,
   ContactPage,
   PaymentMethodsPage,
   RefundPolicyPage,
-  LandingPage,
 } from "./views";
 import FileUploadPage from "./views/FileUploadPage/FileUploadPage";
 import { useEffect } from "react";
-import Aos from "aos";
 import "aos/dist/aos.css";
 import LoginPage from "./views/LoginPage/LoginPage";
 import { getRefreshToken } from "./actions/Auth.action";

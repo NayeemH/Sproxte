@@ -250,15 +250,16 @@ const OrderDescription = ({
               <ProductCard
                 title={product.name}
                 h
-                img={
-                  selectedColor
-                    ? `${IMAGE_PATH}small/${
-                        product.imageData.filter(
-                          (item) => item.color === selectedColor
-                        )[0].image
-                      }`
-                    : `${IMAGE_PATH}small/${product.pngImageFront}`
-                }
+                // img={
+                //   selectedColor
+                //     ? `${IMAGE_PATH}small/${
+                //         product.imageData.filter(
+                //           (item) => item.color === selectedColor
+                //         )[0].image
+                //       }`
+                //     : `${IMAGE_PATH}small/${product.pngImageFront}`
+                // }
+                img={`${IMAGE_PATH}small/${product.pngImageFront}`}
                 id={product._id}
                 template
                 hidden={true}
