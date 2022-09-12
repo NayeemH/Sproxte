@@ -168,14 +168,14 @@ const EditProductFinal = ({ category, editProduct, getTypeList, data }) => {
     name: data && data.name ? data.name : "",
     price:
       data && data.priceArray
-        ? parseInt(data.priceArray.price[data.priceArray.range.length])
+        ? parseFloat(data.priceArray.price[data.priceArray.range.length])
         : 0,
     discount:
       data && data.discount && data.discount.discount
         ? data.discount.discount[data.discount.discount.length - 1]
         : 0,
-    weight: data && data.weight ? parseInt(data.weight) : 0,
-    quantity: data && data.quantity ? parseInt(data.quantity) : 0,
+    weight: data && data.weight ? parseFloat(data.weight) : 0,
+    quantity: data && data.quantity ? parseFloat(data.quantity) : 0,
     productType: data && data.productType ? data.productType : "",
     size:
       data && data.sizes && data.sizes.length > 0 ? data.sizes.join(",") : "",

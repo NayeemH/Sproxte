@@ -221,7 +221,7 @@ const EditTypeFinal = ({
     // categoryType: data && data.categoryType ? data.categoryType : "",
     price:
       data && data.priceArray
-        ? parseInt(data.priceArray.price[data.priceArray.range.length])
+        ? parseFloat(data.priceArray.price[data.priceArray.range.length])
         : 0,
     weight: data && data.weight ? data.weight : 0,
     discount:
@@ -229,7 +229,7 @@ const EditTypeFinal = ({
         ? data.discount.discount[data.discount.discount.length - 1]
         : 0,
     playerAddPrice:
-      data && data.playerAddPrice ? parseInt(data.playerAddPrice) : 0,
+      data && data.playerAddPrice ? parseFloat(data.playerAddPrice) : 0,
   };
 
   const SignupSchema = Yup.object().shape({
