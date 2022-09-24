@@ -10,7 +10,7 @@ router.post('/:id', fileFetch.single('image'), async (req, res, next) => {
         const {userId} = req.user;
         const {message} = req.body;
 
-        let product = await Product.findOne({_id: id, gurdianId: userId});
+        let product = await Product.findOne({_id: id, $or: [{gurdianId: userId, userId}]});
         if(!product) throw Error('Product not found for this gurdian');
 
         let image;
