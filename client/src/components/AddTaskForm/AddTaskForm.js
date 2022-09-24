@@ -69,10 +69,7 @@ const AddTaskForm = ({ createProjectTask, id }) => {
       setSelectedFile(undefined);
       return;
     }
-    if (e.target.files[0].size > 2000000) {
-      toast.error("File size is too big");
-      return;
-    }
+
     setSelectedFile(e.target.files[0]);
   };
 

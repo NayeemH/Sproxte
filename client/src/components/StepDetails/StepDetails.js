@@ -42,10 +42,7 @@ const StepDetails = ({
       toast.error("Please enter a message");
       return;
     }
-    if (image && image.size > 2000000) {
-      toast.error("Image size should be less than 2MB");
-      return;
-    }
+
     let checkReject = await rejectOrder(msg, image, stepId);
 
     if (checkReject) {
@@ -177,7 +174,7 @@ const StepDetails = ({
                         onClick={() => rejectHandeler()}
                         className={`${styles.btn} mx-md-3 mx-0`}
                       >
-                        Reject
+                        Re-Upload
                       </Button>
                     </>
                   ) : (
